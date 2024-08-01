@@ -16,6 +16,7 @@ module.exports = {
         'plugin:@typescript-eslint/all',
         'plugin:unicorn/all',
         'plugin:prettier/recommended',
+        'plugin:jest-dom/recommended',
     ],
     plugins: [
         '@typescript-eslint',
@@ -35,12 +36,14 @@ module.exports = {
     },
     ignorePatterns: [
         '.eslintrc.js',
-        'jest.config.js',
+        'jest.config.mjs',
         'next-sitemap.config.js',
         'public/mockServiceWorker.js',
         'prettier.config.mjs',
         'postcss.config.mjs',
         'next.config.mjs',
+        'next-env.d.ts',
+        'jest.setup.js',
     ],
     overrides: [
         {
