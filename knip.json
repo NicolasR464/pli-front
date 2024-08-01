@@ -1,0 +1,10 @@
+{
+	"ignore": ["src/components/ui/**"],
+	"ignoreDependencies": [
+		"lucide-react",
+		"eslint",
+		"eslint-config-next",
+		"postcss",
+		"postcss-load-config"
+	]
+}
