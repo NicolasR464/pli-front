@@ -5,18 +5,15 @@ import { createEnv } from '@t3-oss/env-core'
 export const environment = createEnv({
     server: {
         DATABASE_URL: z.string().url(),
-        OPEN_AI_API_KEY: z.string().min(1),
     },
 
     /**
      * The prefix that client-side variables must have. This is enforced both at
      * a type-level and at runtime.
      */
-    clientPrefix: 'PUBLIC_',
+    clientPrefix: 'NEXT_PUBLIC_',
 
-    client: {
-        PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
-    },
+    client: { NEXT_PUBLIC_PUBLISHABLE_KEY: z.string() },
 
     /**
      * What object holds the environment variables at runtime. This is usually
