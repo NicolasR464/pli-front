@@ -44,4 +44,4 @@ export const User = z.object({
     debit: z.array(z.string()).optional(),
 })
 
-type User = z.infer<typeof User>
+export type User = z.infer<typeof User>

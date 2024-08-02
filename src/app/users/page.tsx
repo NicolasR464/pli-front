@@ -1,13 +1,22 @@
-import { environment } from '@/types/environment'
+'use client'
 
-// On server
+import { useEffect } from 'react'
+
+import { useUsersStore } from '@/stores/users'
 
 /** Display all users data */
 const Users = (): JSX.Element => {
+    const { getUsersData, users } = useUsersStore()
+
+    useEffect(() => {
+        getUsersData().catch(() => {
+            /* Empty */
+        })
+    }, [getUsersData])
+
     return (
         <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-            <h1>{environment.DATABASE_URL}</h1>
-            <h1>{environment.NEXT_PUBLIC_PUBLISHABLE_KEY}</h1>
+            <span>{JSON.stringify(users)}</span>
         </main>
     )
 }
