@@ -1,0 +1,12 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
+import { z } from 'zod'
+
+export const InstantMessage = z.object({
+    _id: z.string(),
+    sender: z.string(),
+    receiver: z.string(),
+    message: z.string(),
+    sentAt: z.date(),
+})
+
+type InstantMessage = z.infer<typeof InstantMessage>
