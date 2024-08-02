@@ -5,6 +5,7 @@ import { createEnv } from '@t3-oss/env-core'
 export const environment = createEnv({
     server: {
         DATABASE_URL: z.string().url(),
+        MOCK_ENABLED: z.boolean(),
     },
 
     /**

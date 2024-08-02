@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
+import { DeliveryType } from '../article'
+
 const Delivery = z.object({
     _id: z.string(),
-    type: z.enum(['standard', 'express']),
+    type: DeliveryType,
     packageWeight: z.number().positive(),
     sent: z.date(),
     cost: z.number().positive(),

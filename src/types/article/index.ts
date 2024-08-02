@@ -52,7 +52,7 @@ const Article = z.object({
     lastModified: z.date(),
     category: categoryEnum,
     subCategory: subcategoryEnum,
-    deliveryType: DeliveryType,
+    deliveryType: DeliveryType.array(),
     dimensions: Dimensions.optional(),
 })
 

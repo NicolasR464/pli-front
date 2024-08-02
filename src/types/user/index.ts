@@ -30,7 +30,7 @@ export const User = z.object({
     geopoints: Geopoints,
     email: z.string().email(),
     password: z.string(),
-    sexe: z.enum(['male', 'female', 'other']),
+    sexe: z.enum(['masculin', 'féminin', 'autre']),
     phoneNumber: z.string().optional(),
     activityStatus: z.string(),
     birthDate: z.date(),
