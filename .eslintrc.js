@@ -85,6 +85,7 @@ module.exports = {
         '@typescript-eslint/no-magic-numbers': 'off',
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off',
+        '@typescript-eslint/no-floating-promises': 'off',
         'import/first': 'error',
         'import/namespace': ['error', { allowComputed: true }],
         'import/newline-after-import': [

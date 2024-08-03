@@ -16,10 +16,7 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): JSX.Element => (
-    <html
-        suppressHydrationWarning
-        lang='en'
-    >
+    <html lang='en'>
         <body className={inter.className}>{children}</body>
     </html>
 )

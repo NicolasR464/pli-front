@@ -9,9 +9,7 @@ const Users = (): JSX.Element => {
     const { getUsersData, users } = useUsersStore()
 
     useEffect(() => {
-        getUsersData().catch(() => {
-            /* Empty */
-        })
+        getUsersData()
     }, [getUsersData])
 
     return (
