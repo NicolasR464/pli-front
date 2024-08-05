@@ -1,20 +1,17 @@
-'use client'
-
-import { useEffect } from 'react'
-
-import { useUsersStore } from '@/stores/users'
+import { getUsers } from '@/utils/apiCalls/userApi'
 
 /** Display all users data */
-const Users = (): JSX.Element => {
-    const { getUsersData, users } = useUsersStore()
-
-    useEffect(() => {
-        getUsersData()
-    }, [getUsersData])
+const Users = async (): Promise<JSX.Element> => {
+    const users = await getUsers()
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-            <span>{JSON.stringify(users)}</span>
+            <h1>{'Users'}</h1>
+            {users.length > 0 ? (
+                <span>{JSON.stringify(users)}</span>
+            ) : (
+                <>{'Error message'}</>
+            )}
         </main>
     )
 }

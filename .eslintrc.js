@@ -78,6 +78,7 @@ module.exports = {
         'one-var': 'off',
         'sort-keys': 'off',
         'sort-imports': 'off',
+        'unicorn/string-content': 'off',
 
         '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
         '@typescript-eslint/max-params': ['error', { maximum: 10 }],

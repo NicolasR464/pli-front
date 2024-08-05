@@ -4,8 +4,10 @@ import { createEnv } from '@t3-oss/env-core'
 
 export const environment = createEnv({
     server: {
-        DATABASE_URL: z.string().url(),
-        MOCK_ENABLED: z.string().transform((value) => value === 'true'),
+        MOCK_ENABLED: z.string(),
+        BACK_ROOT: z.string(),
+        USER_PORT: z.string(),
+        USER_BASE_URL: z.string(),
     },
 
     /**
@@ -14,7 +16,12 @@ export const environment = createEnv({
      */
     clientPrefix: 'NEXT_PUBLIC_',
 
-    client: { NEXT_PUBLIC_PUBLISHABLE_KEY: z.string() },
+    client: {
+        NEXT_PUBLIC_MOCK_ENABLED: z.string(),
+        NEXT_PUBLIC_BACK_ROOT: z.string(),
+        NEXT_PUBLIC_USER_BASE_URL: z.string(),
+        NEXT_PUBLIC_USER_PORT: z.string(),
+    },
 
     /**
      * What object holds the environment variables at runtime. This is usually

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import { apiMockEndpoints } from '@/utils/constants/endpoints'
+import { apiEndpoints, apiMockEndpoints } from '@/utils/constants/endpoints'
 
 import type { User } from '@/types/user'
 
@@ -15,6 +15,17 @@ export const useUsersStore = create<UsersStore>()(
         users: [],
 
         getUsersData: async (): Promise<void> => {
+            console.log('🔥')
+            console.log(
+                process.env.NEXT_PUBLIC_USER_BASE_URL + apiEndpoints.USERS,
+            )
+
+            /*
+             * Const response = await fetch(
+             *     process.env.NEXT_PUBLIC_USER_BASE_URL + apiEndpoints.USERS,
+             * )
+             */
+
             const response = await fetch(apiMockEndpoints.MOCK_USERS)
 
             const users = (await response.json()) as User[]
