@@ -1,4 +1,4 @@
-import { getUsers } from '@/utils/apiCalls/userApi'
+import { getUsers } from '@/utils/apiCalls/user'
 
 /** Display all users data */
 const Users = async (): Promise<JSX.Element> => {
