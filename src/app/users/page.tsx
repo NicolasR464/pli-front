@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button'
-
 import { getUsers } from '@/utils/apiCalls/user'
 
 /** Display all users data */
