@@ -79,6 +79,10 @@ module.exports = {
         'sort-keys': 'off',
         'sort-imports': 'off',
         'unicorn/string-content': 'off',
+        'react/jsx-no-leaked-render': [
+            'error',
+            { validStrategies: ['coerce'] },
+        ],
 
         '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
         '@typescript-eslint/max-params': ['error', { maximum: 10 }],
