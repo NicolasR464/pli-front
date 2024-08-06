@@ -1,14 +1,13 @@
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
-/** @TODO Change Type */
-import type { User } from '@/types/user'
+import type { Transaction } from '@/types/transaction'
 
-export const getTransactions = async (): Promise<User[]> => {
+export const getTransactions = async (): Promise<Transaction[]> => {
     const response = await fetch(
-        process.env.USER_BASE_URL + apiEndpoints.TRANSACTIONS,
+        process.env.TRANSACTION_BASE_URL + apiEndpoints.TRANSACTIONS,
     )
 
-    const transactions = (await response.json()) as User[]
+    const transactions = (await response.json()) as Transaction[]
 
     return transactions
 }

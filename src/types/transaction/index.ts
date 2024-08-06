@@ -21,4 +21,4 @@ export const Transaction = z.object({
     delivery: Delivery,
 })
 
-type Transaction = z.infer<typeof Transaction>
+export type Transaction = z.infer<typeof Transaction>

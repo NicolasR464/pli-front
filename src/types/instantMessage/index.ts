@@ -9,4 +9,4 @@ export const InstantMessage = z.object({
     sentAt: z.date(),
 })
 
-type InstantMessage = z.infer<typeof InstantMessage>
+export type InstantMessage = z.infer<typeof InstantMessage>

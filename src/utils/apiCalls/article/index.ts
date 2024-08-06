@@ -1,14 +1,13 @@
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
-/** @TODO Change Type */
-import type { User } from '@/types/user'
+import type { Article } from '@/types/article'
 
-export const getArticles = async (): Promise<User[]> => {
+export const getArticles = async (): Promise<Article[]> => {
     const response = await fetch(
-        process.env.USER_BASE_URL + apiEndpoints.ARTICLES,
+        process.env.ARTICLE_BASE_URL + apiEndpoints.ARTICLES,
     )
 
-    const articles = (await response.json()) as User[]
+    const articles = (await response.json()) as Article[]
 
     return articles
 }
