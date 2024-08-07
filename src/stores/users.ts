@@ -1,8 +1,6 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import { apiEndpoints, apiMockEndpoints } from '@/utils/constants/endpoints'
-
 import type { User } from '@/types/user'
 
 type UsersStore = {
@@ -11,9 +9,12 @@ type UsersStore = {
 }
 
 export const useUsersStore = create<UsersStore>()(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     immer((set) => ({
         users: [],
 
-        getUsersData: async (): Promise<void> => {},
+        getUsersData: async (): Promise<void> => {
+            /** @TODO */
+        },
     })),
 )

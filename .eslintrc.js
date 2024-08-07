@@ -44,7 +44,7 @@ module.exports = {
         'next.config.mjs',
         'next-env.d.ts',
         'jest.setup.js',
-        'src/components/shadcnUI/**',
+        'src/components/shadcn/**',
         'tailwind.config.ts',
     ],
     overrides: [
