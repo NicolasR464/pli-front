@@ -30,7 +30,7 @@ pnpm install
 -   [Tailwind](https://tailwindcss.com/) for styling
 -   [Shadcn](https://ui.shadcn.com/) as a component library
 -   [Zustand](https://zustand-demo.pmnd.rs/) for state management, along with [Immer](https://docs.pmnd.rs/zustand/integrations/immer-middleware) middleware for conveniency.
--   [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts#with-tailwind-css) Next's font manager linked to Google Font.
 
 ### Getting Started
 
