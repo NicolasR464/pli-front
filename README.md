@@ -1,4 +1,4 @@
-<p align="center"><img src="https://res.cloudinary.com/dy2ds7yua/image/upload/w_300,h_169/v1723194828/blocmark_holo_blue_2x_zgwt0w.png"/></p>
+<p align="center"><img src="https://res.cloudinary.com/etnaassets/image/upload/v1723194835/Fichier_31_3x_qbogmr.png"/></p>
 
 ## Welcome to the TrocUp project's front-end side 👋
 
