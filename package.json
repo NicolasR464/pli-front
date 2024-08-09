@@ -8,10 +8,10 @@
         "start": "next start",
         "lint": "next lint",
         "knip": "knip",
-        "test": "jest",
+        "test": "jest --passWithNoTests",
         "ts-check": "tsc --noEmit",
         "test:watch": "jest --watchAll",
-        "troc": "pnpm ts-check && pnpm lint && pnpm knip"
+        "troc": "pnpm ts-check && pnpm lint && pnpm knip && pnpm test"
     },
     "dependencies": {
         "@radix-ui/react-slot": "1.1.0",

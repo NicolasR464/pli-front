@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center"><img src="https://res.cloudinary.com/dy2ds7yua/image/upload/w_300,h_169/v1723194828/blocmark_holo_blue_2x_zgwt0w.png"/></p>
 
-## Getting Started
+## Welcome to the Trocup project's front-end side 👋
 
-First, run the development server:
+Trocup is a platform that enables users to exchange products without involving money. It revives the traditional bartering system, enhanced by advanced AI technology to assess the value of items ✨.
+
+### Introduction
+
+This is a [Next.js](https://nextjs.org/docs) project.
+Check out [this link](https://nextjs.org/learn) for an interactive Next.js tutorial.
+
+-   The default package manager is [PNPM](https://pnpm.io/installation)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev 👈 Set as default
-# or
-bun dev
+npm install -g pnpm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   Install the dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   Refer to `.env.example` to create your `.env` and `.env.local`
 
-## Learn More
+-   It uses [Jest](https://jestjs.io/) for unit testing.
+-   Has a strong set of linters from [Eslint](https://eslint.org/docs/latest/)
+-   [Tailwind](https://tailwindcss.com/) for styling
+-   [Shadcn](https://ui.shadcn.com/) as a component library
+-   [Zustand](https://zustand-demo.pmnd.rs/) for state management, along with [Immer](https://docs.pmnd.rs/zustand/integrations/immer-middleware) middleware for conveniency.
+-   [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-To learn more about Next.js, take a look at the following resources:
+### Getting Started
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Start the development server by running:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+#### ⚠️ Before a Merge request
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   Check if your branch is up to date with the main branch:
+    ```bash
+      git pull -r origin main
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If either of theses commands fail, the MR won't pass:
+
+```bash
+# for checking the linter
+pnpm lint
+# Typescript
+pnpm ts-check
+# if there is dead code
+pnpm knip
+# Jest unit tests
+pnpm test
+# or for all of the above rules
+pnpm troc
+```
