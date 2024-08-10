@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Button } from '@/components/shadcn/shadcnUI/button'
 
 import { getUsers } from '@/utils/apiCalls/user'
