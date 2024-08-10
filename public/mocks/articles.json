@@ -1,1440 +1,1362 @@
-[{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9773d"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521eaa"
-  },
-  "adTitle": "La possibilité d'innover à l'état pur",
-  "brand": "Andre Techer S.A.S.",
-  "model": "chercher",
-  "description": "Conclure enfoncer prochain yeux rouler habitant masse. Apercevoir puis commencement. Sommet dehors cinq pain.\nFer habitant devenir condamner blanc. Gens été passé prison ouvrir livre.",
-  "status": "available",
-  "state": "used",
-  "price": 79,
-  "manufactureDate": "2024-05-26",
-  "purchaseDate": "2024-04-23",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/11/06/12-07-49-892_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/04/16/10-14-19-41_250x250.jpg"
-  ],
-  "createdAt": "2012-11-04T10:52:20.867769",
-  "lastModified": "1977-09-04T09:29:40.634639",
-  "category": "Vêtements",
-  "subCategory": "Vêtements pour enfants",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 27,
-    "width": 18,
-    "height": 44,
-    "weight": 20
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9773e"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ed2"
-  },
-  "adTitle": "L'assurance de louer à l'état pur",
-  "brand": "Barre Hamel S.A.",
-  "model": "angoisse",
-  "description": "Salle précieux sentir discuter feu partager champ. Extraordinaire discuter colon déchirer. Joindre rideau argent tout saluer seulement. Contraire condition livrer admettre inspirer pauvre.",
-  "status": "available",
-  "state": "used",
-  "price": 879,
-  "manufactureDate": "2016-12-18",
-  "purchaseDate": "2024-01-14",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "2017-11-18T19:20:59.079254",
-  "lastModified": "2006-06-28T17:13:09.309698",
-  "category": "Produits de beauté",
-  "subCategory": "Soins de la peau",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 63,
-    "width": 91,
-    "height": 13,
-    "weight": 4
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9773f"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521edf"
-  },
-  "adTitle": "Le plaisir d'atteindre vos buts plus rapidement",
-  "brand": "Tanguy S.A.R.L.",
-  "model": "ruine",
-  "description": "Prendre agiter personnage étendue couleur mort changement. Accorder ignorer paysage.\nPassé chiffre conclure refuser poésie. Admettre société avant lourd.",
-  "status": "available",
-  "state": "used",
-  "price": 799,
-  "manufactureDate": "2010-12-18",
-  "purchaseDate": "2024-06-13",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
-  ],
-  "createdAt": "2017-01-17T16:38:07.720156",
-  "lastModified": "2004-07-25T19:16:57.251841",
-  "category": "Meubles",
-  "subCategory": "Armoires",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 58,
-    "width": 11,
-    "height": 74,
-    "weight": 14
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97740"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521e9e"
-  },
-  "adTitle": "Le confort de changer à la pointe",
-  "brand": "Brunel Meunier S.A.S.",
-  "model": "oublier",
-  "description": "Sérieux servir quand il. Devant aventure entier après. Souvenir cheval exprimer tout forme amour contre.\nSéparer fer observer couvrir fine vingt peuple. En éclairer ainsi livrer doux rire.",
-  "status": "available",
-  "state": "used",
-  "price": 727,
-  "manufactureDate": "2009-04-01",
-  "purchaseDate": "2024-06-24",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
-  ],
-  "createdAt": "1982-05-15T05:15:50.156563",
-  "lastModified": "2005-12-10T18:44:14.071601",
-  "category": "Jouets",
-  "subCategory": "Poupées",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 14,
-    "width": 29,
-    "height": 35,
-    "weight": 56
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97741"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521edf"
-  },
-  "adTitle": "Le pouvoir d'évoluer à la pointe",
-  "brand": "Vidal",
-  "model": "vieil",
-  "description": "Effacer creuser prétendre seuil genre encore maintenant. Trouver soleil clef droit ici. Déclarer lendemain recherche certes supérieur conseil.\nTaille présenter or comme intérieur chaud.",
-  "status": "available",
-  "state": "used",
-  "price": 381,
-  "manufactureDate": "2022-03-31",
-  "purchaseDate": "2024-02-11",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
-  ],
-  "createdAt": "2008-12-27T08:07:01.080679",
-  "lastModified": "2010-12-04T09:21:00.042160",
-  "category": "Automobile",
-  "subCategory": "Outils et équipement",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 76,
-    "width": 45,
-    "height": 35,
-    "weight": 31
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97742"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521eaa"
-  },
-  "adTitle": "La liberté de louer de manière sûre",
-  "brand": "Maillard et Fils",
-  "model": "contre",
-  "description": "Dormir rue quel. Ensemble peur rester loin.\nRevenir fatigue auprès drôle valoir note. Inventer donner hier quoi garde en poussière. Sombre selon pied rencontre depuis briser.",
-  "status": "available",
-  "state": "used",
-  "price": 297,
-  "manufactureDate": "2013-03-16",
-  "purchaseDate": "2024-01-06",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg",
-    "https://cdn.pixabay.com/user/2020/05/22/13-10-55-221_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/07/16/20-07-22-443_250x250.jpg"
-  ],
-  "createdAt": "2005-09-03T22:38:23.646044",
-  "lastModified": "2006-07-07T00:12:23.398502",
-  "category": "Livres",
-  "subCategory": "Bandes dessinées",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 13,
-    "width": 91,
-    "height": 31,
-    "weight": 100
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97743"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521e9d"
-  },
-  "adTitle": "La possibilité de changer à la pointe",
-  "brand": "Boutin Le Roux SARL",
-  "model": "demander",
-  "description": "Emmener scène auprès face. Profiter poser demander roche social colère dresser vouloir. Soulever réunir soleil.",
-  "status": "available",
-  "state": "used",
-  "price": 421,
-  "manufactureDate": "2024-02-29",
-  "purchaseDate": "2024-06-26",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "1992-06-04T03:49:27.940047",
-  "lastModified": "2010-10-29T22:46:53.633902",
-  "category": "Produits de beauté",
-  "subCategory": "Soins capillaires",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 27,
-    "width": 7,
-    "height": 51,
-    "weight": 37
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97744"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521edc"
-  },
-  "adTitle": "Le plaisir d'atteindre vos buts autrement",
-  "brand": "Besson Guillet S.A.R.L.",
-  "model": "descendre",
-  "description": "À courant réduire émotion souffrance. Réveiller où vif ton droite plein.\nExemple durant quoi centre. Oublier également interroger façon lutte. Grave dieu malheur mentir printemps.",
-  "status": "available",
-  "state": "used",
-  "price": 953,
-  "manufactureDate": "2006-08-03",
-  "purchaseDate": "2024-03-17",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
-  ],
-  "createdAt": "2021-02-08T17:55:03.614665",
-  "lastModified": "1978-03-26T16:51:43.382458",
-  "category": "Jouets",
-  "subCategory": "Figurines d'action",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 23,
-    "width": 37,
-    "height": 30,
-    "weight": 40
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97745"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ea4"
-  },
-  "adTitle": "L'art d'avancer plus facilement",
-  "brand": "Marion",
-  "model": "notre",
-  "description": "Feuille autorité vent éviter. Désir prière prêt souhaiter franchir moindre système peu. Pourtant absence taire lutter place quoi enfance moins.",
-  "status": "available",
-  "state": "used",
-  "price": 898,
-  "manufactureDate": "2014-09-08",
-  "purchaseDate": "2024-04-20",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
-  ],
-  "createdAt": "1972-03-30T05:29:20.551018",
-  "lastModified": "1977-02-11T23:04:14.422643",
-  "category": "Meubles",
-  "subCategory": "Tables",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 77,
-    "width": 9,
-    "height": 17,
-    "weight": 95
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97746"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ea7"
-  },
-  "adTitle": "L'avantage d'atteindre vos buts avant-tout",
-  "brand": "Lacombe Evrard et Fils",
-  "model": "haïr",
-  "description": "Poche sous appeler couper résoudre nourrir. Indiquer consulter désormais demi cri marchand parent. Est affirmer million soleil.\nColère quoi dimanche huit auprès sang.",
-  "status": "available",
-  "state": "used",
-  "price": 293,
-  "manufactureDate": "2020-11-05",
-  "purchaseDate": "2024-01-01",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    ""
-  ],
-  "createdAt": "2013-05-09T21:15:45.572292",
-  "lastModified": "2006-08-06T11:00:43.994416",
-  "category": "Équipement sportif",
-  "subCategory": "Sports nautiques",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 16,
-    "width": 76,
-    "height": 77,
-    "weight": 38
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97747"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521eaa"
-  },
-  "adTitle": "L'avantage de louer en toute tranquilité",
-  "brand": "Martineau Guérin SARL",
-  "model": "il",
-  "description": "Quartier bas violence place problème ailleurs douze interroger. Mourir quatre ciel escalier passé auteur sans.",
-  "status": "available",
-  "state": "used",
-  "price": 244,
-  "manufactureDate": "2024-03-25",
-  "purchaseDate": "2024-06-07",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    ""
-  ],
-  "createdAt": "2017-03-13T15:49:20.490221",
-  "lastModified": "1991-07-11T07:13:20.482966",
-  "category": "Équipement sportif",
-  "subCategory": "Sports d'équipe",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 5,
-    "width": 63,
-    "height": 25,
-    "weight": 69
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97748"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ea5"
-  },
-  "adTitle": "L'assurance d'évoluer à la pointe",
-  "brand": "Lelièvre",
-  "model": "depuis",
-  "description": "Sembler plaisir dur voisin menacer discussion loup inutile. Année simple ou adresser étouffer.\nFamille crier ferme briller précis vent contre. Briser crier avec colère.",
-  "status": "available",
-  "state": "used",
-  "price": 155,
-  "manufactureDate": "2014-04-19",
-  "purchaseDate": "2024-06-29",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg",
-    "https://cdn.pixabay.com/user/2020/05/22/13-10-55-221_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/07/16/20-07-22-443_250x250.jpg"
-  ],
-  "createdAt": "1998-05-03T15:55:29.334727",
-  "lastModified": "2004-10-14T21:28:15.709455",
-  "category": "Livres",
-  "subCategory": "Enfants",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 25,
-    "width": 70,
-    "height": 71,
-    "weight": 88
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97749"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ef5"
-  },
-  "adTitle": "Le plaisir de concrétiser vos projets plus rapidement",
-  "brand": "Laurent Reynaud et Fils",
-  "model": "succès",
-  "description": "Assurer bande espace détacher humide montrer. Résister représenter bleu retomber depuis tête.\nHumide oiseau malade plutôt cours rouge crier campagne.",
-  "status": "available",
-  "state": "used",
-  "price": 732,
-  "manufactureDate": "2012-03-04",
-  "purchaseDate": "2024-02-25",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
-  ],
-  "createdAt": "2000-08-14T13:18:56.777170",
-  "lastModified": "1994-07-06T02:18:28.484443",
-  "category": "Jouets",
-  "subCategory": "Jouets éducatifs",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 31,
-    "width": 79,
-    "height": 58,
-    "weight": 90
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9774a"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521eba"
-  },
-  "adTitle": "Le droit d'atteindre vos buts à la pointe",
-  "brand": "Marin",
-  "model": "poche",
-  "description": "Devenir représenter court haut payer moi. Aussi entraîner ramener impossible rideau hésiter haine. Occasion carte passer considérer prison éclater.",
-  "status": "available",
-  "state": "used",
-  "price": 353,
-  "manufactureDate": "2008-04-17",
-  "purchaseDate": "2024-05-15",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
-  ],
-  "createdAt": "2009-02-04T22:02:56.149592",
-  "lastModified": "2021-06-01T02:49:09.424131",
-  "category": "Meubles",
-  "subCategory": "Chaises",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 96,
-    "width": 76,
-    "height": 94,
-    "weight": 54
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9774b"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ecf"
-  },
-  "adTitle": "L'assurance de changer de manière sûre",
-  "brand": "Morvan S.A.",
-  "model": "rapport",
-  "description": "Droit rêver appartement. Lieu dont fixer comme. Court sous exister simplement choix alors guerre.\nJuger consentir visage briser but taire seuil peser. Tracer triste diriger ressembler serrer dernier.",
-  "status": "available",
-  "state": "used",
-  "price": 727,
-  "manufactureDate": "2024-02-12",
-  "purchaseDate": "2024-01-26",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
-  ],
-  "createdAt": "2020-09-20T00:45:55.466302",
-  "lastModified": "2013-09-14T19:14:48.394537",
-  "category": "Meubles",
-  "subCategory": "Canapés",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 62,
-    "width": 79,
-    "height": 60,
-    "weight": 70
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9774c"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ef1"
-  },
-  "adTitle": "Le droit de louer de manière sûre",
-  "brand": "Couturier Lesage SA",
-  "model": "art",
-  "description": "Étaler lèvre entrée mourir.\nOuvert nord effort ton convenir rose fois son. Violence trois séparer chaud travailler attention. Atteindre envelopper noire produire or subir.",
-  "status": "available",
-  "state": "used",
-  "price": 763,
-  "manufactureDate": "2015-03-10",
-  "purchaseDate": "2024-06-23",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    ""
-  ],
-  "createdAt": "1978-07-05T23:51:23.027610",
-  "lastModified": "1996-02-15T07:07:08.323169",
-  "category": "Équipement sportif",
-  "subCategory": "Sports d'équipe",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 8,
-    "width": 25,
-    "height": 87,
-    "weight": 35
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9774d"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ee9"
-  },
-  "adTitle": "L'art d'atteindre vos buts à l'état pur",
-  "brand": "Garnier",
-  "model": "réel",
-  "description": "Nombreux folie impossible dangereux conversation. Médecin hasard pont habiter. Même vite mince exiger.",
-  "status": "available",
-  "state": "used",
-  "price": 133,
-  "manufactureDate": "2007-10-23",
-  "purchaseDate": "2024-05-30",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
-  ],
-  "createdAt": "2011-01-08T00:44:55.698093",
-  "lastModified": "1987-03-14T01:15:41.619775",
-  "category": "Automobile",
-  "subCategory": "Accessoires pour voitures",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 42,
-    "width": 100,
-    "height": 40,
-    "weight": 93
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9774e"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ebe"
-  },
-  "adTitle": "Le pouvoir de concrétiser vos projets autrement",
-  "brand": "De Sousa",
-  "model": "pièce",
-  "description": "Neuf comme fille trouver seigneur prêt. Personnage vrai ton geste.\nInterroger monter gagner lune. Semblable âme sec neuf souvenir ajouter recevoir.",
-  "status": "available",
-  "state": "used",
-  "price": 902,
-  "manufactureDate": "2010-08-31",
-  "purchaseDate": "2024-07-04",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "1984-12-01T22:17:01.980753",
-  "lastModified": "2021-11-08T07:13:20.912575",
-  "category": "Produits de beauté",
-  "subCategory": "Soins capillaires",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 37,
-    "width": 32,
-    "height": 25,
-    "weight": 56
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9774f"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ebc"
-  },
-  "adTitle": "L'assurance de rouler plus facilement",
-  "brand": "Jacques",
-  "model": "noir",
-  "description": "Ton un savoir dent inviter vieux. Commencer droit atteindre vêtement premier drôle oublier quel. Votre assez intéresser tendre suite.",
-  "status": "available",
-  "state": "used",
-  "price": 618,
-  "manufactureDate": "2011-08-29",
-  "purchaseDate": "2024-02-22",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2019/03/14/21-00-24-919_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/09/24/13-37-34-609_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/07/21/13-17-14-270_250x250.jpg"
-  ],
-  "createdAt": "2006-10-07T18:30:25.668912",
-  "lastModified": "2012-10-17T21:41:31.616355",
-  "category": "Électronique",
-  "subCategory": "Tablettes",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 84,
-    "width": 18,
-    "height": 60,
-    "weight": 88
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97750"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ece"
-  },
-  "adTitle": "Le plaisir d'avancer autrement",
-  "brand": "Nicolas Vidal et Fils",
-  "model": "cause",
-  "description": "Forme annoncer vert toucher facile entretenir embrasser. Meilleur voiture drame séparer second dresser.",
-  "status": "available",
-  "state": "used",
-  "price": 843,
-  "manufactureDate": "2011-01-14",
-  "purchaseDate": "2024-05-20",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
-  ],
-  "createdAt": "1979-01-01T23:59:42.093920",
-  "lastModified": "2009-02-11T23:28:10.817652",
-  "category": "Jouets",
-  "subCategory": "Jouets éducatifs",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 45,
-    "width": 22,
-    "height": 17,
-    "weight": 76
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97751"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ec5"
-  },
-  "adTitle": "La liberté d'innover autrement",
-  "brand": "Maillet SA",
-  "model": "succès",
-  "description": "Dieu autorité écrire colon caresser. Terminer abattre cas respirer demander habiller.\nÎle poitrine même corps. Souffrance gris silence rire résister présence demeurer. Grandir partie habiller fumer.",
-  "status": "available",
-  "state": "used",
-  "price": 310,
-  "manufactureDate": "2002-08-12",
-  "purchaseDate": "2024-04-15",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "1994-09-20T06:05:09.828949",
-  "lastModified": "1997-12-09T22:42:25.899384",
-  "category": "Produits de beauté",
-  "subCategory": "Soins capillaires",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 2,
-    "width": 20,
-    "height": 67,
-    "weight": 2
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97752"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ef7"
-  },
-  "adTitle": "Le pouvoir d'avancer de manière efficace",
-  "brand": "Colas",
-  "model": "emmener",
-  "description": "Ramasser peau se perdre caresser.\nHumide voisin toujours forme passage. Rencontre acheter noir inquiétude devoir saint. Titre seigneur fait meilleur déposer chemin.",
-  "status": "available",
-  "state": "used",
-  "price": 141,
-  "manufactureDate": "2005-01-22",
-  "purchaseDate": "2024-01-07",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
-  ],
-  "createdAt": "1979-05-05T05:25:34.409416",
-  "lastModified": "2022-08-20T07:00:11.663276",
-  "category": "Jouets",
-  "subCategory": "Puzzles",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 96,
-    "width": 53,
-    "height": 85,
-    "weight": 88
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97753"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ea8"
-  },
-  "adTitle": "La possibilité de rouler en toute tranquilité",
-  "brand": "Léger S.A.S.",
-  "model": "presser",
-  "description": "Ici refuser moyen quinze aile. Recherche indiquer dessus vaste plus retirer vent. Morceau cour échapper présent refuser sentier. Comment côté sol saluer anglais baisser causer travailler.",
-  "status": "available",
-  "state": "used",
-  "price": 929,
-  "manufactureDate": "2008-06-24",
-  "purchaseDate": "2024-02-25",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
-  ],
-  "createdAt": "2013-03-23T19:33:49.041527",
-  "lastModified": "2005-06-22T00:31:08.451922",
-  "category": "Meubles",
-  "subCategory": "Tables",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 49,
-    "width": 40,
-    "height": 45,
-    "weight": 28
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97754"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ef5"
-  },
-  "adTitle": "Le pouvoir d'innover naturellement",
-  "brand": "Lefèvre",
-  "model": "tomber",
-  "description": "Ventre coin me afin de d'autres. Pas machine société image.\nMusique train enfant souvenir suite mourir. Haute seuil plutôt résister as tourner toucher. Tuer question engager traverser.",
-  "status": "available",
-  "state": "used",
-  "price": 185,
-  "manufactureDate": "2020-04-14",
-  "purchaseDate": "2024-03-01",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
-  ],
-  "createdAt": "1998-12-26T01:48:14.714708",
-  "lastModified": "1996-03-10T10:05:13.896245",
-  "category": "Électroménager",
-  "subCategory": "Climatiseurs",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 42,
-    "width": 87,
-    "height": 63,
-    "weight": 83
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97755"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ed3"
-  },
-  "adTitle": "La possibilité de changer en toute tranquilité",
-  "brand": "Reynaud SARL",
-  "model": "salut",
-  "description": "Arrêter remettre puis planche fête inventer avant.\nFou fils beau salut extraordinaire humain. Tromper drôle mettre appartement paysage marche vent malgré.",
-  "status": "available",
-  "state": "used",
-  "price": 802,
-  "manufactureDate": "2006-04-19",
-  "purchaseDate": "2024-03-11",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg",
-    "https://cdn.pixabay.com/user/2020/05/22/13-10-55-221_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/07/16/20-07-22-443_250x250.jpg"
-  ],
-  "createdAt": "2011-06-15T17:45:30.261906",
-  "lastModified": "1995-08-31T01:04:53.295295",
-  "category": "Livres",
-  "subCategory": "Éducatifs",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 71,
-    "width": 9,
-    "height": 17,
-    "weight": 88
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97756"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ee0"
-  },
-  "adTitle": "Le plaisir d'atteindre vos buts de manière sûre",
-  "brand": "François et Fils",
-  "model": "mettre",
-  "description": "Couleur sonner veiller soirée devant personne. Reculer année relation enlever.\nDavantage résistance nature rouler descendre ordre. Celui détail chaise fin maître près.",
-  "status": "available",
-  "state": "used",
-  "price": 899,
-  "manufactureDate": "2010-09-20",
-  "purchaseDate": "2024-01-13",
-  "imageUrls": [
-    "",
-    "",
-    "https://cdn.pixabay.com/user/2016/09/06/20-12-00-308_250x250.jpg"
-  ],
-  "createdAt": "2001-08-02T05:14:34.180501",
-  "lastModified": "1974-09-04T03:03:33.115345",
-  "category": "Fournitures pour animaux",
-  "subCategory": "Fournitures pour chiens",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 25,
-    "width": 60,
-    "height": 79,
-    "weight": 22
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97757"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ee5"
-  },
-  "adTitle": "La liberté de concrétiser vos projets sans soucis",
-  "brand": "Prévost SA",
-  "model": "rayon",
-  "description": "Soulever puis maître vite manier oui mener. Article seconde reposer composer échapper bouche digne interroger. Lendemain exemple vérité.",
-  "status": "available",
-  "state": "used",
-  "price": 700,
-  "manufactureDate": "2016-05-14",
-  "purchaseDate": "2024-05-12",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
-  ],
-  "createdAt": "2009-11-21T06:06:12.415072",
-  "lastModified": "2021-08-29T09:17:30.576666",
-  "category": "Électroménager",
-  "subCategory": "Réfrigérateurs",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 87,
-    "width": 29,
-    "height": 62,
-    "weight": 74
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97758"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ebe"
-  },
-  "adTitle": "Le confort d'atteindre vos buts autrement",
-  "brand": "Mallet",
-  "model": "seigneur",
-  "description": "Tout protéger révolution préférer malgré. Santé nouveau cacher fatigue fou mur.\nDe important allumer. Tard ou rencontrer volonté volonté gros.",
-  "status": "available",
-  "state": "used",
-  "price": 372,
-  "manufactureDate": "2006-09-13",
-  "purchaseDate": "2024-07-25",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    ""
-  ],
-  "createdAt": "1986-12-14T13:28:39.824921",
-  "lastModified": "2013-01-15T22:50:14.245631",
-  "category": "Équipement sportif",
-  "subCategory": "Sports d'hiver",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 43,
-    "width": 52,
-    "height": 14,
-    "weight": 23
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97759"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ebe"
-  },
-  "adTitle": "Le pouvoir de concrétiser vos projets à l'état pur",
-  "brand": "Pottier",
-  "model": "planche",
-  "description": "Part matière pendant idée. Intérieur poursuivre justice.\nPoint empêcher poitrine vaincre. Propos aventure mener curieux vieux abri. Inquiéter posséder membre lune sauter.",
-  "status": "available",
-  "state": "used",
-  "price": 296,
-  "manufactureDate": "2022-02-07",
-  "purchaseDate": "2024-06-03",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "2012-03-26T18:06:08.559097",
-  "lastModified": "2011-09-15T09:25:17.869200",
-  "category": "Produits de beauté",
-  "subCategory": "Soins de la peau",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 87,
-    "width": 12,
-    "height": 33,
-    "weight": 77
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9775a"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ec9"
-  },
-  "adTitle": "La liberté d'évoluer à la pointe",
-  "brand": "Royer S.A.",
-  "model": "dur",
-  "description": "Fort projet pousser rire profiter pendre faire enfance. Pont davantage venir pain rapporter conscience brûler manier.",
-  "status": "available",
-  "state": "used",
-  "price": 638,
-  "manufactureDate": "2017-11-21",
-  "purchaseDate": "2024-02-21",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "2011-08-09T22:58:27.338434",
-  "lastModified": "1990-10-31T21:34:19.521575",
-  "category": "Produits de beauté",
-  "subCategory": "Maquillage",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 83,
-    "width": 33,
-    "height": 6,
-    "weight": 28
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9775b"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ea2"
-  },
-  "adTitle": "L'assurance de louer autrement",
-  "brand": "Diallo Normand et Fils",
-  "model": "absolument",
-  "description": "Craindre rang chant moindre court écrire. Moyen cent fonction.\nDangereux sombre menacer arrière. Escalier combien absence type.",
-  "status": "available",
-  "state": "used",
-  "price": 814,
-  "manufactureDate": "2001-10-01",
-  "purchaseDate": "2024-07-24",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    ""
-  ],
-  "createdAt": "2012-08-01T01:52:01.441795",
-  "lastModified": "2010-09-10T03:32:31.479383",
-  "category": "Équipement sportif",
-  "subCategory": "Matériel de plein air",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 83,
-    "width": 98,
-    "height": 71,
-    "weight": 16
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9775c"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ef9"
-  },
-  "adTitle": "L'avantage d'atteindre vos buts avant-tout",
-  "brand": "Denis Schneider SARL",
-  "model": "hôtel",
-  "description": "Seuil durer enfermer obliger. Mer chasser chef prochain impression. Flamme trace madame.",
-  "status": "available",
-  "state": "used",
-  "price": 522,
-  "manufactureDate": "2011-11-30",
-  "purchaseDate": "2024-06-07",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
-  ],
-  "createdAt": "2019-11-22T12:55:13.481145",
-  "lastModified": "2011-04-26T17:00:04.938803",
-  "category": "Automobile",
-  "subCategory": "Outils et équipement",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 53,
-    "width": 26,
-    "height": 26,
-    "weight": 45
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9775d"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ed2"
-  },
-  "adTitle": "Le confort d'avancer à l'état pur",
-  "brand": "Dupont Couturier S.A.",
-  "model": "franchir",
-  "description": "Pareil défaut sorte. Voyager espace est soi.\nDétail vrai très consentir.\nPropos recommencer obliger montagne un mois risquer de.",
-  "status": "available",
-  "state": "used",
-  "price": 22,
-  "manufactureDate": "2023-12-09",
-  "purchaseDate": "2024-04-20",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2019/03/14/21-00-24-919_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/09/24/13-37-34-609_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/07/21/13-17-14-270_250x250.jpg"
-  ],
-  "createdAt": "2008-08-26T14:01:02.757841",
-  "lastModified": "1999-12-09T21:08:23.388735",
-  "category": "Électronique",
-  "subCategory": "Appareils photo",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 44,
-    "width": 13,
-    "height": 49,
-    "weight": 58
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9775e"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ec0"
-  },
-  "adTitle": "Le confort de changer à l'état pur",
-  "brand": "Girard",
-  "model": "vent",
-  "description": "Livre tantôt compte cesser coûter oiseau. Pleurer on promettre ensemble. Dominer sûr permettre propos.\nTendre objet examiner complètement. Moyen gauche herbe cuisine. Armée malheur police.",
-  "status": "available",
-  "state": "used",
-  "price": 338,
-  "manufactureDate": "2005-04-28",
-  "purchaseDate": "2024-06-19",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "1994-08-13T06:52:15.705153",
-  "lastModified": "2014-10-23T08:30:15.194495",
-  "category": "Produits de beauté",
-  "subCategory": "Parfums",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 73,
-    "width": 1,
-    "height": 42,
-    "weight": 43
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d9775f"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521efa"
-  },
-  "adTitle": "Le pouvoir de changer de manière efficace",
-  "brand": "Teixeira",
-  "model": "épais",
-  "description": "Possible mille comme. Paysan tant fil inquiétude crainte adresser matière.",
-  "status": "available",
-  "state": "used",
-  "price": 308,
-  "manufactureDate": "2023-05-24",
-  "purchaseDate": "2024-07-27",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
-    "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
-    "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
-  ],
-  "createdAt": "1976-01-07T06:52:22.354830",
-  "lastModified": "1971-10-22T10:05:25.018238",
-  "category": "Produits de beauté",
-  "subCategory": "Soins de la peau",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 49,
-    "width": 29,
-    "height": 44,
-    "weight": 22
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97760"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ef4"
-  },
-  "adTitle": "La possibilité d'avancer autrement",
-  "brand": "Paris",
-  "model": "instant",
-  "description": "Vieillard porte blond appartement ligne.\nFruit visible bureau chercher puis savoir. Grave salle allumer ignorer grâce. Hasard saint bureau douceur course immense.",
-  "status": "available",
-  "state": "used",
-  "price": 443,
-  "manufactureDate": "2013-11-26",
-  "purchaseDate": "2024-01-24",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/11/06/12-07-49-892_250x250.jpg",
-    "https://cdn.pixabay.com/user/2014/04/16/10-14-19-41_250x250.jpg"
-  ],
-  "createdAt": "2019-05-08T19:03:06.453705",
-  "lastModified": "2000-03-05T00:05:26.115559",
-  "category": "Vêtements",
-  "subCategory": "Chaussures",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 80,
-    "width": 45,
-    "height": 49,
-    "weight": 62
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97761"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521eb8"
-  },
-  "adTitle": "Le plaisir d'atteindre vos buts à la pointe",
-  "brand": "Breton SARL",
-  "model": "avancer",
-  "description": "Désormais ce mari salut dur grâce. Envelopper en toucher troisième fortune sur. Tâche traiter haute delà. Saint discussion terminer absence papier douleur.",
-  "status": "available",
-  "state": "used",
-  "price": 880,
-  "manufactureDate": "2021-10-20",
-  "purchaseDate": "2024-06-18",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
-  ],
-  "createdAt": "1971-11-07T08:13:21.148451",
-  "lastModified": "1986-09-26T10:32:49.884000",
-  "category": "Automobile",
-  "subCategory": "Pièces pour motos",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 98,
-    "width": 42,
-    "height": 53,
-    "weight": 12
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97762"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ed9"
-  },
-  "adTitle": "Le pouvoir de changer de manière efficace",
-  "brand": "Pelletier",
-  "model": "nombre",
-  "description": "Rose suivant riche selon flot vieil endormir. Marquer volonté voiture pénétrer plan perdu d'autres.",
-  "status": "available",
-  "state": "used",
-  "price": 33,
-  "manufactureDate": "2018-05-26",
-  "purchaseDate": "2024-06-09",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
-  ],
-  "createdAt": "1984-08-06T16:18:16.654300",
-  "lastModified": "1991-07-10T23:02:34.259908",
-  "category": "Électroménager",
-  "subCategory": "Climatiseurs",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 63,
-    "width": 99,
-    "height": 66,
-    "weight": 68
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97763"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ea1"
-  },
-  "adTitle": "Le confort de rouler en toute tranquilité",
-  "brand": "Gallet",
-  "model": "deux",
-  "description": "Fusil note refuser dessiner naturellement grand emporter. Être eh accepter choisir nature. Route choix beaucoup presque plante moyen.",
-  "status": "available",
-  "state": "used",
-  "price": 415,
-  "manufactureDate": "2002-04-04",
-  "purchaseDate": "2024-02-24",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
-    "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
-  ],
-  "createdAt": "2014-03-22T02:47:46.564214",
-  "lastModified": "1993-01-17T15:12:05.469275",
-  "category": "Automobile",
-  "subCategory": "Pièces pour voitures",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 93,
-    "width": 3,
-    "height": 26,
-    "weight": 61
-  }
-},
-{
-  "_id": {
-    "$oid": "66ad13906170fc5a35d97764"
-  },
-  "version": 1,
-  "owner": {
-    "$oid": "66ad0aeb36a1f5320d521ee3"
-  },
-  "adTitle": "L'art de concrétiser vos projets en toute tranquilité",
-  "brand": "Bouvet",
-  "model": "examiner",
-  "description": "Poser image entretenir approcher mari point honte. Puis enfermer rappeler terreur grain disposer comment. Plusieurs chasse gros.",
-  "status": "available",
-  "state": "used",
-  "price": 235,
-  "manufactureDate": "2016-12-15",
-  "purchaseDate": "2024-07-18",
-  "imageUrls": [
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
-    "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
-    "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
-  ],
-  "createdAt": "1979-07-27T15:51:40.520409",
-  "lastModified": "2011-03-14T15:01:27.142935",
-  "category": "Électroménager",
-  "subCategory": "Machines à laver",
-  "deliveryType": [
-    "pickup"
-  ],
-  "dimensions": {
-    "length": 21,
-    "width": 49,
-    "height": 54,
-    "weight": 13
-  }
-}]
+[
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9773d"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521eaa"
+        },
+        "adTitle": "La possibilité d'innover à l'état pur",
+        "brand": "Andre Techer S.A.S.",
+        "model": "chercher",
+        "description": "Conclure enfoncer prochain yeux rouler habitant masse. Apercevoir puis commencement. Sommet dehors cinq pain.\nFer habitant devenir condamner blanc. Gens été passé prison ouvrir livre.",
+        "status": "available",
+        "state": "used",
+        "price": 79,
+        "manufactureDate": "2024-05-26",
+        "purchaseDate": "2024-04-23",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/11/06/12-07-49-892_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/04/16/10-14-19-41_250x250.jpg"
+        ],
+        "createdAt": "2012-11-04T10:52:20.867769",
+        "lastModified": "1977-09-04T09:29:40.634639",
+        "category": "Vêtements",
+        "subCategory": "Vêtements pour enfants",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 27,
+            "width": 18,
+            "height": 44,
+            "weight": 20
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9773e"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ed2"
+        },
+        "adTitle": "L'assurance de louer à l'état pur",
+        "brand": "Barre Hamel S.A.",
+        "model": "angoisse",
+        "description": "Salle précieux sentir discuter feu partager champ. Extraordinaire discuter colon déchirer. Joindre rideau argent tout saluer seulement. Contraire condition livrer admettre inspirer pauvre.",
+        "status": "available",
+        "state": "used",
+        "price": 879,
+        "manufactureDate": "2016-12-18",
+        "purchaseDate": "2024-01-14",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "2017-11-18T19:20:59.079254",
+        "lastModified": "2006-06-28T17:13:09.309698",
+        "category": "Produits de beauté",
+        "subCategory": "Soins de la peau",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 63,
+            "width": 91,
+            "height": 13,
+            "weight": 4
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9773f"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521edf"
+        },
+        "adTitle": "Le plaisir d'atteindre vos buts plus rapidement",
+        "brand": "Tanguy S.A.R.L.",
+        "model": "ruine",
+        "description": "Prendre agiter personnage étendue couleur mort changement. Accorder ignorer paysage.\nPassé chiffre conclure refuser poésie. Admettre société avant lourd.",
+        "status": "available",
+        "state": "used",
+        "price": 799,
+        "manufactureDate": "2010-12-18",
+        "purchaseDate": "2024-06-13",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
+        ],
+        "createdAt": "2017-01-17T16:38:07.720156",
+        "lastModified": "2004-07-25T19:16:57.251841",
+        "category": "Meubles",
+        "subCategory": "Armoires",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 58,
+            "width": 11,
+            "height": 74,
+            "weight": 14
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97740"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521e9e"
+        },
+        "adTitle": "Le confort de changer à la pointe",
+        "brand": "Brunel Meunier S.A.S.",
+        "model": "oublier",
+        "description": "Sérieux servir quand il. Devant aventure entier après. Souvenir cheval exprimer tout forme amour contre.\nSéparer fer observer couvrir fine vingt peuple. En éclairer ainsi livrer doux rire.",
+        "status": "available",
+        "state": "used",
+        "price": 727,
+        "manufactureDate": "2009-04-01",
+        "purchaseDate": "2024-06-24",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
+        ],
+        "createdAt": "1982-05-15T05:15:50.156563",
+        "lastModified": "2005-12-10T18:44:14.071601",
+        "category": "Jouets",
+        "subCategory": "Poupées",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 14,
+            "width": 29,
+            "height": 35,
+            "weight": 56
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97741"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521edf"
+        },
+        "adTitle": "Le pouvoir d'évoluer à la pointe",
+        "brand": "Vidal",
+        "model": "vieil",
+        "description": "Effacer creuser prétendre seuil genre encore maintenant. Trouver soleil clef droit ici. Déclarer lendemain recherche certes supérieur conseil.\nTaille présenter or comme intérieur chaud.",
+        "status": "available",
+        "state": "used",
+        "price": 381,
+        "manufactureDate": "2022-03-31",
+        "purchaseDate": "2024-02-11",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
+        ],
+        "createdAt": "2008-12-27T08:07:01.080679",
+        "lastModified": "2010-12-04T09:21:00.042160",
+        "category": "Automobile",
+        "subCategory": "Outils et équipement",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 76,
+            "width": 45,
+            "height": 35,
+            "weight": 31
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97742"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521eaa"
+        },
+        "adTitle": "La liberté de louer de manière sûre",
+        "brand": "Maillard et Fils",
+        "model": "contre",
+        "description": "Dormir rue quel. Ensemble peur rester loin.\nRevenir fatigue auprès drôle valoir note. Inventer donner hier quoi garde en poussière. Sombre selon pied rencontre depuis briser.",
+        "status": "available",
+        "state": "used",
+        "price": 297,
+        "manufactureDate": "2013-03-16",
+        "purchaseDate": "2024-01-06",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg",
+            "https://cdn.pixabay.com/user/2020/05/22/13-10-55-221_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/07/16/20-07-22-443_250x250.jpg"
+        ],
+        "createdAt": "2005-09-03T22:38:23.646044",
+        "lastModified": "2006-07-07T00:12:23.398502",
+        "category": "Livres",
+        "subCategory": "Bandes dessinées",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 13,
+            "width": 91,
+            "height": 31,
+            "weight": 100
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97743"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521e9d"
+        },
+        "adTitle": "La possibilité de changer à la pointe",
+        "brand": "Boutin Le Roux SARL",
+        "model": "demander",
+        "description": "Emmener scène auprès face. Profiter poser demander roche social colère dresser vouloir. Soulever réunir soleil.",
+        "status": "available",
+        "state": "used",
+        "price": 421,
+        "manufactureDate": "2024-02-29",
+        "purchaseDate": "2024-06-26",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "1992-06-04T03:49:27.940047",
+        "lastModified": "2010-10-29T22:46:53.633902",
+        "category": "Produits de beauté",
+        "subCategory": "Soins capillaires",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 27,
+            "width": 7,
+            "height": 51,
+            "weight": 37
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97744"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521edc"
+        },
+        "adTitle": "Le plaisir d'atteindre vos buts autrement",
+        "brand": "Besson Guillet S.A.R.L.",
+        "model": "descendre",
+        "description": "À courant réduire émotion souffrance. Réveiller où vif ton droite plein.\nExemple durant quoi centre. Oublier également interroger façon lutte. Grave dieu malheur mentir printemps.",
+        "status": "available",
+        "state": "used",
+        "price": 953,
+        "manufactureDate": "2006-08-03",
+        "purchaseDate": "2024-03-17",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
+        ],
+        "createdAt": "2021-02-08T17:55:03.614665",
+        "lastModified": "1978-03-26T16:51:43.382458",
+        "category": "Jouets",
+        "subCategory": "Figurines d'action",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 23,
+            "width": 37,
+            "height": 30,
+            "weight": 40
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97745"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ea4"
+        },
+        "adTitle": "L'art d'avancer plus facilement",
+        "brand": "Marion",
+        "model": "notre",
+        "description": "Feuille autorité vent éviter. Désir prière prêt souhaiter franchir moindre système peu. Pourtant absence taire lutter place quoi enfance moins.",
+        "status": "available",
+        "state": "used",
+        "price": 898,
+        "manufactureDate": "2014-09-08",
+        "purchaseDate": "2024-04-20",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
+        ],
+        "createdAt": "1972-03-30T05:29:20.551018",
+        "lastModified": "1977-02-11T23:04:14.422643",
+        "category": "Meubles",
+        "subCategory": "Tables",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 77,
+            "width": 9,
+            "height": 17,
+            "weight": 95
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97746"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ea7"
+        },
+        "adTitle": "L'avantage d'atteindre vos buts avant-tout",
+        "brand": "Lacombe Evrard et Fils",
+        "model": "haïr",
+        "description": "Poche sous appeler couper résoudre nourrir. Indiquer consulter désormais demi cri marchand parent. Est affirmer million soleil.\nColère quoi dimanche huit auprès sang.",
+        "status": "available",
+        "state": "used",
+        "price": 293,
+        "manufactureDate": "2020-11-05",
+        "purchaseDate": "2024-01-01",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            ""
+        ],
+        "createdAt": "2013-05-09T21:15:45.572292",
+        "lastModified": "2006-08-06T11:00:43.994416",
+        "category": "Équipement sportif",
+        "subCategory": "Sports nautiques",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 16,
+            "width": 76,
+            "height": 77,
+            "weight": 38
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97747"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521eaa"
+        },
+        "adTitle": "L'avantage de louer en toute tranquilité",
+        "brand": "Martineau Guérin SARL",
+        "model": "il",
+        "description": "Quartier bas violence place problème ailleurs douze interroger. Mourir quatre ciel escalier passé auteur sans.",
+        "status": "available",
+        "state": "used",
+        "price": 244,
+        "manufactureDate": "2024-03-25",
+        "purchaseDate": "2024-06-07",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            ""
+        ],
+        "createdAt": "2017-03-13T15:49:20.490221",
+        "lastModified": "1991-07-11T07:13:20.482966",
+        "category": "Équipement sportif",
+        "subCategory": "Sports d'équipe",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 5,
+            "width": 63,
+            "height": 25,
+            "weight": 69
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97748"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ea5"
+        },
+        "adTitle": "L'assurance d'évoluer à la pointe",
+        "brand": "Lelièvre",
+        "model": "depuis",
+        "description": "Sembler plaisir dur voisin menacer discussion loup inutile. Année simple ou adresser étouffer.\nFamille crier ferme briller précis vent contre. Briser crier avec colère.",
+        "status": "available",
+        "state": "used",
+        "price": 155,
+        "manufactureDate": "2014-04-19",
+        "purchaseDate": "2024-06-29",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg",
+            "https://cdn.pixabay.com/user/2020/05/22/13-10-55-221_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/07/16/20-07-22-443_250x250.jpg"
+        ],
+        "createdAt": "1998-05-03T15:55:29.334727",
+        "lastModified": "2004-10-14T21:28:15.709455",
+        "category": "Livres",
+        "subCategory": "Enfants",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 25,
+            "width": 70,
+            "height": 71,
+            "weight": 88
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97749"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ef5"
+        },
+        "adTitle": "Le plaisir de concrétiser vos projets plus rapidement",
+        "brand": "Laurent Reynaud et Fils",
+        "model": "succès",
+        "description": "Assurer bande espace détacher humide montrer. Résister représenter bleu retomber depuis tête.\nHumide oiseau malade plutôt cours rouge crier campagne.",
+        "status": "available",
+        "state": "used",
+        "price": 732,
+        "manufactureDate": "2012-03-04",
+        "purchaseDate": "2024-02-25",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
+        ],
+        "createdAt": "2000-08-14T13:18:56.777170",
+        "lastModified": "1994-07-06T02:18:28.484443",
+        "category": "Jouets",
+        "subCategory": "Jouets éducatifs",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 31,
+            "width": 79,
+            "height": 58,
+            "weight": 90
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9774a"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521eba"
+        },
+        "adTitle": "Le droit d'atteindre vos buts à la pointe",
+        "brand": "Marin",
+        "model": "poche",
+        "description": "Devenir représenter court haut payer moi. Aussi entraîner ramener impossible rideau hésiter haine. Occasion carte passer considérer prison éclater.",
+        "status": "available",
+        "state": "used",
+        "price": 353,
+        "manufactureDate": "2008-04-17",
+        "purchaseDate": "2024-05-15",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
+        ],
+        "createdAt": "2009-02-04T22:02:56.149592",
+        "lastModified": "2021-06-01T02:49:09.424131",
+        "category": "Meubles",
+        "subCategory": "Chaises",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 96,
+            "width": 76,
+            "height": 94,
+            "weight": 54
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9774b"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ecf"
+        },
+        "adTitle": "L'assurance de changer de manière sûre",
+        "brand": "Morvan S.A.",
+        "model": "rapport",
+        "description": "Droit rêver appartement. Lieu dont fixer comme. Court sous exister simplement choix alors guerre.\nJuger consentir visage briser but taire seuil peser. Tracer triste diriger ressembler serrer dernier.",
+        "status": "available",
+        "state": "used",
+        "price": 727,
+        "manufactureDate": "2024-02-12",
+        "purchaseDate": "2024-01-26",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
+        ],
+        "createdAt": "2020-09-20T00:45:55.466302",
+        "lastModified": "2013-09-14T19:14:48.394537",
+        "category": "Meubles",
+        "subCategory": "Canapés",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 62,
+            "width": 79,
+            "height": 60,
+            "weight": 70
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9774c"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ef1"
+        },
+        "adTitle": "Le droit de louer de manière sûre",
+        "brand": "Couturier Lesage SA",
+        "model": "art",
+        "description": "Étaler lèvre entrée mourir.\nOuvert nord effort ton convenir rose fois son. Violence trois séparer chaud travailler attention. Atteindre envelopper noire produire or subir.",
+        "status": "available",
+        "state": "used",
+        "price": 763,
+        "manufactureDate": "2015-03-10",
+        "purchaseDate": "2024-06-23",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            ""
+        ],
+        "createdAt": "1978-07-05T23:51:23.027610",
+        "lastModified": "1996-02-15T07:07:08.323169",
+        "category": "Équipement sportif",
+        "subCategory": "Sports d'équipe",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 8,
+            "width": 25,
+            "height": 87,
+            "weight": 35
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9774d"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ee9"
+        },
+        "adTitle": "L'art d'atteindre vos buts à l'état pur",
+        "brand": "Garnier",
+        "model": "réel",
+        "description": "Nombreux folie impossible dangereux conversation. Médecin hasard pont habiter. Même vite mince exiger.",
+        "status": "available",
+        "state": "used",
+        "price": 133,
+        "manufactureDate": "2007-10-23",
+        "purchaseDate": "2024-05-30",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
+        ],
+        "createdAt": "2011-01-08T00:44:55.698093",
+        "lastModified": "1987-03-14T01:15:41.619775",
+        "category": "Automobile",
+        "subCategory": "Accessoires pour voitures",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 42,
+            "width": 100,
+            "height": 40,
+            "weight": 93
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9774e"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ebe"
+        },
+        "adTitle": "Le pouvoir de concrétiser vos projets autrement",
+        "brand": "De Sousa",
+        "model": "pièce",
+        "description": "Neuf comme fille trouver seigneur prêt. Personnage vrai ton geste.\nInterroger monter gagner lune. Semblable âme sec neuf souvenir ajouter recevoir.",
+        "status": "available",
+        "state": "used",
+        "price": 902,
+        "manufactureDate": "2010-08-31",
+        "purchaseDate": "2024-07-04",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "1984-12-01T22:17:01.980753",
+        "lastModified": "2021-11-08T07:13:20.912575",
+        "category": "Produits de beauté",
+        "subCategory": "Soins capillaires",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 37,
+            "width": 32,
+            "height": 25,
+            "weight": 56
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9774f"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ebc"
+        },
+        "adTitle": "L'assurance de rouler plus facilement",
+        "brand": "Jacques",
+        "model": "noir",
+        "description": "Ton un savoir dent inviter vieux. Commencer droit atteindre vêtement premier drôle oublier quel. Votre assez intéresser tendre suite.",
+        "status": "available",
+        "state": "used",
+        "price": 618,
+        "manufactureDate": "2011-08-29",
+        "purchaseDate": "2024-02-22",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2019/03/14/21-00-24-919_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/09/24/13-37-34-609_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/07/21/13-17-14-270_250x250.jpg"
+        ],
+        "createdAt": "2006-10-07T18:30:25.668912",
+        "lastModified": "2012-10-17T21:41:31.616355",
+        "category": "Électronique",
+        "subCategory": "Tablettes",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 84,
+            "width": 18,
+            "height": 60,
+            "weight": 88
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97750"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ece"
+        },
+        "adTitle": "Le plaisir d'avancer autrement",
+        "brand": "Nicolas Vidal et Fils",
+        "model": "cause",
+        "description": "Forme annoncer vert toucher facile entretenir embrasser. Meilleur voiture drame séparer second dresser.",
+        "status": "available",
+        "state": "used",
+        "price": 843,
+        "manufactureDate": "2011-01-14",
+        "purchaseDate": "2024-05-20",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
+        ],
+        "createdAt": "1979-01-01T23:59:42.093920",
+        "lastModified": "2009-02-11T23:28:10.817652",
+        "category": "Jouets",
+        "subCategory": "Jouets éducatifs",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 45,
+            "width": 22,
+            "height": 17,
+            "weight": 76
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97751"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ec5"
+        },
+        "adTitle": "La liberté d'innover autrement",
+        "brand": "Maillet SA",
+        "model": "succès",
+        "description": "Dieu autorité écrire colon caresser. Terminer abattre cas respirer demander habiller.\nÎle poitrine même corps. Souffrance gris silence rire résister présence demeurer. Grandir partie habiller fumer.",
+        "status": "available",
+        "state": "used",
+        "price": 310,
+        "manufactureDate": "2002-08-12",
+        "purchaseDate": "2024-04-15",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "1994-09-20T06:05:09.828949",
+        "lastModified": "1997-12-09T22:42:25.899384",
+        "category": "Produits de beauté",
+        "subCategory": "Soins capillaires",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 2,
+            "width": 20,
+            "height": 67,
+            "weight": 2
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97752"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ef7"
+        },
+        "adTitle": "Le pouvoir d'avancer de manière efficace",
+        "brand": "Colas",
+        "model": "emmener",
+        "description": "Ramasser peau se perdre caresser.\nHumide voisin toujours forme passage. Rencontre acheter noir inquiétude devoir saint. Titre seigneur fait meilleur déposer chemin.",
+        "status": "available",
+        "state": "used",
+        "price": 141,
+        "manufactureDate": "2005-01-22",
+        "purchaseDate": "2024-01-07",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg"
+        ],
+        "createdAt": "1979-05-05T05:25:34.409416",
+        "lastModified": "2022-08-20T07:00:11.663276",
+        "category": "Jouets",
+        "subCategory": "Puzzles",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 96,
+            "width": 53,
+            "height": 85,
+            "weight": 88
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97753"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ea8"
+        },
+        "adTitle": "La possibilité de rouler en toute tranquilité",
+        "brand": "Léger S.A.S.",
+        "model": "presser",
+        "description": "Ici refuser moyen quinze aile. Recherche indiquer dessus vaste plus retirer vent. Morceau cour échapper présent refuser sentier. Comment côté sol saluer anglais baisser causer travailler.",
+        "status": "available",
+        "state": "used",
+        "price": 929,
+        "manufactureDate": "2008-06-24",
+        "purchaseDate": "2024-02-25",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/09/16/12-20-23-44_250x250.png",
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg"
+        ],
+        "createdAt": "2013-03-23T19:33:49.041527",
+        "lastModified": "2005-06-22T00:31:08.451922",
+        "category": "Meubles",
+        "subCategory": "Tables",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 49,
+            "width": 40,
+            "height": 45,
+            "weight": 28
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97754"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ef5"
+        },
+        "adTitle": "Le pouvoir d'innover naturellement",
+        "brand": "Lefèvre",
+        "model": "tomber",
+        "description": "Ventre coin me afin de d'autres. Pas machine société image.\nMusique train enfant souvenir suite mourir. Haute seuil plutôt résister as tourner toucher. Tuer question engager traverser.",
+        "status": "available",
+        "state": "used",
+        "price": 185,
+        "manufactureDate": "2020-04-14",
+        "purchaseDate": "2024-03-01",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
+        ],
+        "createdAt": "1998-12-26T01:48:14.714708",
+        "lastModified": "1996-03-10T10:05:13.896245",
+        "category": "Électroménager",
+        "subCategory": "Climatiseurs",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 42,
+            "width": 87,
+            "height": 63,
+            "weight": 83
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97755"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ed3"
+        },
+        "adTitle": "La possibilité de changer en toute tranquilité",
+        "brand": "Reynaud SARL",
+        "model": "salut",
+        "description": "Arrêter remettre puis planche fête inventer avant.\nFou fils beau salut extraordinaire humain. Tromper drôle mettre appartement paysage marche vent malgré.",
+        "status": "available",
+        "state": "used",
+        "price": 802,
+        "manufactureDate": "2006-04-19",
+        "purchaseDate": "2024-03-11",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2015/03/30/12-22-31-508_250x250.jpg",
+            "https://cdn.pixabay.com/user/2020/05/22/13-10-55-221_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/07/16/20-07-22-443_250x250.jpg"
+        ],
+        "createdAt": "2011-06-15T17:45:30.261906",
+        "lastModified": "1995-08-31T01:04:53.295295",
+        "category": "Livres",
+        "subCategory": "Éducatifs",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 71,
+            "width": 9,
+            "height": 17,
+            "weight": 88
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97756"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ee0"
+        },
+        "adTitle": "Le plaisir d'atteindre vos buts de manière sûre",
+        "brand": "François et Fils",
+        "model": "mettre",
+        "description": "Couleur sonner veiller soirée devant personne. Reculer année relation enlever.\nDavantage résistance nature rouler descendre ordre. Celui détail chaise fin maître près.",
+        "status": "available",
+        "state": "used",
+        "price": 899,
+        "manufactureDate": "2010-09-20",
+        "purchaseDate": "2024-01-13",
+        "imageUrls": [
+            "",
+            "",
+            "https://cdn.pixabay.com/user/2016/09/06/20-12-00-308_250x250.jpg"
+        ],
+        "createdAt": "2001-08-02T05:14:34.180501",
+        "lastModified": "1974-09-04T03:03:33.115345",
+        "category": "Fournitures pour animaux",
+        "subCategory": "Fournitures pour chiens",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 25,
+            "width": 60,
+            "height": 79,
+            "weight": 22
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97757"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ee5"
+        },
+        "adTitle": "La liberté de concrétiser vos projets sans soucis",
+        "brand": "Prévost SA",
+        "model": "rayon",
+        "description": "Soulever puis maître vite manier oui mener. Article seconde reposer composer échapper bouche digne interroger. Lendemain exemple vérité.",
+        "status": "available",
+        "state": "used",
+        "price": 700,
+        "manufactureDate": "2016-05-14",
+        "purchaseDate": "2024-05-12",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
+        ],
+        "createdAt": "2009-11-21T06:06:12.415072",
+        "lastModified": "2021-08-29T09:17:30.576666",
+        "category": "Électroménager",
+        "subCategory": "Réfrigérateurs",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 87,
+            "width": 29,
+            "height": 62,
+            "weight": 74
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97758"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ebe"
+        },
+        "adTitle": "Le confort d'atteindre vos buts autrement",
+        "brand": "Mallet",
+        "model": "seigneur",
+        "description": "Tout protéger révolution préférer malgré. Santé nouveau cacher fatigue fou mur.\nDe important allumer. Tard ou rencontrer volonté volonté gros.",
+        "status": "available",
+        "state": "used",
+        "price": 372,
+        "manufactureDate": "2006-09-13",
+        "purchaseDate": "2024-07-25",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            ""
+        ],
+        "createdAt": "1986-12-14T13:28:39.824921",
+        "lastModified": "2013-01-15T22:50:14.245631",
+        "category": "Équipement sportif",
+        "subCategory": "Sports d'hiver",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 43,
+            "width": 52,
+            "height": 14,
+            "weight": 23
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97759"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ebe"
+        },
+        "adTitle": "Le pouvoir de concrétiser vos projets à l'état pur",
+        "brand": "Pottier",
+        "model": "planche",
+        "description": "Part matière pendant idée. Intérieur poursuivre justice.\nPoint empêcher poitrine vaincre. Propos aventure mener curieux vieux abri. Inquiéter posséder membre lune sauter.",
+        "status": "available",
+        "state": "used",
+        "price": 296,
+        "manufactureDate": "2022-02-07",
+        "purchaseDate": "2024-06-03",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "2012-03-26T18:06:08.559097",
+        "lastModified": "2011-09-15T09:25:17.869200",
+        "category": "Produits de beauté",
+        "subCategory": "Soins de la peau",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 87,
+            "width": 12,
+            "height": 33,
+            "weight": 77
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9775a"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ec9"
+        },
+        "adTitle": "La liberté d'évoluer à la pointe",
+        "brand": "Royer S.A.",
+        "model": "dur",
+        "description": "Fort projet pousser rire profiter pendre faire enfance. Pont davantage venir pain rapporter conscience brûler manier.",
+        "status": "available",
+        "state": "used",
+        "price": 638,
+        "manufactureDate": "2017-11-21",
+        "purchaseDate": "2024-02-21",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "2011-08-09T22:58:27.338434",
+        "lastModified": "1990-10-31T21:34:19.521575",
+        "category": "Produits de beauté",
+        "subCategory": "Maquillage",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 83,
+            "width": 33,
+            "height": 6,
+            "weight": 28
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9775b"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ea2"
+        },
+        "adTitle": "L'assurance de louer autrement",
+        "brand": "Diallo Normand et Fils",
+        "model": "absolument",
+        "description": "Craindre rang chant moindre court écrire. Moyen cent fonction.\nDangereux sombre menacer arrière. Escalier combien absence type.",
+        "status": "available",
+        "state": "used",
+        "price": 814,
+        "manufactureDate": "2001-10-01",
+        "purchaseDate": "2024-07-24",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2021/03/11/19-34-35-616_250x250.jpg",
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            ""
+        ],
+        "createdAt": "2012-08-01T01:52:01.441795",
+        "lastModified": "2010-09-10T03:32:31.479383",
+        "category": "Équipement sportif",
+        "subCategory": "Matériel de plein air",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 83,
+            "width": 98,
+            "height": 71,
+            "weight": 16
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9775c"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ef9"
+        },
+        "adTitle": "L'avantage d'atteindre vos buts avant-tout",
+        "brand": "Denis Schneider SARL",
+        "model": "hôtel",
+        "description": "Seuil durer enfermer obliger. Mer chasser chef prochain impression. Flamme trace madame.",
+        "status": "available",
+        "state": "used",
+        "price": 522,
+        "manufactureDate": "2011-11-30",
+        "purchaseDate": "2024-06-07",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
+        ],
+        "createdAt": "2019-11-22T12:55:13.481145",
+        "lastModified": "2011-04-26T17:00:04.938803",
+        "category": "Automobile",
+        "subCategory": "Outils et équipement",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 53,
+            "width": 26,
+            "height": 26,
+            "weight": 45
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9775d"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ed2"
+        },
+        "adTitle": "Le confort d'avancer à l'état pur",
+        "brand": "Dupont Couturier S.A.",
+        "model": "franchir",
+        "description": "Pareil défaut sorte. Voyager espace est soi.\nDétail vrai très consentir.\nPropos recommencer obliger montagne un mois risquer de.",
+        "status": "available",
+        "state": "used",
+        "price": 22,
+        "manufactureDate": "2023-12-09",
+        "purchaseDate": "2024-04-20",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2019/03/14/21-00-24-919_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/09/24/13-37-34-609_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/07/21/13-17-14-270_250x250.jpg"
+        ],
+        "createdAt": "2008-08-26T14:01:02.757841",
+        "lastModified": "1999-12-09T21:08:23.388735",
+        "category": "Électronique",
+        "subCategory": "Appareils photo",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 44,
+            "width": 13,
+            "height": 49,
+            "weight": 58
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9775e"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ec0"
+        },
+        "adTitle": "Le confort de changer à l'état pur",
+        "brand": "Girard",
+        "model": "vent",
+        "description": "Livre tantôt compte cesser coûter oiseau. Pleurer on promettre ensemble. Dominer sûr permettre propos.\nTendre objet examiner complètement. Moyen gauche herbe cuisine. Armée malheur police.",
+        "status": "available",
+        "state": "used",
+        "price": 338,
+        "manufactureDate": "2005-04-28",
+        "purchaseDate": "2024-06-19",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "1994-08-13T06:52:15.705153",
+        "lastModified": "2014-10-23T08:30:15.194495",
+        "category": "Produits de beauté",
+        "subCategory": "Parfums",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 73,
+            "width": 1,
+            "height": 42,
+            "weight": 43
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d9775f"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521efa"
+        },
+        "adTitle": "Le pouvoir de changer de manière efficace",
+        "brand": "Teixeira",
+        "model": "épais",
+        "description": "Possible mille comme. Paysan tant fil inquiétude crainte adresser matière.",
+        "status": "available",
+        "state": "used",
+        "price": 308,
+        "manufactureDate": "2023-05-24",
+        "purchaseDate": "2024-07-27",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2023/01/08/04-56-58-85_250x250.jpg",
+            "https://cdn.pixabay.com/user/2013/04/07/21-48-58-589_250x250.jpg",
+            "https://cdn.pixabay.com/user/2021/05/07/21-41-05-79_250x250.jpg"
+        ],
+        "createdAt": "1976-01-07T06:52:22.354830",
+        "lastModified": "1971-10-22T10:05:25.018238",
+        "category": "Produits de beauté",
+        "subCategory": "Soins de la peau",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 49,
+            "width": 29,
+            "height": 44,
+            "weight": 22
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97760"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ef4"
+        },
+        "adTitle": "La possibilité d'avancer autrement",
+        "brand": "Paris",
+        "model": "instant",
+        "description": "Vieillard porte blond appartement ligne.\nFruit visible bureau chercher puis savoir. Grave salle allumer ignorer grâce. Hasard saint bureau douceur course immense.",
+        "status": "available",
+        "state": "used",
+        "price": 443,
+        "manufactureDate": "2013-11-26",
+        "purchaseDate": "2024-01-24",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2016/03/26/22-06-36-459_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/11/06/12-07-49-892_250x250.jpg",
+            "https://cdn.pixabay.com/user/2014/04/16/10-14-19-41_250x250.jpg"
+        ],
+        "createdAt": "2019-05-08T19:03:06.453705",
+        "lastModified": "2000-03-05T00:05:26.115559",
+        "category": "Vêtements",
+        "subCategory": "Chaussures",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 80,
+            "width": 45,
+            "height": 49,
+            "weight": 62
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97761"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521eb8"
+        },
+        "adTitle": "Le plaisir d'atteindre vos buts à la pointe",
+        "brand": "Breton SARL",
+        "model": "avancer",
+        "description": "Désormais ce mari salut dur grâce. Envelopper en toucher troisième fortune sur. Tâche traiter haute delà. Saint discussion terminer absence papier douleur.",
+        "status": "available",
+        "state": "used",
+        "price": 880,
+        "manufactureDate": "2021-10-20",
+        "purchaseDate": "2024-06-18",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
+        ],
+        "createdAt": "1971-11-07T08:13:21.148451",
+        "lastModified": "1986-09-26T10:32:49.884000",
+        "category": "Automobile",
+        "subCategory": "Pièces pour motos",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 98,
+            "width": 42,
+            "height": 53,
+            "weight": 12
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97762"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ed9"
+        },
+        "adTitle": "Le pouvoir de changer de manière efficace",
+        "brand": "Pelletier",
+        "model": "nombre",
+        "description": "Rose suivant riche selon flot vieil endormir. Marquer volonté voiture pénétrer plan perdu d'autres.",
+        "status": "available",
+        "state": "used",
+        "price": 33,
+        "manufactureDate": "2018-05-26",
+        "purchaseDate": "2024-06-09",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
+        ],
+        "createdAt": "1984-08-06T16:18:16.654300",
+        "lastModified": "1991-07-10T23:02:34.259908",
+        "category": "Électroménager",
+        "subCategory": "Climatiseurs",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 63,
+            "width": 99,
+            "height": 66,
+            "weight": 68
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97763"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ea1"
+        },
+        "adTitle": "Le confort de rouler en toute tranquilité",
+        "brand": "Gallet",
+        "model": "deux",
+        "description": "Fusil note refuser dessiner naturellement grand emporter. Être eh accepter choisir nature. Route choix beaucoup presque plante moyen.",
+        "status": "available",
+        "state": "used",
+        "price": 415,
+        "manufactureDate": "2002-04-04",
+        "purchaseDate": "2024-02-24",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2024/02/21/10-05-57-663_250x250.jpg",
+            "https://cdn.pixabay.com/user/2023/05/27/13-28-13-308_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/03/26/21-14-36-811_250x250.jpg"
+        ],
+        "createdAt": "2014-03-22T02:47:46.564214",
+        "lastModified": "1993-01-17T15:12:05.469275",
+        "category": "Automobile",
+        "subCategory": "Pièces pour voitures",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 93,
+            "width": 3,
+            "height": 26,
+            "weight": 61
+        }
+    },
+    {
+        "_id": {
+            "$oid": "66ad13906170fc5a35d97764"
+        },
+        "version": 1,
+        "owner": {
+            "$oid": "66ad0aeb36a1f5320d521ee3"
+        },
+        "adTitle": "L'art de concrétiser vos projets en toute tranquilité",
+        "brand": "Bouvet",
+        "model": "examiner",
+        "description": "Poser image entretenir approcher mari point honte. Puis enfermer rappeler terreur grain disposer comment. Plusieurs chasse gros.",
+        "status": "available",
+        "state": "used",
+        "price": 235,
+        "manufactureDate": "2016-12-15",
+        "purchaseDate": "2024-07-18",
+        "imageUrls": [
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg",
+            "https://cdn.pixabay.com/user/2017/06/27/01-52-28-5_250x250.jpg",
+            "https://cdn.pixabay.com/user/2019/01/29/15-01-52-802_250x250.jpg"
+        ],
+        "createdAt": "1979-07-27T15:51:40.520409",
+        "lastModified": "2011-03-14T15:01:27.142935",
+        "category": "Électroménager",
+        "subCategory": "Machines à laver",
+        "deliveryType": ["pickup"],
+        "dimensions": {
+            "length": 21,
+            "width": 49,
+            "height": 54,
+            "weight": 13
+        }
+    }
+]

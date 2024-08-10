@@ -6,6 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
+        "format": "prettier --write .",
         "lint": "next lint",
         "knip": "knip",
         "test": "jest --passWithNoTests",
@@ -59,6 +60,7 @@
         "jest-environment-jsdom": "29.7.0",
         "knip": "5.27.0",
         "postcss": "^8",
+        "prettier": "3.3.3",
         "tailwindcss": "^3.4.1",
         "ts-jest": "29.2.4",
         "typescript": "^5.5.4"

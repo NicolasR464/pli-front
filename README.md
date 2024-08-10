@@ -35,20 +35,27 @@ pnpm install
 
 ### Getting Started
 
-Start the development server by running:
+-   Start the development server by running:
 
 ```bash
-pnpm dev
+  pnpm dev
 ```
 
 #### ⚠️ Before a Pull request
 
--   Check if your branch is up to date with the main branch:
-    ```bash
-      git pull -r origin main
-    ```
+-   If you don't have Prettier plugin that formats code on save you can alternatively run:
 
-If either of these commands fail, the PR won't pass:
+```bash
+  pnpm format
+```
+
+-   Check if your branch is up to date with the main branch:
+
+```bash
+  git pull -r origin main
+```
+
+If either of these following commands fail, the PR won't pass:
 
 ```bash
 # for checking the linter
