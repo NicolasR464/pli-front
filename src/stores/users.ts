@@ -5,7 +5,7 @@ import type { User } from '@/types/user'
 
 type UsersStore = {
     users: User[]
-    getUsersData: () => Promise<void>
+    setUsersData: () => Promise<void>
 }
 
 export const useUsersStore = create<UsersStore>()(
@@ -13,8 +13,8 @@ export const useUsersStore = create<UsersStore>()(
     immer((set) => ({
         users: [],
 
-        getUsersData: async (): Promise<void> => {
-            /** @TODO */
+        setUsersData: async (): Promise<void> => {
+            /** Example of use */
         },
     })),
 )

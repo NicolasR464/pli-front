@@ -3,9 +3,9 @@ import { z } from 'zod'
 
 import { createEnv } from '@t3-oss/env-nextjs'
 
-/** This assures that the env variables are properly set up */
+/** This assures that the env variables are properly set up. */
 export const environment = createEnv({
-    /** Server-side env variables */
+    /** Server-side env variables. */
     server: {
         USER_PORT: z
             .string()
@@ -45,7 +45,7 @@ export const environment = createEnv({
         INSTANT_MESSAGE_BASE_URL: z.string().url(),
     },
 
-    /** Client-side env variables. Starts by 'NEXT_PUBLIC_' */
+    /** Client-side env variables. Starts by 'NEXT_PUBLIC_'. */
     client: {
         NEXT_PUBLIC_USER_BASE_URL: z.string().url(),
         NEXT_PUBLIC_ARTICLE_BASE_URL: z.string().url(),
@@ -53,7 +53,7 @@ export const environment = createEnv({
         NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: z.string().url(),
     },
 
-    /** Also add your client-side env variables here to avoid TS errors */
+    /** Also add your client-side env variables here to avoid TS errors. */
     experimental__runtimeEnv: {
         NEXT_PUBLIC_USER_BASE_URL: process.env.NEXT_PUBLIC_USER_BASE_URL!,
         NEXT_PUBLIC_ARTICLE_BASE_URL: process.env.NEXT_PUBLIC_ARTICLE_BASE_URL!,

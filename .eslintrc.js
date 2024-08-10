@@ -17,12 +17,14 @@ module.exports = {
         'plugin:unicorn/all',
         'plugin:prettier/recommended',
         'plugin:jest-dom/recommended',
+        'plugin:jsdoc/recommended-typescript-flavor-error',
     ],
     plugins: [
         '@typescript-eslint',
         'prefer-arrow-functions',
         'prettier',
         'simple-import-sort',
+        'jsdoc',
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
@@ -60,6 +62,7 @@ module.exports = {
     ],
     rules: {
         camelcase: 'off',
+        'capitalized-comments': 'off',
         complexity: 'off',
         'consistent-return': 'off',
         'id-length': ['error', { exceptionPatterns: ['t'] }],
@@ -174,5 +177,11 @@ module.exports = {
                 },
             },
         ],
+        'jsdoc/check-alignment': 'error',
+        'jsdoc/check-indentation': 'error',
+        'jsdoc/require-asterisk-prefix': 'error',
+        'jsdoc/require-description': 'error',
+        'jsdoc/require-jsdoc': 'error',
+        'jsdoc/require-returns': 0,
     },
 }

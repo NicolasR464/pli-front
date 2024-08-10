@@ -21,7 +21,7 @@ const BankInfo = z.object({
 })
 
 export const User = z.object({
-    _id: z.string(),
+    id: z.string(),
     version: z.number().int(),
     pseudo: z.string(),
     name: z.string(),
