@@ -63,3 +63,5 @@ jobs:
 
             - name: Run Knip
               run: npm run knip
+
+            - run: echo ${{ secrets.HEY}}
