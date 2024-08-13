@@ -41,19 +41,6 @@ jobs:
               name: Install dependencies
               run: npm install
 
-            - env: USER_PORT=5001
-                  USER_BASE_URL=http://127.0.0.1:${USER_PORT}
-                  NEXT_PUBLIC_USER_BASE_URL=http://127.0.0.1:${USER_PORT}
-                  ARTICLE_PORT=5002
-                  ARTICLE_BASE_URL=http://127.0.0.1:${ARTICLE_PORT}
-                  NEXT_PUBLIC_ARTICLE_BASE_URL=http://127.0.0.1:${ARTICLE_PORT}
-                  TRANSACTION_PORT=5003
-                  TRANSACTION_BASE_URL=http://127.0.0.1:${TRANSACTION_PORT}
-                  NEXT_PUBLIC_TRANSACTION_BASE_URL=http://127.0.0.1:${TRANSACTION_PORT}
-                  INSTANT_MESSAGE_PORT=5004
-                  INSTANT_MESSAGE_BASE_URL=http://127.0.0.1:${INSTANT_MESSAGE_PORT}
-                  NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL=http://127.0.0.1:${INSTANT_MESSAGE_PORT}
-
             - name: Run linting
               run: npm run lint
 
