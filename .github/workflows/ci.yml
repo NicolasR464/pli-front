@@ -33,24 +33,34 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Cache pnpm modules
+              id: cache-pnpm
+              uses: actions/cache@v3
+              with:
+                  path: ~/.pnpm-store
+                  key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-
+
             - name: Set up Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: '20'
-                  cache: 'npm'
+
+            - name: Install pnpm
+              run: npm install -g pnpm
 
             - name: Install dependencies
-              if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-              run: npm install
+              run: pnpm install
 
             - name: Run linting
-              run: npm run lint
+              run: pnpm run lint
 
             - name: Run Jest tests
-              run: npm test
+              run: pnpm test
 
             - name: Run Typescript check
-              run: npm run ts-check
+              run: pnpm run ts-check
 
             - name: Run Knip
-              run: npm run knip
+              run: pnpm run knip
