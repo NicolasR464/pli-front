@@ -14,7 +14,21 @@ on: [push]
 
 jobs:
     tests-checking:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-lates
+
+        env:
+            USER_PORT: ${{ env.USER_PORT }}
+            USER_BASE_URL: ${{ env.USER_BASE_URL }}
+            ARTICLE_PORT: ${{ env.ARTICLE_PORT }}
+            ARTICLE_BASE_URL: ${{ env.ARTICLE_BASE_URL }}
+            TRANSACTION_PORT: ${{ env.TRANSACTION_PORT }}
+            TRANSACTION_BASE_URL: ${{ env.TRANSACTION_BASE_URL }}
+            INSTANT_MESSAGE_PORT: ${{ env.INSTANT_MESSAGE_PORT }}
+            INSTANT_MESSAGE_BASE_URL: ${{ env.INSTANT_MESSAGE_BASE_URL }}
+            NEXT_PUBLIC_USER_BASE_URL: ${{ env.NEXT_PUBLIC_USER_BASE_URL }}
+            NEXT_PUBLIC_ARTICLE_BASE_URL: ${{ env.NEXT_PUBLIC_ARTICLE_BASE_URL }}
+            NEXT_PUBLIC_TRANSACTION_BASE_URL: ${{ env.NEXT_PUBLIC_TRANSACTION_BASE_URL }}
+            NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: ${{ env.NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL }}
 
         steps:
             - uses: actions/checkout@v4
