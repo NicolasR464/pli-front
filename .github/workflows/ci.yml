@@ -3,12 +3,12 @@ name: CI Tests
 run-name: Tests triggered by ${{ github.actor }}
 
 on:
-push:
-    branches:
-        - main
-pull_request:
-    branches:
-        - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
     tests-checking:
