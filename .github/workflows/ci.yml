@@ -2,19 +2,17 @@ name: CI Tests
 
 run-name: Tests triggered by ${{ github.actor }}
 
-# on:
-#     push:
-#         branches:
-#             - main
-#     pull_request:
-#         branches:
-#             - main
-
-on: [push]
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
     tests-checking:
-        runs-on: ubuntu-lates
+        runs-on: ubuntu-latest # Fixed typo here
 
         env:
             ARTICLE_BASE_URL: http://127.0.0.1:5002
@@ -36,8 +34,6 @@ jobs:
             - name: Cache node modules
               id: cache-npm
               uses: actions/cache@v3
-              env:
-                  cache-name: cache-node-modules
               with:
                   path: ~/.npm
                   key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
@@ -51,8 +47,8 @@ jobs:
               with:
                   node-version: '20'
 
-            - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-              name: Install dependencies
+            - name: Install dependencies
+              if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }} # Corrected conditional placement
               run: npm install
 
             - name: Run linting
