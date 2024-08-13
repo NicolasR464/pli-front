@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
 
         env:
-            ARTICLE_BASE_URL: http://127.0.0.1:5002
+            ARTICLE_BASE_URL: ${{ env.ARTICLE_BASE_URL }}
             ARTICLE_PORT: 5002
             INSTANT_MESSAGE_BASE_URL: http://127.0.0.1:5004
             INSTANT_MESSAGE_PORT: 5004
@@ -63,5 +63,3 @@ jobs:
 
             - name: Run Knip
               run: npm run knip
-
-            - run: echo ${{ secrets.HEY }}
