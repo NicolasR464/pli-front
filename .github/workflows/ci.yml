@@ -12,7 +12,7 @@ on:
 
 jobs:
     tests-checking:
-        runs-on: ubuntu-latest # Fixed typo here
+        runs-on: ubuntu-latest
 
         env:
             ARTICLE_BASE_URL: http://127.0.0.1:5002
