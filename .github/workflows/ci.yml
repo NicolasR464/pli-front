@@ -18,35 +18,26 @@ jobs:
 
         env:
             ARTICLE_BASE_URL: ${{ vars.ARTICLE_BASE_URL }}
-            ARTICLE_PORT: 5002
-            INSTANT_MESSAGE_BASE_URL: http://127.0.0.1:5004
-            INSTANT_MESSAGE_PORT: 5004
-            NEXT_PUBLIC_ARTICLE_BASE_URL: http://127.0.0.1:5002
-            NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: http://127.0.0.1:5004
-            NEXT_PUBLIC_TRANSACTION_BASE_URL: http://127.0.0.1:5003
-            NEXT_PUBLIC_USER_BASE_URL: http://127.0.0.1:5001
-            TRANSACTION_BASE_URL: http://127.0.0.1:5003
-            TRANSACTION_PORT: 5003
-            USER_BASE_URL: http://127.0.0.1:5001
-            USER_PORT: 5001
+            ARTICLE_PORT: ${{ vars.ARTICLE_PORT }}
+            INSTANT_MESSAGE_BASE_URL: ${{ vars.INSTANT_MESSAGE_BASE_URL }}
+            INSTANT_MESSAGE_PORT: ${{ vars.INSTANT_MESSAGE_PORT }}
+            NEXT_PUBLIC_ARTICLE_BASE_URL: ${{ vars.NEXT_PUBLIC_ARTICLE_BASE_URL }}
+            NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: ${{ vars.NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL }}
+            NEXT_PUBLIC_TRANSACTION_BASE_URL: ${{ vars.NEXT_PUBLIC_TRANSACTION_BASE_URL }}
+            NEXT_PUBLIC_USER_BASE_URL: ${{ vars.NEXT_PUBLIC_USER_BASE_URL }}
+            TRANSACTION_BASE_URL: ${{ vars.TRANSACTION_BASE_URL }}
+            TRANSACTION_PORT: ${{ vars.TRANSACTION_PORT }}
+            USER_BASE_URL: ${{ vars.USER_BASE_URL }}
+            USER_PORT: ${{ vars.USER_PORT }}
 
         steps:
             - uses: actions/checkout@v4
-
-            - name: Cache node modules
-              id: cache-npm
-              uses: actions/cache@v3
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-
-                      ${{ runner.os }}-
 
             - name: Set up Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: '20'
+                  cache: 'npm'
 
             - name: Install dependencies
               if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
