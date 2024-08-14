@@ -30,6 +30,7 @@ pnpm install
 -   [Tailwind](https://tailwindcss.com/) for styling
 -   [Shadcn](https://ui.shadcn.com/) as a component library
 -   [Zustand](https://zustand-demo.pmnd.rs/) for state management (for client components [only](https://github.com/pmndrs/zustand/discussions/2200)), along with [Immer](https://docs.pmnd.rs/zustand/integrations/immer-middleware) middleware for conveniency.
+-   [T3 Env](https://env.t3.gg/) for typing environment variables (src/types/environment.ts file)
 -   [Zod](https://zod.dev/) for type inference and form validation.
 -   [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts#with-tailwind-css) Next's font manager linked to Google Font.
 
