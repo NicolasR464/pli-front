@@ -4,9 +4,13 @@ import { environment } from '@/types/environment'
 import type { User } from '@/types/user'
 
 export const getUsers = async (): Promise<User[]> => {
+    console.log('🚀 getUsers')
+
     const response = await fetch(environment.USER_BASE_URL + apiEndpoints.USERS)
 
-    const users = (await response.json()) as User[]
+    if (!response.ok) throw new Error('Failed to fetch')
 
-    return users
+    const users = await response.json()
+
+    return users.data
 }

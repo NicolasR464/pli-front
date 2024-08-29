@@ -8,6 +8,8 @@ export const getTransactions = async (): Promise<Transaction[]> => {
         environment.TRANSACTION_BASE_URL + apiEndpoints.TRANSACTIONS,
     )
 
+    if (!response.ok) throw new Error('Failed to fetch')
+
     const transactions = (await response.json()) as Transaction[]
 
     return transactions

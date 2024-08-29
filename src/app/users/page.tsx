@@ -8,6 +8,8 @@ import type { User } from '@/types/user'
 const Users = async (): Promise<JSX.Element> => {
     const users: User[] = await getUsers()
 
+    console.log(users)
+
     return (
         <main className='flex min-h-screen flex-col items-center justify-between p-24'>
             <h1 className='text-emerald-300	'>{'Users'}</h1>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import ReactQueryProvider from '@/utils/providers/ReactQuery'
+
 import './globals.css'
 
 // eslint-disable-next-line new-cap
@@ -17,7 +19,10 @@ const Layout = ({
     children: React.ReactNode
 }>): JSX.Element => (
     <html lang='en'>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+            <ReactQueryProvider>{children}</ReactQueryProvider>
+            {/* {children} */}
+        </body>
     </html>
 )
 export default Layout

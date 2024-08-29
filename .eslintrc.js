@@ -18,6 +18,7 @@ module.exports = {
         'plugin:prettier/recommended',
         'plugin:jest-dom/recommended',
         'plugin:jsdoc/recommended-typescript-flavor-error',
+        'plugin:@tanstack/eslint-plugin-query/recommended',
     ],
     plugins: [
         '@typescript-eslint',

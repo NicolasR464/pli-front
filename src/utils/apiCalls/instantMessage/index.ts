@@ -8,6 +8,8 @@ export const getInstantMsgs = async (): Promise<InstantMessage[]> => {
         environment.INSTANT_MESSAGE_BASE_URL + apiEndpoints.INSTANT_MESSAGES,
     )
 
+    if (!response.ok) throw new Error('Failed to fetch')
+
     const instantMsgs = (await response.json()) as InstantMessage[]
 
     return instantMsgs

@@ -8,6 +8,8 @@ export const getArticles = async (): Promise<Article[]> => {
         environment.ARTICLE_BASE_URL + apiEndpoints.ARTICLES,
     )
 
+    if (!response.ok) throw new Error('Failed to fetch')
+
     const articles = (await response.json()) as Article[]
 
     return articles
