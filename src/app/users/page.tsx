@@ -1,45 +1,34 @@
 import { Button } from '@/components/shadcn/shadcnUI/button'
-
-import { getUsers } from '@/utils/apiCalls/user'
-
-// import getQueryClient from '@/utils/providers/getQueryClient'
-import type { User } from '@/types/user'
-
-import {
-    dehydrate,
-    HydrationBoundary,
-    QueryClient,
-} from '@tanstack/react-query'
 import { UsersList } from '@/components/UsersList'
 
+import { getUsers } from '@/utils/apiCalls/user'
+import { getQueryClient } from '@/utils/providers/getQueryClient'
+
+import type { User } from '@/types/user'
+
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+
 /** Display all users data. */
-const Users = async (): Promise<JSX.Element> => {
-    // const users: User[] = await getUsers()
+const Users = (): JSX.Element => {
+    const queryClient = getQueryClient()
 
-    // console.log(users)
-
-    const queryClient = new QueryClient()
-
-    await queryClient.prefetchQuery<User[]>({
+    queryClient.prefetchInfiniteQuery<User[]>({
         queryKey: ['users'],
         queryFn: getUsers,
+        initialPageParam: 1,
+        getNextPageParam: (lastPage, allPages) => lastPage.nextPage ?? false,
     })
 
     const dehydratedState = dehydrate(queryClient)
 
-    console.log(queryClient)
-
     return (
-        <main className='flex min-h-screen flex-col items-center justify-between p-24'>
+        <main className='flex min-h-screen flex-col items-center justify-between'>
             <h1 className='text-emerald-300	'>{'Users page - server side '}</h1>
             <Button>{'🥸 This is a btn'}</Button>
 
             <HydrationBoundary state={dehydratedState}>
                 <UsersList />
             </HydrationBoundary>
-
-            {/* {users.length > 0 &&
-                users.map((user) => <div key={user.id}>{user.name}</div>)} */}
         </main>
     )
 }

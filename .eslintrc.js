@@ -41,7 +41,6 @@ module.exports = {
         '.eslintrc.js',
         'jest.config.mjs',
         'next-sitemap.config.js',
-        'public/mockServiceWorker.js',
         'prettier.config.mjs',
         'postcss.config.mjs',
         'next.config.mjs',
@@ -70,6 +69,7 @@ module.exports = {
         'max-lines': 'off',
         'max-lines-per-function': 'off',
         'max-statements': 'off',
+        'unicorn/no-console-spaces': 'off',
         'no-duplicate-imports': 'off',
         'no-implicit-coercion': [
             'error',
@@ -85,6 +85,7 @@ module.exports = {
         'sort-keys': 'off',
         'sort-imports': 'off',
         'unicorn/string-content': 'off',
+        'unicorn/prevent-abbreviations': 'off',
         'react/jsx-no-leaked-render': [
             'error',
             { validStrategies: ['coerce'] },

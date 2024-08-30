@@ -1,6 +1,6 @@
 export const apiEndpoints = {
-    USERS: '/users',
-    ARTICLES: '/articles',
-    TRANSACTIONS: '/transaction',
-    INSTANT_MESSAGES: '/instantmsgs',
+    USERS: 'api/users/',
+    ARTICLES: 'articles/',
+    TRANSACTIONS: 'transaction/',
+    INSTANT_MESSAGES: 'instantmsgs/',
 }
