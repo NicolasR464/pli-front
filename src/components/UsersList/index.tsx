@@ -8,58 +8,28 @@ import { getUsers } from '@/utils/apiCalls/user'
 
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
-export const UsersList = (): JSX.Element => {
+export const UsersList = (): React.JSX.Element => {
     console.log('🔥 UsersList')
 
-    ///////////
+    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
+        useSuspenseInfiniteQuery({
+            queryKey: ['users'],
+            // eslint-disable-next-line @typescript-eslint/promise-function-async
+            queryFn: ({ pageParam }) => getUsers(pageParam),
 
-    const {
-        data: users,
-        fetchNextPage,
-        hasNextPage,
-        isFetching,
-        isFetchingNextPage,
-    } = useSuspenseInfiniteQuery({
-        queryKey: ['users'],
-        queryFn: ({ pageParam }) => getUsers(pageParam),
-        initialPageParam: 1,
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-    })
+            initialPageParam: 1,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+        })
 
     console.log('%c isFetching', 'color: red', isFetching)
-
-    useEffect(() => {
-        const handleScroll = (): void => {
-            if (
-                window.innerHeight + window.scrollY >=
-                    document.body.offsetHeight - 2 &&
-                hasNextPage &&
-                !isFetchingNextPage
-            )
-                fetchNextPage()
-        }
-
-        window.addEventListener('scroll', handleScroll)
-
-        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [hasNextPage, isFetchingNextPage, fetchNextPage])
-
-    console.log({ users })
+    console.log(data.pages)
+    console.log({ isFetchingNextPage })
 
     return (
         <>
             <h2 className='text-emerald-300	'>{'Users list - client side'}</h2>
-
-            {!!isFetching && <div>{'🚀 Fetching'}</div>}
-
-            {!isFetching &&
-                users.length > 0 &&
-                users.map((user, index) => (
-                    <div key={(user.id, index)}>{user.name}</div>
-                ))}
+            <>{JSON.stringify(data.pages)}</>
         </>
     )
 }

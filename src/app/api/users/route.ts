@@ -1,17 +1,33 @@
+import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 import { users } from '@/mocks/users'
 
-import { wait } from '@/utils/functions/general'
+import { wait } from '@/utils/functions'
 
 /**
- * Mock API endpoint to get users data
+ * Mock API endpoint to get users data.
+ * @param {NextRequest} request - The incoming request object containing the page number.
+ * @returns {Promise<NextResponse>} The response object containing the user data.
  */
-export const GET = async ({ params }): Promise<NextResponse> => {
-    console.log('in GET route')
-    console.info({ params })
+export const GET = async (request: NextRequest): Promise<NextResponse> => {
+    console.log('🚀 in GET route')
 
-    await wait(5_000)
+    const { searchParams } = request.nextUrl
+    // Get 'skip' and 'limit' from search parameters, defaulting to 0 and the length of the array
+    const skip = Number.parseInt(searchParams.get('skip') ?? '0', 10)
+    const limit = Number.parseInt(
+        searchParams.get('limit') ?? users.length.toString(),
+        10,
+    )
 
-    return NextResponse.json({ data: users }, { status: 200 })
+    console.log({ skip })
+    console.log({ limit })
+
+    await wait(2_000)
+
+    // Slice the users array based on skip and limit
+    const chunkOfUsers = users.slice(skip, skip + limit)
+
+    return NextResponse.json(chunkOfUsers)
 }

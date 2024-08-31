@@ -1,6 +1,7 @@
 export const apiEndpoints = {
     USERS: 'api/users/',
-    ARTICLES: 'articles/',
-    TRANSACTIONS: 'transaction/',
+    ARTICLES: 'api/articles/',
+    TRANSACTIONS: 'api/transaction/',
+    /** @TODO Update the endpoint below  */
     INSTANT_MESSAGES: 'instantmsgs/',
 }

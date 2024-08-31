@@ -9,14 +9,14 @@ import type { User } from '@/types/user'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
 /** Display all users data. */
-const Users = (): JSX.Element => {
+const Users = (): React.JSX.Element => {
     const queryClient = getQueryClient()
 
     queryClient.prefetchInfiniteQuery<User[]>({
         queryKey: ['users'],
         queryFn: getUsers,
         initialPageParam: 1,
-        getNextPageParam: (lastPage, allPages) => lastPage.nextPage ?? false,
+        getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
     })
 
     const dehydratedState = dehydrate(queryClient)

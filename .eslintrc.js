@@ -86,6 +86,7 @@ module.exports = {
         'sort-imports': 'off',
         'unicorn/string-content': 'off',
         'unicorn/prevent-abbreviations': 'off',
+        'jsdoc/check-tag-names': 'off',
         'react/jsx-no-leaked-render': [
             'error',
             { validStrategies: ['coerce'] },

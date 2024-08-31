@@ -17,7 +17,7 @@ const ReactQueryProvider = ({
     children,
 }: Readonly<{
     children: React.ReactNode
-}>): JSX.Element => {
+}>): React.JSX.Element => {
     // eslint-disable-next-line react/hook-use-state
     const [queryClient] = useState(() => new QueryClient(queryOptions))
 

@@ -1,28 +1,39 @@
 /* eslint-disable no-console */
+import { paginationLimit } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import { environment } from '@/types/environment'
 import type { User } from '@/types/user'
 
 import type { QueryFunctionContext } from '@tanstack/react-query'
+import type { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 type PaginatedUsers = {
     users: User[]
     nextPage?: number
 }
 
-export const getUsers = async ({
-    pageParam,
-}: QueryFunctionContext<string[], number>): Promise<PaginatedUsers> => {
-    console.log('🚀 getUsers')
+// Dynamically choose the environment variable based on the execution context (server/client side)
+const mainUserURL =
+    (typeof window === 'undefined'
+        ? environment.USER_BASE_URL
+        : environment.NEXT_PUBLIC_USER_BASE_URL) + apiEndpoints.USERS
 
-    const response = await fetch(
-        `${environment.USER_BASE_URL + apiEndpoints.USERS}?page=${pageParam}`,
-    )
+export const getUsers = async (
+    queryFn: QueryFunctionContext,
+): Promise<PaginatedUsers> => {
+    console.log('🚀 getUsers Fn')
+    console.log(queryFn)
 
-    if (!response.ok) throw new Error('Failed to fetch')
+    const response: AxiosResponse<User[]> = await axios.get(mainUserURL, {
+        params: {
+            skip: (queryFn.pageParam as number) * paginationLimit,
+            limit: paginationLimit,
+        },
+    })
 
-    const users = (await response.json()) as User[]
+    if (response.status !== 200) throw new Error('Failed to fetch')
 
-    return { users, nextPage: pageParam + 1 }
+    return { users: response.data, nextPage: (queryFn.pageParam as number) + 1 }
 }

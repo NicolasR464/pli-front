@@ -17,7 +17,7 @@ const Layout = ({
     children,
 }: Readonly<{
     children: React.ReactNode
-}>): JSX.Element => (
+}>): React.JSX.Element => (
     <html lang='en'>
         <body className={inter.className}>
             <ReactQueryProvider>{children}</ReactQueryProvider>
