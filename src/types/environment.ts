@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { createEnv } from '@t3-oss/env-nextjs'
 
-/** This assures that the env variables are properly set up. */
+/** This assures that the env variables are properly typed and set up. */
 export const environment = createEnv({
     /** Server-side env variables. */
     server: {

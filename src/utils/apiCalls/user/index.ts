@@ -1,7 +1,10 @@
+'use server'
 /* eslint-disable no-console */
 import { paginationLimit } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
+import { whichSide } from '@/utils/functions'
 
+import { Context } from '@/types'
 import { environment } from '@/types/environment'
 import type { User } from '@/types/user'
 
@@ -11,29 +14,34 @@ import axios from 'axios'
 
 type PaginatedUsers = {
     users: User[]
-    nextPage?: number
+    nextCursor?: number
 }
 
 // Dynamically choose the environment variable based on the execution context (server/client side)
-const mainUserURL =
-    (typeof window === 'undefined'
-        ? environment.USER_BASE_URL
-        : environment.NEXT_PUBLIC_USER_BASE_URL) + apiEndpoints.USERS
+const mainUserURL = environment.USER_BASE_URL + apiEndpoints.USERS
 
-export const getUsers = async (
-    queryFn: QueryFunctionContext,
-): Promise<PaginatedUsers> => {
+export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     console.log('🚀 getUsers Fn')
-    console.log(queryFn)
+    console.log({ pageParam })
+
+    // console.log({ queryFn })
+
+    // const pageParam: number =
+    //     whichSide() === Context.enum.SERVER
+    //         ? queryFn.pageParam
+    //         : (queryFn as unknown as number)
+
+    // const page: number =
+    //     typeof queryFn.pageParam === 'number' ? queryFn.pageParam : 0
 
     const response: AxiosResponse<User[]> = await axios.get(mainUserURL, {
         params: {
-            skip: (queryFn.pageParam as number) * paginationLimit,
+            skip: pageParam * paginationLimit,
             limit: paginationLimit,
         },
     })
 
     if (response.status !== 200) throw new Error('Failed to fetch')
 
-    return { users: response.data, nextPage: (queryFn.pageParam as number) + 1 }
+    return { users: response.data, nextCursor: pageParam + 1 }
 }
