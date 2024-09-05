@@ -2,13 +2,12 @@
 /* eslint-disable no-console */
 import { paginationLimit } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
-import { whichSide } from '@/utils/functions'
 
-import { Context } from '@/types'
+// import { whichSide } from '@/utils/functions'
+// import { Context } from '@/types'
 import { environment } from '@/types/environment'
 import type { User } from '@/types/user'
 
-import type { QueryFunctionContext } from '@tanstack/react-query'
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 
@@ -34,14 +33,17 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     // const page: number =
     //     typeof queryFn.pageParam === 'number' ? queryFn.pageParam : 0
 
-    const response: AxiosResponse<User[]> = await axios.get(mainUserURL, {
-        params: {
-            skip: pageParam * paginationLimit,
-            limit: paginationLimit,
-        },
-    })
+    const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
+        await axios.get(mainUserURL, {
+            params: {
+                skip: pageParam,
+                limit: paginationLimit,
+            },
+        })
 
     if (response.status !== 200) throw new Error('Failed to fetch')
 
-    return { users: response.data, nextCursor: pageParam + 1 }
+    console.log('🔥 nextCursor: ', response.data.nextCursor)
+
+    return { users: response.data.users, nextCursor: response.data.nextCursor }
 }

@@ -1,10 +1,11 @@
-import { Button } from '@/components/shadcn/shadcnUI/button'
+/* eslint-disable @typescript-eslint/promise-function-async */
+import { Suspense } from 'react'
+
 import { UsersList } from '@/components/UsersList'
+import Loading from './loading'
 
 import { getUsers } from '@/utils/apiCalls/user'
 import { getQueryClient } from '@/utils/providers/getQueryClient'
-
-import type { User } from '@/types/user'
 
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
@@ -23,11 +24,14 @@ const Users = (): React.JSX.Element => {
     const dehydratedState = dehydrate(queryClient)
 
     return (
-        <main className='flex min-h-screen flex-col items-center justify-between'>
-            <h1 className='text-emerald-300'>{'Users page - server side '}</h1>
+        <main>
+            <h1>{'Users page - server side '}</h1>
 
             <HydrationBoundary state={dehydratedState}>
-                <UsersList />
+                <Loading />
+                <Suspense fallback={<>{'Loading server side'}</>}>
+                    <UsersList />
+                </Suspense>
             </HydrationBoundary>
         </main>
     )

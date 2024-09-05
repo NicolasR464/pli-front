@@ -1,47 +1,47 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable no-console */
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 
 import { getUsers } from '@/utils/apiCalls/user'
 
-import { Button } from '../shadcn/shadcnUI/button'
-import {
-    useInfiniteQuery,
-    useSuspenseInfiniteQuery,
-} from '@tanstack/react-query'
+import { Avatar } from '../shadcn/shadcnUI/avatar'
+import { Skeleton } from '../shadcn/shadcnUI/skeleton'
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
 export const UsersList = (): React.JSX.Element => {
-    console.log('🔥 UsersList')
+    const {
+        data: users,
+        fetchNextPage,
+        hasNextPage,
+        isFetching,
+        isFetchingNextPage,
+    } = useSuspenseInfiniteQuery({
+        // } = useInfiniteQuery({
+        queryKey: ['users'],
+        queryFn: ({ pageParam }) => getUsers(pageParam),
 
-    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
-        // useSuspenseInfiniteQuery({
-        useInfiniteQuery({
-            queryKey: ['users'],
-            // eslint-disable-next-line @typescript-eslint/promise-function-async
-            queryFn: ({ pageParam }) => getUsers(pageParam),
+        initialPageParam: 0,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    })
 
-            initialPageParam: 0,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-        })
-
-    const handleFetchMore = (): void => {
-        console.log('CLICK MORE ✅')
-
-        if (hasNextPage && !isFetching && !isFetchingNextPage) fetchNextPage()
-    }
+    const previousScrollPosition = useRef(0)
 
     useEffect(() => {
         const handleScroll = (): void => {
+            const pxToBottom =
+                document.body.offsetHeight -
+                (window.innerHeight + window.scrollY)
+
             if (
-                window.innerHeight + window.scrollY >=
-                    document.body.offsetHeight - 2 &&
+                pxToBottom < 150 &&
+                hasNextPage &&
+                !isFetching &&
                 !isFetchingNextPage
             ) {
-                console.log('📜 SCROLLING')
-
+                // Save the current scroll position before fetching so it can scroll up once new data loaded
+                previousScrollPosition.current = window.scrollY
                 fetchNextPage()
             }
         }
@@ -52,22 +52,54 @@ export const UsersList = (): React.JSX.Element => {
         return () => {
             window.removeEventListener('scroll', handleScroll)
         }
-    }, [])
+    }, [fetchNextPage, hasNextPage, isFetching, isFetchingNextPage])
 
-    console.log('%c isFetching', 'color: red', isFetching)
-    // console.log(data.pages)
-    console.log({ isFetchingNextPage })
-    console.log({ hasNextPage })
+    // This useEffect runs after new data has been fetched
+    useEffect(() => {
+        if (!isFetchingNextPage) {
+            // Restore the previous scroll position after fetching data
+            window.scrollTo(0, previousScrollPosition.current)
+        }
+    }, [isFetchingNextPage])
 
     return (
-        <>
-            <h2 className='text-emerald-300'>
+        <div>
+            <h2 className='fixed text-center text-emerald-300'>
                 {
                     'Users list - client side - This demonstrate React Query with infinite scrolling'
                 }
             </h2>
-            <Button onClick={handleFetchMore}>{'MORE'}</Button>
-            {!!data && <>{JSON.stringify(data.pages)}</>}
-        </>
+
+            <Skeleton />
+
+            {/* <div>{JSON.stringify(users)}</div> */}
+
+            {users.pages.length > 0 &&
+                users.pages.map((page) =>
+                    page.users.map((user) => (
+                        <div
+                            key={user.pseudo + Date.now()}
+                            className='flex justify-center p-2'
+                        >
+                            <div className='flex w-3/4 items-center justify-center'>
+                                <Avatar>
+                                    <Image
+                                        src={user.avatarUrl ?? ''}
+                                        width={500}
+                                        height={500}
+                                        alt='User avatar'
+                                    />
+                                </Avatar>
+                                <div className='p-2'>{user.pseudo}</div>
+                            </div>
+                        </div>
+                    )),
+                )}
+            <div>
+                {!!isFetching && (
+                    <div className='text-center'>{'Loading more 🚀'}</div>
+                )}
+            </div>
+        </div>
     )
 }
