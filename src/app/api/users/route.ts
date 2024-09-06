@@ -19,7 +19,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
         10,
     )
 
-    await wait(900)
+    await wait(600)
 
     const chunkOfUsers = users.slice(skip, skip + limit)
 

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/promise-function-async */
 import { Suspense } from 'react'
 
+import SkeletonAvatarTxt from '@/components/skeletons/SkeletonAvatarTxt'
 import { UsersList } from '@/components/UsersList'
-import Loading from './loading'
 
 import { getUsers } from '@/utils/apiCalls/user'
 import { getQueryClient } from '@/utils/providers/getQueryClient'
@@ -23,13 +23,17 @@ const Users = (): React.JSX.Element => {
     })
     const dehydratedState = dehydrate(queryClient)
 
+    const skeletons = []
+    for (let inc = 0; inc < 10; inc++) {
+        skeletons.push(<SkeletonAvatarTxt />)
+    }
+
     return (
         <main>
             <h1>{'Users page - server side '}</h1>
 
             <HydrationBoundary state={dehydratedState}>
-                <Loading />
-                <Suspense fallback={<>{'Loading server side'}</>}>
+                <Suspense fallback={skeletons}>
                     <UsersList />
                 </Suspense>
             </HydrationBoundary>

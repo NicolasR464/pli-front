@@ -5,8 +5,8 @@ import Image from 'next/image'
 
 import { getUsers } from '@/utils/apiCalls/user'
 
-import { Avatar } from '../shadcn/shadcnUI/avatar'
-import { Skeleton } from '../shadcn/shadcnUI/skeleton'
+import { Avatar } from '../shadcn/ui/avatar'
+import SkeletonAvatarTxt from '../skeletons/SkeletonAvatarTxt'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
 export const UsersList = (): React.JSX.Element => {
@@ -70,10 +70,6 @@ export const UsersList = (): React.JSX.Element => {
                 }
             </h2>
 
-            <Skeleton />
-
-            {/* <div>{JSON.stringify(users)}</div> */}
-
             {users.pages.length > 0 &&
                 users.pages.map((page) =>
                     page.users.map((user) => (
@@ -95,11 +91,7 @@ export const UsersList = (): React.JSX.Element => {
                         </div>
                     )),
                 )}
-            <div>
-                {!!isFetching && (
-                    <div className='text-center'>{'Loading more 🚀'}</div>
-                )}
-            </div>
+            <div>{!!isFetching && <SkeletonAvatarTxt />}</div>
         </div>
     )
 }
