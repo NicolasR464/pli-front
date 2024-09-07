@@ -5,6 +5,7 @@ import {
     defaultShouldDehydrateQuery,
     isServer,
     QueryClient,
+    QueryCache,
 } from '@tanstack/react-query'
 
 const makeQueryClient = () => {
@@ -12,6 +13,7 @@ const makeQueryClient = () => {
         defaultOptions: {
             queries: {
                 staleTime: 60 * 1_000,
+                refetchOnMount: true,
             },
             dehydrate: {
                 shouldDehydrateQuery: (query) =>

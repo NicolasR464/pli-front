@@ -8,6 +8,7 @@ import { getUsers } from '@/utils/apiCalls/user'
 import { Avatar } from '../shadcn/ui/avatar'
 import SkeletonAvatarTxt from '../skeletons/SkeletonAvatarTxt'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { rqKeys } from '@/utils/constants'
 
 export const UsersList = (): React.JSX.Element => {
     const {
@@ -16,14 +17,13 @@ export const UsersList = (): React.JSX.Element => {
         hasNextPage,
         isFetching,
         isFetchingNextPage,
+        isError,
+        refetch,
     } = useSuspenseInfiniteQuery({
-        // } = useInfiniteQuery({
-        queryKey: ['users'],
+        queryKey: [rqKeys.USERS],
         queryFn: ({ pageParam }) => getUsers(pageParam),
-
         initialPageParam: 0,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+        getNextPageParam: (lastPage) => lastPage?.nextCursor ?? undefined,
     })
 
     const previousScrollPosition = useRef(0)
@@ -62,6 +62,12 @@ export const UsersList = (): React.JSX.Element => {
         }
     }, [isFetchingNextPage])
 
+    useEffect(() => {
+        if (isError) {
+            refetch()
+        }
+    }, [isError])
+
     return (
         <div>
             <h2 className='fixed text-center text-emerald-300'>
@@ -70,9 +76,9 @@ export const UsersList = (): React.JSX.Element => {
                 }
             </h2>
 
-            {users.pages.length > 0 &&
-                users.pages.map((page) =>
-                    page.users.map((user) => (
+            {users?.pages?.length > 0 &&
+                users?.pages.map((page) =>
+                    page?.users.map((user) => (
                         <div
                             key={user.pseudo + Date.now()}
                             className='flex justify-center p-2'

@@ -20,8 +20,10 @@ const Layout = ({
 }>): React.JSX.Element => (
     <html lang='en'>
         <body className={inter.className}>
-            <ReactQueryProvider>{children}</ReactQueryProvider>
-            {/* {children} */}
+            <ReactQueryProvider>
+                <h1>TrocUp header</h1>
+                {children}
+            </ReactQueryProvider>
         </body>
     </html>
 )

@@ -25,5 +25,14 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
 
     const nextCursor = skip + limit < users.length ? skip + limit : undefined
 
+    const number = Math.random() * 10
+
+    // This condition is to mock error 500
+    if (number < 2)
+        return NextResponse.json(
+            { error: 'Internal Server Error' },
+            { status: 500 },
+        )
+
     return NextResponse.json({ users: chunkOfUsers, nextCursor })
 }

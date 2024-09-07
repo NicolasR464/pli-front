@@ -10,7 +10,8 @@
         "src/types/instantMessage/index.ts",
         "src/utils/apiCalls/article/index.ts",
         "src/utils/apiCalls/instantMessage/index.ts",
-        "src/utils/apiCalls/transaction/index.ts"
+        "src/utils/apiCalls/transaction/index.ts",
+        "src/utils/axiosInstances.tsx"
     ],
     "ignoreDependencies": [
         "lucide-react",

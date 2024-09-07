@@ -1,16 +1,16 @@
+import { transactionInstance } from '@/utils/axiosInstances'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
-import { environment } from '@/types/environment'
 import type { Transaction } from '@/types/transaction'
 
+import type { AxiosResponse } from 'axios'
+
 export const getTransactions = async (): Promise<Transaction[]> => {
-    const response = await fetch(
-        environment.TRANSACTION_BASE_URL + apiEndpoints.TRANSACTIONS,
-    )
+    const response: AxiosResponse<Transaction[]> =
+        await transactionInstance.get(apiEndpoints.TRANSACTIONS)
 
-    if (!response.ok) throw new Error('Failed to fetch')
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch ${apiEndpoints.TRANSACTIONS}`)
 
-    const transactions = (await response.json()) as Transaction[]
-
-    return transactions
+    return response.data
 }
