@@ -18,7 +18,10 @@ const Address = z.object({
     geopoints: Geopoints,
 })
 
-type Address = z.infer<typeof Address>
+/**
+ * @public
+ */
+export type Address = z.infer<typeof Address>
 
 const BankInfo = z.object({
     IBAN: z.string(),
