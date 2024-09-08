@@ -4,11 +4,11 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 
 import { getUsers } from '@/utils/apiCalls/user'
+import { rqKeys } from '@/utils/constants'
 
 import { Avatar } from '../shadcn/ui/avatar'
 import SkeletonAvatarTxt from '../skeletons/SkeletonAvatarTxt'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
-import { rqKeys } from '@/utils/constants'
 
 export const UsersList = (): React.JSX.Element => {
     const {
@@ -23,7 +23,7 @@ export const UsersList = (): React.JSX.Element => {
         queryKey: [rqKeys.USERS],
         queryFn: ({ pageParam }) => getUsers(pageParam),
         initialPageParam: 0,
-        getNextPageParam: (lastPage) => lastPage?.nextCursor ?? undefined,
+        getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     })
 
     const previousScrollPosition = useRef(0)
@@ -66,7 +66,7 @@ export const UsersList = (): React.JSX.Element => {
         if (isError) {
             refetch()
         }
-    }, [isError])
+    }, [isError, refetch])
 
     return (
         <div>
@@ -76,9 +76,10 @@ export const UsersList = (): React.JSX.Element => {
                 }
             </h2>
 
-            {users?.pages?.length > 0 &&
-                users?.pages.map((page) =>
-                    page?.users.map((user) => (
+            {!isError &&
+                users.pages.length > 0 &&
+                users.pages.map((page) =>
+                    page.users.map((user) => (
                         <div
                             key={user.pseudo + Date.now()}
                             className='flex justify-center p-2'

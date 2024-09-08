@@ -2,11 +2,7 @@
 
 import { useState } from 'react'
 
-import {
-    QueryClient,
-    QueryClientProvider,
-    QueryCache,
-} from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryOptions = {
@@ -15,12 +11,6 @@ const queryOptions = {
             staleTime: 60 * 1_000,
         },
     },
-    queryCache: new QueryCache({
-        onError: (error) =>
-            console.error(
-                `Something went wrong: ${error.message} -- in getQueryClient`,
-            ),
-    }),
 }
 
 const ReactQueryProvider = ({

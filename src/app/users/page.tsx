@@ -4,10 +4,10 @@ import SkeletonAvatarTxt from '@/components/skeletons/SkeletonAvatarTxt'
 import { UsersList } from '@/components/UsersList'
 
 import { getUsers } from '@/utils/apiCalls/user'
+import { rqKeys } from '@/utils/constants'
 import { getQueryClient } from '@/utils/providers/getQueryClient'
 
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import { rqKeys } from '@/utils/constants'
 
 /** Display all users data. */
 const Users = (): React.JSX.Element => {
@@ -17,7 +17,7 @@ const Users = (): React.JSX.Element => {
         queryKey: [rqKeys.USERS],
         queryFn: () => getUsers(0),
         initialPageParam: 0,
-        getNextPageParam: (lastPage) => lastPage?.nextCursor ?? undefined,
+        getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
         pages: 1,
     })
 

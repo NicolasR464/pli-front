@@ -21,7 +21,7 @@ const Layout = ({
     <html lang='en'>
         <body className={inter.className}>
             <ReactQueryProvider>
-                <h1>TrocUp header</h1>
+                <h1>{'TrocUp header'}</h1>
                 {children}
             </ReactQueryProvider>
         </body>
