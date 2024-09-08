@@ -112,6 +112,7 @@ module.exports = {
         'prefer-arrow-functions/prefer-arrow-functions': 'error',
         'react/button-has-type': 'off',
         'react/forbid-component-props': 'off',
+        'react/jsx-max-depth': 'off',
         'react/jsx-curly-brace-presence': [
             'error',
             {

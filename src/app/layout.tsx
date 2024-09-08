@@ -4,6 +4,13 @@ import { Inter } from 'next/font/google'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
+import {
+    ClerkProvider,
+    SignedIn,
+    SignedOut,
+    SignInButton,
+    UserButton,
+} from '@clerk/nextjs'
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] })
@@ -18,13 +25,23 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => (
-    <html lang='en'>
-        <body className={inter.className}>
+    <ClerkProvider>
+        <html lang='en'>
+            <body className={inter.className}>
             <ReactQueryProvider>
-                <h1>{'TrocUp header'}</h1>
-                {children}
+                <header>
+                    <SignedOut>
+                        <SignInButton />
+                    </SignedOut>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                </header>
+
+                <main> {children}</main>
             </ReactQueryProvider>
-        </body>
-    </html>
+            </body>
+        </html>
+    </ClerkProvider>
 )
 export default Layout
