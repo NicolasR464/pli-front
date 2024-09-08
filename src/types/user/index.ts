@@ -6,7 +6,7 @@ const Geopoints = z.object({
     coordinates: z.array(z.number()),
 })
 
-export type Geopoints = z.infer<typeof Geopoints>
+type Geopoints = z.infer<typeof Geopoints>
 
 const Address = z.object({
     street: z.string(),
@@ -18,14 +18,14 @@ const Address = z.object({
     geopoints: Geopoints,
 })
 
-export type Address = z.infer<typeof Address>
+type Address = z.infer<typeof Address>
 
 const BankInfo = z.object({
     IBAN: z.string(),
     BIC: z.string(),
 })
 
-export type BankInfo = z.infer<typeof BankInfo>
+type BankInfo = z.infer<typeof BankInfo>
 
 export const User = z.object({
     id: z.string(),

@@ -36,6 +36,7 @@ pnpm install
 -   [T3 Env](https://env.t3.gg/) for typing environment variables (src/types/environment.ts file).
 -   [Zod](https://zod.dev/) for type inference and form validation.
 -   [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts#with-tailwind-css) Next's font manager linked to Google Font.
+-   [Knip](https://knip.dev/) to check for dead code and unused dependencies (tweak knip.json to your liking).
 
 ### Getting Started
 
