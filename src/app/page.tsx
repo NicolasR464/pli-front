@@ -5,14 +5,13 @@ import { auth, currentUser } from '@clerk/nextjs/server'
 const Home = async (): Promise<React.JSX.Element> => {
     const { userId } = auth()
 
+    let user
+
     if (userId) {
         // Query DB for user specific information or display assets only to signed in users
         console.log({ userId })
+        user = await currentUser()
     }
-
-    // Get the Backend API User object when you need access to the user's information
-    const user = await currentUser()
-    console.log(user)
 
     // Use `user` to render user details or create UI elements
 

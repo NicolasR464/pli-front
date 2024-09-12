@@ -6,6 +6,15 @@ import type { User } from '@/types/user'
 
 import type { AxiosResponse } from 'axios'
 
+type CreateUserSuccess = {
+    message: string
+}
+type CreateUserError = {
+    error: string
+}
+
+type CreateUserResponse = CreateUserSuccess | CreateUserError
+
 type PaginatedUsers = {
     users: User[]
     nextCursor?: number
@@ -25,5 +34,37 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     return {
         users: response.data.users,
         nextCursor: response.data.nextCursor,
+    }
+}
+
+export const createUser = async (jwt: string): Promise<CreateUserResponse> => {
+    console.log(environment.NEXT_PUBLIC_USER_BASE_URL + apiEndpoints.USERS)
+
+    try {
+        const response = await fetch(
+            environment.NEXT_PUBLIC_USER_BASE_URL + apiEndpoints.USERS,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${jwt}`,
+                },
+                body: JSON.stringify({
+                    pseudo: 'Front Man',
+                    avatarUrl:
+                        'https://api.multiavatar.com/a249bc6.png?apikey=JSUznFEgTLPa3x',
+                }),
+            },
+        )
+
+        if (!response.ok) {
+            const errorResponse: CreateUserError = await response.json()
+            return errorResponse
+        }
+
+        const successResponse: CreateUserSuccess = await response.json()
+        return successResponse
+    } catch (error) {
+        return { error: 'Failed to connect to the server' }
     }
 }
