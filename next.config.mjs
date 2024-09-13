@@ -28,6 +28,9 @@ const nextConfig = {
 
         return config
     },
+    images: {
+        domains: ['res.cloudinary.com', 'api.multiavatar.com'],
+    },
 }
 
 export default nextConfig

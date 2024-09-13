@@ -1,14 +1,17 @@
+import { articleInstance } from '@/utils/axiosInstances'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { Article } from '@/types/article'
-import { environment } from '@/types/environment'
+
+import type { AxiosResponse } from 'axios'
 
 export const getArticles = async (): Promise<Article[]> => {
-    const response = await fetch(
-        environment.ARTICLE_BASE_URL + apiEndpoints.ARTICLES,
+    const response: AxiosResponse<Article[]> = await articleInstance.get(
+        apiEndpoints.ARTICLES,
     )
 
-    const articles = (await response.json()) as Article[]
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch ${apiEndpoints.ARTICLES}`)
 
-    return articles
+    return response.data
 }

@@ -1,12 +1,29 @@
+import { userInstance } from '@/utils/axiosInstances'
+import { paginationLimit } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
-import { environment } from '@/types/environment'
 import type { User } from '@/types/user'
 
-export const getUsers = async (): Promise<User[]> => {
-    const response = await fetch(environment.USER_BASE_URL + apiEndpoints.USERS)
+import type { AxiosResponse } from 'axios'
 
-    const users = (await response.json()) as User[]
+type PaginatedUsers = {
+    users: User[]
+    nextCursor?: number
+}
 
-    return users
+export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
+    const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
+        await userInstance.get(apiEndpoints.USERS, {
+            params: {
+                skip: pageParam,
+                limit: paginationLimit,
+            },
+        })
+
+    if (response.status !== 200) throw new Error('No users found')
+
+    return {
+        users: response.data.users,
+        nextCursor: response.data.nextCursor,
+    }
 }

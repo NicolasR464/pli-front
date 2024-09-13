@@ -18,6 +18,7 @@ module.exports = {
         'plugin:prettier/recommended',
         'plugin:jest-dom/recommended',
         'plugin:jsdoc/recommended-typescript-flavor-error',
+        'plugin:@tanstack/eslint-plugin-query/recommended',
     ],
     plugins: [
         '@typescript-eslint',
@@ -40,7 +41,6 @@ module.exports = {
         '.eslintrc.js',
         'jest.config.mjs',
         'next-sitemap.config.js',
-        'public/mockServiceWorker.js',
         'prettier.config.mjs',
         'postcss.config.mjs',
         'next.config.mjs',
@@ -69,6 +69,7 @@ module.exports = {
         'max-lines': 'off',
         'max-lines-per-function': 'off',
         'max-statements': 'off',
+        'unicorn/no-console-spaces': 'off',
         'no-duplicate-imports': 'off',
         'no-implicit-coercion': [
             'error',
@@ -84,6 +85,10 @@ module.exports = {
         'sort-keys': 'off',
         'sort-imports': 'off',
         'unicorn/string-content': 'off',
+        'unicorn/prevent-abbreviations': 'off',
+        'jsdoc/check-tag-names': 'off',
+        'react/jsx-max-depth': 'off',
+
         'react/jsx-no-leaked-render': [
             'error',
             { validStrategies: ['coerce'] },
@@ -96,6 +101,7 @@ module.exports = {
         '@typescript-eslint/prefer-readonly-parameter-types': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/promise-function-async': 'off',
         'import/first': 'error',
         'import/namespace': ['error', { allowComputed: true }],
         'import/newline-after-import': [
@@ -138,19 +144,15 @@ module.exports = {
             {
                 groups: [
                     // Packages
-                    [
-                        '^react',
-                        '^next',
-                        '^recoil',
-                        '^react-hook-form',
-                        '^@hookform/resolvers',
-                        '^@testing-library',
-                        '^zustand',
-                        'zod',
-                    ],
+                    ['^react', '^next', '^zustand', 'zod'],
 
                     // UI and mocks
-                    ['^@/components/ui', '^@/components', '^@/mocks', '^\\./'],
+                    [
+                        '^@/components/shadcn',
+                        '^@/components',
+                        '^@/mocks',
+                        '^\\./',
+                    ],
 
                     // Logic
                     ['^@/stores', '^@/utils', '^@/theme'],
