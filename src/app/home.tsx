@@ -1,5 +1,6 @@
 'use client'
-import { Button } from '@/components/shadcn/shadcnUI/button'
+
+import { Button } from '@/components/shadcn/ui/button'
 
 import { createUser } from '@/utils/apiCalls/user'
 

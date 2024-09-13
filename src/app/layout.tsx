@@ -28,18 +28,18 @@ const Layout = ({
     <ClerkProvider>
         <html lang='en'>
             <body className={inter.className}>
-            <ReactQueryProvider>
-                <header>
-                    <SignedOut>
-                        <SignInButton />
-                    </SignedOut>
-                    <SignedIn>
-                        <UserButton />
-                    </SignedIn>
-                </header>
+                <ReactQueryProvider>
+                    <header>
+                        <SignedOut>
+                            <SignInButton />
+                        </SignedOut>
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+                    </header>
 
-                <main> {children}</main>
-            </ReactQueryProvider>
+                    <main> {children}</main>
+                </ReactQueryProvider>
             </body>
         </html>
     </ClerkProvider>
