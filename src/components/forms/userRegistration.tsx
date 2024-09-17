@@ -80,16 +80,21 @@ export const RegistrationForm = (): React.JSX.Element => {
     const fetchAddressSuggestions = useDebouncedCallback(
         async (input: string): Promise<AddressSuggestion[]> => {
             console.log({ input })
+            console.log(input.length)
 
-            try {
-                const addresses = await getAddressSuggestions(input)
-                console.log(addresses)
+            if (input.length >= 3) {
+                try {
+                    const addresses = await getAddressSuggestions(input)
+                    console.log(addresses)
 
-                return addresses
-            } catch (error) {
-                console.error('Error fetching address suggestions:', error)
-                return []
+                    return addresses
+                } catch (error) {
+                    console.error('Error fetching address suggestions:', error)
+                    return []
+                }
             }
+
+            return []
         },
         500,
     )
