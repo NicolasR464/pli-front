@@ -1,4 +1,5 @@
-import Clerk from './home'
+import { RegistrationForm } from '@/components/forms/userRegistration'
+import ClerkTest from './clerkTest'
 
 import { auth, currentUser } from '@clerk/nextjs/server'
 
@@ -18,8 +19,9 @@ const Home = async (): Promise<React.JSX.Element> => {
     return (
         <div className='flex min-h-screen flex-col items-center justify-between p-24'>
             <h1>{process.env.NODE_ENV}</h1>
-            <h1>{JSON.stringify(user, null, 2)}</h1>
-            <Clerk />
+            {!!userId && <RegistrationForm />}
+            <h1>{JSON.stringify(user, undefined, 2)}</h1>
+            <ClerkTest />
         </div>
     )
 }

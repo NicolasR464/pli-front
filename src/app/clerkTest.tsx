@@ -6,7 +6,7 @@ import { createUser } from '@/utils/apiCalls/user'
 
 import { useAuth } from '@clerk/nextjs'
 
-const Clerk = (): React.JSX.Element => {
+const ClerkTest = (): React.JSX.Element => {
     const { isLoaded, userId, sessionId, getToken } = useAuth()
 
     const handleClick = async (): Promise<void> => {
@@ -32,4 +32,4 @@ const Clerk = (): React.JSX.Element => {
         </div>
     )
 }
-export default Clerk
+export default ClerkTest

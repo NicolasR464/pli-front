@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { userInstance } from '@/utils/axiosInstances'
 import { paginationLimit } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
@@ -50,7 +49,7 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
  * @returns {Promise<CreateUserResponse>} A promise that resolves to the create user response.
  */
 export const createUser = async (jwt: string): Promise<CreateUserResponse> => {
-    userInstance.defaults.headers.common.Authorization = jwt
+    userInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`
 
     console.log(environment.NEXT_PUBLIC_USER_BASE_URL + apiEndpoints.USERS)
 
