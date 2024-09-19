@@ -17,7 +17,7 @@ const Home = async (): Promise<React.JSX.Element> => {
     // Use `user` to render user details or create UI elements
 
     return (
-        <div className='flex min-h-screen flex-col items-center justify-between p-24'>
+        <div className='flex min-h-screen flex-col items-center justify-start p-24'>
             <h1>{process.env.NODE_ENV}</h1>
             {!!userId && <RegistrationForm />}
             {/* <h1>{JSON.stringify(user, undefined, 2)}</h1> */}

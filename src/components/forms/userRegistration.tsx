@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
-import React, { useCallback, useRef, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import React, { useState } from 'react'
+import type { FieldErrors } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -14,7 +16,6 @@ import {
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -44,15 +45,22 @@ import { ChevronsUpDown } from 'lucide-react'
  * @returns {React.JSX.Element} The rendered registration form
  */
 export const RegistrationForm = (): React.JSX.Element => {
-    const { control, watch, setValue, register } = useForm<UserRegistration>({
-        resolver: zodResolver(userRegistrationSchema),
-    })
+    const { control, watch, setValue, register, handleSubmit } =
+        useForm<UserRegistration>({
+            resolver: zodResolver(userRegistrationSchema),
+        })
 
     const form = useForm<UserRegistration>({
         resolver: zodResolver(userRegistrationSchema),
+        defaultValues: {
+            pseudo: '',
+            avatarUrl: 'Todo',
+            addressInput: '',
+            addressObject: {},
+        },
     })
 
-    const { fields, replace, update } = useFieldArray({
+    const { fields, update } = useFieldArray({
         control,
         name: 'addressSuggestions',
         rules: {
@@ -64,12 +72,11 @@ export const RegistrationForm = (): React.JSX.Element => {
 
     const addressInput = watch('addressInput')
     const addressObject = watch('addressObject')
+    const pseudo = watch('pseudo')
+    console.log('pseudo:', pseudo)
 
     const fetchAddressSuggestions = useDebouncedCallback(
         async (input: string): Promise<AddressSuggestion[]> => {
-            console.log({ input })
-            console.log(input.length)
-
             if (input.length >= 3) {
                 try {
                     const addresses = await getAddressSuggestions(input)
@@ -81,11 +88,6 @@ export const RegistrationForm = (): React.JSX.Element => {
                             update(index, address)
                             index++
                         }
-
-                    console.log(addresses)
-
-                    // if (addresses) setValue('addressSuggestions', addresses)
-                    // if (addresses) update(addresses)
                 } catch (error) {
                     console.error('Error fetching address suggestions:', error)
                     return []
@@ -100,38 +102,59 @@ export const RegistrationForm = (): React.JSX.Element => {
     const addressInputWatch = watch('addressInput')
     const addressSuggestionsWatch = watch('addressSuggestions')
 
+    setValue('avatarUrl', 'https://placehold.co/100x100')
+
+    const onSubmit = (data: UserRegistration) => {
+        console.log('🔥')
+
+        console.log(data)
+    }
+
+    const onError = (errors: FieldErrors<UserRegistration>): void => {
+        console.log('Validation Errors:', errors)
+    }
+
     return (
         <Form {...form}>
-            <form className='space-y-8'>
+            <form
+                onSubmit={handleSubmit(onSubmit, onError)}
+                className='space-y-8'
+            >
+                {JSON.stringify(pseudo, undefined, 2)}
                 {/** User Pseudo */}
-                <FormField
-                    control={form.control}
+                <Controller
+                    control={control}
                     name='pseudo'
-                    render={({ field }) => (
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
                         <FormItem>
-                            <FormLabel>{'Pseudo'}</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                    value={value}
+                                />
                             </FormControl>
                         </FormItem>
                     )}
                 />
 
                 {/** User Avatar */}
-                <FormField
-                    control={form.control}
+                <Controller
+                    control={control}
                     name='avatarUrl'
-                    render={({ field }) => (
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
                                     type='hidden'
-                                    {...field}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
                                 />
                             </FormControl>
                         </FormItem>
                     )}
                 />
+
                 {/* {'addressSuggestionsWatch 👇'}
                 <br />
                 {JSON.stringify(addressSuggestionsWatch, undefined, 2)}
@@ -172,7 +195,9 @@ export const RegistrationForm = (): React.JSX.Element => {
                                                 !field.value &&
                                                     'text-muted-foreground',
                                             )}
-                                            onClick={() => setOpen(true)}
+                                            onClick={() => {
+                                                setOpen(true)
+                                            }}
                                         >
                                             {!!field.value &&
                                                 !addressObject &&
@@ -180,7 +205,7 @@ export const RegistrationForm = (): React.JSX.Element => {
                                             {!!addressObject &&
                                                 `${addressObject.housenumber} ${addressObject.street}, ${addressObject.postcode} ${addressObject.city}`}
                                             {!field.value &&
-                                                !!addressObject &&
+                                                !addressObject &&
                                                 'Sélectionne ton adresse'}
                                             <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                                         </Button>
