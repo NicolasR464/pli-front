@@ -1,27 +1,8 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
+
 import { z } from 'zod'
 
-const Geopoints = z.object({
-    type: z.string(),
-    coordinates: z.array(z.number()),
-})
-
-type Geopoints = z.infer<typeof Geopoints>
-
-const Address = z.object({
-    street: z.string(),
-    city: z.string(),
-    postcode: z.number().int(),
-    citycode: z.number().int(),
-    floor: z.number().int().optional(),
-    extra: z.string().optional(),
-    geopoints: Geopoints,
-})
-
-/**
- * @public
- */
-export type Address = z.infer<typeof Address>
+import type { Address, Geopoints } from '@/types/address/userAddress'
 
 const BankInfo = z.object({
     IBAN: z.string(),
@@ -36,8 +17,8 @@ export const User = z.object({
     pseudo: z.string(),
     name: z.string(),
     surname: z.string(),
-    address: Address,
-    geopoints: Geopoints,
+    address: z.custom<Address>(),
+    geopoints: z.custom<Geopoints>(),
     email: z.string().email(),
     password: z.string(),
     sexe: z.enum(['masculin', 'féminin', 'autre']),

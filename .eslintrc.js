@@ -65,7 +65,7 @@ module.exports = {
         'capitalized-comments': 'off',
         complexity: 'off',
         'consistent-return': 'off',
-        'id-length': ['error', { exceptionPatterns: ['t'] }],
+        'id-length': 'off',
         'max-lines': 'off',
         'max-lines-per-function': 'off',
         'max-statements': 'off',

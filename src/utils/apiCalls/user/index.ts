@@ -51,13 +51,10 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
 export const createUser = async (jwt: string): Promise<CreateUserResponse> => {
     userInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`
 
-    console.log(environment.NEXT_PUBLIC_USER_BASE_URL + apiEndpoints.USERS)
-
     const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
         await userInstance.post(apiEndpoints.USERS, {
             pseudo: 'Front Man',
-            avatarUrl:
-                'https://api.multiavatar.com/a249bc6.png?apikey=JSUznFEgTLPa3x',
+            avatarUrl: `${apiEndpoints.USER_AVATAR}a249bc6.png?apikey=${environment.NEXT_PUBLIC_MULTIAVATAR_API_KEY}`,
         })
 
     if (response.status !== 201)

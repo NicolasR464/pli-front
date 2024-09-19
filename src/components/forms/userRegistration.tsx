@@ -51,23 +51,6 @@ type AddressSuggestion = {
 export const RegistrationForm = (): React.JSX.Element => {
     const form = useForm<UserRegistration>({
         resolver: zodResolver(userRegistrationSchema),
-        defaultValues: {
-            pseudo: 'Johny',
-            avatarUrl: 'https://placehold.co/100x100',
-            addressInput: '',
-            addressObject: {
-                street: '',
-                city: '',
-                postcode: 0,
-                citycode: 0,
-                floor: 0,
-                extra: '',
-                geopoints: {
-                    type: '',
-                    coordinates: [],
-                },
-            },
-        },
     })
 
     const [addressSuggestions, setAddressSuggestions] = useState<
@@ -87,7 +70,7 @@ export const RegistrationForm = (): React.JSX.Element => {
                     const addresses = await getAddressSuggestions(input)
                     console.log(addresses)
 
-                    return addresses
+                    setAddressSuggestions(addresses)
                 } catch (error) {
                     console.error('Error fetching address suggestions:', error)
                     return []
@@ -131,14 +114,15 @@ export const RegistrationForm = (): React.JSX.Element => {
                         </FormItem>
                     )}
                 />
-
+                {/* {JSON.stringify(addressSuggestions, null, 2)} */}
                 {/** User Address */}
                 <FormField
                     control={form.control}
                     name='addressInput'
                     render={({ field }) => (
                         <FormItem className='flex flex-col'>
-                            <FormLabel>{'Address'}</FormLabel>
+                            {/* <FormLabel>{'Address'}</FormLabel> */}
+                            <FormLabel>{addressSuggestions.length}</FormLabel>
                             <Popover
                                 open={open}
                                 onOpenChange={setOpen}
@@ -150,27 +134,23 @@ export const RegistrationForm = (): React.JSX.Element => {
                                             role='combobox'
                                             aria-expanded={open}
                                             className={cn(
-                                                'w-[200px] justify-between',
+                                                'w-[500px] justify-between',
                                                 !field.value &&
                                                     'text-muted-foreground',
                                             )}
+                                            onClick={() => setOpen(true)}
                                         >
-                                            {field.value
-                                                ? (addressSuggestions.find(
-                                                      (address) =>
-                                                          address.label ===
-                                                          field.value,
-                                                  )?.label ?? field.value)
-                                                : 'Select address'}
+                                            {!!field.value && field.value}
+                                            {!field.value && 'Select address'}
                                             <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                                         </Button>
                                     </FormControl>
                                 </PopoverTrigger>
 
-                                <PopoverContent className='w-[300px]'>
+                                <PopoverContent className='w-[300px] p-0'>
                                     <Command>
                                         <CommandInput
-                                            placeholder='Type address…'
+                                            placeholder='Search address…'
                                             onValueChange={(value) => {
                                                 field.onChange(value)
                                                 fetchAddressSuggestions(value)
@@ -180,35 +160,25 @@ export const RegistrationForm = (): React.JSX.Element => {
                                             <CommandEmpty>
                                                 {'No address found.'}
                                             </CommandEmpty>
-                                            {!!isLoading && (
-                                                <div className='p-2 text-sm'>
-                                                    {'Loading…'}
-                                                </div>
-                                            )}
                                             <CommandGroup>
-                                                {!isLoading &&
-                                                    addressSuggestions.map(
-                                                        (address) => (
-                                                            <CommandItem
-                                                                key={
-                                                                    address.label
-                                                                }
-                                                                value={
-                                                                    address.label
-                                                                }
-                                                                onSelect={() => {
-                                                                    field.onChange(
-                                                                        address.label,
-                                                                    )
-                                                                    setIsPopoverOpen(
-                                                                        false,
-                                                                    )
-                                                                }}
-                                                            >
-                                                                {address.label}
-                                                            </CommandItem>
-                                                        ),
-                                                    )}
+                                                {addressSuggestions.map(
+                                                    (address) => (
+                                                        <CommandItem
+                                                            value={
+                                                                address.label
+                                                            }
+                                                            key={address.label}
+                                                            onSelect={() => {
+                                                                field.onChange(
+                                                                    address.label,
+                                                                )
+                                                                setOpen(false)
+                                                            }}
+                                                        >
+                                                            {address.label}
+                                                        </CommandItem>
+                                                    ),
+                                                )}
                                             </CommandGroup>
                                         </CommandList>
                                     </Command>
