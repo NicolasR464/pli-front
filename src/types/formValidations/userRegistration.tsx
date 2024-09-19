@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-import type { Address } from '@/types/address/userAddress'
+import { AddressSuggestionSchema } from '@/types/address/gouvApiCall'
+import { AddressSchema } from '@/types/address/userAddress'
 
 /**
  * Zod schema for user registration form validation.
@@ -19,8 +20,8 @@ export const userRegistrationSchema = z.object({
         .max(20),
     avatarUrl: z.string().url(),
     addressInput: z.string().optional(),
-    addressObject: z.custom<Address>().optional(),
-    addressSuggestions: z.array(z.string()).optional(),
+    addressObject: AddressSchema.optional(),
+    addressSuggestions: z.array(AddressSuggestionSchema),
 })
 
 export type UserRegistration = z.infer<typeof userRegistrationSchema>

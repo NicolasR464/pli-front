@@ -1,6 +1,6 @@
 'use client'
 import React, { useCallback, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -25,8 +25,9 @@ import {
     PopoverTrigger,
 } from '@/components/shadcn/ui/popover'
 
-import { getAddressSuggestions } from '@/utils/apiCalls/address-suggestions'
+import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/address-suggestions'
 
+import type { AddressSuggestion } from '@/types/address/gouvApiCall'
 import type { UserRegistration } from '@/types/formValidations/userRegistration'
 import { userRegistrationSchema } from '@/types/formValidations/userRegistration'
 
@@ -34,13 +35,7 @@ import { Button } from '../shadcn/ui/button'
 import { Input } from '../shadcn/ui/input'
 import { cn } from '../shadcn/utils'
 import { useDebouncedCallback } from '@mantine/hooks'
-import axios from 'axios'
 import { ChevronsUpDown } from 'lucide-react'
-
-type AddressSuggestion = {
-    label: string
-    context: string
-}
 
 /**
  * RegistrationForm component for user registration.
@@ -49,16 +44,26 @@ type AddressSuggestion = {
  * @returns {React.JSX.Element} The rendered registration form
  */
 export const RegistrationForm = (): React.JSX.Element => {
+    const { control, watch, setValue, register } = useForm<UserRegistration>({
+        resolver: zodResolver(userRegistrationSchema),
+    })
+
     const form = useForm<UserRegistration>({
         resolver: zodResolver(userRegistrationSchema),
     })
 
-    const [addressSuggestions, setAddressSuggestions] = useState<
-        AddressSuggestion[]
-    >([])
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const { fields, replace, update } = useFieldArray({
+        control,
+        name: 'addressSuggestions',
+        rules: {
+            required: false,
+        },
+    })
+
     const [open, setOpen] = useState(false)
+
+    const addressInput = watch('addressInput')
+    const addressObject = watch('addressObject')
 
     const fetchAddressSuggestions = useDebouncedCallback(
         async (input: string): Promise<AddressSuggestion[]> => {
@@ -70,7 +75,17 @@ export const RegistrationForm = (): React.JSX.Element => {
                     const addresses = await getAddressSuggestions(input)
                     console.log(addresses)
 
-                    setAddressSuggestions(addresses)
+                    let index = 0
+                    if (addresses)
+                        for (const address of addresses) {
+                            update(index, address)
+                            index++
+                        }
+
+                    console.log(addresses)
+
+                    // if (addresses) setValue('addressSuggestions', addresses)
+                    // if (addresses) update(addresses)
                 } catch (error) {
                     console.error('Error fetching address suggestions:', error)
                     return []
@@ -81,6 +96,9 @@ export const RegistrationForm = (): React.JSX.Element => {
         },
         500,
     )
+
+    const addressInputWatch = watch('addressInput')
+    const addressSuggestionsWatch = watch('addressSuggestions')
 
     return (
         <Form {...form}>
@@ -114,15 +132,31 @@ export const RegistrationForm = (): React.JSX.Element => {
                         </FormItem>
                     )}
                 />
-                {/* {JSON.stringify(addressSuggestions, null, 2)} */}
+                {/* {'addressSuggestionsWatch 👇'}
+                <br />
+                {JSON.stringify(addressSuggestionsWatch, undefined, 2)}
+                <br />
+                {JSON.stringify(fields, undefined, 2)}
+                <br />
+                {'🔥----------------------------------🔥'}
+                <br />
+                <br />
+                {'addressObject 👇'}
+                <br />
+                {JSON.stringify(addressObject, undefined, 2)}
+                <br />
+                {'addressInputWatch 👇'}
+                <br />
+                {JSON.stringify(addressInputWatch, undefined, 2)} */}
+
                 {/** User Address */}
                 <FormField
                     control={form.control}
                     name='addressInput'
                     render={({ field }) => (
                         <FormItem className='flex flex-col'>
-                            {/* <FormLabel>{'Address'}</FormLabel> */}
-                            <FormLabel>{addressSuggestions.length}</FormLabel>
+                            <FormLabel>{'Addresse'}</FormLabel>
+
                             <Popover
                                 open={open}
                                 onOpenChange={setOpen}
@@ -150,32 +184,49 @@ export const RegistrationForm = (): React.JSX.Element => {
                                 <PopoverContent className='w-[300px] p-0'>
                                     <Command>
                                         <CommandInput
-                                            placeholder='Search address…'
+                                            placeholder='Cherche ton adresse'
                                             onValueChange={(value) => {
-                                                field.onChange(value)
-                                                fetchAddressSuggestions(value)
+                                                const sanitizedValue =
+                                                    value.replaceAll(',', '')
+
+                                                field.onChange(sanitizedValue)
+
+                                                fetchAddressSuggestions(
+                                                    sanitizedValue,
+                                                )
                                             }}
                                         />
                                         <CommandList>
                                             <CommandEmpty>
-                                                {'No address found.'}
+                                                {'Aucune adresse trouvée.'}
                                             </CommandEmpty>
+
                                             <CommandGroup>
-                                                {addressSuggestions.map(
-                                                    (address) => (
+                                                {fields.map(
+                                                    (suggestion, index) => (
                                                         <CommandItem
+                                                            className='cursor-pointer'
+                                                            key={suggestion.id}
                                                             value={
-                                                                address.label
+                                                                suggestion.label
                                                             }
-                                                            key={address.label}
                                                             onSelect={() => {
-                                                                field.onChange(
-                                                                    address.label,
+                                                                setValue(
+                                                                    'addressObject',
+                                                                    suggestion.properties,
                                                                 )
                                                                 setOpen(false)
                                                             }}
                                                         >
-                                                            {address.label}
+                                                            <span
+                                                                {...register(
+                                                                    `addressSuggestions.${index}.label`,
+                                                                )}
+                                                            >
+                                                                {
+                                                                    suggestion.label
+                                                                }
+                                                            </span>
                                                         </CommandItem>
                                                     ),
                                                 )}

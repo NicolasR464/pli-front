@@ -20,8 +20,8 @@ const Home = async (): Promise<React.JSX.Element> => {
         <div className='flex min-h-screen flex-col items-center justify-between p-24'>
             <h1>{process.env.NODE_ENV}</h1>
             {!!userId && <RegistrationForm />}
-            <h1>{JSON.stringify(user, undefined, 2)}</h1>
-            <ClerkTest />
+            {/* <h1>{JSON.stringify(user, undefined, 2)}</h1> */}
+            {/* <ClerkTest /> */}
         </div>
     )
 }

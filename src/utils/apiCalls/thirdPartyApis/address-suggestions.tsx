@@ -19,7 +19,7 @@ export const getAddressSuggestions = async (
 ): Promise<AddressSuggestion[] | undefined> => {
     const response = await axios.get(apiEndpoints.ADDRESS_SUGGESTIONS, {
         params: {
-            q: encodeURIComponent(input),
+            q: input,
             limit: 15,
         },
     })
