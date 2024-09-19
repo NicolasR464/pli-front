@@ -174,8 +174,14 @@ export const RegistrationForm = (): React.JSX.Element => {
                                             )}
                                             onClick={() => setOpen(true)}
                                         >
-                                            {!!field.value && field.value}
-                                            {!field.value && 'Select address'}
+                                            {!!field.value &&
+                                                !addressObject &&
+                                                field.value}
+                                            {!!addressObject &&
+                                                `${addressObject.housenumber} ${addressObject.street}, ${addressObject.postcode} ${addressObject.city}`}
+                                            {!field.value &&
+                                                !!addressObject &&
+                                                'Sélectionne ton adresse'}
                                             <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                                         </Button>
                                     </FormControl>

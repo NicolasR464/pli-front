@@ -29,6 +29,7 @@ export const getAddressSuggestions = async (
     ).features.map((feature: ApiGouvFeature) => ({
         label: feature.properties.label,
         properties: {
+            housenumber: feature.properties.housenumber,
             street: feature.properties.street,
             city: feature.properties.city,
             postcode: feature.properties.postcode,
