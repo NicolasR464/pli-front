@@ -28,7 +28,7 @@ import {
 } from '@/components/shadcn/ui/popover'
 
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/address-suggestions'
-import { getRandomAvatarUrl } from '@/utils/functions'
+import { getRandomAvatarUrl, getRandomUserPseudonym } from '@/utils/functions'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
 import type { UserRegistration } from '@/types/formValidations/userRegistration'
@@ -40,6 +40,7 @@ import { cn } from '../shadcn/utils'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
 import { ChevronsUpDown } from 'lucide-react'
+import { Label } from '@radix-ui/react-label'
 
 /**
  * RegistrationForm component for user registration.
@@ -56,7 +57,6 @@ export const RegistrationForm = (): React.JSX.Element => {
     const form = useForm<UserRegistration>({
         resolver: zodResolver(userRegistrationSchema),
         defaultValues: {
-            pseudo: '',
             avatarUrl: '',
             addressInput: '',
             addressObject: {},
@@ -76,6 +76,7 @@ export const RegistrationForm = (): React.JSX.Element => {
     // Set random avatar on mount
     useEffect(() => {
         setValue('avatarUrl', getRandomAvatarUrl())
+        setValue('pseudo', getRandomUserPseudonym())
     }, [setValue])
 
     // Watch for form values
@@ -131,8 +132,10 @@ export const RegistrationForm = (): React.JSX.Element => {
                     name='pseudo'
                     render={({ field: { onChange, onBlur, value } }) => (
                         <FormItem>
+                            <Label>{'Pseudo'}</Label>
                             <FormControl>
                                 <Input
+                                    autoFocus
                                     onChange={onChange}
                                     onBlur={onBlur}
                                     value={value}
@@ -160,14 +163,16 @@ export const RegistrationForm = (): React.JSX.Element => {
                 />
 
                 {/** Avatar Image */}
-                <Avatar>
-                    <Image
-                        src={avatarUrl}
-                        alt='Avatar'
-                        width={100}
-                        height={100}
-                    />
-                </Avatar>
+                {!!avatarUrl && (
+                    <Avatar>
+                        <Image
+                            src={avatarUrl}
+                            alt='Avatar'
+                            width={100}
+                            height={100}
+                        />
+                    </Avatar>
+                )}
                 <Button
                     type='button'
                     onClick={() => {

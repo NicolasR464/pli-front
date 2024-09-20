@@ -1,6 +1,14 @@
 import { Context } from '@/types'
 import { environment } from '@/types/environment'
 
+import {
+    adjectives,
+    animals,
+    colors,
+    Config,
+    uniqueNamesGenerator,
+} from 'unique-names-generator'
+
 export const wait = async (mlseconds: number): Promise<void> => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -29,4 +37,24 @@ export const getRandomAvatarUrl = (): string => {
     const randomNumber = Math.floor(Math.random() * 100)
 
     return `https://api.multiavatar.com/${randomNumber}.png?apikey=${environment.NEXT_PUBLIC_MULTIAVATAR_API_KEY}`
+}
+
+/**
+ * Generates a random user pseudonym using the unique-names-generator library.
+ *
+ * This function combines adjectives, animals, and colors to create a unique and humorous name.
+ * @returns {string} A randomly generated user pseudonym.
+ * @example
+ * const pseudonym = getRandomUserPseudonym();
+ * Returns something like: "Fierce-Tiger-Lime"
+ * @see https://github.com/DylanVann/unique-names-generator for more information about the unique-names-generator library.
+ */
+export const getRandomUserPseudonym = (): string => {
+    const randomFunnyName = uniqueNamesGenerator({
+        dictionaries: [adjectives, animals, colors],
+        separator: ' ',
+        length: 3,
+    })
+
+    return randomFunnyName
 }
