@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { FieldErrors } from 'react-hook-form'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import Image from 'next/image'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -27,6 +28,7 @@ import {
 } from '@/components/shadcn/ui/popover'
 
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/address-suggestions'
+import { getRandomAvatarUrl } from '@/utils/functions'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
 import type { UserRegistration } from '@/types/formValidations/userRegistration'
@@ -36,6 +38,7 @@ import { Button } from '../shadcn/ui/button'
 import { Input } from '../shadcn/ui/input'
 import { cn } from '../shadcn/utils'
 import { useDebouncedCallback } from '@mantine/hooks'
+import { Avatar } from '@radix-ui/react-avatar'
 import { ChevronsUpDown } from 'lucide-react'
 
 /**
@@ -54,7 +57,7 @@ export const RegistrationForm = (): React.JSX.Element => {
         resolver: zodResolver(userRegistrationSchema),
         defaultValues: {
             pseudo: '',
-            avatarUrl: 'Todo',
+            avatarUrl: '',
             addressInput: '',
             addressObject: {},
         },
@@ -70,10 +73,16 @@ export const RegistrationForm = (): React.JSX.Element => {
 
     const [open, setOpen] = useState(false)
 
-    const addressInput = watch('addressInput')
+    // Set random avatar on mount
+    useEffect(() => {
+        setValue('avatarUrl', getRandomAvatarUrl())
+    }, [setValue])
+
+    // Watch for form values
+    // const addressInput = watch('addressInput')
     const addressObject = watch('addressObject')
     const pseudo = watch('pseudo')
-    console.log('pseudo:', pseudo)
+    const avatarUrl = watch('avatarUrl')
 
     const fetchAddressSuggestions = useDebouncedCallback(
         async (input: string): Promise<AddressSuggestion[]> => {
@@ -99,11 +108,6 @@ export const RegistrationForm = (): React.JSX.Element => {
         500,
     )
 
-    const addressInputWatch = watch('addressInput')
-    const addressSuggestionsWatch = watch('addressSuggestions')
-
-    setValue('avatarUrl', 'https://placehold.co/100x100')
-
     const onSubmit = (data: UserRegistration) => {
         console.log('🔥')
 
@@ -125,7 +129,7 @@ export const RegistrationForm = (): React.JSX.Element => {
                 <Controller
                     control={control}
                     name='pseudo'
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                    render={({ field: { onChange, onBlur, value } }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
@@ -138,11 +142,11 @@ export const RegistrationForm = (): React.JSX.Element => {
                     )}
                 />
 
-                {/** User Avatar */}
+                {/** User Avatar URL */}
                 <Controller
                     control={control}
                     name='avatarUrl'
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                    render={({ field: { onChange, onBlur } }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
@@ -154,6 +158,24 @@ export const RegistrationForm = (): React.JSX.Element => {
                         </FormItem>
                     )}
                 />
+
+                {/** Avatar Image */}
+                <Avatar>
+                    <Image
+                        src={avatarUrl}
+                        alt='Avatar'
+                        width={100}
+                        height={100}
+                    />
+                </Avatar>
+                <Button
+                    type='button'
+                    onClick={() => {
+                        setValue('avatarUrl', getRandomAvatarUrl())
+                    }}
+                >
+                    {'Change Avatar'}
+                </Button>
 
                 {/* {'addressSuggestionsWatch 👇'}
                 <br />
