@@ -43,27 +43,19 @@ import { Avatar } from '@radix-ui/react-avatar'
 import { Label } from '@radix-ui/react-label'
 import { ChevronsUpDown } from 'lucide-react'
 
-type UserData = {
-    readonly id?: string
-    readonly firstName?: string
-    readonly lastName?: string
-    readonly email?: string
-    readonly jwt?: string
-}
-
-type RegistrationFormProperties = { readonly user: UserData }
-
 /**
  * RegistrationForm component for user registration.
  *
  * This component renders a form for user onboarding. It is asking for the user's address, an avatar,
  * and a pseudonym.
- * @param {UserData} props - The props for the RegistrationForm component
+ * @param {jwt} props - The JWT token for authentication
  * @returns {React.JSX.Element} The rendered registration form
  */
 export const RegistrationForm = ({
-    user,
-}: RegistrationFormProperties): React.JSX.Element => {
+    jwt,
+}: {
+    readonly jwt?: string
+}): React.JSX.Element => {
     const { mutateAsync } = useCreateUser()
 
     const { control, watch, setValue, handleSubmit, register } =
@@ -137,20 +129,16 @@ export const RegistrationForm = ({
         const { pseudo } = data
 
         const dataToSend = {
-            id: user.id,
             avatarUrl,
             pseudo,
             address: addressObject,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
             createdAt: new Date().toISOString(),
         }
 
         await mutateAsync(
             {
                 data: dataToSend,
-                jwt: user.jwt ?? '',
+                jwt: jwt ?? '',
             },
             {
                 onSuccess: () => {
