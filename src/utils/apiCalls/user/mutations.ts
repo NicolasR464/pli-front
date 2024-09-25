@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 
 type CreateUserParams = {
     data: Partial<User>
-    jwt: string
+    JWT: string
 }
 
 export const useCreateUser = (): UseMutationResult<
@@ -17,6 +17,6 @@ export const useCreateUser = (): UseMutationResult<
     CreateUserParams
 > => {
     return useMutation<CreateUserResponse, Error, CreateUserParams>({
-        mutationFn: ({ data, jwt }) => createUser(data, jwt),
+        mutationFn: ({ data, JWT }) => createUser(data, JWT),
     })
 }

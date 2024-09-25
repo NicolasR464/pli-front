@@ -48,13 +48,13 @@ import { ChevronsUpDown } from 'lucide-react'
  *
  * This component renders a form for user onboarding. It is asking for the user's address, an avatar,
  * and a pseudonym.
- * @param {jwt} props - The JWT token for authentication
+ * @param {JWT} props - The JWT token for authentication
  * @returns {React.JSX.Element} The rendered registration form
  */
 export const RegistrationForm = ({
-    jwt,
+    JWT,
 }: {
-    readonly jwt?: string
+    readonly JWT: string
 }): React.JSX.Element => {
     const { mutateAsync } = useCreateUser()
 
@@ -138,7 +138,7 @@ export const RegistrationForm = ({
         await mutateAsync(
             {
                 data: dataToSend,
-                jwt: jwt ?? '',
+                JWT: JWT ?? '',
             },
             {
                 onSuccess: () => {

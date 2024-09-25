@@ -46,16 +46,16 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
 /**
  * Creates a new user.
  * @param {User} data The user data to create.
- * @param {string} jwt The JWT token for authentication.
+ * @param {string} JWT The JWT token for authentication.
  * @returns {Promise<CreateUserResponse>} A promise that resolves to the create user response.
  */
 export const createUser = async (
     data: Partial<User>,
-    jwt: string,
+    JWT: string,
 ): Promise<CreateUserResponse> => {
-    if (!jwt) throw new Error('No JWT provided')
+    if (!JWT) throw new Error('No JWT provided')
 
-    addAuthHeader(jwt)
+    addAuthHeader(JWT)
 
     const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
         apiEndpoints.USERS,

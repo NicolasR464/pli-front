@@ -64,13 +64,13 @@ export const getRandomUserPseudonym = (): string => {
  * This function sets the Authorization header of the userInstance axios instance
  * to include the provided JWT token. This is typically used to authenticate
  * API requests.
- * @param {string} jwt - The JSON Web Token to be included in the Authorization header.
+ * @param {string} JWT - The JSON Web Token to be included in the Authorization header.
  * @returns {void}
  * @example
  * const jwtToken = 'your.jwt.token';
  * addAuthHeader(jwtToken);
  * // Now all subsequent requests using userInstance will include the Authorization header
  */
-export const addAuthHeader = (jwt: string): void => {
-    userInstance.defaults.headers.Authorization = `Bearer ${jwt}`
+export const addAuthHeader = (JWT: string): void => {
+    userInstance.defaults.headers.Authorization = `Bearer ${JWT}`
 }
