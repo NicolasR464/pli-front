@@ -28,6 +28,8 @@ import {
 } from '@/components/shadcn/ui/popover'
 
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/address-suggestions'
+import { createUser } from '@/utils/apiCalls/user'
+import { useCreateUser } from '@/utils/apiCalls/user/mutations'
 import { getRandomAvatarUrl, getRandomUserPseudonym } from '@/utils/functions'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
@@ -37,18 +39,23 @@ import { userRegistrationSchema } from '@/types/formValidations/userRegistration
 import { Button } from '../shadcn/ui/button'
 import { Input } from '../shadcn/ui/input'
 import { cn } from '../shadcn/utils'
+import { useAuth } from '@clerk/nextjs'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
-import { ChevronsUpDown } from 'lucide-react'
 import { Label } from '@radix-ui/react-label'
+import { ChevronsUpDown } from 'lucide-react'
 
 /**
  * RegistrationForm component for user registration.
  *
- * This component renders a form for user onboarding.
+ * This component renders a form for user onboarding. It is asking for the user's address, an avatar,
+ * and a pseudonym.
  * @returns {React.JSX.Element} The rendered registration form
  */
 export const RegistrationForm = (): React.JSX.Element => {
+    const { isLoaded, userId, sessionId, getToken } = useAuth()
+    const { mutateAsync, isLoading } = useCreateUser()
+
     const { control, watch, setValue, register, handleSubmit } =
         useForm<UserRegistration>({
             resolver: zodResolver(userRegistrationSchema),
@@ -87,7 +94,7 @@ export const RegistrationForm = (): React.JSX.Element => {
 
     const fetchAddressSuggestions = useDebouncedCallback(
         async (input: string): Promise<AddressSuggestion[]> => {
-            if (input.length >= 3) {
+            if (input.length > 3) {
                 try {
                     const addresses = await getAddressSuggestions(input)
                     console.log(addresses)
@@ -109,10 +116,25 @@ export const RegistrationForm = (): React.JSX.Element => {
         500,
     )
 
-    const onSubmit = (data: UserRegistration) => {
+    const onSubmit = async (data: UserRegistration): Promise<void> => {
         console.log('🔥')
 
         console.log(data)
+
+        const token = await getToken({ template: 'trocup-1' })
+        console.log({ token })
+
+        if (token)
+            await createUserMutation.mutateAsync(token, {
+                onSuccess: () => {
+                    console.log('User created successfully')
+                    // You can add additional logic here, like redirecting the user or showing a success message
+                },
+                onError: (error) => {
+                    console.error('Error creating user:', error)
+                    // Handle the error, maybe show an error message to the user
+                },
+            })
     }
 
     const onError = (errors: FieldErrors<UserRegistration>): void => {
@@ -125,7 +147,6 @@ export const RegistrationForm = (): React.JSX.Element => {
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className='space-y-8'
             >
-                {JSON.stringify(pseudo, undefined, 2)}
                 {/** User Pseudo */}
                 <Controller
                     control={control}
@@ -135,7 +156,6 @@ export const RegistrationForm = (): React.JSX.Element => {
                             <Label>{'Pseudo'}</Label>
                             <FormControl>
                                 <Input
-                                    autoFocus
                                     onChange={onChange}
                                     onBlur={onBlur}
                                     value={value}
@@ -297,7 +317,12 @@ export const RegistrationForm = (): React.JSX.Element => {
                     )}
                 />
 
-                <Button type='submit'>{'Submit'}</Button>
+                <Button
+                    type='submit'
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Submitting…' : 'Submit'}
+                </Button>
             </form>
         </Form>
     )

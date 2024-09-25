@@ -5,6 +5,7 @@ import { apiEndpoints } from '@/utils/constants/endpoints'
 import { environment } from '@/types/environment'
 import type { User } from '@/types/user'
 
+import { addAuthHeader } from '..'
 import type { AxiosResponse } from 'axios'
 
 type CreateUserSuccess = {
@@ -49,7 +50,7 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
  * @returns {Promise<CreateUserResponse>} A promise that resolves to the create user response.
  */
 export const createUser = async (jwt: string): Promise<CreateUserResponse> => {
-    userInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`
+    addAuthHeader(userInstance, jwt)
 
     const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
         await userInstance.post(apiEndpoints.USERS, {
