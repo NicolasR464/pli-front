@@ -1,3 +1,4 @@
+import type { CreateUserResponse } from './index'
 import { createUser } from './index'
 
 import type { User } from '@/types/user'
@@ -5,8 +6,17 @@ import type { User } from '@/types/user'
 import type { UseMutationResult } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
 
-export const useCreateUser = (): UseMutationResult<User, Error, string> => {
-    return useMutation<User, Error, string>({
-        mutationFn: (data: User) => createUser(data),
+type CreateUserParams = {
+    data: Partial<User>
+    jwt: string
+}
+
+export const useCreateUser = (): UseMutationResult<
+    CreateUserResponse,
+    Error,
+    CreateUserParams
+> => {
+    return useMutation<CreateUserResponse, Error, CreateUserParams>({
+        mutationFn: ({ data, jwt }) => createUser(data, jwt),
     })
 }

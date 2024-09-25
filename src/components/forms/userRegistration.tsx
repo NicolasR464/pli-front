@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
 import React, { useEffect, useState } from 'react'
@@ -49,6 +48,7 @@ type UserData = {
     readonly firstName?: string
     readonly lastName?: string
     readonly email?: string
+    readonly jwt?: string
 }
 
 type RegistrationFormProperties = { readonly user: UserData }
@@ -113,7 +113,6 @@ export const RegistrationForm = ({
         async (input: string): Promise<AddressSuggestion[]> => {
             if (input.length > 3) {
                 const addresses = await getAddressSuggestions(input)
-                console.log(addresses)
 
                 let index = 0
                 if (addresses)
@@ -133,10 +132,6 @@ export const RegistrationForm = ({
     )
 
     const onSubmit = async (data: UserRegistration): Promise<void> => {
-        console.log('🔥 onSubmit')
-
-        console.log(data)
-
         // @TODO Transform the data to match the API's requirements
 
         const { pseudo } = data
@@ -149,20 +144,25 @@ export const RegistrationForm = ({
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            createdAt: new Date().toISOString(),
         }
 
-        console.log(dataToSend)
-
-        // await mutateAsync(dataToSend, {
-        //     onSuccess: () => {
-        //         console.log('User created successfully')
-        //         // You can add additional logic here, like redirecting the user or showing a success message
-        //     },
-        //     onError: (error) => {
-        //         console.error('Error creating user:', error)
-        //         // Handle the error, maybe show an error message to the user
-        //     },
-        // })
+        await mutateAsync(
+            {
+                data: dataToSend,
+                jwt: user.jwt ?? '',
+            },
+            {
+                onSuccess: () => {
+                    console.log('User created successfully')
+                    // Add toaster or redirection
+                },
+                onError: (error) => {
+                    console.error('Error creating user:', error)
+                    // Handle the error, maybe show an error message to the user
+                },
+            },
+        )
     }
 
     /**
@@ -231,6 +231,8 @@ export const RegistrationForm = ({
                         />
                     </Avatar>
                 )}
+
+                {/** Change Avatar Button */}
                 <Button
                     type='button'
                     onClick={() => {
@@ -338,6 +340,7 @@ export const RegistrationForm = ({
                     )}
                 />
 
+                {/** Submit Button */}
                 <Button
                     type='submit'
                     disabled={!!isLoading}

@@ -1,6 +1,7 @@
-import { userInstance, userInstanceAuth } from '@/utils/axiosInstances/user'
+import { userInstance } from '@/utils/axiosInstances/user'
 import { paginationLimit } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
+import { addAuthHeader } from '@/utils/functions'
 
 import type { User } from '@/types/user'
 
@@ -13,7 +14,7 @@ type CreateUserError = {
     error: string
 }
 
-type CreateUserResponse = CreateUserSuccess | CreateUserError
+export type CreateUserResponse = CreateUserSuccess | CreateUserError
 
 type PaginatedUsers = {
     users: User[]
@@ -45,11 +46,21 @@ export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
 /**
  * Creates a new user.
  * @param {User} data The user data to create.
+ * @param {string} jwt The JWT token for authentication.
  * @returns {Promise<CreateUserResponse>} A promise that resolves to the create user response.
  */
-export const createUser = async (data: User): Promise<CreateUserResponse> => {
-    const response: AxiosResponse<CreateUserResponse> =
-        await userInstanceAuth.post(apiEndpoints.USERS, data)
+export const createUser = async (
+    data: Partial<User>,
+    jwt: string,
+): Promise<CreateUserResponse> => {
+    if (!jwt) throw new Error('No JWT provided')
+
+    addAuthHeader(jwt)
+
+    const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
+        apiEndpoints.USERS,
+        data,
+    )
 
     if (response.status !== 201)
         throw new Error('User data could not be created')
