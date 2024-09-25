@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
 import React, { useEffect, useState } from 'react'
@@ -28,7 +29,6 @@ import {
 } from '@/components/shadcn/ui/popover'
 
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/address-suggestions'
-import { createUser } from '@/utils/apiCalls/user'
 import { useCreateUser } from '@/utils/apiCalls/user/mutations'
 import { getRandomAvatarUrl, getRandomUserPseudonym } from '@/utils/functions'
 
@@ -39,24 +39,34 @@ import { userRegistrationSchema } from '@/types/formValidations/userRegistration
 import { Button } from '../shadcn/ui/button'
 import { Input } from '../shadcn/ui/input'
 import { cn } from '../shadcn/utils'
-import { useAuth } from '@clerk/nextjs'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
 import { Label } from '@radix-ui/react-label'
 import { ChevronsUpDown } from 'lucide-react'
+
+type UserData = {
+    readonly id?: string
+    readonly firstName?: string
+    readonly lastName?: string
+    readonly email?: string
+}
+
+type RegistrationFormProperties = { readonly user: UserData }
 
 /**
  * RegistrationForm component for user registration.
  *
  * This component renders a form for user onboarding. It is asking for the user's address, an avatar,
  * and a pseudonym.
+ * @param {UserData} props - The props for the RegistrationForm component
  * @returns {React.JSX.Element} The rendered registration form
  */
-export const RegistrationForm = (): React.JSX.Element => {
-    const { isLoaded, userId, sessionId, getToken } = useAuth()
-    const { mutateAsync, isLoading } = useCreateUser()
+export const RegistrationForm = ({
+    user,
+}: RegistrationFormProperties): React.JSX.Element => {
+    const { mutateAsync } = useCreateUser()
 
-    const { control, watch, setValue, register, handleSubmit } =
+    const { control, watch, setValue, handleSubmit, register } =
         useForm<UserRegistration>({
             resolver: zodResolver(userRegistrationSchema),
         })
@@ -80,33 +90,39 @@ export const RegistrationForm = (): React.JSX.Element => {
 
     const [open, setOpen] = useState(false)
 
-    // Set random avatar on mount
+    const [isLoading, setIsLoading] = useState(false)
+
+    // Set random avatar and pseudo on mount
     useEffect(() => {
         setValue('avatarUrl', getRandomAvatarUrl())
         setValue('pseudo', getRandomUserPseudonym())
     }, [setValue])
 
-    // Watch for form values
-    // const addressInput = watch('addressInput')
     const addressObject = watch('addressObject')
-    const pseudo = watch('pseudo')
     const avatarUrl = watch('avatarUrl')
 
+    /**
+     * Fetches address suggestions based on user input.
+     *
+     * This function is debounced to prevent excessive API calls. It only triggers
+     * when the input length is greater than 3 characters.
+     * @param {string} input - The user's input for address search
+     * @returns {Promise<AddressSuggestion[]>} A promise that resolves to an array of address suggestions
+     */
     const fetchAddressSuggestions = useDebouncedCallback(
         async (input: string): Promise<AddressSuggestion[]> => {
             if (input.length > 3) {
-                try {
-                    const addresses = await getAddressSuggestions(input)
-                    console.log(addresses)
+                const addresses = await getAddressSuggestions(input)
+                console.log(addresses)
 
-                    let index = 0
-                    if (addresses)
-                        for (const address of addresses) {
-                            update(index, address)
-                            index++
-                        }
-                } catch (error) {
-                    console.error('Error fetching address suggestions:', error)
+                let index = 0
+                if (addresses)
+                    for (const address of addresses) {
+                        update(index, address)
+                        index++
+                    }
+
+                if (!addresses) {
                     return []
                 }
             }
@@ -117,28 +133,50 @@ export const RegistrationForm = (): React.JSX.Element => {
     )
 
     const onSubmit = async (data: UserRegistration): Promise<void> => {
-        console.log('🔥')
+        console.log('🔥 onSubmit')
 
         console.log(data)
 
-        const token = await getToken({ template: 'trocup-1' })
-        console.log({ token })
+        // @TODO Transform the data to match the API's requirements
 
-        if (token)
-            await createUserMutation.mutateAsync(token, {
-                onSuccess: () => {
-                    console.log('User created successfully')
-                    // You can add additional logic here, like redirecting the user or showing a success message
-                },
-                onError: (error) => {
-                    console.error('Error creating user:', error)
-                    // Handle the error, maybe show an error message to the user
-                },
-            })
+        const { pseudo } = data
+
+        const dataToSend = {
+            id: user.id,
+            avatarUrl,
+            pseudo,
+            address: addressObject,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+        }
+
+        console.log(dataToSend)
+
+        // await mutateAsync(dataToSend, {
+        //     onSuccess: () => {
+        //         console.log('User created successfully')
+        //         // You can add additional logic here, like redirecting the user or showing a success message
+        //     },
+        //     onError: (error) => {
+        //         console.error('Error creating user:', error)
+        //         // Handle the error, maybe show an error message to the user
+        //     },
+        // })
     }
 
+    /**
+     * Handles form validation errors.
+     *
+     * This function is called when form validation fails. It logs the validation errors
+     * to the console for debugging purposes.
+     *
+     * @param {FieldErrors<UserRegistration>} errors - The validation errors object
+     * @returns {void}
+     */
     const onError = (errors: FieldErrors<UserRegistration>): void => {
         console.log('Validation Errors:', errors)
+        // TODO: Handle the errors, maybe show an error message to the user@
     }
 
     return (
@@ -201,23 +239,6 @@ export const RegistrationForm = (): React.JSX.Element => {
                 >
                     {'Change Avatar'}
                 </Button>
-
-                {/* {'addressSuggestionsWatch 👇'}
-                <br />
-                {JSON.stringify(addressSuggestionsWatch, undefined, 2)}
-                <br />
-                {JSON.stringify(fields, undefined, 2)}
-                <br />
-                {'🔥----------------------------------🔥'}
-                <br />
-                <br />
-                {'addressObject 👇'}
-                <br />
-                {JSON.stringify(addressObject, undefined, 2)}
-                <br />
-                {'addressInputWatch 👇'}
-                <br />
-                {JSON.stringify(addressInputWatch, undefined, 2)} */}
 
                 {/** User Address */}
                 <FormField
@@ -319,7 +340,7 @@ export const RegistrationForm = (): React.JSX.Element => {
 
                 <Button
                     type='submit'
-                    disabled={isLoading}
+                    disabled={!!isLoading}
                 >
                     {isLoading ? 'Submitting…' : 'Submit'}
                 </Button>

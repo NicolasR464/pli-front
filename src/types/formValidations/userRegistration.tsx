@@ -21,7 +21,22 @@ export const userRegistrationSchema = z.object({
     avatarUrl: z.string().url(),
     addressInput: z.string().optional(),
     addressObject: AddressSchema.optional(),
-    addressSuggestions: z.array(AddressSuggestionSchema),
+    addressSuggestions: z.array(AddressSuggestionSchema).optional(),
 })
 
 export type UserRegistration = z.infer<typeof userRegistrationSchema>
+
+export const userOnboardingSchema = userRegistrationSchema
+    .omit({
+        addressInput: true,
+        addressSuggestions: true,
+    })
+    .extend({
+        userId: z.string(),
+        createdAt: z.date(),
+        firstName: z.string(),
+        lastName: z.string(),
+        email: z.string().email(),
+    })
+
+export type UserOnboarding = z.infer<typeof userOnboardingSchema>

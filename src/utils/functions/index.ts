@@ -5,7 +5,6 @@ import {
     adjectives,
     animals,
     colors,
-    Config,
     uniqueNamesGenerator,
 } from 'unique-names-generator'
 
@@ -30,7 +29,6 @@ export const whichSide = (): Context =>
  * @example
  * const avatarUrl = getRandomAvatarUrl();
  * // Returns something like: "https://api.multiavatar.com/42.png?apikey=YOUR_API_KEY"
- *
  * @see https://api.multiavatar.com/ for more information about the MultiAvatar API.
  */
 export const getRandomAvatarUrl = (): string => {
@@ -50,11 +48,11 @@ export const getRandomAvatarUrl = (): string => {
  * @see https://github.com/DylanVann/unique-names-generator for more information about the unique-names-generator library.
  */
 export const getRandomUserPseudonym = (): string => {
-    const randomFunnyName = uniqueNamesGenerator({
+    const randomPseudo = uniqueNamesGenerator({
         dictionaries: [adjectives, animals, colors],
         separator: ' ',
         length: 3,
     })
 
-    return randomFunnyName
+    return randomPseudo
 }
