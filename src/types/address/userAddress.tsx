@@ -14,8 +14,9 @@ export const GeopointsSchema = z.object({
  * @exports AddressSchema
  */
 export const AddressSchema = z.object({
-    housenumber: z.string(),
-    street: z.string(),
+    label: z.string(),
+    housenumber: z.string().optional(),
+    street: z.string().optional(),
     city: z.string(),
     postcode: z.string(),
     citycode: z.string(),

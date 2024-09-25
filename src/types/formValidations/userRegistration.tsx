@@ -25,18 +25,3 @@ export const userRegistrationSchema = z.object({
 })
 
 export type UserRegistration = z.infer<typeof userRegistrationSchema>
-
-export const userOnboardingSchema = userRegistrationSchema
-    .omit({
-        addressInput: true,
-        addressSuggestions: true,
-    })
-    .extend({
-        userId: z.string(),
-        createdAt: z.date(),
-        firstName: z.string(),
-        lastName: z.string(),
-        email: z.string().email(),
-    })
-
-export type UserOnboarding = z.infer<typeof userOnboardingSchema>

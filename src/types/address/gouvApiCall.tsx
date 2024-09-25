@@ -12,11 +12,11 @@ export const ApiGouvFeatureSchema = z.object({
     properties: z.object({
         label: z.string(),
         score: z.number(),
-        housenumber: z.string(),
+        housenumber: z.string().optional(),
         id: z.string(),
         type: z.string(),
         name: z.string(),
-        street: z.string(),
+        street: z.string().optional(),
         city: z.string(),
         postcode: z.string(),
         citycode: z.string(),
@@ -44,7 +44,6 @@ export const ApiGouvResponseSchema = z.object({
  * @exports AddressSuggestionSchema
  */
 export const AddressSuggestionSchema = z.object({
-    label: z.string(),
     properties: AddressSchema,
 })
 

@@ -7,6 +7,6 @@ export const apiEndpoints = {
     INSTANT_MESSAGES: 'instantmsgs/',
 
     // Third party APIs
-    ADDRESS_SUGGESTIONS: 'https://api-adresse.data.gouv.fr/search/',
+    API_GOUV: 'https://api-adresse.data.gouv.fr/search/',
     USER_AVATAR: 'https://api.multiavatar.com/',
 }

@@ -27,7 +27,7 @@ import {
     PopoverTrigger,
 } from '@/components/shadcn/ui/popover'
 
-import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/address-suggestions'
+import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
 import { useCreateUser } from '@/utils/apiCalls/user/mutations'
 import { getRandomAvatarUrl, getRandomUserPseudonym } from '@/utils/functions'
 
@@ -56,7 +56,7 @@ export const RegistrationForm = ({
 }: {
     readonly JWT: string
 }): React.JSX.Element => {
-    const { mutateAsync } = useCreateUser()
+    const { mutateAsync, isPending } = useCreateUser()
 
     const { control, watch, setValue, handleSubmit, register } =
         useForm<UserRegistration>({
@@ -82,7 +82,7 @@ export const RegistrationForm = ({
 
     const [open, setOpen] = useState(false)
 
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
 
     // Set random avatar and pseudo on mount
     useEffect(() => {
@@ -113,6 +113,8 @@ export const RegistrationForm = ({
                         index++
                     }
 
+                console.log(addresses)
+
                 if (!addresses) {
                     return []
                 }
@@ -124,8 +126,6 @@ export const RegistrationForm = ({
     )
 
     const onSubmit = async (data: UserRegistration): Promise<void> => {
-        // @TODO Transform the data to match the API's requirements
-
         const { pseudo } = data
 
         const dataToSend = {
@@ -138,7 +138,7 @@ export const RegistrationForm = ({
         await mutateAsync(
             {
                 data: dataToSend,
-                JWT: JWT ?? '',
+                JWT,
             },
             {
                 onSuccess: () => {
@@ -158,7 +158,6 @@ export const RegistrationForm = ({
      *
      * This function is called when form validation fails. It logs the validation errors
      * to the console for debugging purposes.
-     *
      * @param {FieldErrors<UserRegistration>} errors - The validation errors object
      * @returns {void}
      */
@@ -261,7 +260,7 @@ export const RegistrationForm = ({
                                                 !addressObject &&
                                                 field.value}
                                             {!!addressObject &&
-                                                `${addressObject.housenumber} ${addressObject.street}, ${addressObject.postcode} ${addressObject.city}`}
+                                                addressObject.label}
                                             {!field.value &&
                                                 !addressObject &&
                                                 'Sélectionne ton adresse'}
@@ -297,23 +296,32 @@ export const RegistrationForm = ({
                                                             className='cursor-pointer'
                                                             key={suggestion.id}
                                                             value={
-                                                                suggestion.label
+                                                                suggestion
+                                                                    .properties
+                                                                    .label
                                                             }
                                                             onSelect={() => {
                                                                 setValue(
                                                                     'addressObject',
-                                                                    suggestion.properties,
+                                                                    {
+                                                                        ...suggestion.properties,
+                                                                        label: suggestion
+                                                                            .properties
+                                                                            .label,
+                                                                    },
                                                                 )
                                                                 setOpen(false)
                                                             }}
                                                         >
                                                             <span
                                                                 {...register(
-                                                                    `addressSuggestions.${index}.label`,
+                                                                    `addressSuggestions.${index}.properties.label`,
                                                                 )}
                                                             >
                                                                 {
-                                                                    suggestion.label
+                                                                    suggestion
+                                                                        .properties
+                                                                        .label
                                                                 }
                                                             </span>
                                                         </CommandItem>
@@ -331,9 +339,9 @@ export const RegistrationForm = ({
                 {/** Submit Button */}
                 <Button
                     type='submit'
-                    disabled={!!isLoading}
+                    disabled={!!isPending}
                 >
-                    {isLoading ? 'Submitting…' : 'Submit'}
+                    {isPending ? 'Submitting…' : 'Submit'}
                 </Button>
             </form>
         </Form>

@@ -1,4 +1,4 @@
-import { articleInstance } from '@/utils/axiosInstances'
+import { articleInstance } from '@/utils/axiosInstances/article'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { Article } from '@/types/article'

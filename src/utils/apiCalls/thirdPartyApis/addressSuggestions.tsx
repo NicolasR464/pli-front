@@ -17,7 +17,7 @@ import axios from 'axios'
 export const getAddressSuggestions = async (
     input: string,
 ): Promise<AddressSuggestion[] | undefined> => {
-    const response = await axios.get(apiEndpoints.ADDRESS_SUGGESTIONS, {
+    const response = await axios.get(apiEndpoints.API_GOUV, {
         params: {
             q: input,
             limit: 15,
@@ -27,8 +27,8 @@ export const getAddressSuggestions = async (
     const suggestions: AddressSuggestion[] = (
         response.data as ApiGouvResponse
     ).features.map((feature: ApiGouvFeature) => ({
-        label: feature.properties.label,
         properties: {
+            label: feature.properties.label,
             housenumber: feature.properties.housenumber,
             street: feature.properties.street,
             city: feature.properties.city,
