@@ -45,7 +45,7 @@ import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
 import { Label } from '@radix-ui/react-label'
 import type { AxiosError } from 'axios'
-import { ChevronsUpDown } from 'lucide-react'
+import { ChevronsUpDown, UserPen } from 'lucide-react'
 
 /**
  * RegistrationForm component for user registration.
@@ -190,198 +190,226 @@ export const RegistrationForm = (): React.JSX.Element => {
             <form
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onSubmit={handleSubmit(onSubmit, onError)}
-                className='space-y-8'
+                className='flex flex-col items-center justify-center space-y-8'
             >
-                {/** User Pseudo */}
-                <Controller
-                    control={control}
-                    name='pseudo'
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <FormItem>
-                            <Label
-                                className={cn(
-                                    'flex flex-row justify-between',
-                                    !!errorPseudo && 'text-red-500',
-                                )}
-                            >
-                                {'Pseudo'}
-                            </Label>
-                            <FormControl>
-                                <Input
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                    value={value}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                {!!errorPseudo && (
-                                    <p className='text-red-500'>
-                                        {errorPseudo}
-                                    </p>
-                                )}
-                            </FormDescription>
-                        </FormItem>
-                    )}
-                />
-
-                {/** User Avatar URL */}
-                <Controller
-                    control={control}
-                    name='avatarUrl'
-                    render={({ field: { onChange, onBlur } }) => (
-                        <FormItem>
-                            <FormControl>
-                                <Input
-                                    type='hidden'
-                                    onChange={onChange}
-                                    onBlur={onBlur}
-                                />
-                            </FormControl>
-                        </FormItem>
-                    )}
-                />
-
-                {/** Avatar Image */}
-                {!!avatarUrl && (
-                    <Avatar>
-                        <Image
-                            src={avatarUrl}
-                            alt='Avatar'
-                            width={100}
-                            height={100}
-                            priority
-                            onLoad={() => {
-                                setImageLoaded(true)
-                            }}
+                <div className='flex min-h-20 flex-wrap items-center justify-center'>
+                    <div className='flex flex-col items-center'>
+                        {/** User Avatar URL - hidden to the user */}
+                        <Controller
+                            control={control}
+                            name='avatarUrl'
+                            render={({ field: { onChange } }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input
+                                            type='hidden'
+                                            onChange={onChange}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
                         />
-                    </Avatar>
-                )}
 
-                {/** Change Avatar Button */}
-                <Button
-                    disabled={!imageLoaded}
-                    type='button'
-                    onClick={() => {
-                        setValue('avatarUrl', getRandomAvatarUrl())
-                    }}
-                >
-                    {'Change ton avatar'}
-                </Button>
+                        {/** Avatar Image */}
+                        {!!avatarUrl && (
+                            <Avatar>
+                                <Image
+                                    src={avatarUrl}
+                                    alt='Avatar'
+                                    width={100}
+                                    height={100}
+                                    priority
+                                    onLoad={() => {
+                                        setImageLoaded(true)
+                                    }}
+                                />
+                            </Avatar>
+                        )}
+
+                        {/** Change Avatar Button */}
+                        <Button
+                            className='mt-1'
+                            disabled={!imageLoaded}
+                            type='button'
+                            onClick={() => {
+                                setValue('avatarUrl', getRandomAvatarUrl())
+                            }}
+                        >
+                            <UserPen className='mr-2 h-4 w-4' />
+                            {'Ton avatar'}
+                        </Button>
+                    </div>
+
+                    {/** User Pseudo */}
+                    <Controller
+                        control={control}
+                        name='pseudo'
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <FormItem className='self-end px-4'>
+                                <Label
+                                    className={cn(
+                                        'flex flex-row justify-between',
+                                        !!errorPseudo && 'text-red-500',
+                                    )}
+                                >
+                                    {'Pseudo'}
+                                </Label>
+                                <FormDescription>
+                                    {!!errorPseudo && (
+                                        <p className='text-red-500'>
+                                            {errorPseudo}
+                                        </p>
+                                    )}
+                                </FormDescription>
+                                <FormControl>
+                                    <Input
+                                        className='mt-0 min-w-[300px]'
+                                        onChange={onChange}
+                                        onBlur={onBlur}
+                                        value={value}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                {/* {JSON.stringify(addressObject)}
+                {JSON.stringify(Object.keys(addressObject).length === 0)} */}
 
                 {/** User Address */}
-                <FormField
-                    control={control}
-                    name='addressInput'
-                    render={({ field }) => (
-                        <FormItem className='flex flex-col'>
-                            <FormLabel>{'Adresse'}</FormLabel>
+                <div className='flex justify-center'>
+                    <FormField
+                        control={control}
+                        name='addressInput'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>{'Ton adresse'}</FormLabel>
 
-                            <Popover
-                                open={open}
-                                onOpenChange={setOpen}
-                            >
-                                <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                            variant='outline'
-                                            role='combobox'
-                                            aria-expanded={open}
-                                            className={cn(
-                                                'w-[500px] justify-between',
-                                                !field.value &&
-                                                    'text-muted-foreground',
-                                            )}
-                                            onClick={() => {
-                                                setOpen(true)
-                                            }}
-                                        >
-                                            {!!field.value &&
-                                                !addressObject &&
-                                                field.value}
-                                            {!!addressObject &&
-                                                addressObject.label}
-                                            {!field.value &&
-                                                !addressObject &&
-                                                'Sélectionne ton adresse'}
-                                            <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                                        </Button>
-                                    </FormControl>
-                                </PopoverTrigger>
+                                <Popover
+                                    open={open}
+                                    onOpenChange={setOpen}
+                                >
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant='outline'
+                                                role='combobox'
+                                                aria-expanded={open}
+                                                className={cn(
+                                                    'min-w-full justify-between sm:min-w-[420px]',
+                                                    !field.value &&
+                                                        'text-muted-foreground',
+                                                )}
+                                                onClick={() => {
+                                                    setOpen(true)
+                                                }}
+                                            >
+                                                {!!field.value &&
+                                                    !!addressObject &&
+                                                    Object.keys(addressObject)
+                                                        .length === 0 &&
+                                                    field.value}
 
-                                <PopoverContent className='w-[300px] p-0'>
-                                    <Command>
-                                        <CommandInput
-                                            value={field.value}
-                                            placeholder='Cherche ton adresse'
-                                            onValueChange={(value) => {
-                                                const sanitizedValue =
-                                                    value.replaceAll(',', '')
+                                                {!!addressObject &&
+                                                    Object.keys(addressObject)
+                                                        .length > 0 &&
+                                                    addressObject.label}
 
-                                                field.onChange(sanitizedValue)
+                                                {!field.value &&
+                                                    !!addressObject &&
+                                                    Object.keys(addressObject)
+                                                        .length === 0 &&
+                                                    'Rentre ton adresse'}
+                                                <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
 
-                                                fetchAddressSuggestions(
-                                                    sanitizedValue,
-                                                )
-                                            }}
-                                        />
-                                        <CommandList>
-                                            <CommandEmpty>
-                                                {'Aucune adresse trouvée'}
-                                            </CommandEmpty>
+                                    <PopoverContent className='w-[300px] p-0'>
+                                        <Command>
+                                            <CommandInput
+                                                value={field.value}
+                                                placeholder='Cherche ton adresse'
+                                                onValueChange={(value) => {
+                                                    const sanitizedValue =
+                                                        value.replaceAll(
+                                                            ',',
+                                                            '',
+                                                        )
 
-                                            <CommandGroup>
-                                                {fields.map(
-                                                    (suggestion, index) => (
-                                                        <CommandItem
-                                                            className='cursor-pointer'
-                                                            key={suggestion.id}
-                                                            value={
-                                                                suggestion
-                                                                    .properties
-                                                                    .label
-                                                            }
-                                                            onSelect={() => {
-                                                                setValue(
-                                                                    'addressObject',
-                                                                    {
-                                                                        ...suggestion.properties,
-                                                                        label: suggestion
-                                                                            .properties
-                                                                            .label,
-                                                                    },
-                                                                )
-                                                                setOpen(false)
-                                                            }}
-                                                        >
-                                                            <span
-                                                                {...register(
-                                                                    `addressSuggestions.${index}.properties.label`,
-                                                                )}
-                                                            >
-                                                                {
+                                                    field.onChange(
+                                                        sanitizedValue,
+                                                    )
+
+                                                    fetchAddressSuggestions(
+                                                        sanitizedValue,
+                                                    )
+                                                }}
+                                            />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    {'Aucune adresse trouvée'}
+                                                </CommandEmpty>
+
+                                                <CommandGroup>
+                                                    {fields.map(
+                                                        (suggestion, index) => (
+                                                            <CommandItem
+                                                                className='cursor-pointer'
+                                                                key={
+                                                                    suggestion.id
+                                                                }
+                                                                value={
                                                                     suggestion
                                                                         .properties
                                                                         .label
                                                                 }
-                                                            </span>
-                                                        </CommandItem>
-                                                    ),
-                                                )}
-                                            </CommandGroup>
-                                        </CommandList>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
-                        </FormItem>
-                    )}
-                />
+                                                                onSelect={() => {
+                                                                    setValue(
+                                                                        'addressObject',
+                                                                        {
+                                                                            ...suggestion.properties,
+                                                                            label: suggestion
+                                                                                .properties
+                                                                                .label,
+                                                                        },
+                                                                    )
+                                                                    setOpen(
+                                                                        false,
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <span
+                                                                    {...register(
+                                                                        `addressSuggestions.${index}.properties.label`,
+                                                                    )}
+                                                                >
+                                                                    {
+                                                                        suggestion
+                                                                            .properties
+                                                                            .label
+                                                                    }
+                                                                </span>
+                                                            </CommandItem>
+                                                        ),
+                                                    )}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
                 {/** Submit Button */}
                 <Button
                     type='submit'
                     disabled={!!isPending}
                 >
-                    {isPending ? 'Enregistrement…' : 'Sauvegarder'}
+                    {isPending ? 'Enregistrement…' : 'Enregister'}
                 </Button>
             </form>
         </Form>
