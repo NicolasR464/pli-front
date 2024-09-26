@@ -1,17 +1,7 @@
-import { RegistrationForm } from '@/components/forms/userRegistration'
-
-import { auth } from '@clerk/nextjs/server'
-
-const Home = async (): Promise<React.JSX.Element> => {
-    const { getToken } = auth()
-
-    const JWT = await getToken({ template: 'trocup-1' })
-
-    return (
-        <div className='flex min-h-screen flex-col items-center justify-start p-24'>
-            {!!JWT && <RegistrationForm JWT={JWT} />}
-        </div>
-    )
-}
+const Home = (): React.JSX.Element => (
+    <div className='flex min-h-screen flex-col items-center justify-start p-24'>
+        <h1 className='text-4xl font-bold'>{'Welcome to TrocUp'}</h1>
+    </div>
+)
 
 export default Home

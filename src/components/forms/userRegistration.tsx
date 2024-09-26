@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
 import React, { useEffect, useState } from 'react'
 import type { FieldErrors } from 'react-hook-form'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import Image from 'next/image'
+import { redirect } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -29,6 +29,7 @@ import {
 
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
 import { useCreateUser } from '@/utils/apiCalls/user/mutations'
+import { pagePaths } from '@/utils/constants'
 import { getRandomAvatarUrl, getRandomUserPseudonym } from '@/utils/functions'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
@@ -38,6 +39,7 @@ import { userRegistrationSchema } from '@/types/formValidations/userRegistration
 import { Button } from '../shadcn/ui/button'
 import { Input } from '../shadcn/ui/input'
 import { cn } from '../shadcn/utils'
+import { useAuth } from '@clerk/nextjs'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
 import { Label } from '@radix-ui/react-label'
@@ -48,20 +50,12 @@ import { ChevronsUpDown } from 'lucide-react'
  *
  * This component renders a form for user onboarding. It is asking for the user's address, an avatar,
  * and a pseudonym.
- * @param {JWT} props - The JWT token for authentication
  * @returns {React.JSX.Element} The rendered registration form
  */
-export const RegistrationForm = ({
-    JWT,
-}: {
-    readonly JWT: string
-}): React.JSX.Element => {
+export const RegistrationForm = (): React.JSX.Element => {
     const { mutateAsync, isPending } = useCreateUser()
-
-    const { control, watch, setValue, handleSubmit, register } =
-        useForm<UserRegistration>({
-            resolver: zodResolver(userRegistrationSchema),
-        })
+    const [imageLoaded, setImageLoaded] = useState(false)
+    const { getToken } = useAuth()
 
     const form = useForm<UserRegistration>({
         resolver: zodResolver(userRegistrationSchema),
@@ -72,6 +66,8 @@ export const RegistrationForm = ({
         },
     })
 
+    const { control, watch, setValue, handleSubmit, register } = form
+
     const { fields, update } = useFieldArray({
         control,
         name: 'addressSuggestions',
@@ -81,8 +77,6 @@ export const RegistrationForm = ({
     })
 
     const [open, setOpen] = useState(false)
-
-    // const [isLoading, setIsLoading] = useState(false)
 
     // Set random avatar and pseudo on mount
     useEffect(() => {
@@ -113,8 +107,6 @@ export const RegistrationForm = ({
                         index++
                     }
 
-                console.log(addresses)
-
                 if (!addresses) {
                     return []
                 }
@@ -125,8 +117,20 @@ export const RegistrationForm = ({
         500,
     )
 
+    /**
+     * Handles form submission.
+     *
+     * This function is called when the form is submitted. It processes the form data,
+     * gets a JWT token, prepares the data to send, and makes an API call to create a new user.
+     * @param {UserRegistration} data - The form data
+     * @returns {Promise<void>}
+     */
     const onSubmit = async (data: UserRegistration): Promise<void> => {
         const { pseudo } = data
+
+        const JWT = await getToken({ template: 'trocup-1' })
+
+        if (!JWT) redirect(`${pagePaths.HOME}?onboardingSuccess=false`)
 
         const dataToSend = {
             avatarUrl,
@@ -141,13 +145,15 @@ export const RegistrationForm = ({
                 JWT,
             },
             {
-                onSuccess: () => {
-                    console.log('User created successfully')
-                    // Add toaster or redirection
-                },
+                onSuccess: () =>
+                    redirect(`${pagePaths.HOME}?onboardingSuccess=true`),
                 onError: (error) => {
+                    // TODO: Implement proper error handling
+                    // - For pseudo already taken: autofocus on pseudo input with error message
+                    // - For stale JWT: redirect to login
+                    // - For email already used: show appropriate error message
                     console.error('Error creating user:', error)
-                    // Handle the error, maybe show an error message to the user
+                    redirect('/?onboardingSuccess=false')
                 },
             },
         )
@@ -169,6 +175,7 @@ export const RegistrationForm = ({
     return (
         <Form {...form}>
             <form
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className='space-y-8'
             >
@@ -215,27 +222,32 @@ export const RegistrationForm = ({
                             alt='Avatar'
                             width={100}
                             height={100}
+                            priority
+                            onLoad={() => {
+                                setImageLoaded(true)
+                            }}
                         />
                     </Avatar>
                 )}
 
                 {/** Change Avatar Button */}
                 <Button
+                    disabled={!imageLoaded}
                     type='button'
                     onClick={() => {
                         setValue('avatarUrl', getRandomAvatarUrl())
                     }}
                 >
-                    {'Change Avatar'}
+                    {'Change ton avatar'}
                 </Button>
 
                 {/** User Address */}
                 <FormField
-                    control={form.control}
+                    control={control}
                     name='addressInput'
                     render={({ field }) => (
                         <FormItem className='flex flex-col'>
-                            <FormLabel>{'Addresse'}</FormLabel>
+                            <FormLabel>{'Adresse'}</FormLabel>
 
                             <Popover
                                 open={open}
@@ -286,7 +298,7 @@ export const RegistrationForm = ({
                                         />
                                         <CommandList>
                                             <CommandEmpty>
-                                                {'Aucune adresse trouvée.'}
+                                                {'Aucune adresse trouvée'}
                                             </CommandEmpty>
 
                                             <CommandGroup>
@@ -341,7 +353,7 @@ export const RegistrationForm = ({
                     type='submit'
                     disabled={!!isPending}
                 >
-                    {isPending ? 'Submitting…' : 'Submit'}
+                    {isPending ? 'Enregistrement…' : 'Sauvegarder'}
                 </Button>
             </form>
         </Form>

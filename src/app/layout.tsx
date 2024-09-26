@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { redirect } from 'next/navigation'
 
+import { Button } from '@/components/shadcn/ui/button'
+
+import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
@@ -9,7 +13,7 @@ import {
     SignedIn,
     SignedOut,
     SignInButton,
-    UserButton,
+    SignOutButton,
 } from '@clerk/nextjs'
 
 // eslint-disable-next-line new-cap
@@ -31,10 +35,18 @@ const Layout = ({
                 <ReactQueryProvider>
                     <header>
                         <SignedOut>
-                            <SignInButton />
+                            <SignInButton
+                                forceRedirectUrl={pagePaths.HOME}
+                                signUpForceRedirectUrl={pagePaths.ONBOARDING}
+                                mode='modal'
+                            >
+                                <Button>{'🚀 Connexion'}</Button>
+                            </SignInButton>
                         </SignedOut>
                         <SignedIn>
-                            <UserButton />
+                            <SignOutButton redirectUrl={pagePaths.HOME}>
+                                <Button>{'Déconnexion'}</Button>
+                            </SignOutButton>
                         </SignedIn>
                     </header>
 
