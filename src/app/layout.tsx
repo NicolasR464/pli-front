@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { redirect } from 'next/navigation'
 
 import { Button } from '@/components/shadcn/ui/button'
 

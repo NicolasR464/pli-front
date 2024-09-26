@@ -31,6 +31,7 @@ import {
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
 import { useCreateUser } from '@/utils/apiCalls/user/mutations'
 import { pagePaths } from '@/utils/constants'
+import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
 import { getRandomAvatarUrl, getRandomUserPseudonym } from '@/utils/functions'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
@@ -211,20 +212,20 @@ export const RegistrationForm = (): React.JSX.Element => {
                         />
 
                         {/** Avatar Image */}
-                        {!!avatarUrl && (
-                            <Avatar>
-                                <Image
-                                    src={avatarUrl}
-                                    alt='Avatar'
-                                    width={100}
-                                    height={100}
-                                    priority
-                                    onLoad={() => {
-                                        setImageLoaded(true)
-                                    }}
-                                />
-                            </Avatar>
-                        )}
+
+                        <Avatar>
+                            <Image
+                                src={avatarUrl}
+                                alt='Avatar'
+                                width={100}
+                                height={100}
+                                priority
+                                onLoad={() => {
+                                    setImageLoaded(true)
+                                }}
+                                placeholder={avatarPlaceholder}
+                            />
+                        </Avatar>
 
                         {/** Change Avatar Button */}
                         <Button
