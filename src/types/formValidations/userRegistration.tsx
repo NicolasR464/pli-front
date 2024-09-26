@@ -17,7 +17,9 @@ export const userRegistrationSchema = z.object({
         .min(3, {
             message: 'Le pseudo doit contenir au moins 3 caractères',
         })
-        .max(50),
+        .max(50, {
+            message: 'Le pseudo doit contenir moins de 50 caractères',
+        }),
     avatarUrl: z.string().url(),
     addressInput: z.string().optional(),
     addressObject: AddressSchema.optional(),

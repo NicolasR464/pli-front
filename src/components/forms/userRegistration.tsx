@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import type { FieldErrors } from 'react-hook-form'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -17,6 +17,7 @@ import {
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -43,6 +44,7 @@ import { useAuth } from '@clerk/nextjs'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
 import { Label } from '@radix-ui/react-label'
+import type { AxiosError } from 'axios'
 import { ChevronsUpDown } from 'lucide-react'
 
 /**
@@ -56,10 +58,15 @@ export const RegistrationForm = (): React.JSX.Element => {
     const { mutateAsync, isPending } = useCreateUser()
     const [imageLoaded, setImageLoaded] = useState(false)
     const { getToken } = useAuth()
+    const router = useRouter()
+
+    // Set error message
+    const [errorPseudo, setErrorPseudo] = useState<string | undefined>()
 
     const form = useForm<UserRegistration>({
         resolver: zodResolver(userRegistrationSchema),
         defaultValues: {
+            pseudo: '',
             avatarUrl: '',
             addressInput: '',
             addressObject: {},
@@ -130,7 +137,10 @@ export const RegistrationForm = (): React.JSX.Element => {
 
         const JWT = await getToken({ template: 'trocup-1' })
 
-        if (!JWT) redirect(`${pagePaths.HOME}?onboardingSuccess=false`)
+        if (!JWT) {
+            router.push(`${pagePaths.HOME}?onboardingSuccess=false`)
+            return
+        }
 
         const dataToSend = {
             avatarUrl,
@@ -145,15 +155,15 @@ export const RegistrationForm = (): React.JSX.Element => {
                 JWT,
             },
             {
-                onSuccess: () =>
-                    redirect(`${pagePaths.HOME}?onboardingSuccess=true`),
-                onError: (error) => {
-                    // TODO: Implement proper error handling
-                    // - For pseudo already taken: autofocus on pseudo input with error message
-                    // - For stale JWT: redirect to login
-                    // - For email already used: show appropriate error message
-                    console.error('Error creating user:', error)
-                    redirect('/?onboardingSuccess=false')
+                onSuccess: () => {
+                    router.push(`${pagePaths.HOME}?onboardingSuccess=true`)
+                },
+                onError: (errorMsg) => {
+                    if (
+                        (errorMsg as AxiosError<{ error: string }>).response
+                            ?.data.error === 'pseudo already in use'
+                    )
+                        setErrorPseudo('Ce pseudo est déjà pris.')
                 },
             },
         )
@@ -168,8 +178,11 @@ export const RegistrationForm = (): React.JSX.Element => {
      * @returns {void}
      */
     const onError = (errors: FieldErrors<UserRegistration>): void => {
-        console.log('Validation Errors:', errors)
-        // TODO: Handle the errors, maybe show an error message to the user@
+        if (errors.pseudo && errors.pseudo.type === 'too_small')
+            setErrorPseudo(errors.pseudo.message ?? 'Ce pseudo est trop court.')
+
+        if (errors.pseudo && errors.pseudo.type === 'too_big')
+            setErrorPseudo(errors.pseudo.message ?? 'Ce pseudo est trop long.')
     }
 
     return (
@@ -185,7 +198,14 @@ export const RegistrationForm = (): React.JSX.Element => {
                     name='pseudo'
                     render={({ field: { onChange, onBlur, value } }) => (
                         <FormItem>
-                            <Label>{'Pseudo'}</Label>
+                            <Label
+                                className={cn(
+                                    'flex flex-row justify-between',
+                                    !!errorPseudo && 'text-red-500',
+                                )}
+                            >
+                                {'Pseudo'}
+                            </Label>
                             <FormControl>
                                 <Input
                                     onChange={onChange}
@@ -193,6 +213,13 @@ export const RegistrationForm = (): React.JSX.Element => {
                                     value={value}
                                 />
                             </FormControl>
+                            <FormDescription>
+                                {!!errorPseudo && (
+                                    <p className='text-red-500'>
+                                        {errorPseudo}
+                                    </p>
+                                )}
+                            </FormDescription>
                         </FormItem>
                     )}
                 />
@@ -284,6 +311,7 @@ export const RegistrationForm = (): React.JSX.Element => {
                                 <PopoverContent className='w-[300px] p-0'>
                                     <Command>
                                         <CommandInput
+                                            value={field.value}
                                             placeholder='Cherche ton adresse'
                                             onValueChange={(value) => {
                                                 const sanitizedValue =
