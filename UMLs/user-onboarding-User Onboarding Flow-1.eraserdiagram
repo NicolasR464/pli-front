@@ -26,5 +26,6 @@ Pseudo Name > Submit Form [icon: send]
 Multiavatar API > Submit Form [icon: send]
 Address > Submit Form [icon: send]
 Submit Form > POST to User Micro-service [icon: server]
-POST to User Micro-service > Status 201 returned to the client [shape: oval, icon: check]
+POST to User Micro-service > Status 201 returned to the client [icon: check]
+Status 201 returned to the client > Redirection to home page [shape: oval, icon: home]
 

@@ -6,7 +6,7 @@
 <!-- eraser-additional-content -->
 ## Diagrams
 <!-- eraser-additional-files -->
-<a href="/UMLs/user-onboarding-User Onboarding Flow-1.eraserdiagram" data-element-id="gSqngiZdXh7rGHeP5AeIM"><img src="/.eraser/iz67J24NSkbW4931qsRW___Ik9umQOMUFhqdFIAZGOKv4xvRUO2___---diagram----296cafb4d3298525c52dffd53af26004-User-Onboarding-Flow.png" alt="" data-element-id="gSqngiZdXh7rGHeP5AeIM" /></a>
+<a href="/UMLs/user-onboarding-User Onboarding Flow-1.eraserdiagram" data-element-id="gSqngiZdXh7rGHeP5AeIM"><img src="/.eraser/iz67J24NSkbW4931qsRW___Ik9umQOMUFhqdFIAZGOKv4xvRUO2___---diagram----7d889d3263d4b96b0e2f6caf00bbbdda-User-Onboarding-Flow.png" alt="" data-element-id="gSqngiZdXh7rGHeP5AeIM" /></a>
 <!-- end-eraser-additional-files -->
 <!-- end-eraser-additional-content -->
 <!--- Eraser file: https://app.eraser.io/workspace/iz67J24NSkbW4931qsRW --->
