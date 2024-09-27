@@ -34,6 +34,7 @@ import {
     TooltipTrigger,
 } from '@/components/shadcn/ui/tooltip'
 
+import { useUserStore } from '@/stores/user'
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
 import { useCreateUser } from '@/utils/apiCalls/user/mutations'
 import { pagePaths } from '@/utils/constants'
@@ -66,6 +67,7 @@ export const RegistrationForm = (): React.JSX.Element => {
     const [imageLoaded, setImageLoaded] = useState(false)
     const { getToken } = useAuth()
     const router = useRouter()
+    const { setUserData } = useUserStore()
 
     // Set error message
     const [errorPseudo, setErrorPseudo] = useState<string | undefined>()
@@ -164,6 +166,12 @@ export const RegistrationForm = (): React.JSX.Element => {
             },
             {
                 onSuccess: () => {
+                    setUserData({
+                        pseudo,
+                        avatarUrl,
+                        ...(addressObject && { address: addressObject }),
+                    })
+
                     router.push(`${pagePaths.HOME}?onboardingSuccess=true`)
                 },
                 onError: (errorMsg) => {
@@ -251,7 +259,6 @@ export const RegistrationForm = (): React.JSX.Element => {
                         </Avatar>
 
                         {/** Change Avatar Button */}
-
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>

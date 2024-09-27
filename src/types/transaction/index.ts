@@ -12,7 +12,7 @@ const Delivery = z.object({
     qrCodeUrl: z.string().url(),
 })
 
-export const Transaction = z.object({
+export const TransactionSchema = z.object({
     _id: z.string(),
     version: z.number().int(),
     receiver: z.string(),
@@ -21,4 +21,4 @@ export const Transaction = z.object({
     delivery: Delivery,
 })
 
-export type Transaction = z.infer<typeof Transaction>
+export type Transaction = z.infer<typeof TransactionSchema>

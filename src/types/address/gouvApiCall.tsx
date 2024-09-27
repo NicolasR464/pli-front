@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { z } from 'zod'
 
 import { AddressSchema, GeopointsSchema } from './userAddress'
@@ -6,7 +7,7 @@ import { AddressSchema, GeopointsSchema } from './userAddress'
  * @description Schema for the API Gouv Feature object
  * @exports ApiGouvFeatureSchema
  */
-export const ApiGouvFeatureSchema = z.object({
+const ApiGouvFeatureSchema = z.object({
     type: z.string(),
     geometry: GeopointsSchema,
     properties: z.object({
@@ -29,7 +30,7 @@ export const ApiGouvFeatureSchema = z.object({
  * @description Schema for the API Gouv Response object
  * @exports ApiGouvResponseSchema
  */
-export const ApiGouvResponseSchema = z.object({
+const ApiGouvResponseSchema = z.object({
     type: z.string(),
     version: z.string(),
     features: z.array(z.lazy(() => ApiGouvFeatureSchema)),

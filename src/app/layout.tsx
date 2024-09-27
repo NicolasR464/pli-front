@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -49,7 +50,10 @@ const Layout = ({
                         </SignedIn>
                     </header>
 
-                    <main> {children}</main>
+                    <main>
+                        <Toaster />
+                        {children}
+                    </main>
                 </ReactQueryProvider>
             </body>
         </html>

@@ -1,4 +1,6 @@
-import { Context } from '@/types'
+import toast from 'react-hot-toast'
+
+import { NotificationType } from '@/types'
 import { environment } from '@/types/environment'
 
 import { userInstance } from '../axiosInstances/user'
@@ -16,10 +18,6 @@ export const wait = async (mlseconds: number): Promise<void> => {
         }, mlseconds)
     })
 }
-
-/** To know which execution context we are on, server or client side */
-export const whichSide = (): Context =>
-    typeof window === 'undefined' ? Context.enum.SERVER : Context.enum.CLIENT
 
 /**
  * Generates a random avatar URL using the MultiAvatar API.
@@ -74,4 +72,27 @@ export const getRandomUserPseudonym = (): string => {
  */
 export const addAuthHeader = (JWT: string): void => {
     userInstance.defaults.headers.Authorization = `Bearer ${JWT}`
+}
+
+export const notify = ({
+    message,
+    type,
+}: {
+    message: string
+    type: NotificationType
+}): void => {
+    switch (type) {
+        case NotificationType.enum.SUCCESS: {
+            toast.success(message)
+            break
+        }
+        case NotificationType.enum.ERROR: {
+            toast.error(message)
+            break
+        }
+        default: {
+            toast(message)
+            break
+        }
+    }
 }

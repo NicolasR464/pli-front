@@ -18,3 +18,9 @@ export const pagePaths = {
     /** Path to the onboarding page */
     ONBOARDING: '/onboarding/',
 }
+
+export const userMessages = {
+    onboardingSuccess: 'Tes informations ont été sauvegardées',
+    onboardingError:
+        'Erreur de sauvegarde de tes informations. Réessaye plus tard.',
+}

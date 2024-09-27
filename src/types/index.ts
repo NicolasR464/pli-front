@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
-/** Execution context. */
-export const Context = z.enum(['SERVER', 'CLIENT'])
+export const NotificationType = z.enum(['SUCCESS', 'ERROR', 'INFO'])
 
-export type Context = z.infer<typeof Context>
+export type NotificationType = z.infer<typeof NotificationType>

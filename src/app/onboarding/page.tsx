@@ -2,11 +2,13 @@ import Image from 'next/image'
 
 import { RegistrationForm } from '@/components/forms/userRegistration'
 
+import { trocUpLogos } from '@/utils/constants/images'
+
 const Onboarding = (): React.JSX.Element => {
     return (
         <div className='flex h-screen flex-col items-center justify-start'>
             <Image
-                src='https://res.cloudinary.com/etnaassets/image/upload/v1723194847/TROCUP_nobk_4x_izt0q3.png'
+                src={trocUpLogos.transparent.secondary}
                 alt='TrocUp Logo'
                 width={200}
                 height={200}

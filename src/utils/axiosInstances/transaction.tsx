@@ -1,7 +1,5 @@
-import { Context } from '@/types'
 import { environment } from '@/types/environment'
 
-import { whichSide } from '../functions'
 import { createInstance } from '.'
 
 /**
@@ -9,7 +7,7 @@ import { createInstance } from '.'
  * @returns {AxiosInstance} - The created Axios instance.
  */
 export const transactionInstance = createInstance(
-    whichSide() === Context.enum.SERVER
+    typeof window === 'undefined'
         ? environment.TRANSACTION_BASE_URL
         : environment.NEXT_PUBLIC_TRANSACTION_BASE_URL,
 )
