@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { z } from 'zod'
 
 import { createEnv } from '@t3-oss/env-nextjs'
