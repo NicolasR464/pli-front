@@ -19,9 +19,13 @@ const Layout = ({
     children: React.ReactNode
 }>): React.JSX.Element => (
     <html lang='en'>
+        <head>
+        {/* Lien vers les polices Google Fonts */}
+        <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&family=Century+Gothic:wght@400&family=Quattrocento+Sans:wght@400&display=swap" rel="stylesheet" />
+        </head>
         <body className={inter.className}>
             <ReactQueryProvider>
-                <h1>{'TrocUp header'}</h1>
+                <h1 className="font-display text-heading-1">{'TrocUp header'}</h1>
                 {children}
             </ReactQueryProvider>
         </body>
