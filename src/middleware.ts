@@ -1,7 +1,12 @@
 /* eslint-disable unicorn/prefer-string-raw */
-import { clerkMiddleware } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export default clerkMiddleware()
+// Define a matcher for protected routes
+const isProtectedRoute = createRouteMatcher(['/onboarding'])
+
+export default clerkMiddleware((auth, req) => {
+    if (isProtectedRoute(req)) auth().protect()
+})
 
 export const config = {
     matcher: [

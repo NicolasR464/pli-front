@@ -27,6 +27,12 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/components/shadcn/ui/popover'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from '@/components/shadcn/ui/tooltip'
 
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
 import { useCreateUser } from '@/utils/apiCalls/user/mutations'
@@ -46,7 +52,7 @@ import { useDebouncedCallback } from '@mantine/hooks'
 import { Avatar } from '@radix-ui/react-avatar'
 import { Label } from '@radix-ui/react-label'
 import type { AxiosError } from 'axios'
-import { ChevronsUpDown, UserPen } from 'lucide-react'
+import { ChevronsUpDown, House, UserPen } from 'lucide-react'
 
 /**
  * RegistrationForm component for user registration.
@@ -70,7 +76,7 @@ export const RegistrationForm = (): React.JSX.Element => {
             pseudo: '',
             avatarUrl: '',
             addressInput: '',
-            addressObject: {},
+            addressObject: undefined,
         },
     })
 
@@ -94,6 +100,7 @@ export const RegistrationForm = (): React.JSX.Element => {
 
     const addressObject = watch('addressObject')
     const avatarUrl = watch('avatarUrl')
+    const addressInput = watch('addressInput')
 
     /**
      * Fetches address suggestions based on user input.
@@ -145,8 +152,8 @@ export const RegistrationForm = (): React.JSX.Element => {
 
         const dataToSend = {
             avatarUrl,
-            pseudo,
-            address: addressObject,
+            pseudo: pseudo.trim(),
+            ...(addressObject && { address: addressObject }),
             createdAt: new Date().toISOString(),
         }
 
@@ -165,6 +172,12 @@ export const RegistrationForm = (): React.JSX.Element => {
                             ?.data.error === 'pseudo already in use'
                     )
                         setErrorPseudo('Ce pseudo est déjà pris.')
+
+                    if (
+                        (errorMsg as AxiosError<{ error: string }>).response
+                            ?.data.error === 'email already in use'
+                    )
+                        router.push(`${pagePaths.HOME}?onboardingSuccess=false`)
                 },
             },
         )
@@ -191,7 +204,7 @@ export const RegistrationForm = (): React.JSX.Element => {
             <form
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onSubmit={handleSubmit(onSubmit, onError)}
-                className='flex flex-col items-center justify-center space-y-8'
+                className='m-1 flex flex-col items-center justify-center space-y-8 rounded-lg border-2 border-blue-800 p-4'
             >
                 <div className='flex min-h-20 flex-wrap items-center justify-center'>
                     <div className='flex flex-col items-center'>
@@ -212,33 +225,56 @@ export const RegistrationForm = (): React.JSX.Element => {
                         />
 
                         {/** Avatar Image */}
-
                         <Avatar>
-                            <Image
-                                src={avatarUrl}
-                                alt='Avatar'
-                                width={100}
-                                height={100}
-                                priority
-                                onLoad={() => {
-                                    setImageLoaded(true)
-                                }}
-                                placeholder={avatarPlaceholder}
-                            />
+                            {!!avatarUrl && (
+                                <Image
+                                    src={avatarUrl}
+                                    alt='Avatar'
+                                    width={100}
+                                    height={100}
+                                    priority
+                                    onLoad={() => {
+                                        setImageLoaded(true)
+                                    }}
+                                    placeholder={avatarPlaceholder}
+                                />
+                            )}
+                            {!avatarUrl && (
+                                <Image
+                                    src={avatarPlaceholder}
+                                    alt='Avatar'
+                                    width={100}
+                                    height={100}
+                                    priority
+                                />
+                            )}
                         </Avatar>
 
                         {/** Change Avatar Button */}
-                        <Button
-                            className='mt-1'
-                            disabled={!imageLoaded}
-                            type='button'
-                            onClick={() => {
-                                setValue('avatarUrl', getRandomAvatarUrl())
-                            }}
-                        >
-                            <UserPen className='mr-2 h-4 w-4' />
-                            {'Ton avatar'}
-                        </Button>
+
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        className='mt-1'
+                                        disabled={!imageLoaded}
+                                        type='button'
+                                        onClick={() => {
+                                            setValue(
+                                                'avatarUrl',
+                                                getRandomAvatarUrl(),
+                                            )
+                                        }}
+                                    >
+                                        <UserPen className='mr-2 h-4 w-4' />
+                                        {'Ton avatar'}
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{'Change ton avatar'}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </div>
 
                     {/** User Pseudo */}
@@ -246,14 +282,14 @@ export const RegistrationForm = (): React.JSX.Element => {
                         control={control}
                         name='pseudo'
                         render={({ field: { onChange, onBlur, value } }) => (
-                            <FormItem className='self-end px-4'>
+                            <FormItem className='mt-2 self-end px-4'>
                                 <Label
                                     className={cn(
                                         'flex flex-row justify-between',
                                         !!errorPseudo && 'text-red-500',
                                     )}
                                 >
-                                    {'Pseudo'}
+                                    {'Ton Pseudo'}
                                 </Label>
                                 <FormDescription>
                                     {!!errorPseudo && (
@@ -350,7 +386,14 @@ export const RegistrationForm = (): React.JSX.Element => {
                                             />
                                             <CommandList>
                                                 <CommandEmpty>
-                                                    {'Aucune adresse trouvée'}
+                                                    {addressInput &&
+                                                    addressInput.length > 3 ? (
+                                                        'Aucune adresse trouvée'
+                                                    ) : (
+                                                        <div className='flex justify-center'>
+                                                            <House />
+                                                        </div>
+                                                    )}
                                                 </CommandEmpty>
 
                                                 <CommandGroup>

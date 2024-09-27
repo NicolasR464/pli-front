@@ -53,6 +53,7 @@ export const getRandomUserPseudonym = (): string => {
         dictionaries: [adjectives, animals, colors],
         separator: ' ',
         length: 3,
+        style: 'capital',
     })
 
     return randomPseudo
