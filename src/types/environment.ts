@@ -44,7 +44,7 @@ export const environment = createEnv({
                     'INSTANT_MESSAGE_PORT must be a valid port number (1-65535)',
             }),
         INSTANT_MESSAGE_BASE_URL: z.string().url(),
-        MULTIAVATAR_API_KEY: z.string(),
+        MULTIAVATAR_API_KEY: z.string().optional(),
     },
 
     /** Client-side env variables. Starts by 'NEXT_PUBLIC_'. */
