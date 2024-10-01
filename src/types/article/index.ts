@@ -1,21 +1,39 @@
-/* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
 import { categories } from './categories'
 
-const categoryEnum = z.enum(
+/**
+ * @description Schema for category enum
+ * @exports CategoryEnumSchema
+ */
+export const CategoryEnumSchema = z.enum(
     Object.keys(categories) as [keyof typeof categories],
 )
-const subcategoryEnum = z.enum(Object.values(categories).flat() as [string])
 
-const Dimensions = z.object({
+/**
+ * @description Schema for subcategory enum
+ * @exports SubcategoryEnumSchema
+ */
+export const SubcategoryEnumSchema = z.enum(
+    Object.values(categories).flat() as [string],
+)
+
+/**
+ * @description Schema for dimensions
+ * @exports DimensionsSchema
+ */
+export const DimensionsSchema = z.object({
     length: z.number(),
     width: z.number(),
     height: z.number(),
     weight: z.number(),
 })
 
-export const State = z.enum([
+/**
+ * @description Schema for state enum
+ * @exports StateSchema
+ */
+export const StateSchema = z.enum([
     'Neuf',
     'Comme neuf',
     'Très bon état',
@@ -23,19 +41,28 @@ export const State = z.enum([
     'État correct',
     'À réparer',
 ])
-export type State = z.infer<typeof State>
 
-export const Status = z.enum(['Accessible', 'Inaccessible'])
-export type Status = z.infer<typeof Status>
+/**
+ * @description Schema for status enum
+ * @exports StatusSchema
+ */
+export const StatusSchema = z.enum(['Accessible', 'Inaccessible'])
 
-export const DeliveryType = z.enum([
+/**
+ * @description Schema for delivery type enum
+ * @exports DeliveryTypeSchema
+ */
+export const DeliveryTypeSchema = z.enum([
     'La Poste',
     'Mondial Relay',
     'En main propre',
 ])
-export type DeliveryType = z.infer<typeof DeliveryType>
 
-const Article = z.object({
+/**
+ * @description Schema for article
+ * @exports ArticleSchema
+ */
+export const ArticleSchema = z.object({
     _id: z.string(),
     version: z.number().int(),
     owner: z.string(),
@@ -46,14 +73,21 @@ const Article = z.object({
     price: z.number().positive(),
     manufactureDate: z.date().optional(),
     purchaseDate: z.date().optional(),
-    state: State,
+    state: StateSchema,
     imageUrls: z.array(z.string().url()),
     createdAt: z.date(),
     lastModified: z.date(),
-    category: categoryEnum,
-    subCategory: subcategoryEnum,
-    deliveryType: DeliveryType.array(),
-    dimensions: Dimensions.optional(),
+    category: CategoryEnumSchema,
+    subCategory: SubcategoryEnumSchema,
+    deliveryType: DeliveryTypeSchema.array(),
+    dimensions: DimensionsSchema.optional(),
 })
 
-export type Article = z.infer<typeof Article>
+// Type inference
+export type CategoryEnum = z.infer<typeof CategoryEnumSchema>
+export type SubcategoryEnum = z.infer<typeof SubcategoryEnumSchema>
+export type Dimensions = z.infer<typeof DimensionsSchema>
+export type State = z.infer<typeof StateSchema>
+export type Status = z.infer<typeof StatusSchema>
+export type DeliveryType = z.infer<typeof DeliveryTypeSchema>
+export type Article = z.infer<typeof ArticleSchema>

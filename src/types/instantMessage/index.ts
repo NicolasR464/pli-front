@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
-export const InstantMessage = z.object({
+export const InstantMessageSchema = z.object({
     _id: z.string(),
     sender: z.string(),
     receiver: z.string(),
@@ -9,4 +9,4 @@ export const InstantMessage = z.object({
     sentAt: z.date(),
 })
 
-export type InstantMessage = z.infer<typeof InstantMessage>
+export type InstantMessage = z.infer<typeof InstantMessageSchema>

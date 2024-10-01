@@ -1,6 +1,9 @@
 import { getArticles } from '@/utils/apiCalls/article'
 
-/** Display all articles data. */
+/**
+ * Display all articles data.
+ * @todo Change the API call to use React query
+ */
 const Articles = async (): Promise<React.JSX.Element> => {
     const articles = await getArticles()
 

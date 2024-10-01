@@ -1,0 +1,31 @@
+flowchart-diagram
+
+title User Onboarding Flow
+
+User Authentication [color: lightblue] {
+  Google OAuth [icon: google]
+  Email verification link [icon: mail]
+}
+
+User Information [color: lightgreen] {
+  Display Form [icon: form]
+  Submit Form [icon: send]
+}
+
+Start [shape: oval, icon: play]  > Google OAuth [color: blue, icon: google]
+Start > Email verification link [color: orange, icon: mail]
+Google OAuth > Clerk Returns JWT and user ID [icon: key]
+Email verification link > Clerk Returns JWT and user ID [icon: key]
+Clerk Returns JWT and user ID > Display Form [icon: form]
+Display Form > User Fills Form [icon: edit]
+User Fills Form > Pseudo Name [icon: user]
+User Fills Form > Avatar Selection [icon: image]
+User Fills Form > Address [icon: home]
+Avatar Selection > Multiavatar API [icon: api]
+Pseudo Name > Submit Form [icon: send]
+Multiavatar API > Submit Form [icon: send]
+Address > Submit Form [icon: send]
+Submit Form > POST to User Micro-service [icon: server]
+POST to User Micro-service > Status 201 returned to the client [icon: check]
+Status 201 returned to the client > Redirection to home page [shape: oval, icon: home]
+

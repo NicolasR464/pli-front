@@ -65,7 +65,7 @@ module.exports = {
         'capitalized-comments': 'off',
         complexity: 'off',
         'consistent-return': 'off',
-        'id-length': ['error', { exceptionPatterns: ['t'] }],
+        'id-length': 'off',
         'max-lines': 'off',
         'max-lines-per-function': 'off',
         'max-statements': 'off',
@@ -112,6 +112,7 @@ module.exports = {
         'prefer-arrow-functions/prefer-arrow-functions': 'error',
         'react/button-has-type': 'off',
         'react/forbid-component-props': 'off',
+        'react/jsx-max-depth': 'off',
         'react/jsx-curly-brace-presence': [
             'error',
             {

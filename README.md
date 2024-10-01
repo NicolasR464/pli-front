@@ -26,7 +26,7 @@ pnpm install
 -   Refer to `.env.example` to create your `.env` and `.env.local`
 
 -   It uses [Jest](https://jestjs.io/) for unit testing.
--   Has a strong set of linters from [Eslint](https://eslint.org/docs/latest/).
+-   It has a strong set of linters from [Eslint](https://eslint.org/docs/latest/).
 -   [Tailwind](https://tailwindcss.com/) for styling.
 -   [Shadcn](https://ui.shadcn.com/) as a component library.
     -   To [install](https://ui.shadcn.com/docs/changelog?ck_subscriber_id=2472719707#199:%20shadcn,%20Next.js,%20TanStack,%20Remix,%20MDX,%20Astro,%20Storybook,%20@svg-use,%20MSW,%20RAG,%20RN-WebGPU,%20React-Three-Fiber,%20Re.Pack,%20Super%20Apps,%20RN-macOS,%20EAS,%20Node.jx,%20Stage%202.7,%20AggregateError,%20Style-Observer...%20-%2014908011) components, themes, hooks, utils and more, your can use: `npx shadcn add`
@@ -37,6 +37,9 @@ pnpm install
 -   [Zod](https://zod.dev/) for type inference and form validation.
 -   [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts#with-tailwind-css) Next's font manager linked to Google Font.
 -   [Knip](https://knip.dev/) to check for dead code and unused dependencies (tweak knip.json to your liking).
+-   [Eraser](https://docs.eraser.io/docs/what-is-eraser) to make diagrams/UMLs (folder named `UMLs`). Download the plugin to visualize diagrams (plugin id: EraserLabs.eraserlabs)
+-   [Clerk](https://clerk.com/) for user authentication
+-   [React-hot-toast](https://react-hot-toast.com/docs/toast) for toasters (user notifications)
 
 ### Getting Started
 
