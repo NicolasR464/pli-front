@@ -1,12 +1,32 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {
+    Carrois_Gothic_SC,
+    Quattrocento_Sans,
+    Questrial,
+} from 'next/font/google'
 
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
 
+// const inter = Inter({ subsets: ['latin'] })
+
 // eslint-disable-next-line new-cap
-const inter = Inter({ subsets: ['latin'] })
+const carroisGothic = Carrois_Gothic_SC({
+    weight: '400',
+    subsets: ['latin'],
+})
+
+// eslint-disable-next-line new-cap
+const quattrocentoSans = Quattrocento_Sans({
+    weight: ['400'],
+    subsets: ['latin'],
+})
+// eslint-disable-next-line new-cap
+const questrial = Questrial({
+    weight: '400',
+    subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
     title: 'TrocUp',
@@ -19,13 +39,14 @@ const Layout = ({
     children: React.ReactNode
 }>): React.JSX.Element => (
     <html lang='en'>
-        <head>
-        {/* Lien vers les polices Google Fonts */}
-        <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&family=Century+Gothic:wght@400&family=Quattrocento+Sans:wght@400&display=swap" rel="stylesheet" />
-        </head>
-        <body className={inter.className}>
+        <head />
+        <body
+            className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
+        >
             <ReactQueryProvider>
-                <h1 className="font-display text-heading-1">{'TrocUp header'}</h1>
+                <h1 className='text-heading-1·font-display'>
+                    {'TrocUp header'}
+                </h1>
                 {children}
             </ReactQueryProvider>
         </body>
