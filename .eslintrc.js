@@ -181,6 +181,7 @@ module.exports = {
                 },
             },
         ],
+        'unicorn/prefer-spread': 'off',
         'jsdoc/check-alignment': 'error',
         'jsdoc/check-indentation': 'error',
         'jsdoc/require-asterisk-prefix': 'error',
