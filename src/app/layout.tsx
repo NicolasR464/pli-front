@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 import type { Metadata } from 'next'
 import {
     Carrois_Gothic_SC,
@@ -5,9 +6,19 @@ import {
     Questrial,
 } from 'next/font/google'
 
+import { Button } from '@/components/shadcn/ui/button'
+
+import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
+import {
+    ClerkProvider,
+    SignedIn,
+    SignedOut,
+    SignInButton,
+    SignOutButton,
+} from '@clerk/nextjs'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -38,18 +49,34 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => (
-    <html lang='en'>
-        <head />
-        <body
-            className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
-        >
-            <ReactQueryProvider>
-                <h1 className='text-heading-1·font-display'>
-                    {'TrocUp header'}
-                </h1>
-                {children}
-            </ReactQueryProvider>
-        </body>
-    </html>
+    <ClerkProvider>
+        <html lang='en'>
+            <body className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}>
+                <ReactQueryProvider>
+                    <header>
+                        <SignedOut>
+                            <SignInButton
+                                forceRedirectUrl={pagePaths.HOME}
+                                signUpForceRedirectUrl={pagePaths.ONBOARDING}
+                                mode='modal'
+                            >
+                                <Button>{'🚀 Connexion'}</Button>
+                            </SignInButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <SignOutButton redirectUrl={pagePaths.HOME}>
+                                <Button>{'Déconnexion'}</Button>
+                            </SignOutButton>
+                        </SignedIn>
+                    </header>
+
+                    <main>
+                        <Toaster />
+                        {children}
+                    </main>
+                </ReactQueryProvider>
+            </body>
+        </html>
+    </ClerkProvider>
 )
 export default Layout

@@ -1,35 +1,39 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import type { Address } from '@/types/user'
+import type { Address } from '@/types/address/userAddress'
 
-/** To complete according to the evolution of the app */
 type UserData = {
     pseudo: string
-    address: Address
+    avatarUrl: string
+    isPremium: boolean
+    address?: Address
 }
 
 type UserStore = {
     user: UserData
-    setUserData: () => Promise<void>
+    setUserData: (userData: Partial<UserData>) => void
 }
 
-/** Todo in FRONT-33 */
 export const useUserStore = create<UserStore>()(
-    immer(() => ({
-        user: {
-            pseudo: '',
-            address: {
-                street: '',
-                city: '',
-                postcode: 0,
-                citycode: 0,
-                geopoints: { type: '', coordinates: [0, 0] },
+    persist(
+        immer((set) => ({
+            user: {
+                pseudo: '',
+                avatarUrl: '',
+                isPremium: false,
+                address: undefined,
             },
-        },
 
-        setUserData: async (): Promise<void> => {
-            /** Example of use */
+            setUserData: (userData: Partial<UserData>): void => {
+                set((state) => {
+                    state.user = { ...state.user, ...userData }
+                })
+            },
+        })),
+        {
+            name: 'user-store',
         },
-    })),
+    ),
 )

@@ -1,4 +1,4 @@
-import { transactionInstance } from '@/utils/axiosInstances'
+import { transactionInstance } from '@/utils/axiosInstances/transaction'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { Transaction } from '@/types/transaction'

@@ -1,4 +1,4 @@
-import { instantMsgInstance } from '@/utils/axiosInstances'
+import { instantMsgInstance } from '@/utils/axiosInstances/instantMessage'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { InstantMessage } from '@/types/instantMessage'

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { z } from 'zod'
 
 import { createEnv } from '@t3-oss/env-nextjs'
@@ -43,6 +44,7 @@ export const environment = createEnv({
                     'INSTANT_MESSAGE_PORT must be a valid port number (1-65535)',
             }),
         INSTANT_MESSAGE_BASE_URL: z.string().url(),
+        MULTIAVATAR_API_KEY: z.string().optional(),
     },
 
     /** Client-side env variables. Starts by 'NEXT_PUBLIC_'. */
@@ -51,6 +53,7 @@ export const environment = createEnv({
         NEXT_PUBLIC_ARTICLE_BASE_URL: z.string().url(),
         NEXT_PUBLIC_TRANSACTION_BASE_URL: z.string().url(),
         NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: z.string().url(),
+        NEXT_PUBLIC_MULTIAVATAR_API_KEY: z.string().optional(),
     },
 
     /** Also add your client-side env variables here to avoid TS errors. */
@@ -61,5 +64,7 @@ export const environment = createEnv({
             process.env.NEXT_PUBLIC_TRANSACTION_BASE_URL!,
         NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL:
             process.env.NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL!,
+        NEXT_PUBLIC_MULTIAVATAR_API_KEY:
+            process.env.NEXT_PUBLIC_MULTIAVATAR_API_KEY,
     },
 })

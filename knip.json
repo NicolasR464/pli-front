@@ -12,23 +12,19 @@
         "src/utils/apiCalls/instantMessage/index.ts",
         "src/utils/apiCalls/transaction/index.ts",
         "src/utils/axiosInstances.tsx",
-        "src/stores/user.ts"
+        "src/stores/user.ts",
+        "src/utils/axiosInstances/instantMessage.tsx",
+        "src/utils/axiosInstances/transaction.tsx"
     ],
     "ignoreDependencies": [
-        "lucide-react",
         "postcss",
         "postcss-load-config",
         "@testing-library/react",
         "@testing-library/user-event",
         "jest-environment-jsdom",
-        "immer",
-        "zustand",
-        "@radix-ui/react-label",
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "@types/react-query",
         "@typescript-eslint/type-utils",
         "@typescript-eslint/utils",
-        "i"
+        "i",
+        "@radix-ui/react-select"
     ]
 }
