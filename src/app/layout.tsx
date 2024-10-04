@@ -15,6 +15,7 @@ import {
     SignInButton,
     SignOutButton,
 } from '@clerk/nextjs'
+import Navbar from '@/components/designSystem/navbar'
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] })
@@ -34,7 +35,8 @@ const Layout = ({
             <body className={inter.className}>
                 <ReactQueryProvider>
                     <header>
-                        <SignedOut>
+                        <Navbar />
+                        {/* <SignedOut>
                             <SignInButton
                                 forceRedirectUrl={pagePaths.HOME}
                                 signUpForceRedirectUrl={pagePaths.ONBOARDING}
@@ -47,7 +49,7 @@ const Layout = ({
                             <SignOutButton redirectUrl={pagePaths.HOME}>
                                 <Button>{'Déconnexion'}</Button>
                             </SignOutButton>
-                        </SignedIn>
+                        </SignedIn> */}
                     </header>
 
                     <main>
