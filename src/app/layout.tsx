@@ -51,7 +51,9 @@ const Layout = ({
 }>): React.JSX.Element => (
     <ClerkProvider>
         <html lang='en'>
-            <body className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}>
+            <body 
+                className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
+            >
                 <ReactQueryProvider>
                     <header>
                         <SignedOut>
