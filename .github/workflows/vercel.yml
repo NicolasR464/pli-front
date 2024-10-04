@@ -1,0 +1,20 @@
+name: Deploy to Vercel
+
+on:
+    push:
+        branches:
+            - main
+jobs:
+    deploy:
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Deploy to Vercel
+              uses: amondnet/vercel-action@v20
+              with:
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }}
+                  vercel-args: '--prod'
+                  working-directory: ./
