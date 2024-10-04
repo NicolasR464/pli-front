@@ -1,6 +1,10 @@
 import { Toaster } from 'react-hot-toast'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {
+    Carrois_Gothic_SC,
+    Quattrocento_Sans,
+    Questrial,
+} from 'next/font/google'
 
 import { Button } from '@/components/shadcn/ui/button'
 
@@ -16,8 +20,24 @@ import {
     SignOutButton,
 } from '@clerk/nextjs'
 
+// const inter = Inter({ subsets: ['latin'] })
+
 // eslint-disable-next-line new-cap
-const inter = Inter({ subsets: ['latin'] })
+const carroisGothic = Carrois_Gothic_SC({
+    weight: '400',
+    subsets: ['latin'],
+})
+
+// eslint-disable-next-line new-cap
+const quattrocentoSans = Quattrocento_Sans({
+    weight: ['400'],
+    subsets: ['latin'],
+})
+// eslint-disable-next-line new-cap
+const questrial = Questrial({
+    weight: '400',
+    subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
     title: 'TrocUp',
@@ -31,7 +51,9 @@ const Layout = ({
 }>): React.JSX.Element => (
     <ClerkProvider>
         <html lang='en'>
-            <body className={inter.className}>
+            <body
+                className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
+            >
                 <ReactQueryProvider>
                     <header>
                         <SignedOut>
