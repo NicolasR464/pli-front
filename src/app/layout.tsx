@@ -49,7 +49,10 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => (
-    <ClerkProvider>
+    <ClerkProvider
+        signUpFallbackRedirectUrl={pagePaths.ONBOARDING}
+        afterSignOutUrl={pagePaths.HOME}
+    >
         <html lang='en'>
             <body
                 className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
