@@ -260,13 +260,15 @@ export const RegistrationForm = (): React.JSX.Element => {
 
                         {/** Change Avatar Button */}
                         <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip delayDuration={500}>
                                 <TooltipTrigger asChild>
                                     <Button
                                         className='mt-1'
                                         disabled={!imageLoaded}
                                         type='button'
                                         onClick={() => {
+                                            setImageLoaded(false)
+
                                             setValue(
                                                 'avatarUrl',
                                                 getRandomAvatarUrl(),
