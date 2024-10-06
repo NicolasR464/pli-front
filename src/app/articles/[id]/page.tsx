@@ -3,11 +3,11 @@
 import { useParams } from 'next/navigation'
 
 const Article = (): React.JSX.Element => {
-    const { id } = useParams()
-    console.log('le search hereeeeee', id)
+    const { _id } = useParams()
+    console.log('le search hereeeeee', _id)
 
-    if (!id) {
-        console.log('koukou', id)
+    if (!_id) {
+        console.log('koukou', _id)
         return <p>Sorry no article found</p>
     }
     return (

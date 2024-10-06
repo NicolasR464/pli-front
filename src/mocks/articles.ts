@@ -1,12 +1,12 @@
 /* eslint-disable unicorn/numeric-separators-style */
 export const articles = [
     {
-        id: {
-            $oid: '66c89c196777c169ce469991',
+        _id: {
+            $o_id: '66c89c196777c169ce469991',
         },
         version: 1,
         owner: {
-            $oid: '66c89c196777c169ce469998', // Référence à l'utilisateur propriétaire
+            $o_id: '66c89c196777c169ce469998', // Référence à l'utilisateur propriétaire
         },
         adTitle: 'iPhone 12 Pro',
         brand: 'Apple',
@@ -36,18 +36,18 @@ export const articles = [
         deliveryType: ['Shipping', 'Pickup'],
         dimensions: {
             length: 14.67,
-            width: 7.15,
+            w_idth: 7.15,
             height: 0.74,
             weight: 0.189,
         },
     },
     {
-        id: {
-            $oid: '66c89c196777c169ce469992',
+        _id: {
+            $o_id: '66c89c196777c169ce469992',
         },
         version: 1,
         owner: {
-            $oid: '66c89c196777c169ce469997', // Référence à un autre utilisateur propriétaire
+            $o_id: '66c89c196777c169ce469997', // Référence à un autre utilisateur propriétaire
         },
         adTitle: 'Samsung QLED TV',
         brand: 'Samsung',
@@ -77,18 +77,18 @@ export const articles = [
         deliveryType: ['Shipping'],
         dimensions: {
             length: 144.3,
-            width: 83.2,
+            w_idth: 83.2,
             height: 5.6,
             weight: 28.5,
         },
     },
     {
-        id: {
-            $oid: '66c89c196777c169ce469993',
+        _id: {
+            $o_id: '66c89c196777c169ce469993',
         },
         version: 1,
         owner: {
-            $oid: '66c89c196777c169ce469996', // Propriétaire différent
+            $o_id: '66c89c196777c169ce469996', // Propriétaire différent
         },
         adTitle: 'Nike Air Max 270',
         brand: 'Nike',
@@ -118,18 +118,18 @@ export const articles = [
         deliveryType: ['Pickup'],
         dimensions: {
             length: 29.0,
-            width: 11.0,
+            w_idth: 11.0,
             height: 13.0,
             weight: 0.5,
         },
     },
     {
-        id: {
-            $oid: '66c89c196777c169ce469994',
+        _id: {
+            $o_id: '66c89c196777c169ce469994',
         },
         version: 1,
         owner: {
-            $oid: '66c89c196777c169ce469995', // Propriétaire différent
+            $o_id: '66c89c196777c169ce469995', // Propriétaire différent
         },
         adTitle: 'MacBook Pro 16"',
         brand: 'Apple',
@@ -159,18 +159,18 @@ export const articles = [
         deliveryType: ['Shipping', 'Pickup'],
         dimensions: {
             length: 35.79,
-            width: 24.59,
+            w_idth: 24.59,
             height: 1.62,
             weight: 2.0,
         },
     },
     {
-        id: {
-            $oid: '66c89c196777c169ce469995',
+        _id: {
+            $o_id: '66c89c196777c169ce469995',
         },
         version: 1,
         owner: {
-            $oid: '66c89c196777c169ce469994', // Propriétaire différent
+            $o_id: '66c89c196777c169ce469994', // Propriétaire différent
         },
         adTitle: 'Couch Sofa 3-Seater',
         brand: 'IKEA',
@@ -200,7 +200,7 @@ export const articles = [
         deliveryType: ['Shipping', 'Pickup'],
         dimensions: {
             length: 220.0,
-            width: 90.0,
+            w_idth: 90.0,
             height: 75.0,
             weight: 35.0,
         },
