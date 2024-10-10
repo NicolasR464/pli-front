@@ -16,6 +16,8 @@ import {
     SignOutButton,
 } from '@clerk/nextjs'
 import Navbar from '@/components/designSystem/navbar'
+import Footer from '@/components/designSystem/footer'
+import { ProductCard, ProductCardLargeTitle, ProductCardSmallText, ProductCardWithBorder } from '@/components/designSystem/productCard'
 
 // eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ['latin'] })
@@ -51,11 +53,15 @@ const Layout = ({
                             </SignOutButton>
                         </SignedIn> */}
                     </header>
-
                     <main>
                         <Toaster />
                         {children}
                     </main>
+                    <ProductCardSmallText />
+                    <ProductCardLargeTitle />
+                    <ProductCardWithBorder />
+                    <ProductCard title={'Lorem Ipsum'} />
+                    <Footer />
                 </ReactQueryProvider>
             </body>
         </html>

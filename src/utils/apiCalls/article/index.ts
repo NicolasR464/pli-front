@@ -15,3 +15,5 @@ export const getArticles = async (): Promise<Article[]> => {
 
     return response.data
 }
+
+//get article by id

@@ -1,4 +1,4 @@
-'use client' // Indicate that this is a client-side component
+'use client'
 
 import { Button } from '@/components/shadcn/ui/button'
 
