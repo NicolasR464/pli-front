@@ -169,7 +169,7 @@ export const RegistrationForm = (): React.JSX.Element => {
                     setUserData({
                         pseudo,
                         avatarUrl,
-                        ...(addressObject && { address: addressObject }),
+                        ...(addressObject && { address: [addressObject] }),
                     })
 
                     router.push(`${pagePaths.HOME}?onboardingSuccess=true`)
