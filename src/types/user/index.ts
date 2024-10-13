@@ -21,7 +21,7 @@ export const UserSchema = z.object({
     pseudo: z.string(),
     name: z.string(),
     surname: z.string(),
-    address: AddressSchema.array().optional(),
+    address: z.custom<Address>(),
     geopoints: z.custom<Geopoints>(),
     email: z.string().email(),
     password: z.string(),
