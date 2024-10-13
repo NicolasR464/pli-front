@@ -9,9 +9,9 @@ const BankInfoSchema = z.object({
     BIC: z.string(),
 })
 
-const ActivityStatusSchema = z.object({
-    lastConnected: z.date(),
-    birthday: z.date(),
+export const ActivityStatusSchema = z.object({
+    lastConnected: z.date().optional(),
+    birthday: z.date().optional(),
 })
 
 export const UserSchema = z.object({
@@ -20,11 +20,11 @@ export const UserSchema = z.object({
     pseudo: z.string(),
     name: z.string(),
     surname: z.string(),
-    address: AddressSchema.array(),
+    address: AddressSchema.array().optional(),
     email: z.string().email(),
     sexe: z.enum(['masculin', 'féminin', 'autre']).optional(),
     phoneNumber: z.string().optional(),
-    activityStatus: ActivityStatusSchema,
+    activityStatus: z.string(),
     birthDate: z.date(),
     bankInfo: BankInfoSchema.optional(),
     avatarUrl: z.string().url().optional(),
