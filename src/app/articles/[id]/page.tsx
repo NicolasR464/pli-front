@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { articles as mockArticle } from '@/mocks/articles'
+// import { articles as mockArticle } from '@/mocks/articles'
 import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
 import {
@@ -11,20 +11,45 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
+import { getArticlesById } from '@/utils/apiCalls/article'
+import type { Article } from '@/types/article'
 
 const Article = (): React.JSX.Element => {
+    //récupérer l'id dans l'url et le variabiliser:
     const { id } = useParams()
     const articleId = Array.isArray(id) ? id[0] : id
-    if (!articleId) {
-        return <p>Sorry, no article found</p>
+
+    // Préparer les hooks pour gérer l'intégration des données de l'article, les loader et les erreurs
+    const [article, setArticle] = useState<Article | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
+    // hook pour les 2 onglets Produits user / besace
+    const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
+
+    useEffect(() => {
+        const fetchArticle = async () => {
+            try {
+                if (articleId) {
+                    const decodedId = decodeURIComponent(articleId)
+                    const fetchedArticle = await getArticlesById(decodedId)
+                    setArticle(fetchedArticle)
+                    console.log('Article state updated:', article)
+                }
+            } catch (err) {
+                setError('Failed to fetch article')
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchArticle()
+    }, [articleId])
+    console.log('article maggle', article)
+    if (loading) {
+        return <p>Loading...</p>
     }
-
-    const decodedId = decodeURIComponent(articleId)
-    const slicedId = decodedId.split('=')[1] || decodedId
-    const article = mockArticle.find((article) => article._id.$o_id == slicedId)
-
-    if (!article) {
-        return <p>Sorry no article found</p>
+    if (error || !articleId) {
+        return <p>{error || 'Sorry, no article found'}</p>
     }
 
     const userArticles = Array.from({ length: 8 }, (_, i) => ({
@@ -39,34 +64,33 @@ const Article = (): React.JSX.Element => {
         image: 'https://via.placeholder.com/150',
     }))
 
-    const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
-
     const articles = activeTab === 'user' ? userArticles : similarArticles
 
-    switch (article.state) {
-        case 'New':
-            article.state = 'Nouveau'
-            break
-        case 'Like New':
-            article.state = 'Comme Neuf'
-            break
-        case 'very good condition':
-            article.state = 'Très bon état'
-            break
-        case 'good condition':
-            article.state = 'Bon état'
-            break
-        case 'fair condition':
-            article.state = 'Etat correct'
-            break
-        case 'to repair':
-            article.state = 'A réparer'
-            break
+    // switch (article.state) {
+    //     case 'New':
+    //         article.state = 'Nouveau'
+    //         break
+    //     case 'Like New':
+    //         article.state = 'Comme Neuf'
+    //         break
+    //     case 'very good condition':
+    //         article.state = 'Très bon état'
+    //         break
+    //     case 'good condition':
+    //         article.state = 'Bon état'
+    //         break
+    //     case 'fair condition':
+    //         article.state = 'Etat correct'
+    //         break
+    //     case 'to repair':
+    //         article.state = 'A réparer'
+    //         break
 
-        default:
-            break
-    }
+    //     default:
+    //         article.state = 'Non spécifié'
+    //         break
 
+    // }
     return (
         <div className='flex flex-col items-start justify-between p-8 md:flex-row'>
             {/* Carousel section */}
@@ -128,7 +152,9 @@ const Article = (): React.JSX.Element => {
 
             {/* Product details and seller info */}
             <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
-                <h1 className='mb-4 text-4xl font-bold'>{article.adTitle} </h1>
+                <h1 className='mb-4 text-4xl font-bold'>
+                    {article ? article.adTitle : 'Article non trouvé'}{' '}
+                </h1>
 
                 {/* Seller information */}
                 <div className='mb-4 flex items-center'>
@@ -151,20 +177,21 @@ const Article = (): React.JSX.Element => {
                     </p>
                     <p>
                         <strong>Dimensions :</strong>
-                        <li> Longueur : {article.dimensions.length} cm </li>
-                        <li> Largeur : {article.dimensions.w_idth} cm </li>
-                        <li> Hauteur : {article.dimensions.height} cm</li>
-                        <li> Poids : {article.dimensions.weight} cm</li>
                     </p>
+                    <li> Longueur : cm </li>
+                    <li> Largeur : cm </li>
+                    <li> Hauteur : cm</li>
+                    <li> Poids : cm</li>
+
                     <p>
-                        <strong>Année:</strong> {article.manufactureDate.$date}
+                        <strong>Année:</strong>
                     </p>
                     <p>
                         {/* à traduire !!! */}
-                        <strong>État :</strong> {article.state}
+                        <strong>État :</strong>
                     </p>
                     <p>
-                        <strong>Marque :</strong> {article.brand}
+                        <strong>Marque :</strong>
                     </p>
                 </div>
 
