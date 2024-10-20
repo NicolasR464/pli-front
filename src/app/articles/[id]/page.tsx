@@ -29,7 +29,7 @@ const Article = (): React.JSX.Element => {
     const [error, setError] = useState<string | null>(null)
 
     // hook pour les 2 onglets Produits user / besace
-    const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
+    // const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
 
     const jwtToken = process.env.NEXT_PUBLIC_JWT_TOKEN
 
@@ -85,7 +85,8 @@ const Article = (): React.JSX.Element => {
         image: 'https://via.placeholder.com/150',
     }))
 
-    const articles = activeTab === 'user' ? userArticles : similarArticles
+    // A décommenter une fois la partie get user article by id et get article par categorie implémentée 
+    // const articles = activeTab === 'user' ? userArticles : similarArticles
 
     const formatManufactureDate = (dateString: string) => {
         const options: Intl.DateTimeFormatOptions = {
@@ -170,10 +171,13 @@ const Article = (): React.JSX.Element => {
                             <strong>Dimensions :</strong>
                         </p>
                         <ul className='mt-2 list-inside list-disc'>
-                            <li> Longueur : {article.dimensions?.length} cm</li>
-                            <li> Largeur : {article.dimensions?.width} cm</li>
-                            <li> Hauteur : {article.dimensions?.height} cm</li>
-                            <li> Poids : {article.dimensions?.weight} kg</li>
+                            <li>
+                                {' '}
+                                Longueur : {article?.dimensions?.length} cm
+                            </li>
+                            <li> Largeur : {article?.dimensions?.width} cm</li>
+                            <li> Hauteur : {article?.dimensions?.height} cm</li>
+                            <li> Poids : {article?.dimensions?.weight} kg</li>
                         </ul>
                     </div>
 
@@ -208,7 +212,9 @@ const Article = (): React.JSX.Element => {
                             className='h-12 w-12 rounded-full'
                         />
                         <div className='ml-4'>
-                            <p className='font-bold'>Pseudo : {user?.pseudo}</p>
+                            <p>
+                                <strong>Pseudo : </strong> {user?.pseudo}
+                            </p>
                             <p>
                                 <strong> Ville</strong> {user?.address[0].city},{' '}
                                 <strong> Code Postal :</strong>{' '}
@@ -252,12 +258,15 @@ const Article = (): React.JSX.Element => {
                         </Button>
                     </div>
                 </div>
-                {/* Tab section (Besace user / Similaire) */}
-                
             </div>
-            <div className='mt-8 w-full'>
-                    {/* Tabs (Besace user / Similaire) */}
-                    <div className='mb-6 flex justify-center'>
+
+            
+            {/* // A décommenter une fois la partie get user article by id et get article par categorie implémentée  */}
+
+            {/* Tab section (Besace user / Similaire)
+            <div className='mt-8 w-full'> */}
+            {/* Tabs (Besace user / Similaire) */}
+            {/* <div className='mb-6 flex justify-center'>
                         <Button
                             className={`${
                                 activeTab === 'user'
@@ -278,10 +287,10 @@ const Article = (): React.JSX.Element => {
                         >
                             Similaire
                         </Button>
-                    </div>
+                    </div> */}
 
-                    {/* Product cards */}
-                    <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+            {/* Product cards */}
+            {/* <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
                         {articles.map((article) => (
                             <Card
                                 key={article.id}
@@ -317,8 +326,8 @@ const Article = (): React.JSX.Element => {
                                 </CardFooter>
                             </Card>
                         ))}
-                    </div>
-                </div>
+                    </div> */}
+            {/* </div> */}
         </div>
     )
 }
