@@ -69,3 +69,38 @@ export const createUser = async (
         message: 'User created successfully',
     }
 }
+
+
+/**
+ * Get user by Id.
+ * @param {string} userId the id of the user to retreive.
+ * @param {string} JWT The JWT token for authentication.
+ * @returns {Promise<User>|null} A promise that resolves with user information.
+ */
+export const getUserById = async (
+    userId: string,
+    JWT: string,
+): Promise<User|null> => {
+    if (!JWT) throw new Error('No JWT provided')
+    addAuthHeader(JWT)
+    
+    try {
+        const response: AxiosResponse<User> = await userInstance.get(
+            `${apiEndpoints.USERS}${userId}`,
+        );
+        
+        if (response.status === 200) {
+            return response.data; 
+        } else {
+            console.error('An error with the following status has occured:', response.status);
+            return null;
+        }
+
+    }catch(error){
+        console.error('Error fetching id', error)
+        return null;
+    }
+    
+
+}
+
