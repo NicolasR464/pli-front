@@ -56,7 +56,6 @@ export const getRandomUserPseudonym = (): string => {
 
     return randomPseudo
 }
-
 /**
  * Adds an Authorization header with a JWT token to the specified axios instance.
  *
@@ -69,7 +68,7 @@ export const getRandomUserPseudonym = (): string => {
  * @example
  * const jwtToken = 'your.jwt.token';
  * addAuthHeader(axiosInstance, jwtToken);
- * Now all subsequent requests using the provided axiosInstance will include the Authorization header
+ * // Now all subsequent requests using the provided axiosInstance will include the Authorization header
  */
 export const addAuthHeader = (
     axiosInstance: AxiosInstance,
