@@ -14,8 +14,26 @@
         "src/utils/axiosInstances.tsx",
         "src/stores/user.ts",
         "src/utils/axiosInstances/instantMessage.tsx",
-        "src/utils/axiosInstances/transaction.tsx"
+        "src/utils/axiosInstances/transaction.tsx",
+        "src/utils/providers/middleware.ts",
+        "src/components/designSystem/card.tsx",
+        "src/utils/constants/productValues.ts"
     ],
+    "ignoreExports": {
+        "src/components/designSystem/card.tsx": [
+            "CardSmallText",
+            "CardLargeTitle",
+            "CardWithBorder"
+        ],
+        "src/utils/constants/productValues.ts": [
+            "categoriesList",
+            "subcategoriesList",
+            "productStates",
+            "productStatus",
+            "deliveryTypes",
+            "sizeOptions"
+        ]
+    },
     "ignoreDependencies": [
         "postcss",
         "postcss-load-config",
