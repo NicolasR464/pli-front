@@ -2,6 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { pagePaths } from '@/utils/constants'
+
 import { Button } from '../shadcn/ui/button'
 
 const Hero: React.FC = () => {
@@ -19,7 +21,7 @@ const Hero: React.FC = () => {
                 <div className='flex flex-col items-center text-center'>
                     {/* Call to Action */}
                     <div className='mt-8'>
-                        <Link href='/articles'>
+                        <Link href={pagePaths.ARTICLES}>
                             <Button className='rounded-md bg-blueGreen px-6 py-3 text-lg font-semibold text-white hover:bg-blueGreen-hover'>
                                 {'Voir la Piscine'}
                             </Button>
