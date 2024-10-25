@@ -17,6 +17,7 @@ export const pagePaths = {
     HOME: '/',
     /** Path to the onboarding page */
     ONBOARDING: '/onboarding/',
+    MESSAGES: '/messagerie/',
 }
 
 /** Object containing notifications to the user for various cases, set in alphabetical order */
