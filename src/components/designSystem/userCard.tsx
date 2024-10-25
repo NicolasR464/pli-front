@@ -10,14 +10,13 @@ const UserProfileCard: React.FC = () => {
     }
 
     // Formatage de la date de dernière connexion
-    const lastLoginDate = new Date(user.lastSignInAt).toLocaleDateString(
-        'fr-FR',
-        {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-        },
-    )
+    const lastLoginDate = user.lastSignInAt
+        ? new Date(user.lastSignInAt).toLocaleDateString('fr-FR', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+          })
+        : 'Date non disponible'
 
     return (
         <div className='mx-auto max-w-lg rounded-lg bg-grey-light-active p-8 text-center'>

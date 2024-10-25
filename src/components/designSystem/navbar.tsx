@@ -2,7 +2,7 @@
 /* eslint-disable import/newline-after-import */
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Bell, Home, User } from 'react-feather'
 // Importation des icônes
 import Link from 'next/link'
@@ -31,45 +31,23 @@ import type { Article } from '@/types/article'
  * Récupérer les catégories depuis le fichier de typage
  */
 import { SignedIn, SignedOut, SignInButton, SignOutButton } from '@clerk/nextjs'
+import { useQuery } from '@tanstack/react-query'
 
 const Navbar: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState('')
-    const [allArticles, setAllArticles] = useState<Article[]>([])
-    const [filteredArticles, setFilteredArticles] = useState<Article[]>([])
-    const [showResults, setShowResults] = useState(false)
+    const [searchTerm, setSearchTerm] = useState<string>('')
 
     const router = useRouter()
 
-    // Récupérer les articles depuis l'API
-    const fetchAllArticles = async (): Promise<Article[]> => {
-        const articles: Article[] = await getArticles()
-        try {
-            setAllArticles(articles)
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error('Erreur lors de la récupération des articles:', error)
-        }
-        return allArticles
-    }
+    // Utilisation de useQuery avec un typage correct pour récupérer les articles
+    const { data: allArticles = [], error } = useQuery<Article[]>({
+        queryKey: ['articles'],
+        queryFn: getArticles,
+    })
 
-    useEffect(() => {
-        fetchAllArticles()
-    }, [])
-
-    // Filtrer les articles localement en fonction du terme de recherche
-    useEffect(() => {
-        if (searchTerm.length > 0) {
-            const filtered = allArticles.filter((article: Article) =>
-                article.adTitle
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()),
-            )
-            setFilteredArticles(filtered)
-            setShowResults(true)
-        } else {
-            setShowResults(false)
-        }
-    }, [searchTerm, allArticles])
+    // Filtrer les articles
+    const filteredArticles: Article[] = allArticles.filter((article: Article) =>
+        article.adTitle.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
 
     // Gestion de la soumission de recherche
     const handleSearchSubmit = (event: React.FormEvent): void => {
@@ -113,8 +91,15 @@ const Navbar: React.FC = () => {
                     </form>
 
                     {/* Suggestions de résultats de recherche */}
-                    {!!showResults && (
+                    {!!searchTerm && (
                         <div className='absolute z-50 mt-2 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg'>
+                            {!!error && (
+                                <p className='p-2 text-signals-forbidden-normal-active'>
+                                    {error instanceof Error
+                                        ? `Erreur: ${error.message}`
+                                        : 'Erreur inconnue'}
+                                </p>
+                            )}
                             {filteredArticles.length > 0 ? (
                                 filteredArticles.map((article: Article) => (
                                     <div
