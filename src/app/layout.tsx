@@ -1,3 +1,4 @@
+import { Bell } from 'react-feather'
 import { Toaster } from 'react-hot-toast'
 import type { Metadata } from 'next'
 import {
@@ -5,6 +6,7 @@ import {
     Quattrocento_Sans,
     Questrial,
 } from 'next/font/google'
+import Link from 'next/link'
 
 import { Button } from '@/components/shadcn/ui/button'
 
@@ -69,6 +71,13 @@ const Layout = ({
                             <SignOutButton redirectUrl={pagePaths.HOME}>
                                 <Button>{'Déconnexion'}</Button>
                             </SignOutButton>
+
+                            <Link href={pagePaths.MESSAGES}>
+                                <Bell
+                                    className='color-blueGreen-dark-active cursor-pointer'
+                                    strokeWidth={1.5}
+                                />
+                            </Link>
                         </SignedIn>
                     </header>
 
