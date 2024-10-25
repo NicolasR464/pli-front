@@ -1,26 +1,37 @@
 import { Toaster } from 'react-hot-toast'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {
+    Carrois_Gothic_SC,
+    Quattrocento_Sans,
+    Questrial,
+} from 'next/font/google'
 
-import { Button } from '@/components/shadcn/ui/button'
+import Footer from '@/components/designSystem/footer'
+import Navbar from '@/components/designSystem/navbar'
 
-import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
-import {
-    ClerkProvider,
-    SignedIn,
-    SignedOut,
-    SignInButton,
-    SignOutButton,
-} from '@clerk/nextjs'
-import Navbar from '@/components/designSystem/navbar'
-import Footer from '@/components/designSystem/footer'
-import { ProductCard, ProductCardLargeTitle, ProductCardSmallText, ProductCardWithBorder } from '@/components/designSystem/productCard'
+import { ClerkProvider } from '@clerk/nextjs'
+
+// const inter = Inter({ subsets: ['latin'] })
 
 // eslint-disable-next-line new-cap
-const inter = Inter({ subsets: ['latin'] })
+const carroisGothic = Carrois_Gothic_SC({
+    weight: '400',
+    subsets: ['latin'],
+})
+
+// eslint-disable-next-line new-cap
+const quattrocentoSans = Quattrocento_Sans({
+    weight: ['400'],
+    subsets: ['latin'],
+})
+// eslint-disable-next-line new-cap
+const questrial = Questrial({
+    weight: '400',
+    subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
     title: 'TrocUp',
@@ -34,33 +45,17 @@ const Layout = ({
 }>): React.JSX.Element => (
     <ClerkProvider>
         <html lang='en'>
-            <body className={inter.className}>
+            <body
+                className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
+            >
                 <ReactQueryProvider>
                     <header>
                         <Navbar />
-                        {/* <SignedOut>
-                            <SignInButton
-                                forceRedirectUrl={pagePaths.HOME}
-                                signUpForceRedirectUrl={pagePaths.ONBOARDING}
-                                mode='modal'
-                            >
-                                <Button>{'🚀 Connexion'}</Button>
-                            </SignInButton>
-                        </SignedOut>
-                        <SignedIn>
-                            <SignOutButton redirectUrl={pagePaths.HOME}>
-                                <Button>{'Déconnexion'}</Button>
-                            </SignOutButton>
-                        </SignedIn> */}
                     </header>
-                    <main>
+                    <main className='flex-grow'>
                         <Toaster />
                         {children}
                     </main>
-                    <ProductCardSmallText />
-                    <ProductCardLargeTitle />
-                    <ProductCardWithBorder />
-                    <ProductCard title={'Lorem Ipsum'} />
                     <Footer />
                 </ReactQueryProvider>
             </body>

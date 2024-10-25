@@ -146,6 +146,8 @@ export const RegistrationForm = (): React.JSX.Element => {
         const { pseudo } = data
 
         const JWT = await getToken({ template: 'trocup-1' })
+        // eslint-disable-next-line no-console
+        console.log(JWT)
 
         if (!JWT) {
             router.push(`${pagePaths.HOME}?onboardingSuccess=false`)
