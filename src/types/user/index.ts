@@ -11,6 +11,11 @@ const BankInfo = z.object({
 
 type BankInfo = z.infer<typeof BankInfo>
 
+const ActivityStatus = z.object({
+    lastConnected: z.date(), 
+    birthday: z.date(), 
+});
+
 export const User = z.object({
     id: z.string(),
     version: z.number().int(),
@@ -23,7 +28,7 @@ export const User = z.object({
     password: z.string(),
     sexe: z.enum(['masculin', 'féminin', 'autre']),
     phoneNumber: z.string().optional(),
-    activityStatus: z.string(),
+    activityStatus: ActivityStatus,
     birthDate: z.date(),
     bankInfo: BankInfo.optional(),
     avatarUrl: z.string().url().optional(),

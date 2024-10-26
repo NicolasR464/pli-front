@@ -1,7 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-// import { articles as mockArticle } from '@/mocks/articles'
 import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
 import {
@@ -11,262 +9,295 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
+import { Avatar, AvatarImage } from '@/components/shadcn/ui/avatar'
 import { getArticlesById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import type { Article } from '@/types/article'
-import type { User } from '@/types/user'
+import { useState } from 'react'
+
+import { useQuery } from '@tanstack/react-query'
+
+import { formatDate } from '@/utils/functions'
+import { AvatarFallback } from '@radix-ui/react-avatar'
 
 const Article = (): React.JSX.Element => {
-    // récupérer l'id dans l'url et le variabiliser:
+    // Get token & id from URL in string to avoid type errors :
+    const jwtToken = String(process.env.NEXT_PUBLIC_JWT_TOKEN)
     const { id } = useParams()
-    const articleId = Array.isArray(id) ? id[0] : id
+    const articleId = String(id)
 
-    // Préparer les hooks pour gérer l'intégration des données de l'article, les loader et les erreurs
-    const [article, setArticle] = useState<Article | null>(null)
-    const [user, setUser] = useState<User | null>(null)
+    // React query to get article data
+    const {
+        data: article,
+        isPending: isLoading,
+        isError: isError,
+    } = useQuery({
+        queryKey: ['article', articleId],
+        queryFn: () => getArticlesById(articleId),
+        enabled: !!articleId,
+    })
+    // Type and store id in a variable to avoid errors
+    const ownerId = article?.owner
 
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-
-    // hook pour les 2 onglets Produits user / besace
-    // const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
-
-    const jwtToken = process.env.NEXT_PUBLIC_JWT_TOKEN
-
-    // fetch article
-    useEffect(() => {
-        const fetchArticleData = async () => {
-            try {
-                if (articleId) {
-                    const decodedId = decodeURIComponent(articleId)
-                    const fetchedArticle = await getArticlesById(decodedId)
-                    setArticle(fetchedArticle)
-
-                    if (fetchedArticle?.owner) {
-                        const fetchedUser = await getUserById(
-                            fetchedArticle.owner,
-                            jwtToken!,
-                        )
-                        if (!fetchedUser) {
-                            console.log('user not found', fetchedUser)
-                            setUser(null)
-                        } else {
-                            setUser(fetchedUser)
-                            console.log('heyyyy', fetchedUser)
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error('eror fetching data : ', err)
-                setError('Failed to fetch article')
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchArticleData()
-    }, [articleId, jwtToken])
-    if (loading) {
-        return <p>Loading...</p>
-    }
-    if (error || !articleId) {
-        return <p>{error || 'Sorry, no article found'}</p>
-    }
-
+    // React query to get user data
+    const { data: user } = useQuery({
+        queryKey: ['user', ownerId],
+        queryFn: () => getUserById(ownerId, jwtToken),
+        enabled: !!ownerId,
+    })
+    // tab dynamiques
+    const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
     const userArticles = Array.from({ length: 8 }, (_, i) => ({
         id: i,
         title: 'Lorem ipsum',
-        image: 'https://via.placeholder.com/150',
+        image: 'https://picsum.photos/150',
     }))
 
     const similarArticles = Array.from({ length: 8 }, (_, i) => ({
         id: i,
         title: 'Similar article',
-        image: 'https://via.placeholder.com/150',
+        image: 'https://picsum.photos/150',
     }))
+    const articles = activeTab === 'user' ? userArticles : similarArticles
 
-    // A décommenter une fois la partie get user article by id et get article par categorie implémentée 
-    // const articles = activeTab === 'user' ? userArticles : similarArticles
+    if (isLoading) return <p aria-live='polite'>Chargement en cours...</p>
+    if (isError)
+        return <p aria-live='assertive'>Oulah ! Une erreur est survenue..</p>
 
-    const formatManufactureDate = (dateString: string) => {
-        const options: Intl.DateTimeFormatOptions = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        }
-        return new Date(dateString).toLocaleDateString('fr-FR', options)
-    }
-    const formatLastConnected = (dateString: string) => {
-        const options: Intl.DateTimeFormatOptions = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        }
-        return new Date(dateString).toLocaleDateString('fr-FR', options)
-    }
-
-    // switch (article.state) {
-    //     case 'New':
-    //         article.state = 'Nouveau'
-    //         break
-    //     case 'Like New':
-    //         article.state = 'Comme Neuf'
-    //         break
-    //     case 'very good condition':
-    //         article.state = 'Très bon état'
-    //         break
-    //     case 'good condition':
-    //         article.state = 'Bon état'
-    //         break
-    //     case 'fair condition':
-    //         article.state = 'Etat correct'
-    //         break
-    //     case 'to repair':
-    //         article.state = 'A réparer'
-    //         break
-    //     case 'USED':
-    //         article.state = 'Utilisé'
-    //         break
-
-    //     default:
-    //         article.state = 'Non spécifié'
-    //         break
-    // }
     return (
         <div>
-            <div className='flex flex-col items-start justify-between p-8 md:flex-row'>
-                {/* Carousel section */}
-                <div className='w-full md:w-1/2'>
-                    <Carousel className='w-full max-w-md'>
-                        <CarouselContent>
-                            {article?.imageUrls?.map(
-                                (imageUrl, index) =>
-                                    // Vérifier que l'image n'est pas vide
-                                    imageUrl && (
-                                        <CarouselItem key={index}>
-                                            <div className='p-1'>
-                                                <Card>
-                                                    <CardContent className='flex aspect-square items-center justify-center p-6'>
-                                                        <img
-                                                            src={imageUrl}
-                                                            alt={`Image de l'article ${index + 1}`}
-                                                            className='h-full w-full object-cover'
-                                                        />
-                                                    </CardContent>
-                                                </Card>
-                                            </div>
-                                        </CarouselItem>
-                                    ),
-                            )}
-                        </CarouselContent>
-                        <CarouselPrevious className='ml-4' />
-                        <CarouselNext className='mr-4' />
-                    </Carousel>
-
-                    {/* Description section */}
-                    <div className='mt-4'>
-                        <h2 className='text-2xl font-bold'>Description</h2>
-                        <p className='mb-4 mt-2'>{article?.description}</p>
-                        <p>
-                            <strong>Dimensions :</strong>
-                        </p>
-                        <ul className='mt-2 list-inside list-disc'>
-                            <li>
-                                {' '}
-                                Longueur : {article?.dimensions?.length} cm
-                            </li>
-                            <li> Largeur : {article?.dimensions?.width} cm</li>
-                            <li> Hauteur : {article?.dimensions?.height} cm</li>
-                            <li> Poids : {article?.dimensions?.weight} kg</li>
-                        </ul>
-                    </div>
-
-                    {/* Sales condition section */}
-
-                    <div className='mt-4'>
-                        <h2 className='text-2xl font-bold'>
-                            Conditions de ventes{' '}
-                        </h2>
-                        <p className='mt-2'>
-                            Livraison en {article?.deliveryType} : Lorem ipsum
-                            dolor sit amet consectetur. Lorem ipsum dolor sit
-                            amet consectetur. Lorem ipsum dolor sit amet
-                            consectetur. Lorem ipsum dolor sit amet consectetur.
-                            Lorem ipsum dolor sit amet consectetur. Lorem ipsum
-                            dolor sit amet consectetur.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Product details and seller info */}
-                <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
-                    <h1 className='mb-4 text-4xl font-bold'>
-                        {article?.adTitle}{' '}
-                    </h1>
-
-                    {/* Seller information */}
-                    <div className='mb-4 flex items-center'>
-                        <img
-                            src={user?.avatarUrl}
-                            alt='Avatar'
-                            className='h-12 w-12 rounded-full'
-                        />
-                        <div className='ml-4'>
-                            <p>
-                                <strong>Pseudo : </strong> {user?.pseudo}
-                            </p>
-                            <p>
-                                <strong> Ville</strong> {user?.address[0].city},{' '}
-                                <strong> Code Postal :</strong>{' '}
-                                {user?.address[0].postcode}{' '}
-                            </p>
-                            <p>
-                                <strong>Dernière connexion le : </strong>{' '}
-                                {formatLastConnected(
-                                    user?.activityStatus.lastConnected ||
-                                        'Non précisé',
+            {article ? (
+                <div className='flex flex-col items-start justify-between p-8 md:flex-row'>
+                    {/* Carousel section */}
+                    <div className='w-full md:w-1/2'>
+                        <Carousel
+                            className='w-full max-w-md'
+                            aria-label="Carousel des images de l'article"
+                        >
+                            <CarouselContent>
+                                {article.imageUrls?.map(
+                                    (imageUrl, index) =>
+                                        // Vérifier que l'image n'est pas vide
+                                        imageUrl && (
+                                            <CarouselItem key={index}>
+                                                <div className='p-1'>
+                                                    <Card>
+                                                        <CardContent className='flex aspect-square items-center justify-center p-6'>
+                                                            <img
+                                                                src={imageUrl}
+                                                                alt={`Image de l'article ${index + 1}`}
+                                                                className='h-full w-full object-cover'
+                                                            />
+                                                        </CardContent>
+                                                    </Card>
+                                                </div>
+                                            </CarouselItem>
+                                        ),
                                 )}
+                            </CarouselContent>
+                            <CarouselPrevious
+                                className='ml-4'
+                                aria-label='Image précédente'
+                            />
+                            <CarouselNext
+                                className='mr-4'
+                                aria-label='Image suivante'
+                            />
+                        </Carousel>
+
+                        {/* Description section */}
+                        <div className='mt-4'>
+                            {article.dimensions ? (
+                                <>
+                                    <h2 className='text-2xl font-bold'>
+                                        Description
+                                    </h2>
+                                    <p className='mb-4 mt-2'>
+                                        {article.description}
+                                    </p>
+                                    <p>
+                                        <strong>Dimensions :</strong>
+                                    </p>
+                                    <ul className='mt-2 list-inside list-disc'>
+                                        <li>
+                                            {' '}
+                                            Longueur :{' '}
+                                            {article.dimensions.length} cm
+                                        </li>
+                                        <li>
+                                            {' '}
+                                            Largeur : {
+                                                article.dimensions.width
+                                            }{' '}
+                                            cm
+                                        </li>
+                                        <li>
+                                            {' '}
+                                            Hauteur :{' '}
+                                            {article.dimensions.height} cm
+                                        </li>
+                                        <li>
+                                            {' '}
+                                            Poids : {
+                                                article?.dimensions.weight
+                                            }{' '}
+                                            kg
+                                        </li>
+                                    </ul>
+                                </>
+                            ) : (
+                                ''
+                            )}
+                        </div>
+
+                        {/* Sales condition section */}
+                        <div className='mt-4'>
+                            <h2 className='text-2xl font-bold'>
+                                Conditions de ventes{' '}
+                            </h2>
+                            <p className='mt-2'>
+                                Livraison en {article.deliveryType} : Lorem
+                                ipsum dolor sit amet consectetur. Lorem ipsum
+                                dolor sit amet consectetur. Lorem ipsum dolor
+                                sit amet consectetur. Lorem ipsum dolor sit amet
+                                consectetur. Lorem ipsum dolor sit amet
+                                consectetur. Lorem ipsum dolor sit amet
+                                consectetur.
                             </p>
                         </div>
                     </div>
 
-                    {/* Product details */}
-                    <div className='text-gray-700'>
-                        <p>
-                            <strong>Année: </strong>
-                            {formatManufactureDate(
-                                article?.manufactureDate || 'Non précisé',
-                            )}
-                        </p>
-                        <p>
-                            {/* à traduire !!! */}
-                            <strong>État : </strong> {article?.state}
-                        </p>
-                        <p>
-                            <strong>Marque : </strong>
-                            {article?.brand}
-                        </p>
-                    </div>
+                    {/* Product details and seller info */}
+                    <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
+                        <h1 className='mb-4 text-4xl font-bold'>
+                            {article.adTitle}{' '}
+                        </h1>
 
-                    {/* Action buttons */}
-                    <div className='mt-6 flex space-x-4'>
-                        <Button className='bg-teal-500 text-white'>
-                            Je le veux !
-                        </Button>
-                        <Button className='bg-teal-200 text-teal-700'>
-                            Envoyer un message
-                        </Button>
+                        {/* Seller information */}
+                        <div className='mb-4 flex items-center'>
+                            {user ? (
+                                <>
+                                    <Avatar>
+                                        <AvatarImage
+                                            src={user.avatarUrl}
+                                            alt='Avatar du user'
+                                            className='h-15 w-15 rounded-full'
+                                        />
+                                        <AvatarFallback>
+                                            {user.name}
+                                        </AvatarFallback>
+                                    </Avatar>
+
+                                    <div className='ml-4'>
+                                        <p>
+                                            <strong>Pseudo : </strong>{' '}
+                                            {user.pseudo}
+                                        </p>
+                                        <p>
+                                            {Array.isArray(user.address) &&
+                                            user.address.length > 0 ? (
+                                                <>
+                                                    <strong> Ville</strong>{' '}
+                                                    {user.address[0].city},{' '}
+                                                    <strong>
+                                                        {' '}
+                                                        Code Postal :
+                                                    </strong>{' '}
+                                                    {
+                                                        user.address[0].postcode
+                                                    }{' '}
+                                                </>
+                                            ) : null}
+                                        </p>
+                                        <p>
+                                            {user.activityStatus ? (
+                                                <>
+                                                    <strong>
+                                                        Dernière connexion le :{' '}
+                                                    </strong>{' '}
+                                                    {formatDate(
+                                                        user.activityStatus
+                                                            .lastConnected ||
+                                                            'Non précisé',
+                                                    )}
+                                                </>
+                                            ) : null}
+                                        </p>
+                                    </div>
+                                </>
+                            ) : null}
+                        </div>
+
+                        {/* Product details */}
+                        <div className='text-gray-700'>
+                            <p>
+                                {' '}
+                                {article.manufactureDate ? (
+                                    <>
+                                        <strong>Année: </strong>
+                                        {formatDate(article.manufactureDate)}
+                                    </>
+                                ) : null}
+                            </p>
+                            <p>
+                                {/*TO DO à traduire */}
+                                <strong>État : </strong> {article?.state}
+                            </p>
+                            <p>
+                                {article.brand ? (
+                                    <>
+                                        <strong>Marque : </strong>
+                                        {article?.brand}
+                                    </>
+                                ) : (
+                                    <p> Pas de marque précisée</p>
+                                )}
+                            </p>
+                            {/* Action buttons */}
+                            <div className='mt-6 flex justify-center space-x-4'>
+                                {/* TODO : add conditionnal rendering of this according to balance:
+                                 */}
+                                <Button
+                                    className='bg-teal-500 text-white'
+                                    aria-label='Je veux acheter cet article'
+                                >
+                                    Je le veux !
+                                </Button>
+                                <Button
+                                    className='bg-teal-200 text-teal-700'
+                                    aria-label='Envoyer un message au vendeur'
+                                >
+                                    Envoyer un message
+                                </Button>
+                            </div>{' '}
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            
-            {/* // A décommenter une fois la partie get user article by id et get article par categorie implémentée  */}
-
-            {/* Tab section (Besace user / Similaire)
-            <div className='mt-8 w-full'> */}
-            {/* Tabs (Besace user / Similaire) */}
-            {/* <div className='mb-6 flex justify-center'>
+            ) : (
+                <p>Nous n'avons pas trouvé l'article !</p>
+            )}
+            <div>
+                {/* Action buttons */}
+                <div className='mt-6 flex justify-center space-x-4'>
+                    {/* TODO : add conditionnal rendering of this according to balance:
+                     */}
+                    <Button
+                        className='bg-teal-500 text-white'
+                        aria-label='Je veux acheter cet article'
+                    >
+                        Je le veux !
+                    </Button>
+                    <Button
+                        className='bg-teal-200 text-teal-700'
+                        aria-label='Envoyer un message au vendeur'
+                    >
+                        Envoyer un message
+                    </Button>
+                </div>{' '}
+                {/* Tab section (Besace user / Similaire) */}
+                <div className='mt-8 w-full'>
+                    {/* Tabs (Besace user / Similaire) */}
+                    <div className='mb-6 flex justify-center'>
                         <Button
                             className={`${
                                 activeTab === 'user'
@@ -287,10 +318,10 @@ const Article = (): React.JSX.Element => {
                         >
                             Similaire
                         </Button>
-                    </div> */}
+                    </div>
 
-            {/* Product cards */}
-            {/* <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+                    {/* Product cards */}
+                    <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
                         {articles.map((article) => (
                             <Card
                                 key={article.id}
@@ -326,8 +357,9 @@ const Article = (): React.JSX.Element => {
                                 </CardFooter>
                             </Card>
                         ))}
-                    </div> */}
-            {/* </div> */}
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

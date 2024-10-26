@@ -78,7 +78,7 @@ export const createUser = async (
  * @returns {Promise<User>|null} A promise that resolves with user information.
  */
 export const getUserById = async (
-    userId: string,
+    userId: string |undefined,
     JWT: string,
 ): Promise<User|null> => {
     if (!JWT) throw new Error('No JWT provided')
@@ -97,7 +97,7 @@ export const getUserById = async (
         }
 
     }catch(error){
-        console.error('Error fetching id', error)
+        console.error('Error fetching user id', error)
         return null;
     }
     
