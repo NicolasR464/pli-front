@@ -8,6 +8,7 @@
         "src/types/article/index.ts",
         "src/types/transaction/index.ts",
         "src/types/instantMessage/index.ts",
+        "src/types/user/index.ts",
         "src/utils/apiCalls/article/index.ts",
         "src/utils/apiCalls/instantMessage/index.ts",
         "src/utils/apiCalls/transaction/index.ts",

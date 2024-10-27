@@ -19,8 +19,6 @@ import { getArticlesById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import { formatDate } from '@/utils/functions'
 
-import type { User } from '@/types/user/index'
-
 // Ajustez le chemin d'importation
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useQuery } from '@tanstack/react-query'
@@ -45,7 +43,7 @@ const ArticlePage = (): React.JSX.Element => {
     const ownerId = article?.owner
 
     // React query to get user data
-    const { data: user } = useQuery<User | undefined>({
+    const { data: user } = useQuery({
         queryKey: ['user', ownerId, jwtToken],
         queryFn: () => getUserById(ownerId, jwtToken),
         enabled: !!ownerId,
@@ -207,7 +205,7 @@ const ArticlePage = (): React.JSX.Element => {
                                             {user.pseudo}
                                         </p>
                                         <p>
-                                            {Array.isArray(user.address) &&
+                                            {!!user.address &&
                                                 user.address.length > 0 && (
                                                     <>
                                                         <strong>
