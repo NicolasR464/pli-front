@@ -2,6 +2,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button } from '@/components/shadcn/ui/button'
@@ -44,6 +45,7 @@ import type {
 } from '@/utils/apiCalls/local'
 import { useProductDataAnalysis } from '@/utils/apiCalls/local/mutations'
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
+import { pagePaths } from '@/utils/constants'
 import {
     categoriesList,
     deliveryTypes,
@@ -54,6 +56,7 @@ import {
 } from '@/utils/constants/productValues'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
+import type { Address } from '@/types/address/userAddress'
 import type { Article, DeliveryType } from '@/types/article'
 import { DeliveryTypeSchema, StateSchema, StatusSchema } from '@/types/article'
 import type { ArticleFormData } from '@/types/formValidations/adCreation'
@@ -78,6 +81,8 @@ import {
 } from 'lucide-react'
 
 const ArticleForm = (): React.JSX.Element => {
+    const router = useRouter()
+
     const [newAddressOpen, setNewAddressOpen] = useState(false)
     const [isManufactureDateOpen, setIsManufactureDateOpen] = useState(false)
     const [isPurchaseDateOpen, setIsPurchaseDateOpen] = useState(false)
@@ -182,8 +187,6 @@ const ArticleForm = (): React.JSX.Element => {
      * @returns {Promise<void>}
      */
     const onSubmit = async (data: ArticleFormData): Promise<void> => {
-        console.log('🔥 data', data)
-
         if (
             !data.newAddressObject.label &&
             !data.registeredAddressObject.label
@@ -234,8 +237,6 @@ const ArticleForm = (): React.JSX.Element => {
             { formData: articleData },
             {
                 onSuccess: (result: ProductAnalysisResponse) => {
-                    console.log('🔥 mutateProductAnalysis onSuccess', result)
-
                     setArticle({
                         ...articleData,
                         price: result.content.estimatedValue,
@@ -245,8 +246,9 @@ const ArticleForm = (): React.JSX.Element => {
                     setOpenConfirmDialog(true)
                 },
 
-                onError: (error) => {
-                    console.error('❌ mutateProductAnalysis error', error)
+                // Azure Cognitive Services error
+                onError: () => {
+                    router.push(`${pagePaths.HOME}?error=product-analysis`)
                 },
             },
         )
@@ -285,7 +287,10 @@ const ArticleForm = (): React.JSX.Element => {
     return (
         <Form {...form}>
             <form
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    handleSubmit(onSubmit)()
+                }}
                 className='mx-auto max-w-4xl space-y-8 rounded-lg bg-white p-6 shadow-md'
             >
                 <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
@@ -359,7 +364,7 @@ const ArticleForm = (): React.JSX.Element => {
                                 <FormMessage />
                                 <Select
                                     onValueChange={field.onChange}
-                                    value={categoryWatch ?? field.value}
+                                    value={categoryWatch || field.value}
                                     defaultValue={categoryWatch}
                                 >
                                     <FormControl>
@@ -368,22 +373,18 @@ const ArticleForm = (): React.JSX.Element => {
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        {categoriesList.map(
-                                            (category, categoryIndex) => (
-                                                <SelectItem
-                                                    key={
-                                                        category + categoryIndex
-                                                    }
-                                                    value={category}
-                                                >
-                                                    {
-                                                        products.categories[
-                                                            category
-                                                        ].tag
-                                                    }
-                                                </SelectItem>
-                                            ),
-                                        )}
+                                        {categoriesList.map((category) => (
+                                            <SelectItem
+                                                key={category}
+                                                value={category}
+                                            >
+                                                {
+                                                    products.categories[
+                                                        category
+                                                    ].tag
+                                                }
+                                            </SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </FormItem>
@@ -391,7 +392,6 @@ const ArticleForm = (): React.JSX.Element => {
                     />
 
                     {/* Subcategory Select */}
-
                     <FormField
                         control={control}
                         name='subCategory'
@@ -403,7 +403,7 @@ const ArticleForm = (): React.JSX.Element => {
                                 <FormMessage />
                                 <Select
                                     onValueChange={field.onChange}
-                                    value={subCategoryWatch ?? field.value}
+                                    value={subCategoryWatch || field.value}
                                     defaultValue={subCategoryWatch}
                                 >
                                     <FormControl>
@@ -415,7 +415,7 @@ const ArticleForm = (): React.JSX.Element => {
                                         {!!categoryWatch &&
                                             Object.entries(
                                                 products.categories[
-                                                    categoryWatch as keyof typeof products.categories
+                                                    categoryWatch
                                                 ].subcategories,
                                             )
                                                 .sort(([, a], [, b]) =>
@@ -588,8 +588,7 @@ const ArticleForm = (): React.JSX.Element => {
                                 <FormMessage />
                                 <Select
                                     onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                    value={stateWatch ?? field.value}
+                                    value={stateWatch || field.value}
                                     defaultValue={stateWatch}
                                 >
                                     <FormControl>
@@ -598,16 +597,14 @@ const ArticleForm = (): React.JSX.Element => {
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        {StateSchema.options.map(
-                                            (state, stateIndex) => (
-                                                <SelectItem
-                                                    key={state + stateIndex}
-                                                    value={state}
-                                                >
-                                                    {productStates[state]}
-                                                </SelectItem>
-                                            ),
-                                        )}
+                                        {StateSchema.options.map((state) => (
+                                            <SelectItem
+                                                key={state}
+                                                value={state}
+                                            >
+                                                {productStates[state]}
+                                            </SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </FormItem>
@@ -763,30 +760,25 @@ const ArticleForm = (): React.JSX.Element => {
                                             <SelectValue placeholder='Sélectionner une taille' />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {sizeOptions.map(
-                                                (group, groupIndex) => (
-                                                    <SelectGroup
-                                                        key={`size-group-${group.label}-${groupIndex}`}
-                                                    >
-                                                        <SelectLabel>
-                                                            {group.label}
-                                                        </SelectLabel>
-                                                        {group.options.map(
-                                                            (
-                                                                size,
-                                                                sizeIndex,
-                                                            ) => (
-                                                                <SelectItem
-                                                                    key={`size-option-${group.label}-${size}-${groupIndex}-${sizeIndex}`}
-                                                                    value={`${group.label}-${size}`}
-                                                                >
-                                                                    {size}
-                                                                </SelectItem>
-                                                            ),
-                                                        )}
-                                                    </SelectGroup>
-                                                ),
-                                            )}
+                                            {sizeOptions.map((group) => (
+                                                <SelectGroup key={group.label}>
+                                                    <SelectLabel>
+                                                        {group.label}
+                                                    </SelectLabel>
+                                                    {group.options.map(
+                                                        (size) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    group.label
+                                                                }
+                                                                value={`${group.label}-${size}`}
+                                                            >
+                                                                {size}
+                                                            </SelectItem>
+                                                        ),
+                                                    )}
+                                                </SelectGroup>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -794,7 +786,7 @@ const ArticleForm = (): React.JSX.Element => {
                         )}
                     />
 
-                    {/** Saved user addresses Select */}
+                    {/* Saved user addresses Select */}
                     {!!storedAddresses && storedAddresses.length > 0 && (
                         <div className='flex justify-center'>
                             <FormField
@@ -815,18 +807,10 @@ const ArticleForm = (): React.JSX.Element => {
                                                         addressObjectEmpty,
                                                     )
 
-                                                    console.log(
-                                                        '🔥 value',
-                                                        value,
-                                                    )
-
                                                     const parsedValue =
-                                                        JSON.parse(value)
-
-                                                    console.log(
-                                                        '🔥 parsedValue',
-                                                        parsedValue,
-                                                    )
+                                                        JSON.parse(
+                                                            value,
+                                                        ) as Address
 
                                                     setValue(
                                                         'registeredAddressObject',
@@ -853,14 +837,10 @@ const ArticleForm = (): React.JSX.Element => {
                                                 </FormControl>
                                                 <SelectContent>
                                                     {storedAddresses.map(
-                                                        (
-                                                            address,
-                                                            addressIndex,
-                                                        ) => (
+                                                        (address) => (
                                                             <SelectItem
                                                                 key={
-                                                                    address.label +
-                                                                    addressIndex
+                                                                    address.label
                                                                 }
                                                                 value={JSON.stringify(
                                                                     address,
@@ -896,8 +876,7 @@ const ArticleForm = (): React.JSX.Element => {
                         </div>
                     )}
 
-                    {JSON.stringify(newAddressObjectWatch)}
-                    {/** Article Address Input */}
+                    {/* Article Address Input */}
                     <div className='mt-[9px] flex justify-center'>
                         <FormField
                             control={control}
@@ -1010,8 +989,7 @@ const ArticleForm = (): React.JSX.Element => {
                                                                 <CommandItem
                                                                     className='cursor-pointer'
                                                                     key={
-                                                                        suggestion.id +
-                                                                        suggestionIndex
+                                                                        suggestion.id
                                                                     }
                                                                     value={
                                                                         suggestion
@@ -1068,7 +1046,6 @@ const ArticleForm = (): React.JSX.Element => {
                     </div>
 
                     {/* Delivery Type Checkboxes */}
-
                     {!!isPremium && (
                         <FormField
                             control={control}

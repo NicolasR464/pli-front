@@ -24,7 +24,10 @@ export const useUserStore = create<UserStore>()(
                 surname: '',
                 email: '',
                 phoneNumber: undefined,
-                activityStatus: '',
+                activityStatus: {
+                    lastConnected: new Date(),
+                    birthday: new Date(),
+                },
                 birthDate: new Date(),
                 avatarUrl: undefined,
                 isPremium: false,

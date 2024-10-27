@@ -55,7 +55,6 @@ export const createArticle = async (
     JWT: string,
 ): Promise<Partial<Article>> => {
     if (!JWT) throw new Error('No JWT provided')
-    console.log('🔥 JWT', JWT)
 
     addAuthHeader(articleInstance, JWT)
 

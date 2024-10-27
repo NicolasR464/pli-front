@@ -1,44 +1,22 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { useUserStore } from '@/stores/user'
-import { userMessages } from '@/utils/constants'
-import { notify } from '@/utils/functions'
-
-import { NotificationType } from '@/types'
+import { getParamsAndNotify } from '@/utils/constants'
 
 import { Button } from '../shadcn/ui/button'
 
 const WelcomeMsg = ({
-    allGood,
+    searchParams,
 }: {
-    readonly allGood: boolean
+    readonly searchParams: Record<string, string | string[] | undefined>
 }): React.JSX.Element => {
     const { user } = useUserStore()
 
-    const [toastState, setToastState] = useState({
-        message: '',
-        type: NotificationType.enum.SUCCESS as NotificationType,
-    })
-
     useEffect(() => {
-        if (allGood)
-            setToastState({
-                message: userMessages.onboardingSuccess,
-                type: NotificationType.enum.SUCCESS,
-            })
-
-        if (!allGood)
-            setToastState({
-                message: userMessages.onboardingError,
-                type: NotificationType.enum.ERROR,
-            })
-    }, [allGood])
-
-    useEffect(() => {
-        if (user.pseudo && toastState.message) notify(toastState)
-    }, [user, toastState])
+        getParamsAndNotify(searchParams)
+    }, [searchParams])
 
     return (
         <>

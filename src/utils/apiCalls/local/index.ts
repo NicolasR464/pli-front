@@ -20,7 +20,7 @@ export type ImageAnalysisResponse = {
     content: ImageAnalysis
 }
 
-export type ProductAnalysis = {
+type ProductAnalysis = {
     productName: string
     estimatedValue: number
 }

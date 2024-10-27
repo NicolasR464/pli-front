@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import type { CategoryEnumSchema, SubcategoryEnumSchema } from './categories'
-
 import {
     categoriesList,
     subcategoriesList,
@@ -71,9 +69,6 @@ export const ArticleSchema = z.object({
     // adress
 })
 
-// Type inference
-export type CategoryEnum = z.infer<typeof CategoryEnumSchema>
-export type SubcategoryEnum = z.infer<typeof SubcategoryEnumSchema>
 export type Dimensions = z.infer<typeof DimensionsSchema>
 export type State = z.infer<typeof StateSchema>
 export type Status = z.infer<typeof StatusSchema>

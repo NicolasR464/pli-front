@@ -77,12 +77,21 @@ export const addAuthHeader = (
     axiosInstance.defaults.headers.Authorization = `Bearer ${JWT}`
 }
 
+/**
+ * Displays a toast notification with the specified message and type.
+ *
+ * This function uses the `react-hot-toast` library to display a toast notification.
+ * @param {object} options - An object containing the message and type of the notification.
+ * @param {string} options.message - The message to be displayed in the toast notification.
+ * @param {NotificationType} options.type - The type of the notification (success, error, etc.).
+ * @returns {void}
+ */
 export const notify = ({
     message,
-    type,
+    type = NotificationType.enum.INFO,
 }: {
     message: string
-    type: NotificationType
+    type?: NotificationType
 }): void => {
     switch (type) {
         case NotificationType.enum.SUCCESS: {

@@ -14,6 +14,7 @@ import {
 
 import { useArticleStore } from '@/stores/article'
 import { useCreateArticle } from '@/utils/apiCalls/article/mutations'
+import { userMessages } from '@/utils/constants'
 
 import { useAuth } from '@clerk/nextjs'
 
@@ -27,17 +28,13 @@ const ConfirmDialog = (): React.JSX.Element => {
         openConfirmDialog: state.openConfirmDialog,
     }))
 
-    console.log('🔥 article in ConfirmDialog', article)
-
     const { mutateAsync: createArticle, isPending: isCreatingArticle } =
         useCreateArticle()
 
     const handleCreateArticle = async (): Promise<void> => {
-        console.log('🚀 handleCreateArticle')
-
         const JWT = await getToken({ template: 'trocup-1' })
         if (!JWT) {
-            router.push('/?error=not-logged-in')
+            router.push(`/${userMessages.notLoggedIn.ERROR}`)
             return
         }
 
@@ -45,10 +42,10 @@ const ConfirmDialog = (): React.JSX.Element => {
             { article, JWT },
             {
                 onSuccess: () => {
-                    console.log('🔥 article created')
+                    router.push(`/${userMessages.articleCreation.SUCCESS}`)
                 },
-                onError: (error) => {
-                    console.error('❌ createArticle error', error)
+                onError: () => {
+                    router.push(`/${userMessages.articleCreation.ERROR}`)
                 },
             },
         )
