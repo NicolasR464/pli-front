@@ -71,11 +71,12 @@ const ArticlePage = (): React.JSX.Element => {
     return (
         <div>
             {article ? (
-                <div className='flex flex-col items-start justify-between p-8 md:flex-row'>
+                <div className='flex flex-col p-8 md:flex-row md:justify-between'>
+                    {' '}
                     {/* Carousel section */}
-                    <div className='w-full md:w-1/2'>
+                    <div className='flex w-full flex-col md:w-1/2 md:pr-4'>
                         <Carousel
-                            className='w-full max-w-md'
+                            className='mx-auto w-full max-w-md'
                             aria-label='Carousel des images des articles'
                         >
                             <CarouselContent>
@@ -177,7 +178,6 @@ const ArticlePage = (): React.JSX.Element => {
                             </p>
                         </div>
                     </div>
-
                     {/* Product details and seller info */}
                     <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
                         <h1 className='mb-4 text-4xl font-bold'>
