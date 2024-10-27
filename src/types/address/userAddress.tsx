@@ -26,5 +26,4 @@ export const AddressSchema = z.object({
 })
 
 // Type inference
-export type Geopoints = z.infer<typeof GeopointsSchema>
 export type Address = z.infer<typeof AddressSchema>

@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         siteName: 'TrocUp',
     },
     other: {
-        custom: ['utf-8'],
+        custom: ['utf8'],
     },
 }
 

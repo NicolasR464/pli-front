@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 import type { ImageAnalysisResponse } from '@/utils/apiCalls/local'
+import { userMessages } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 import { mainFolder, subfolders } from '@/utils/constants/images'
 import { categoriesList, products } from '@/utils/constants/productValues'
 
 import { StateSchema } from '@/types/article'
+import type { ProductCategories } from '@/types/article/categories'
 import type { CloudinaryResponse } from '@/types/article/cloudinaryApiCall'
 import { environment } from '@/types/environment'
 
@@ -42,13 +40,14 @@ const analyzeImageFromUrl = async (
         })
 
     if (isUnexpected(result)) {
-        throw new Error(result.body.error)
+        throw new Error(userMessages.imageAnalysis.ERROR)
     }
 
     let brand = ''
     let objectIdentified = ''
     const tags: string[] = []
-    let category = ''
+    let category: keyof ProductCategories['categories'] = ''
+
     let subCategory = ''
     let state = ''
 
@@ -62,7 +61,8 @@ const analyzeImageFromUrl = async (
         result.body.objectsResult.values.length > 0
     ) {
         const objects = result.body.objectsResult.values
-        let highestConfidenceObject = undefined
+        // eslint-disable-next-line @typescript-eslint/init-declarations
+        let highestConfidenceObject
 
         for (const object of objects) {
             highestConfidenceObject =
@@ -107,7 +107,10 @@ const analyzeImageFromUrl = async (
     }
 
     // Identify the subCategory
-    if (category) {
+    if (
+        category &&
+        Object.keys(products.categories).includes(category.toUpperCase())
+    ) {
         for (const tag of tags) {
             const subCategories = Object.entries(
                 products.categories[category].subcategories,
@@ -117,8 +120,10 @@ const analyzeImageFromUrl = async (
                 ([key, value]) =>
                     key.includes(tag.toUpperCase()) ||
                     tag.toUpperCase().includes(key) ||
-                    value.toUpperCase().includes(tag.toUpperCase()) ||
-                    tag.toUpperCase().includes(value.toUpperCase()),
+                    (typeof value === 'string' &&
+                        value.toUpperCase().includes(tag.toUpperCase())) ||
+                    (typeof value === 'string' &&
+                        tag.toUpperCase().includes(value.toUpperCase())),
             )
 
             if (subCategoryFound)

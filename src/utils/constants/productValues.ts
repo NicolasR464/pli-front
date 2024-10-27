@@ -1,5 +1,7 @@
+import type { ProductCategories } from '@/types/article/categories'
+
 /** List of product categories, subcategories and their translations to FR */
-export const products = {
+export const products: ProductCategories = {
     categories: {
         CLOTHING: {
             tag: 'Vêtements',
@@ -332,7 +334,7 @@ export const products = {
 /** List of product category keys */
 export const categoriesList = Object.entries(products.categories)
     .sort(([, a], [, b]) => a.tag.localeCompare(b.tag))
-    .map(([key]) => key) as (keyof typeof products.categories)[]
+    .map(([key]) => key)
 
 /** List of all product subCategory keys */
 export const subcategoriesList = Object.values(products.categories).flatMap(

@@ -10,8 +10,8 @@ const BankInfoSchema = z.object({
 })
 
 export const ActivityStatusSchema = z.object({
-    lastConnected: z.date().optional(),
-    birthday: z.date().optional(),
+    lastConnected: z.date(),
+    birthday: z.date(),
 })
 
 export const UserSchema = z.object({
@@ -24,7 +24,7 @@ export const UserSchema = z.object({
     email: z.string().email(),
     sexe: z.enum(['masculin', 'féminin', 'autre']).optional(),
     phoneNumber: z.string().optional(),
-    activityStatus: z.string(),
+    activityStatus: ActivityStatusSchema,
     birthDate: z.date(),
     bankInfo: BankInfoSchema.optional(),
     avatarUrl: z.string().url().optional(),

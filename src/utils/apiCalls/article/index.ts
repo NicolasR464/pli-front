@@ -21,6 +21,7 @@ export const getArticles = async (): Promise<Article[]> => {
     return response.data
 }
 
+
 export const getArticleById = async (id: string): Promise<Article> => {
     const response: AxiosResponse<Article> = await articleInstance.get(
         `${apiEndpoints.ARTICLES}${id}`,
@@ -29,6 +30,7 @@ export const getArticleById = async (id: string): Promise<Article> => {
         throw new Error(`Failed to fetch article with id ${String(id)}`)
     return response.data
 }
+
 /**
  * Create a new article.
  * @param {Partial<Article>} article - The article to create.
@@ -40,7 +42,6 @@ export const createArticle = async (
     JWT: string,
 ): Promise<Partial<Article>> => {
     if (!JWT) throw new Error('No JWT provided')
-    console.log('🔥 JWT', JWT)
 
     addAuthHeader(articleInstance, JWT)
 
