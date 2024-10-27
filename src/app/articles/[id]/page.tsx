@@ -1,5 +1,9 @@
 'use client'
+import { useState } from 'react'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
+
+import { Avatar, AvatarImage } from '@/components/shadcn/ui/avatar'
 import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
 import {
@@ -9,18 +13,19 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
-import { Avatar, AvatarImage } from '@/components/shadcn/ui/avatar'
+import { Separator } from '@/components/shadcn/ui/separator'
+
 import { getArticlesById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
-import type { Article } from '@/types/article'
-import { useState } from 'react'
+import { formatDate } from '@/utils/functions'
 
+import type { User } from '@/types/user/index'
+
+// Ajustez le chemin d'importation
+import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useQuery } from '@tanstack/react-query'
 
-import { formatDate } from '@/utils/functions'
-import { AvatarFallback } from '@radix-ui/react-avatar'
-
-const Article = (): React.JSX.Element => {
+const ArticlePage = (): React.JSX.Element => {
     // Get token & id from URL in string to avoid type errors :
     const jwtToken = String(process.env.NEXT_PUBLIC_JWT_TOKEN)
     const { id } = useParams()
@@ -29,8 +34,8 @@ const Article = (): React.JSX.Element => {
     // React query to get article data
     const {
         data: article,
-        isPending: isLoading,
-        isError: isError,
+        isLoading,
+        isError,
     } = useQuery({
         queryKey: ['article', articleId],
         queryFn: () => getArticlesById(articleId),
@@ -40,29 +45,30 @@ const Article = (): React.JSX.Element => {
     const ownerId = article?.owner
 
     // React query to get user data
-    const { data: user } = useQuery({
-        queryKey: ['user', ownerId],
+    const { data: user } = useQuery<User | undefined>({
+        queryKey: ['user', ownerId, jwtToken],
         queryFn: () => getUserById(ownerId, jwtToken),
         enabled: !!ownerId,
     })
+
     // tab dynamiques
     const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')
     const userArticles = Array.from({ length: 8 }, (_, i) => ({
         id: i,
         title: 'Lorem ipsum',
-        image: 'https://picsum.photos/150',
     }))
 
     const similarArticles = Array.from({ length: 8 }, (_, i) => ({
         id: i,
         title: 'Similar article',
-        image: 'https://picsum.photos/150',
     }))
     const articles = activeTab === 'user' ? userArticles : similarArticles
 
-    if (isLoading) return <p aria-live='polite'>Chargement en cours...</p>
+    if (isLoading) return <p aria-live='polite'>{'Chargement en cours…'}</p>
     if (isError)
-        return <p aria-live='assertive'>Oulah ! Une erreur est survenue..</p>
+        return (
+            <p aria-live='assertive'>{'Oulah ! Une erreur est survenue..'}</p>
+        )
 
     return (
         <div>
@@ -72,21 +78,25 @@ const Article = (): React.JSX.Element => {
                     <div className='w-full md:w-1/2'>
                         <Carousel
                             className='w-full max-w-md'
-                            aria-label="Carousel des images de l'article"
+                            aria-label='Carousel des images des articles'
                         >
                             <CarouselContent>
-                                {article.imageUrls?.map(
-                                    (imageUrl, index) =>
+                                {article.imageUrls.map(
+                                    (imageUrl) =>
                                         // Vérifier que l'image n'est pas vide
                                         imageUrl && (
-                                            <CarouselItem key={index}>
+                                            <CarouselItem
+                                                key={String(imageUrl)}
+                                            >
                                                 <div className='p-1'>
                                                     <Card>
                                                         <CardContent className='flex aspect-square items-center justify-center p-6'>
-                                                            <img
+                                                            <Image
                                                                 src={imageUrl}
-                                                                alt={`Image de l'article ${index + 1}`}
+                                                                alt='Image de l’article'
                                                                 className='h-full w-full object-cover'
+                                                                width={250}
+                                                                height={250}
                                                             />
                                                         </CardContent>
                                                     </Card>
@@ -110,38 +120,34 @@ const Article = (): React.JSX.Element => {
                             {article.dimensions ? (
                                 <>
                                     <h2 className='text-2xl font-bold'>
-                                        Description
+                                        {'Description'}
                                     </h2>
                                     <p className='mb-4 mt-2'>
                                         {article.description}
                                     </p>
                                     <p>
-                                        <strong>Dimensions :</strong>
+                                        <strong>{'Dimensions :'}</strong>
                                     </p>
                                     <ul className='mt-2 list-inside list-disc'>
                                         <li>
                                             {' '}
-                                            Longueur :{' '}
-                                            {article.dimensions.length} cm
+                                            {'Longueur :'}{' '}
+                                            {article.dimensions.length} {'cm'}
                                         </li>
                                         <li>
                                             {' '}
-                                            Largeur : {
-                                                article.dimensions.width
-                                            }{' '}
-                                            cm
+                                            {'Largeur : '}
+                                            {article.dimensions.width} {'cm'}
                                         </li>
                                         <li>
                                             {' '}
-                                            Hauteur :{' '}
-                                            {article.dimensions.height} cm
+                                            {'Hauteur :'}{' '}
+                                            {article.dimensions.height} {'cm'}
                                         </li>
                                         <li>
                                             {' '}
-                                            Poids : {
-                                                article?.dimensions.weight
-                                            }{' '}
-                                            kg
+                                            {'Poids : '}
+                                            {article.dimensions.weight} {'kg'}
                                         </li>
                                     </ul>
                                 </>
@@ -153,16 +159,23 @@ const Article = (): React.JSX.Element => {
                         {/* Sales condition section */}
                         <div className='mt-4'>
                             <h2 className='text-2xl font-bold'>
-                                Conditions de ventes{' '}
+                                {'Conditions de ventes'}{' '}
                             </h2>
                             <p className='mt-2'>
-                                Livraison en {article.deliveryType} : Lorem
-                                ipsum dolor sit amet consectetur. Lorem ipsum
-                                dolor sit amet consectetur. Lorem ipsum dolor
-                                sit amet consectetur. Lorem ipsum dolor sit amet
-                                consectetur. Lorem ipsum dolor sit amet
-                                consectetur. Lorem ipsum dolor sit amet
-                                consectetur.
+                                {'Livraison en '}
+                                {article.deliveryType} {': Lorem'}
+                                {
+                                    'ipsum dolor sit amet consectetur. Lorem ipsum'
+                                }
+                                {
+                                    'dolor sit amet consectetur. Lorem ipsum dolor'
+                                }
+                                {
+                                    'sit amet consectetur. Lorem ipsum dolor sit amet'
+                                }
+                                {'consectetur. Lorem ipsum dolor sit amet'}
+                                {'consectetur. Lorem ipsum dolor sit amet'}
+                                {'consectetur.'}
                             </p>
                         </div>
                     </div>
@@ -175,7 +188,7 @@ const Article = (): React.JSX.Element => {
 
                         {/* Seller information */}
                         <div className='mb-4 flex items-center'>
-                            {user ? (
+                            {!!user && (
                                 <>
                                     <Avatar>
                                         <AvatarImage
@@ -190,110 +203,110 @@ const Article = (): React.JSX.Element => {
 
                                     <div className='ml-4'>
                                         <p>
-                                            <strong>Pseudo : </strong>{' '}
+                                            <strong>{'Pseudo : '}</strong>{' '}
                                             {user.pseudo}
                                         </p>
                                         <p>
                                             {Array.isArray(user.address) &&
-                                            user.address.length > 0 ? (
-                                                <>
-                                                    <strong> Ville</strong>{' '}
-                                                    {user.address[0].city},{' '}
-                                                    <strong>
-                                                        {' '}
-                                                        Code Postal :
-                                                    </strong>{' '}
-                                                    {
-                                                        user.address[0].postcode
-                                                    }{' '}
-                                                </>
-                                            ) : null}
+                                                user.address.length > 0 && (
+                                                    <>
+                                                        <strong>
+                                                            {' Ville'}
+                                                        </strong>{' '}
+                                                        {user.address[0].city}
+                                                        {','}{' '}
+                                                        <strong>
+                                                            {' '}
+                                                            {'Code Postal :'}
+                                                        </strong>{' '}
+                                                        {
+                                                            user.address[0]
+                                                                .postcode
+                                                        }{' '}
+                                                    </>
+                                                )}
                                         </p>
                                         <p>
-                                            {user.activityStatus ? (
-                                                <>
-                                                    <strong>
-                                                        Dernière connexion le :{' '}
-                                                    </strong>{' '}
-                                                    {formatDate(
-                                                        user.activityStatus
-                                                            .lastConnected ||
-                                                            'Non précisé',
-                                                    )}
-                                                </>
-                                            ) : null}
+                                            <strong>
+                                                {'Dernière connexion le :'}{' '}
+                                            </strong>{' '}
+                                            {formatDate(
+                                                user.activityStatus
+                                                    .lastConnected,
+                                            )}
                                         </p>
                                     </div>
                                 </>
-                            ) : null}
+                            )}
                         </div>
 
                         {/* Product details */}
                         <div className='text-gray-700'>
                             <p>
                                 {' '}
-                                {article.manufactureDate ? (
+                                {!!article.manufactureDate && (
                                     <>
-                                        <strong>Année: </strong>
+                                        <strong>{'Année: '}</strong>
                                         {formatDate(article.manufactureDate)}
                                     </>
-                                ) : null}
+                                )}
                             </p>
                             <p>
                                 {/*TO DO à traduire */}
-                                <strong>État : </strong> {article?.state}
+                                <strong>{'État : '}</strong> {article.state}
                             </p>
                             <p>
                                 {article.brand ? (
                                     <>
-                                        <strong>Marque : </strong>
-                                        {article?.brand}
+                                        <strong>{'Marque : '}</strong>
+                                        {article.brand}
                                     </>
                                 ) : (
-                                    <p> Pas de marque précisée</p>
+                                    <p>{' Pas de marque précisée'}</p>
                                 )}
                             </p>
                             {/* Action buttons */}
                             <div className='mt-6 flex justify-center space-x-4'>
-                                {/* TODO : add conditionnal rendering of this according to balance:
+                                {/* add conditionnal rendering of this according to balance:
                                  */}
                                 <Button
                                     className='bg-teal-500 text-white'
                                     aria-label='Je veux acheter cet article'
                                 >
-                                    Je le veux !
+                                    {'Je le veux !'}
                                 </Button>
                                 <Button
                                     className='bg-teal-200 text-teal-700'
                                     aria-label='Envoyer un message au vendeur'
                                 >
-                                    Envoyer un message
+                                    {'Envoyer un message'}
                                 </Button>
                             </div>{' '}
                         </div>
                     </div>
                 </div>
             ) : (
-                <p>Nous n'avons pas trouvé l'article !</p>
+                <p>{'Nous n’avons pas trouvé l’article !'}</p>
             )}
             <div>
                 {/* Action buttons */}
-                <div className='mt-6 flex justify-center space-x-4'>
-                    {/* TODO : add conditionnal rendering of this according to balance:
+                <div className='mb-6 mt-6 flex justify-center space-x-4'>
+                    {/* add conditionnal rendering of this according to balance:
                      */}
                     <Button
                         className='bg-teal-500 text-white'
                         aria-label='Je veux acheter cet article'
                     >
-                        Je le veux !
+                        {'Je le veux !'}
                     </Button>
                     <Button
                         className='bg-teal-200 text-teal-700'
                         aria-label='Envoyer un message au vendeur'
                     >
-                        Envoyer un message
+                        {'Envoyer un message'}
                     </Button>
                 </div>{' '}
+                <Separator />
                 {/* Tab section (Besace user / Similaire) */}
                 <div className='mt-8 w-full'>
                     {/* Tabs (Besace user / Similaire) */}
@@ -304,9 +317,11 @@ const Article = (): React.JSX.Element => {
                                     ? 'bg-yellow-600 text-white'
                                     : 'bg-gray-200 text-gray-600'
                             } rounded-l-lg px-4 py-2`}
-                            onClick={() => setActiveTab('user')}
+                            onClick={() => {
+                                setActiveTab('user')
+                            }}
                         >
-                            Besace user
+                            {'Besace user'}
                         </Button>
                         <Button
                             className={`${
@@ -314,33 +329,30 @@ const Article = (): React.JSX.Element => {
                                     ? 'bg-yellow-600 text-white'
                                     : 'bg-gray-200 text-gray-600'
                             } rounded-r-lg px-4 py-2`}
-                            onClick={() => setActiveTab('similar')}
+                            onClick={() => {
+                                setActiveTab('similar')
+                            }}
                         >
-                            Similaire
+                            {'Similaire'}
                         </Button>
                     </div>
 
                     {/* Product cards */}
                     <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-                        {articles.map((article) => (
+                        {articles.map((art, index) => (
                             <Card
-                                key={article.id}
+                                key={art.id || index}
                                 className='text-center'
                             >
                                 <CardContent>
-                                    <img
-                                        src={article.image}
-                                        alt={article.title}
-                                        className='mb-2 h-40 w-full object-cover'
-                                    />
                                     <p className='text-sm font-medium'>
-                                        {article.title}
+                                        {art.title}
                                     </p>
                                 </CardContent>
                                 <CardFooter className='flex justify-center'>
                                     <button className='text-gray-500'>
                                         <svg
-                                            xmlns='http://www.w3.org/2000/svg'
+                                            // xmlns='^http:\/\/www.w3.org/2000/svg'
                                             fill='none'
                                             viewBox='0 0 24 24'
                                             strokeWidth={1.5}
@@ -364,4 +376,4 @@ const Article = (): React.JSX.Element => {
     )
 }
 
-export default Article
+export default ArticlePage

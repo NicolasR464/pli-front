@@ -4,19 +4,19 @@ import { z } from 'zod'
 
 import type { Address, Geopoints } from '@/types/address/userAddress'
 
-const BankInfo = z.object({
+const BankInfoSchema = z.object({
     IBAN: z.string(),
     BIC: z.string(),
 })
 
-type BankInfo = z.infer<typeof BankInfo>
+export type BankInfo = z.infer<typeof BankInfoSchema>
 
-const ActivityStatus = z.object({
-    lastConnected: z.date(), 
-    birthday: z.date(), 
-});
+const ActivityStatusSchema = z.object({
+    lastConnected: z.date(),
+    birthday: z.date(),
+})
 
-export const User = z.object({
+export const UserSchema = z.object({
     id: z.string(),
     version: z.number().int(),
     pseudo: z.string(),
@@ -28,9 +28,9 @@ export const User = z.object({
     password: z.string(),
     sexe: z.enum(['masculin', 'féminin', 'autre']),
     phoneNumber: z.string().optional(),
-    activityStatus: ActivityStatus,
+    activityStatus: ActivityStatusSchema,
     birthDate: z.date(),
-    bankInfo: BankInfo.optional(),
+    bankInfo: BankInfoSchema.optional(),
     avatarUrl: z.string().url().optional(),
     isPremium: z.boolean(),
     favoriteArticles: z.array(z.string()).optional(),
@@ -40,4 +40,4 @@ export const User = z.object({
     debit: z.array(z.string()).optional(),
 })
 
-export type User = z.infer<typeof User>
+export type User = z.infer<typeof UserSchema>

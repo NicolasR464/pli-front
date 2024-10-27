@@ -55,7 +55,7 @@ export const createUser = async (
 ): Promise<CreateUserResponse> => {
     if (!JWT) throw new Error('No JWT provided')
 
-    addAuthHeader(JWT)
+    addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
         apiEndpoints.USERS,
@@ -70,37 +70,29 @@ export const createUser = async (
     }
 }
 
-
 /**
  * Get user by Id.
  * @param {string} userId the id of the user to retreive.
  * @param {string} JWT The JWT token for authentication.
- * @returns {Promise<User>|null} A promise that resolves with user information.
+ * @returns {Promise<User>|undefined} A promise that resolves with user information.
  */
 export const getUserById = async (
-    userId: string |undefined,
+    userId: string | undefined,
     JWT: string,
-): Promise<User|null> => {
+): Promise<User | undefined> => {
     if (!JWT) throw new Error('No JWT provided')
-    addAuthHeader(JWT)
-    
+    addAuthHeader(userInstance, JWT)
+
     try {
         const response: AxiosResponse<User> = await userInstance.get(
             `${apiEndpoints.USERS}${userId}`,
-        );
-        
+        )
+
         if (response.status === 200) {
-            return response.data; 
-        } else {
-            console.error('An error with the following status has occured:', response.status);
-            return null;
+            return response.data
         }
-
-    }catch(error){
-        console.error('Error fetching user id', error)
-        return null;
+    } catch (error) {
+        throw new Error(`Error fetching user id: ${String(error)}`)
     }
-    
-
+    return undefined
 }
-
