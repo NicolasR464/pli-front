@@ -82,17 +82,10 @@ export const getUserById = async (
 ): Promise<User | undefined> => {
     if (!JWT) throw new Error('No JWT provided')
     addAuthHeader(userInstance, JWT)
-
-    try {
-        const response: AxiosResponse<User> = await userInstance.get(
-            `${apiEndpoints.USERS}${userId}`,
-        )
-
-        if (response.status === 200) {
-            return response.data
-        }
-    } catch (error) {
-        throw new Error(`Error fetching user id: ${String(error)}`)
-    }
-    return undefined
+    const response: AxiosResponse<User> = await userInstance.get(
+        `${apiEndpoints.USERS}${userId}`,
+    )
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch user with id ${String(userId)}`)
+    return response.data
 }

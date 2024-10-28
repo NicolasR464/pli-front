@@ -15,7 +15,7 @@ export const getArticles = async (): Promise<Article[]> => {
 
     return response.data
 }
-export const getArticlesById = async (id: string): Promise<Article> => {
+export const getArticleById = async (id: string): Promise<Article> => {
     const response: AxiosResponse<Article> = await articleInstance.get(
         `${apiEndpoints.ARTICLES}${id}`,
     )

@@ -15,7 +15,7 @@ import {
 } from '@/components/shadcn/ui/carousel'
 import { Separator } from '@/components/shadcn/ui/separator'
 
-import { getArticlesById } from '@/utils/apiCalls/article'
+import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import { formatDate } from '@/utils/functions'
 
@@ -36,7 +36,7 @@ const ArticlePage = (): React.JSX.Element => {
         isError,
     } = useQuery({
         queryKey: ['article', articleId],
-        queryFn: () => getArticlesById(articleId),
+        queryFn: () => getArticleById(articleId),
         enabled: !!articleId,
     })
     // Type and store id in a variable to avoid errors
@@ -116,7 +116,7 @@ const ArticlePage = (): React.JSX.Element => {
 
                         {/* Description section */}
                         <div className='mt-4'>
-                            {article.dimensions ? (
+                            {article.dimensions && (
                                 <>
                                     <h2 className='text-2xl font-bold'>
                                         {'Description'}
@@ -150,8 +150,6 @@ const ArticlePage = (): React.JSX.Element => {
                                         </li>
                                     </ul>
                                 </>
-                            ) : (
-                                ''
                             )}
                         </div>
 

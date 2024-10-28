@@ -114,7 +114,6 @@ export const notify = ({
  * const formattedDate = formatDate('2024-10-26T12:00:00Z');
  * Returns: "26 octobre 2024"
  */
-
 export const formatDate = (date: string | Date): string => {
     const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
