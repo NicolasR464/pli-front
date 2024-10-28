@@ -107,7 +107,7 @@ export const notify = ({
  * This function takes a date string, converts it into a Date object,
  * and then formats it according to specified options. The resulting
  * date is returned as a string in the format "day month year" (e.g., "26 octobre 2024").
- * @param {string} dateString - The input date string to format. It should be a valid date format
+ * @param {string} date - The input date string to format. It should be a valid date format
  * compatible with the JavaScript Date object.
  * @returns {string} A formatted date string in "day month year" format.
  * @example

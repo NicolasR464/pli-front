@@ -17,6 +17,7 @@ import { Separator } from '@/components/shadcn/ui/separator'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
+import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
 import { formatDate } from '@/utils/functions'
 
 // Ajustez le chemin d'importation
@@ -116,7 +117,7 @@ const ArticlePage = (): React.JSX.Element => {
 
                         {/* Description section */}
                         <div className='mt-4'>
-                            {article.dimensions && (
+                            {!!article.dimensions && (
                                 <>
                                     <h2 className='text-2xl font-bold'>
                                         {'Description'}
@@ -187,14 +188,25 @@ const ArticlePage = (): React.JSX.Element => {
                             {!!user && (
                                 <>
                                     <Avatar>
-                                        <AvatarImage
-                                            src={user.avatarUrl}
-                                            alt='Avatar du user'
-                                            className='h-15 w-15 rounded-full'
-                                        />
+                                        {!!user.avatarUrl && (
+                                            <AvatarImage
+                                                src={user.avatarUrl}
+                                                alt='Avatar du user'
+                                                className='h-15 w-15 rounded-full'
+                                            />
+                                        )}
                                         <AvatarFallback>
                                             {user.name}
                                         </AvatarFallback>
+                                        {!user.avatarUrl && (
+                                            <Image
+                                                src={avatarPlaceholder}
+                                                alt='Avatar'
+                                                width={100}
+                                                height={100}
+                                                priority
+                                            />
+                                        )}
                                     </Avatar>
 
                                     <div className='ml-4'>
