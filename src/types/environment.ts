@@ -46,8 +46,8 @@ export const environment = createEnv({
         INSTANT_MESSAGE_BASE_URL: z.string().url(),
         MULTIAVATAR_API_KEY: z.string().optional(),
         CLOUDINARY_SECRET_KEY: z.string(),
-        LOCAL_API_URL: z.string().url(),
-        AZURE_COGNITIVE_SERVICES_ENDPOINT: z.string().url(),
+        LOCAL_API_URL: z.string(),
+        AZURE_COGNITIVE_SERVICES_ENDPOINT: z.string(),
         AZURE_COGNITIVE_SERVICES_KEY: z.string(),
         AZURE_COGNITIVE_SERVICES_KEY_TWO: z.string(),
     },
@@ -61,7 +61,7 @@ export const environment = createEnv({
         NEXT_PUBLIC_MULTIAVATAR_API_KEY: z.string().optional(),
         NEXT_PUBLIC_CLOUDINARY_KEY: z.string(),
         NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string(),
-        NEXT_PUBLIC_LOCAL_API_URL: z.string().url(),
+        NEXT_PUBLIC_LOCAL_API_URL: z.string(),
     },
 
     /** Also add your client-side env variables here to avoid TS errors. */
