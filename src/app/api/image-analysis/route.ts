@@ -40,7 +40,7 @@ const analyzeImageFromUrl = async (
         })
 
     if (isUnexpected(result)) {
-        throw new Error(userMessages.imageAnalysis.ERROR)
+        throw new Error(userMessages.imageAnalysis.type.ERROR)
     }
 
     let brand = ''

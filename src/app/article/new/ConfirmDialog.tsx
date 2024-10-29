@@ -16,6 +16,8 @@ import { useArticleStore } from '@/stores/article'
 import { useCreateArticle } from '@/utils/apiCalls/article/mutations'
 import { userMessages } from '@/utils/constants'
 
+import { NotificationType } from '@/types'
+
 import { useAuth } from '@clerk/nextjs'
 
 const ConfirmDialog = (): React.JSX.Element => {
@@ -33,8 +35,11 @@ const ConfirmDialog = (): React.JSX.Element => {
 
     const handleCreateArticle = async (): Promise<void> => {
         const JWT = await getToken({ template: 'trocup-1' })
+
         if (!JWT) {
-            router.push(`/${userMessages.notLoggedIn.ERROR}`)
+            router.push(
+                `/?${userMessages.notLoggedIn.label}=${NotificationType.enum.ERROR}`,
+            )
             return
         }
 
@@ -42,10 +47,14 @@ const ConfirmDialog = (): React.JSX.Element => {
             { article, JWT },
             {
                 onSuccess: () => {
-                    router.push(`/${userMessages.articleCreation.SUCCESS}`)
+                    router.push(
+                        `/?${userMessages.articleCreation.label}=${NotificationType.enum.SUCCESS}`,
+                    )
                 },
                 onError: () => {
-                    router.push(`/${userMessages.articleCreation.ERROR}`)
+                    router.push(
+                        `/?${userMessages.articleCreation.label}=${NotificationType.enum.ERROR}`,
+                    )
                 },
             },
         )

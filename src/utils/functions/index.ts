@@ -1,8 +1,10 @@
 import toast from 'react-hot-toast'
 
+import type { ISO8601DateTime } from '@/types'
 import { NotificationType } from '@/types'
 import { environment } from '@/types/environment'
 
+import { userMessages } from '../constants'
 import type { AxiosInstance } from 'axios'
 import {
     adjectives,
@@ -86,7 +88,7 @@ export const addAuthHeader = (
  * @param {NotificationType} options.type - The type of the notification (success, error, etc.).
  * @returns {void}
  */
-export const notify = ({
+const notify = ({
     message,
     type = NotificationType.enum.INFO,
 }: {
@@ -130,4 +132,53 @@ export const formatDate = (date: string | Date): string => {
     }
     const dateObj = typeof date === 'string' ? new Date(date) : date
     return dateObj.toLocaleDateString('fr-FR', options)
+}
+
+type UserMessageKeys = keyof typeof userMessages
+
+/**
+ * Function to get the user message key from the label
+ * @param {string} label - The label of the user message
+ * @returns {UserMessageKeys | undefined} The user message key
+ */
+const getUserMessageKeyFromLabel = (
+    label: string,
+): UserMessageKeys | undefined => {
+    return Object.entries(userMessages).find(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ([_, value]) => value.label === label,
+    )?.[0] as UserMessageKeys | undefined
+}
+
+/**
+ * Function to get the search params and notify the user with a toaster
+ * @param {Array<{key: string, value: string | undefined}>} paramsArray - Array containing key-value pairs of URL search parameters
+ */
+export const getParamsAndNotify = (
+    paramsArray: {
+        key: string
+        value: string | undefined
+    }[],
+): void => {
+    for (const param of paramsArray) {
+        const matchingMessageKey = getUserMessageKeyFromLabel(param.key)
+
+        if (matchingMessageKey) {
+            notify({
+                message:
+                    userMessages[matchingMessageKey].type[
+                        param.value?.toUpperCase() as keyof (typeof userMessages)[typeof matchingMessageKey]['type']
+                    ],
+                type: param.value?.toUpperCase() as keyof (typeof userMessages)[typeof matchingMessageKey]['type'],
+            })
+        }
+    }
+}
+
+/**
+ * Returns the current date.
+ * @returns {ISO8601DateTime} The current date.
+ */
+export const getPresentDate = (): ISO8601DateTime => {
+    return new Date().toISOString() as ISO8601DateTime
 }

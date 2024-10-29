@@ -1,22 +1,25 @@
 'use client'
 
-import { useEffect } from 'react'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+
+import { Button } from '@/components/shadcn/ui/button'
 
 import { useUserStore } from '@/stores/user'
-import { getParamsAndNotify } from '@/utils/constants'
+import { getParamsAndNotify } from '@/utils/functions'
 
-import { Button } from '../shadcn/ui/button'
-
-const WelcomeMsg = ({
-    searchParams,
-}: {
-    readonly searchParams: Record<string, string | string[] | undefined>
-}): React.JSX.Element => {
+const WelcomeMsg = (): React.JSX.Element => {
     const { user } = useUserStore()
 
-    useEffect(() => {
-        getParamsAndNotify(searchParams)
-    }, [searchParams])
+    const searchParams = useSearchParams()
+
+    const paramsArray = []
+
+    for (const [key, value] of searchParams.entries()) {
+        paramsArray.push({ key, value })
+    }
+
+    getParamsAndNotify(paramsArray)
 
     return (
         <>
@@ -29,8 +32,10 @@ const WelcomeMsg = ({
                         </span>
                         {' ! 👋'}
                     </div>
-                    {/** TODO: on FRONT-45 */}
-                    <Button>{'Ajoute ton premier objet 🎁'}</Button>
+
+                    <Link href='/article/new'>
+                        <Button>{'Ajoute ton premier objet 🎁'}</Button>
+                    </Link>
                 </div>
             )}
         </>

@@ -54,6 +54,7 @@ import {
     productStatus,
     sizeOptions,
 } from '@/utils/constants/productValues'
+import { getPresentDate } from '@/utils/functions'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
 import type { Address } from '@/types/address/userAddress'
@@ -231,6 +232,8 @@ const ArticleForm = (): React.JSX.Element => {
             ...(data.newAddressObject.label && {
                 address: data.newAddressObject,
             }),
+            createdAt: getPresentDate(),
+            lastModified: getPresentDate(),
         }
 
         await mutateProductAnalysis(
@@ -768,9 +771,7 @@ const ArticleForm = (): React.JSX.Element => {
                                                     {group.options.map(
                                                         (size) => (
                                                             <SelectItem
-                                                                key={
-                                                                    group.label
-                                                                }
+                                                                key={`${group.label}-${size}`}
                                                                 value={`${group.label}-${size}`}
                                                             >
                                                                 {size}
