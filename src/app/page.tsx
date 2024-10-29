@@ -1,3 +1,4 @@
+import { Notification } from '@/components/Notification'
 import WelcomeMsg from '@/components/WelcomeMsg'
 
 type HomeProperties = {
@@ -11,9 +12,11 @@ const Home = ({
 }: HomeProperties): React.JSX.Element => {
     return (
         <div className='flex min-h-screen flex-col items-center justify-start p-24'>
-            {!!searchParams.onboarding && (
-                <WelcomeMsg searchParams={searchParams} />
-            )}
+            {/* Toaster from the search params */}
+            <Notification />
+
+            {/* Display the welcome message if the onboarding search param is present */}
+            {!!searchParams.onboarding && <WelcomeMsg />}
         </div>
     )
 }
