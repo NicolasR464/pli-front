@@ -27,6 +27,14 @@ jobs:
             TRANSACTION_PORT: ${{ vars.TRANSACTION_PORT }}
             USER_BASE_URL: ${{ vars.USER_BASE_URL }}
             USER_PORT: ${{ vars.USER_PORT }}
+            CLOUDINARY_SECRET_KEY: ${{ secrets.CLOUDINARY_SECRET_KEY }}
+            LOCAL_API_URL: ${{ secrets.LOCAL_API_URL }}
+            AZURE_COGNITIVE_SERVICES_ENDPOINT: ${{ secrets.AZURE_COGNITIVE_SERVICES_ENDPOINT }}
+            AZURE_COGNITIVE_SERVICES_KEY: ${{ secrets.AZURE_COGNITIVE_SERVICES_KEY }}
+            AZURE_COGNITIVE_SERVICES_KEY_TWO: ${{ secrets.AZURE_COGNITIVE_SERVICES_KEY_TWO }}
+            NEXT_PUBLIC_CLOUDINARY_KEY: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_KEY }}
+            NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+            NEXT_PUBLIC_LOCAL_API_URL: ${{ secrets.NEXT_PUBLIC_LOCAL_API_URL }}
 
         steps:
             - uses: actions/checkout@v4
