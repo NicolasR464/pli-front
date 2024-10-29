@@ -85,3 +85,16 @@ export const getUserById = async (
         throw new Error(`Failed to fetch user with id ${String(userId)}`)
     return response.data
 }
+
+// Récupéreration d'un utilisateur par son id
+export const getUserInfo = async (
+    userId: string,
+    token: string,
+): Promise<User> => {
+    const headers = { Authorization: `Bearer ${token}` }
+    const url = `${apiEndpoints.USERS}${userId}`
+    console.log(`Fetching user info from URL: ${url}`)
+    
+    const response = await userInstance.get(url, { headers })
+    return response.data
+}

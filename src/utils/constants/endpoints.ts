@@ -8,7 +8,7 @@ export const apiEndpoints = {
     ARTICLES: 'articles/',
     TRANSACTIONS: 'api/transaction/',
     /** @TODO Update the endpoint below  */
-    INSTANT_MESSAGES: 'instantmsgs/',
+    INSTANT_MESSAGES: 'api/messages/',
 
     // Local API endpoints
     IMAGE_ANALYSIS: 'image-analysis/',
