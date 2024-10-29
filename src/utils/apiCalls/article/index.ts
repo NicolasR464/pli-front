@@ -15,3 +15,11 @@ export const getArticles = async (): Promise<Article[]> => {
 
     return response.data
 }
+export const getArticleById = async (id: string): Promise<Article> => {
+    const response: AxiosResponse<Article> = await articleInstance.get(
+        `${apiEndpoints.ARTICLES}${id}`,
+    )
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch article with id ${String(id)}`)
+    return response.data
+}

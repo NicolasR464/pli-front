@@ -81,6 +81,7 @@ export const ArticleSchema = z.object({
     subCategory: SubcategoryEnumSchema,
     deliveryType: DeliveryTypeSchema.array(),
     dimensions: DimensionsSchema.optional(),
+    // adress
 })
 
 // Type inference
