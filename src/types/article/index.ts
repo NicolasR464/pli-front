@@ -19,6 +19,15 @@ export const DimensionsSchema = z.object({
 })
 
 /**
+ * @description Schema for geo points
+ * @exports GeoPointsSchema
+ */
+export const GeoPointsSchema = z.object({
+    type: z.literal('Point'),
+    coordinates: z.tuple([z.number(), z.number()]),
+})
+
+/**
  * @description Schema for state enum
  * @exports StateSchema
  */
@@ -71,6 +80,8 @@ export const ArticleSchema = z.object({
 })
 
 export type Dimensions = z.infer<typeof DimensionsSchema>
+export type GeoPoints = z.infer<typeof GeoPointsSchema>
+export type Address = z.infer<typeof AddressSchema>
 export type State = z.infer<typeof StateSchema>
 export type Status = z.infer<typeof StatusSchema>
 export type DeliveryType = z.infer<typeof DeliveryTypeSchema>

@@ -6,6 +6,40 @@ import type { Article } from '@/types/article'
 
 import type { AxiosResponse } from 'axios'
 
+type PaginatedArticlesResponse = {
+    articles: Article[]
+    hasNext: boolean
+    nextCursor?: number
+}
+
+export const getAllArticles = async (
+    page: number,
+    limit = 30,
+): Promise<PaginatedArticlesResponse> => {
+    const skip = page * limit
+    const response: AxiosResponse<PaginatedArticlesResponse> =
+        await articleInstance.get(apiEndpoints.microServices.public.ARTICLES, {
+            params: {
+                skip,
+                limit,
+            },
+        })
+
+    if (response.status !== 200) {
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
+        )
+    }
+
+    const { articles, hasNext } = response.data
+
+    return {
+        articles,
+        hasNext,
+        nextCursor: articles.length === limit ? page + 1 : undefined,
+    }
+}
+
 /**
  * Fetch all articles from the API.
  * @returns {Promise<Article[]>} An array of articles.
