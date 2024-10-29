@@ -4,7 +4,7 @@ export const apiEndpoints = {
     ARTICLES: 'api/articles/',
     TRANSACTIONS: 'api/transaction/',
     /** @TODO Update the endpoint below  */
-    INSTANT_MESSAGES: 'instantmsgs/',
+    INSTANT_MESSAGES: 'api/messages/',
 
     // Third party APIs
     API_GOUV: 'https://api-adresse.data.gouv.fr/search/',

@@ -19,6 +19,7 @@ const Room = (): React.JSX.Element => {
                 {'Connecté : '}
                 {user.id}
             </p>
+            {/* <ShowTokenComponent/> */}
         </div>
     )
 }
