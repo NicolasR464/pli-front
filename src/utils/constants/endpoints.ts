@@ -1,7 +1,8 @@
 export const apiEndpoints = {
     // Micro services
     USERS: 'api/users/',
-    ARTICLES: 'api/articles/',
+
+    ARTICLES: 'articles/',
     TRANSACTIONS: 'api/transaction/',
     /** @TODO Update the endpoint below  */
     INSTANT_MESSAGES: 'instantmsgs/',

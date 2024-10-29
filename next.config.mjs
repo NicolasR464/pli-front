@@ -7,7 +7,11 @@ jiti('./src/types/environment')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['res.cloudinary.com', 'api.multiavatar.com'],
+        domains: [
+            'res.cloudinary.com',
+            'api.multiavatar.com',
+            'cdn.pixabay.com',
+        ],
     },
 }
 
