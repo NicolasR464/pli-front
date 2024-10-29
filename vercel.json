@@ -3,7 +3,7 @@
         "deploymentEnabled": {
             "main": true,
             "dev": false,
-            "feature/*": false
+            "front-*": false
         }
     }
 }
