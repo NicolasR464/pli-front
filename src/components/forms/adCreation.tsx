@@ -54,7 +54,7 @@ import {
     productStatus,
     sizeOptions,
 } from '@/utils/constants/productValues'
-import { getPresentDate } from '@/utils/functions'
+import { getPresentDate } from '@/utils/functions/dates'
 
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
 import type { Address } from '@/types/address/userAddress'
