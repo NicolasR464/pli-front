@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-import { getParamsAndNotify } from '@/utils/functions'
+import { getParamsAndNotify } from '@/utils/functions/toasterHelper'
 
 export const Notification = (): undefined => {
     const searchParams = useSearchParams()
