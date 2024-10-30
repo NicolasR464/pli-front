@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/shadcn/ui/button'
 
 import { useUserStore } from '@/stores/user'
-import { getParamsAndNotify } from '@/utils/functions'
+import { getParamsAndNotify } from '@/utils/functions/toasterHelper'
 
 const WelcomeMsg = (): React.JSX.Element => {
     const { user } = useUserStore()
