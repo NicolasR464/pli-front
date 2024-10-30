@@ -71,13 +71,6 @@ const Layout = ({
                             <SignOutButton redirectUrl={pagePaths.HOME}>
                                 <Button>{'Déconnexion'}</Button>
                             </SignOutButton>
-
-                            <Link href={pagePaths.MESSAGES}>
-                                <Bell
-                                    className='color-blueGreen-dark-active cursor-pointer'
-                                    strokeWidth={1.5}
-                                />
-                            </Link>
                         </SignedIn>
                     </header>
 
