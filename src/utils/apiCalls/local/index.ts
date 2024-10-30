@@ -71,3 +71,23 @@ export const analyzeProductData = async (
 
     return response.data
 }
+
+/**
+ * Send an email by sending it to the local instance.
+ * @param {FormData} formData - The form data to be sent.
+ * @returns {Promise<EmailResponse>} A promise that resolves to the email response.
+ * @throws {Error} If the email sending fails.
+ */
+export const sendEmail = async (
+    formData: EmailParams,
+): Promise<EmailResponse> => {
+    const response: AxiosResponse<EmailResponse> = await localInstance.postForm(
+        apiEndpoints.SEND_EMAIL,
+        { formData },
+    )
+
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch ${apiEndpoints.SEND_EMAIL}`)
+
+    return response.data
+}
