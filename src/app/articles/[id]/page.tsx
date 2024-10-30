@@ -18,7 +18,7 @@ import { Separator } from '@/components/shadcn/ui/separator'
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
-import { formatDate } from '@/utils/functions'
+import { formatDate } from '@/utils/functions/dates'
 
 // Ajustez le chemin d'importation
 import { AvatarFallback } from '@radix-ui/react-avatar'
