@@ -52,6 +52,7 @@
         "react-feather": "2.0.10",
         "react-hook-form": "7.53.0",
         "react-hot-toast": "2.4.1",
+        "resend": "4.0.1-alpha.0",
         "tailwind-merge": "2.4.0",
         "tailwindcss-animate": "1.0.7",
         "unique-names-generator": "4.7.1",
