@@ -35,6 +35,8 @@ jobs:
             NEXT_PUBLIC_CLOUDINARY_KEY: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_KEY }}
             NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
             NEXT_PUBLIC_LOCAL_API_URL: ${{ secrets.NEXT_PUBLIC_LOCAL_API_URL }}
+            INSTANT_MESSAGE_WS_URL: ${{ vars.INSTANT_MESSAGE_WS_URL }}
+            NEXT_PUBLIC_INSTANT_MESSAGE_WS_URL: ${{ vars.NEXT_PUBLIC_INSTANT_MESSAGE_WS_URL }}
 
         steps:
             - uses: actions/checkout@v4
