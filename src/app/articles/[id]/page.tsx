@@ -14,6 +14,7 @@ import { ConditionsTroc } from '@/components/ConditionsTroc'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
+import { useSendEmail } from '@/utils/apiCalls/local/mutations'
 import { getUserById } from '@/utils/apiCalls/user'
 
 import { useQuery } from '@tanstack/react-query'
@@ -42,6 +43,8 @@ const ArticlePage = (): React.JSX.Element => {
         queryFn: () => getUserById(ownerId),
         enabled: !!ownerId,
     })
+
+    const { mutate: sendEmail } = useSendEmail()
 
     // tab dynamiques
     const [activeTab, setActiveTab] = useState<'user' | 'similar'>('user')

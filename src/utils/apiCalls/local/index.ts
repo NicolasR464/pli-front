@@ -30,6 +30,15 @@ export type ProductAnalysisResponse = {
     content: ProductAnalysis
 }
 
+export type EmailParams = {
+    senderEmail: string
+    receiverEmail: string
+}
+
+export type EmailResponse = {
+    message: string
+}
+
 /**
  * Store and analyze an image by sending it to the local instance.
  * @param {File} file - The image file to be analyzed.
