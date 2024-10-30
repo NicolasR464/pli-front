@@ -2,33 +2,49 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import type { Address } from '@/types/address/userAddress'
-
-type UserData = {
-    pseudo: string
-    avatarUrl: string
-    isPremium: boolean
-    address?: Address
-}
+import type { User } from '@/types/user'
 
 type UserStore = {
-    user: UserData
-    setUserData: (userData: Partial<UserData>) => void
+    user: User
+    setUserData: (userData: Partial<User>) => void
 }
 
+/**
+ * This store is used to manage user data, including pseudo, avatarUrl, isPremium status, and address.
+ * It provides a method to update the user data partially.
+ */
 export const useUserStore = create<UserStore>()(
     persist(
         immer((set) => ({
             user: {
+                id: '',
+                version: 0,
                 pseudo: '',
-                avatarUrl: '',
+                name: '',
+                surname: '',
+                email: '',
+                phoneNumber: undefined,
+                activityStatus: {
+                    lastConnected: new Date(),
+                    birthday: new Date(),
+                },
+                birthDate: new Date(),
+                avatarUrl: undefined,
                 isPremium: false,
-                address: undefined,
+                credit: undefined,
+                articles: undefined,
+                debit: undefined,
             },
 
-            setUserData: (userData: Partial<UserData>): void => {
+            setUserData: (userData: Partial<User>): void => {
                 set((state) => {
                     state.user = { ...state.user, ...userData }
+                })
+            },
+
+            deleteStoredUserData: (): void => {
+                set((state) => {
+                    state.user = {} as User
                 })
             },
         })),

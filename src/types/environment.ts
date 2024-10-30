@@ -45,6 +45,11 @@ export const environment = createEnv({
             }),
         INSTANT_MESSAGE_BASE_URL: z.string().url(),
         MULTIAVATAR_API_KEY: z.string().optional(),
+        CLOUDINARY_SECRET_KEY: z.string(),
+        LOCAL_API_URL: z.string(),
+        AZURE_COGNITIVE_SERVICES_ENDPOINT: z.string(),
+        AZURE_COGNITIVE_SERVICES_KEY: z.string(),
+        AZURE_COGNITIVE_SERVICES_KEY_TWO: z.string(),
     },
 
     /** Client-side env variables. Starts by 'NEXT_PUBLIC_'. */
@@ -54,6 +59,9 @@ export const environment = createEnv({
         NEXT_PUBLIC_TRANSACTION_BASE_URL: z.string().url(),
         NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: z.string().url(),
         NEXT_PUBLIC_MULTIAVATAR_API_KEY: z.string().optional(),
+        NEXT_PUBLIC_CLOUDINARY_KEY: z.string(),
+        NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string(),
+        NEXT_PUBLIC_LOCAL_API_URL: z.string(),
     },
 
     /** Also add your client-side env variables here to avoid TS errors. */
@@ -66,5 +74,9 @@ export const environment = createEnv({
             process.env.NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL!,
         NEXT_PUBLIC_MULTIAVATAR_API_KEY:
             process.env.NEXT_PUBLIC_MULTIAVATAR_API_KEY,
+        NEXT_PUBLIC_CLOUDINARY_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_KEY!,
+        NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+            process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!,
+        NEXT_PUBLIC_LOCAL_API_URL: process.env.NEXT_PUBLIC_LOCAL_API_URL!,
     },
 })

@@ -1,44 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+
+import { Button } from '@/components/shadcn/ui/button'
 
 import { useUserStore } from '@/stores/user'
-import { userMessages } from '@/utils/constants'
-import { notify } from '@/utils/functions'
+import { getParamsAndNotify } from '@/utils/functions/toasterHelper'
 
-import { NotificationType } from '@/types'
-
-import { Button } from '../shadcn/ui/button'
-
-const WelcomeMsg = ({
-    allGood,
-}: {
-    readonly allGood: boolean
-}): React.JSX.Element => {
+const WelcomeMsg = (): React.JSX.Element => {
     const { user } = useUserStore()
 
-    const [toastState, setToastState] = useState({
-        message: '',
-        type: NotificationType.enum.SUCCESS as NotificationType,
-    })
+    const searchParams = useSearchParams()
 
-    useEffect(() => {
-        if (allGood)
-            setToastState({
-                message: userMessages.onboardingSuccess,
-                type: NotificationType.enum.SUCCESS,
-            })
+    const paramsArray = []
 
-        if (!allGood)
-            setToastState({
-                message: userMessages.onboardingError,
-                type: NotificationType.enum.ERROR,
-            })
-    }, [allGood])
+    for (const [key, value] of searchParams.entries()) {
+        paramsArray.push({ key, value })
+    }
 
-    useEffect(() => {
-        if (user.pseudo && toastState.message) notify(toastState)
-    }, [user, toastState])
+    getParamsAndNotify(paramsArray)
 
     return (
         <>
@@ -51,8 +32,10 @@ const WelcomeMsg = ({
                         </span>
                         {' ! 👋'}
                     </div>
-                    {/** TODO: on FRONT-45 */}
-                    <Button>{'Ajoute ton premier objet 🎁'}</Button>
+
+                    <Link href='/article/new'>
+                        <Button>{'Ajoute ton premier objet 🎁'}</Button>
+                    </Link>
                 </div>
             )}
         </>

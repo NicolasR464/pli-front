@@ -1,22 +1,9 @@
 import { z } from 'zod'
 
-import { categories } from './categories'
-
-/**
- * @description Schema for category enum
- * @exports CategoryEnumSchema
- */
-export const CategoryEnumSchema = z.enum(
-    Object.keys(categories) as [keyof typeof categories],
-)
-
-/**
- * @description Schema for subcategory enum
- * @exports SubcategoryEnumSchema
- */
-export const SubcategoryEnumSchema = z.enum(
-    Object.values(categories).flat() as [string],
-)
+import {
+    categoriesList,
+    subcategoriesList,
+} from '@/utils/constants/productValues'
 
 /**
  * @description Schema for dimensions
@@ -34,29 +21,25 @@ export const DimensionsSchema = z.object({
  * @exports StateSchema
  */
 export const StateSchema = z.enum([
-    'Neuf',
-    'Comme neuf',
-    'Très bon état',
-    'Bon état',
-    'État correct',
-    'À réparer',
+    'NEW',
+    'LIKE_NEW',
+    'VERY_GOOD_CONDITION',
+    'GOOD_CONDITION',
+    'FAIR_CONDITION',
+    'TO_REPAIR',
 ])
 
 /**
- * @description Schema for status enum
+ * @description Schema defining the availability of the article
  * @exports StatusSchema
  */
-export const StatusSchema = z.enum(['Accessible', 'Inaccessible'])
+export const StatusSchema = z.enum(['AVAILABLE', 'UNAVAILABLE', 'RESERVED'])
 
 /**
  * @description Schema for delivery type enum
  * @exports DeliveryTypeSchema
  */
-export const DeliveryTypeSchema = z.enum([
-    'La Poste',
-    'Mondial Relay',
-    'En main propre',
-])
+export const DeliveryTypeSchema = z.enum(['SHIPPING', 'PICKUP', 'BOTH'])
 
 /**
  * @description Schema for article
@@ -70,23 +53,22 @@ export const ArticleSchema = z.object({
     brand: z.string().optional(),
     model: z.string().optional(),
     description: z.string(),
+    size: z.string().optional(),
     price: z.number().positive(),
     manufactureDate: z.date().optional(),
     purchaseDate: z.date().optional(),
     state: StateSchema,
+    status: StatusSchema,
     imageUrls: z.array(z.string().url()),
-    createdAt: z.date(),
-    lastModified: z.date(),
-    category: CategoryEnumSchema,
-    subCategory: SubcategoryEnumSchema,
-    deliveryType: DeliveryTypeSchema.array(),
+    createdAt: z.string().datetime(),
+    lastModified: z.string().datetime(),
+    category: z.enum([...categoriesList] as [string, ...string[]]),
+    subCategory: z.enum([...subcategoriesList] as [string, ...string[]]),
+    deliveryType: DeliveryTypeSchema,
     dimensions: DimensionsSchema.optional(),
     // adress
 })
 
-// Type inference
-export type CategoryEnum = z.infer<typeof CategoryEnumSchema>
-export type SubcategoryEnum = z.infer<typeof SubcategoryEnumSchema>
 export type Dimensions = z.infer<typeof DimensionsSchema>
 export type State = z.infer<typeof StateSchema>
 export type Status = z.infer<typeof StatusSchema>

@@ -10,10 +10,10 @@ import { getQueryClient } from '@/utils/providers/getQueryClient'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
 /** Display all users data. */
-const Users = (): React.JSX.Element => {
+const Users = async (): Promise<React.JSX.Element> => {
     const queryClient = getQueryClient()
 
-    queryClient.prefetchInfiniteQuery({
+    await queryClient.prefetchInfiniteQuery({
         queryKey: [rqKeys.USERS],
         queryFn: () => getUsers(0),
         initialPageParam: 0,

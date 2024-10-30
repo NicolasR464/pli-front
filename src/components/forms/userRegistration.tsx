@@ -100,8 +100,8 @@ export const RegistrationForm = (): React.JSX.Element => {
         setValue('pseudo', getRandomUserPseudonym())
     }, [setValue])
 
-    const addressObject = watch('addressObject')
     const avatarUrl = watch('avatarUrl')
+    const addressObject = watch('addressObject')
     const addressInput = watch('addressInput')
 
     /**
@@ -169,7 +169,7 @@ export const RegistrationForm = (): React.JSX.Element => {
                     setUserData({
                         pseudo,
                         avatarUrl,
-                        ...(addressObject && { address: addressObject }),
+                        ...(addressObject && { address: [addressObject] }),
                     })
 
                     router.push(`${pagePaths.HOME}?onboardingSuccess=true`)
@@ -178,14 +178,12 @@ export const RegistrationForm = (): React.JSX.Element => {
                     if (
                         (errorMsg as AxiosError<{ error: string }>).response
                             ?.data.error === 'pseudo already in use'
-                    )
+                    ) {
                         setErrorPseudo('Ce pseudo est déjà pris.')
+                        return
+                    }
 
-                    if (
-                        (errorMsg as AxiosError<{ error: string }>).response
-                            ?.data.error === 'email already in use'
-                    )
-                        router.push(`${pagePaths.HOME}?onboardingSuccess=false`)
+                    router.push(`${pagePaths.HOME}?onboardingSuccess=false`)
                 },
             },
         )
@@ -260,13 +258,15 @@ export const RegistrationForm = (): React.JSX.Element => {
 
                         {/** Change Avatar Button */}
                         <TooltipProvider>
-                            <Tooltip>
+                            <Tooltip delayDuration={500}>
                                 <TooltipTrigger asChild>
                                     <Button
                                         className='mt-1'
                                         disabled={!imageLoaded}
                                         type='button'
                                         onClick={() => {
+                                            setImageLoaded(false)
+
                                             setValue(
                                                 'avatarUrl',
                                                 getRandomAvatarUrl(),
@@ -317,9 +317,6 @@ export const RegistrationForm = (): React.JSX.Element => {
                         )}
                     />
                 </div>
-
-                {/* {JSON.stringify(addressObject)}
-                {JSON.stringify(Object.keys(addressObject).length === 0)} */}
 
                 {/** User Address */}
                 <div className='flex justify-center'>

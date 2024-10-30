@@ -19,8 +19,38 @@ export const pagePaths = {
     ONBOARDING: '/onboarding/',
 }
 
+/** Object containing notifications to the user for various cases, set in alphabetical order */
 export const userMessages = {
-    onboardingSuccess: 'Tes informations ont été sauvegardées',
-    onboardingError:
-        'Erreur de sauvegarde de tes informations. Réessaye plus tard.',
+    imageAnalysis: {
+        label: 'image-analysis',
+        type: {
+            ERROR: 'Erreur lors de l’analyse de l’image.',
+        },
+    },
+    articleAnalysis: {
+        label: 'article-analysis',
+        type: {
+            ERROR: 'Erreur lors de l’analyse de l’article. Réessaye plus tard.',
+        },
+    },
+    articleCreation: {
+        label: 'article-creation',
+        type: {
+            ERROR: 'Erreur lors de la création de l’article. Réessaye plus tard.',
+            SUCCESS: 'L’article a été créé avec succès.',
+        },
+    },
+    onboarding: {
+        label: 'onboarding',
+        type: {
+            ERROR: 'Erreur de sauvegarde de tes informations. Réessaye plus tard.',
+            SUCCESS: 'Tes informations ont été sauvegardées',
+        },
+    },
+    notLoggedIn: {
+        label: 'not-logged-in',
+        type: {
+            ERROR: 'Tu n’es pas connecté. Connecte-toi pour continuer.',
+        },
+    },
 }

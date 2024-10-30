@@ -2,7 +2,6 @@
 
 import { z } from 'zod'
 
-import type { Geopoints } from '@/types/address/userAddress'
 import { AddressSchema } from '@/types/address/userAddress'
 
 const BankInfoSchema = z.object({
@@ -10,7 +9,7 @@ const BankInfoSchema = z.object({
     BIC: z.string(),
 })
 
-const ActivityStatusSchema = z.object({
+export const ActivityStatusSchema = z.object({
     lastConnected: z.date(),
     birthday: z.date(),
 })
@@ -22,10 +21,8 @@ export const UserSchema = z.object({
     name: z.string(),
     surname: z.string(),
     address: AddressSchema.array().optional(),
-    geopoints: z.custom<Geopoints>(),
     email: z.string().email(),
-    password: z.string(),
-    sexe: z.enum(['masculin', 'féminin', 'autre']),
+    sexe: z.enum(['masculin', 'féminin', 'autre']).optional(),
     phoneNumber: z.string().optional(),
     activityStatus: ActivityStatusSchema,
     birthDate: z.date(),

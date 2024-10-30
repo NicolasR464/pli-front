@@ -3,6 +3,7 @@
         "src/components/shadcn/**",
         "prettier.config.mjs",
         "src/stores/users.ts",
+        "src/types/article/cloudinaryApiCall.tsx",
         "src/types/environment.ts",
         "src/types/article/categories.ts",
         "src/types/article/index.ts",
@@ -25,7 +26,6 @@
         "jest-environment-jsdom",
         "@typescript-eslint/type-utils",
         "@typescript-eslint/utils",
-        "i",
-        "@radix-ui/react-select"
+        "i"
     ]
 }

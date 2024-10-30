@@ -42,6 +42,18 @@ const questrial = Questrial({
 export const metadata: Metadata = {
     title: 'TrocUp',
     description: 'Le troc 2.0',
+    icons: {
+        icon: '/trocup_icon.ico',
+    },
+    openGraph: {
+        type: 'website',
+        locale: 'fr_FR',
+        url: 'https://troc-up.vercel.app',
+        siteName: 'TrocUp',
+    },
+    other: {
+        custom: ['utf8'],
+    },
 }
 
 const Layout = ({
@@ -49,7 +61,10 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => (
-    <ClerkProvider>
+    <ClerkProvider
+        signUpFallbackRedirectUrl={pagePaths.ONBOARDING}
+        afterSignOutUrl={pagePaths.HOME}
+    >
         <html lang='en'>
             <body
                 className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
