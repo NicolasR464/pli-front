@@ -1,27 +1,26 @@
 'use client'
+import { useParams } from 'next/navigation'
+import {ChatContainer} from '@/components/messages/conversation/chatContainer'
+import { pagePaths } from '@/utils/constants'
+import { Bell } from 'react-feather'
+import Link from 'next/link'
 
-import { useUser } from '@clerk/nextjs'
+const MessagePage = () => {
+    const { id: roomId } = useParams()
 
-const Room = (): React.JSX.Element => {
-    // Get user info from Clerk
-    const { user } = useUser()
+    if (!roomId) return null
 
-    // Loading state while fetching the user
-    if (!user) {
-        return <div>{'Loading…'}</div>
-    }
-
-    // Component
     return (
-        <div>
-            <h1>{'Room'}</h1>
-            <p>
-                {'Connecté : '}
-                {user.id}
-            </p>
-            {/* <ShowTokenComponent/> */}
+        <div className='chat-page'>
+            <Link href={pagePaths.MESSAGES}>
+                <Bell
+                    className='color-blueGreen-dark-active cursor-pointer'
+                    strokeWidth={1.5}
+                />
+            </Link>
+            <ChatContainer roomId={roomId as string} />
         </div>
     )
 }
 
-export default Room
+export default MessagePage

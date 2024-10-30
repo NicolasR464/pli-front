@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 
-import { Avatar, AvatarImage } from '@/components/shadcn/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/ui/avatar'
 import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
 import {
@@ -22,10 +22,11 @@ import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
 import { formatDate } from '@/utils/functions/dates'
 
 // Ajustez le chemin d'importation
-import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useQuery } from '@tanstack/react-query'
+import InitialProposalModal from '@/components/messages/msgFromArticles/initialProposalModal'
 
 const ArticlePage = (): React.JSX.Element => {
+    const [showExchangeModal, setShowExchangeModal] = useState(false)
     // Get id from URL in string to avoid type errors :
     const { id } = useParams()
     const articleId = String(id)
@@ -73,6 +74,11 @@ const ArticlePage = (): React.JSX.Element => {
     const lat = cityPosition ? cityPosition[0] : undefined
     const long = cityPosition ? cityPosition[1] : undefined
 
+    const openExchangeModal = () => {
+        setShowExchangeModal(true)
+    }
+    
+    
     return (
         <div>
             {article ? (
@@ -327,11 +333,19 @@ const ArticlePage = (): React.JSX.Element => {
                         {'Je le veux !'}
                     </Button>
                     <Button
+                        onClick={openExchangeModal}
                         className='bg-teal-200 text-teal-700'
                         aria-label='Envoyer un message au vendeur'
                     >
                         {'Envoyer un message'}
                     </Button>
+                    {showExchangeModal && (
+                        <InitialProposalModal
+                            onClose={() => setShowExchangeModal(false)}
+                            articleId={articleId}
+                            receiverId={ownerId || ''}
+                        />
+                    )}
                 </div>{' '}
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}

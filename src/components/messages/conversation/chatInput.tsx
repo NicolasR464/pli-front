@@ -16,7 +16,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
     }
 
     return (
-        <div className='flex items-center border-t border-gray-200 p-4'>
+        <div className='w-3/4 items-center flex border-t border-gray-200 p-4'>
             <input
                 type='text'
                 value={input}
@@ -28,7 +28,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
             />
             <button
                 onClick={handleSend}
-                className='rounded-full bg-teal-600 p-2 text-white'
+                className='rounded-lg bg-blueGreen-hover p-2 text-white'
             >
                 {'Send'}
             </button>

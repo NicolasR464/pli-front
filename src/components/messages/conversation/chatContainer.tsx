@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ChatHeader } from './chatHeader'
-import SubHeader  from './subHeader'
 import { ChatInput } from './chatInput'
 import { MessageBubble } from './messageBubble'
+import ProposeExchangeModal from './proposalModal'
+import StickySubheader from './stickySubHeader'
 import {
-    getMessagesByRoomID,
-    sendMessage,
-} from '@/utils/apiCalls/instantMessage'
-import { getUserInfo } from '@/utils/apiCalls/user'
-import { connectWebSocketById } from '@/utils/constants/connectWebSocket'
+    connectWebSocketByRoomId,
+    sendMessageViaWebSocket,
+} from '@/utils/apiCalls/instantMessage/connectWebSocket'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { groupMessagesByDate, formatDate } from '@/utils/functions/messages'
+import { getMessagesByRoomID } from '@/utils/apiCalls/instantMessage'
+import { getUserInfo } from '@/utils/apiCalls/user'
+import UserInfoCard from './userInfoCard'
+import { Repeat } from 'react-feather'
 
 type Message = {
     id: string
@@ -26,90 +29,120 @@ type ChatContainerProps = {
 
 export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     const [messages, setMessages] = useState<Message[]>([])
-    const [error, setError] = useState<string | null>(null)
+    const [showModal, setShowModal] = useState(false)
+    const [proposalMessages, setProposalMessages] = useState<
+        Record<string, string | null>
+    >({})
     const [contactName, setContactName] = useState<string>('Inconnu')
     const [contactAvatar, setContactAvatar] = useState<string>('')
-    const [receiverId, setReceiverId] = useState<string>('') // Ajout de l'état pour le receiver
-
+    const [receiverId, setReceiverId] = useState<string | null>(null)
+    const [currentUserInfo, setCurrentUserInfo] = useState<{
+        avatar: string
+        username: string
+    } | null>(null)
     const { user } = useUser()
     const { getToken } = useAuth()
+    const messagesEndRef = useRef<HTMLDivElement>(null)
+    const messageIds = useRef(new Set<string>())
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
 
     useEffect(() => {
-        const initializeMessages = async () => {
-            try {
-                const token = (await getToken()) ?? ''
-                const fetchedMessages = await getMessagesByRoomID(roomId, token)
+        const initializeChat = async () => {
+            const token = (await getToken()) ?? ''
+            const fetchedMessages = await getMessagesByRoomID(roomId, token)
 
-                // Identifier le receiver depuis les messages
-                const receiverMessage = fetchedMessages.find(
-                    (msg) => msg.sender !== user?.id,
+            const otherParticipantId =
+                fetchedMessages.find((msg) => msg.sender !== user?.id)
+                    ?.sender ||
+                fetchedMessages.find((msg) => msg.receiver !== user?.id)
+                    ?.receiver
+            setReceiverId(otherParticipantId || '')
+
+            if (otherParticipantId) {
+                const otherParticipantInfo = await getUserInfo(
+                    otherParticipantId,
+                    token,
                 )
-                if (receiverMessage) {
-                    setReceiverId(receiverMessage.receiver) // Définir dynamiquement l'ID du receiver
-                    const receiverInfo = await getUserInfo(
-                        receiverMessage.receiver,
-                        token,
-                    )
-                    setContactName(receiverInfo.pseudo)
-                    setContactAvatar(receiverInfo.avatarUrl || '')
+                setContactName(otherParticipantInfo.pseudo)
+                setContactAvatar(otherParticipantInfo.avatarUrl || '')
+            }
+
+            // Récupérer les infos de l'utilisateur connecté
+            if (user?.id) {
+                const currentUser = await getUserInfo(user.id, token)
+                setCurrentUserInfo({
+                    avatar: currentUser.avatarUrl || '',
+                    username: currentUser.pseudo || 'Utilisateur',
+                })
+            }
+
+            setMessages(
+                fetchedMessages.map((msg) => ({
+                    id: msg._id,
+                    content: msg.message,
+                    isSent: msg.sender === user?.id,
+                    sender: msg.sender,
+                    sentAt: new Date(msg.sentAt),
+                })),
+            )
+
+            const socket = connectWebSocketByRoomId(roomId)
+            socket.addEventListener('message', (event) => {
+                const newMessage = JSON.parse(event.data)
+                if (
+                    newMessage.roomID === roomId &&
+                    !messageIds.current.has(newMessage._id)
+                ) {
+                    messageIds.current.add(newMessage._id)
+                    setMessages((prevMessages) => [
+                        ...prevMessages,
+                        {
+                            id: newMessage._id,
+                            content: newMessage.message,
+                            isSent: newMessage.sender === user?.id,
+                            sender: newMessage.sender,
+                            sentAt: new Date(newMessage.sentAt),
+                        },
+                    ])
                 }
-
-                setMessages(
-                    fetchedMessages.map((msg) => ({
-                        id: msg._id,
-                        content: msg.message,
-                        isSent: msg.sender === user?.id,
-                        sender: msg.sender,
-                        sentAt: new Date(msg.sentAt),
-                    })),
-                )
-            } catch {
-                setError('Erreur lors de la récupération des messages')
-            }
+            })
+            return () => socket.close()
         }
 
-        initializeMessages()
-
-        const socket = connectWebSocketById(roomId)
-        socket.addEventListener('message', (event) => {
-            const newMessage = JSON.parse(event.data)
-            if (newMessage.roomID === roomId) {
-                setMessages((prevMessages) => [
-                    ...prevMessages,
-                    {
-                        id: newMessage._id,
-                        content: newMessage.message,
-                        isSent: newMessage.sender === user?.id,
-                        sender: newMessage.sender,
-                        sentAt: new Date(newMessage.sentAt),
-                    },
-                ])
-            }
-        })
-
-        return () => {
-            socket.close()
-        }
+        initializeChat()
     }, [roomId, getToken, user])
 
-    const handleSendMessage = async (messageContent: string) => {
-        if (!receiverId) {
-            setError('Erreur : Récepteur non défini')
-            return
-        }
+    useEffect(() => {
+        scrollToBottom()
+    }, [messages])
 
-        try {
-            const token = await getToken()
-            await sendMessage(
-                roomId,
-                user?.id || '',
-                receiverId, // Utilisation du receiverId dynamique
-                messageContent,
-                new Date(),
-                token || '',
-            )
-        } catch {
-            setError('Erreur lors de l’envoi du message')
+    const handleSendMessage = (messageContent: string) => {
+        if (!user?.id || !receiverId) return
+        sendMessageViaWebSocket(messageContent, user.id, receiverId, roomId)
+    }
+
+    const handleProposeExchange = (myArticle: string, theirArticle: string) => {
+        const proposalMessage = `Je propose "${myArticle}" en échange de "${theirArticle}"`
+        if (proposalMessages[roomId] !== proposalMessage) {
+            setProposalMessages((prev) => ({
+                ...prev,
+                [roomId]: proposalMessage,
+            }))
+            handleSendMessage(proposalMessage)
+        }
+    }
+
+    const handleRefuseProposal = () => {
+        const refusalMessage = 'Je refuse la proposition'
+        if (proposalMessages[roomId] !== refusalMessage) {
+            handleSendMessage(refusalMessage)
+            setProposalMessages((prev) => ({
+                ...prev,
+                [roomId]: null,
+            }))
         }
     }
 
@@ -117,15 +150,35 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
 
     return (
         <div className='flex h-screen flex-col'>
-            <ChatHeader
-                contactName={contactName}
-                contactAvatar={contactAvatar}
-                contactStatus='En ligne'
-            />
-            <SubHeader
-                roomId={roomId}
-                userId={user?.id || ''}
-            />
+            <div className='flex justify-between border-b bg-blueGreen-light align-middle shadow-md'>
+                {/* Header pour le participant autre que l'utilisateur */}
+                <ChatHeader
+                    contactName={contactName}
+                    contactAvatar={contactAvatar}
+                    contactStatus='En ligne'
+                />
+
+                <Repeat className='mx-2 self-center text-gray-500' />
+
+                {/* Card sticky pour les infos de l'utilisateur connecté */}
+                {currentUserInfo && (
+                    <UserInfoCard
+                        avatarUrl={currentUserInfo.avatar}
+                        username={currentUserInfo.username}
+                        status={'En ligne'}
+                    />
+                )}
+            </div>
+
+            {proposalMessages[roomId] && (
+                <StickySubheader
+                    proposalMessage={proposalMessages[roomId] || ''}
+                    roomId={roomId}
+                    onModifyProposal={() => setShowModal(true)}
+                    onRefuseProposal={handleRefuseProposal}
+                />
+            )}
+
             <div className='flex-1 overflow-y-auto bg-gray-50 p-4'>
                 {Object.keys(groupedMessages).map((date) => (
                     <div key={date}>
@@ -141,11 +194,26 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
                         ))}
                     </div>
                 ))}
+                <div ref={messagesEndRef} />
             </div>
-            <div className='sticky bottom-0 border-t border-gray-300 bg-white p-4'>
+
+            <div className='bottom-0 sticky flex border-t border-gray-300 bg-white p-4'>
                 <ChatInput onSendMessage={handleSendMessage} />
-                {!!error && <p className='text-red-500'>{error}</p>}
+                <button
+                    onClick={() => setShowModal(true)}
+                    className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'
+                >
+                    Proposer un échange
+                </button>
             </div>
+
+            {showModal && (
+                <ProposeExchangeModal
+                    receiverId={receiverId || ''}
+                    onClose={() => setShowModal(false)}
+                    onPropose={handleProposeExchange}
+                />
+            )}
         </div>
     )
 }
