@@ -59,7 +59,7 @@ export const environment = createEnv({
         NEXT_PUBLIC_ARTICLE_BASE_URL: z.string().url(),
         NEXT_PUBLIC_TRANSACTION_BASE_URL: z.string().url(),
         NEXT_PUBLIC_INSTANT_MESSAGE_BASE_URL: z.string().url(),
-        NEXT_PUBLIC_INSTANT_MESSAGE_WS_URL: z.string().url().optional(),
+        NEXT_PUBLIC_INSTANT_MESSAGE_WS_URL: z.string().url(),
         NEXT_PUBLIC_MULTIAVATAR_API_KEY: z.string().optional(),
         NEXT_PUBLIC_CLOUDINARY_KEY: z.string(),
         NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string(),
