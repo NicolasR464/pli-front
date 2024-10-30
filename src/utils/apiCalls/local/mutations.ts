@@ -1,6 +1,8 @@
 'use client'
 
 import type {
+    EmailParams,
+    EmailResponse,
     ImageAnalysis,
     ImageAnalysisResponse,
     ProductAnalysisResponse,
@@ -8,7 +10,7 @@ import type {
 
 import type { Article } from '@/types/article'
 
-import { analyzeImage, analyzeProductData } from '.'
+import { analyzeImage, analyzeProductData, sendEmail } from '.'
 import type { UseMutationResult } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
 
@@ -47,5 +49,18 @@ export const useProductDataAnalysis = (): UseMutationResult<
 > => {
     return useMutation<ProductAnalysisResponse, Error, ProductDataParams>({
         mutationFn: (formData) => analyzeProductData(formData),
+    })
+}
+
+/**
+ * Custom hook for sending an email by using React Query's useMutation.
+ */
+export const useSendEmail = (): UseMutationResult<
+    EmailResponse,
+    Error,
+    EmailParams
+> => {
+    return useMutation<EmailResponse, Error, EmailParams>({
+        mutationFn: (formData) => sendEmail(formData),
     })
 }
