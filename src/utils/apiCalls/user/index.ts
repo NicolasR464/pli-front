@@ -28,7 +28,7 @@ type PaginatedUsers = {
  */
 export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
-        await userInstance.get(apiEndpoints.USERS, {
+        await userInstance.get(apiEndpoints.USERS_PRIVATE, {
             params: {
                 skip: pageParam,
                 limit: paginationLimit,
@@ -58,7 +58,7 @@ export const createUser = async (
     addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
-        apiEndpoints.USERS,
+        apiEndpoints.USERS_PRIVATE,
         data,
     )
 
@@ -73,15 +73,11 @@ export const createUser = async (
 /**
  * Get user by Id.
  * @param {string} userId the id of the user to retreive.
- * @param {string} JWT The JWT token for authentication.
  * @returns {Promise<User>|undefined} A promise that resolves with user information.
  */
 export const getUserById = async (
     userId: string | undefined,
-    JWT: string,
 ): Promise<User | undefined> => {
-    if (!JWT) throw new Error('No JWT provided')
-    addAuthHeader(userInstance, JWT)
     const response: AxiosResponse<User> = await userInstance.get(
         `${apiEndpoints.USERS}${userId}`,
     )

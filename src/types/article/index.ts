@@ -5,15 +5,17 @@ import {
     subcategoriesList,
 } from '@/utils/constants/productValues'
 
+import { AddressSchema } from '../address/userAddress'
+
 /**
  * @description Schema for dimensions
  * @exports DimensionsSchema
  */
 export const DimensionsSchema = z.object({
-    length: z.number(),
-    width: z.number(),
-    height: z.number(),
-    weight: z.number(),
+    length: z.number().optional(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+    weight: z.number().optional(),
 })
 
 /**
@@ -39,22 +41,20 @@ export const StatusSchema = z.enum(['AVAILABLE', 'UNAVAILABLE', 'RESERVED'])
  * @description Schema for delivery type enum
  * @exports DeliveryTypeSchema
  */
-export const DeliveryTypeSchema = z.enum(['SHIPPING', 'PICKUP', 'BOTH'])
+export const DeliveryTypeSchema = z.enum(['PICKUP', 'SHIPPING', 'BOTH'])
 
 /**
  * @description Schema for article
  * @exports ArticleSchema
  */
 export const ArticleSchema = z.object({
-    _id: z.string(),
-    version: z.number().int(),
+    id: z.string().optional(),
     owner: z.string(),
     adTitle: z.string(),
     brand: z.string().optional(),
     model: z.string().optional(),
     description: z.string(),
-    size: z.string().optional(),
-    price: z.number().positive(),
+    price: z.number().positive().int(),
     manufactureDate: z.date().optional(),
     purchaseDate: z.date().optional(),
     state: StateSchema,
@@ -66,7 +66,8 @@ export const ArticleSchema = z.object({
     subCategory: z.enum([...subcategoriesList] as [string, ...string[]]),
     deliveryType: DeliveryTypeSchema,
     dimensions: DimensionsSchema.optional(),
-    // adress
+    address: AddressSchema.optional(),
+    size: z.string().optional(),
 })
 
 export type Dimensions = z.infer<typeof DimensionsSchema>
