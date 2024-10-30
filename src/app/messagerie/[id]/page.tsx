@@ -12,12 +12,6 @@ const MessagePage = () => {
 
     return (
         <div className='chat-page'>
-            <Link href={pagePaths.MESSAGES}>
-                <Bell
-                    className='color-blueGreen-dark-active cursor-pointer'
-                    strokeWidth={1.5}
-                />
-            </Link>
             <ChatContainer roomId={roomId as string} />
         </div>
     )
