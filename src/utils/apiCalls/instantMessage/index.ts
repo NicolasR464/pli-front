@@ -92,14 +92,25 @@ export const deleteMessageById = async (
     }
 }
 
-// 6. Fonction pour récupérer les rooms
-export const getRooms = async (token: string): Promise<any[]> => {
-    const headers = { Authorization: `Bearer ${token}` }
-    const response = await instantMsgInstance.get(
-        apiEndpoints.INSTANT_MESSAGES + 'rooms',
-        {
-            headers,
-        },
-    )
-    return response.data
+export async function fetchRoomsForUser(token: string, userId: string) {
+    const allMessages = await getInstantMsgs(token)
+
+    // Filtrer les messages pour obtenir les rooms uniques où l'utilisateur est impliqué
+    const userRoomsMap: Record<string, any> = {}
+
+    allMessages.forEach((message) => {
+        if (message.sender === userId || message.receiver === userId) {
+            if (!userRoomsMap[message.roomID]) {
+                userRoomsMap[message.roomID] = {
+                    id: message.roomID,
+                    name: `Room ${message.roomID}`,
+                    lastMessage: message.message,
+                    lastUpdated: message.sentAt,
+                }
+            } else if (new Date(message.sentAt) > new Date(userRoomsMap[message.roomID].lastUpdated)) {
+                userRoomsMap[message.roomID].lastMessage = message.message
+                userRoomsMap[message.roomID].lastUpdated = message.sentAt
+            }
+        }
+    })
 }

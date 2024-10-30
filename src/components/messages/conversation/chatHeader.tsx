@@ -14,7 +14,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
     contactStatus,
 }) => {
     return (
-        <div className='flex items-center border-b border-gray-200 p-4'>
+        <div className='flex items-center p-4'>
             <img
                 src={contactAvatar || avatarPlaceholder}
                 alt={contactName || 'Avatar'}

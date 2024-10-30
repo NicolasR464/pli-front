@@ -77,8 +77,22 @@ export const getUserInfo = async (
 ): Promise<User> => {
     const headers = { Authorization: `Bearer ${token}` }
     const url = `${apiEndpoints.USERS}${userId}`
-    console.log(`Fetching user info from URL: ${url}`)
-    
     const response = await userInstance.get(url, { headers })
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch user with id ${String(userId)}`)
+    return response.data
+}
+
+export const getUserById = async (
+    userId: string | undefined,
+    JWT: string,
+): Promise<User | undefined> => {
+    if (!JWT) throw new Error('No JWT provided')
+    addAuthHeader(userInstance, JWT)
+    const response: AxiosResponse<User> = await userInstance.get(
+        `${apiEndpoints.USERS}${userId}`,
+    )
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch user with id ${String(userId)}`)
     return response.data
 }
