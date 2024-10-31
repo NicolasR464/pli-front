@@ -88,7 +88,7 @@ module.exports = {
         'unicorn/prevent-abbreviations': 'off',
         'jsdoc/check-tag-names': 'off',
         'react/jsx-max-depth': 'off',
-
+        'no-underscore-dangle': 'off',
         'react/jsx-no-leaked-render': [
             'error',
             { validStrategies: ['coerce'] },

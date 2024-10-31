@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 
 import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
 
@@ -10,22 +11,25 @@ import { getUserById } from '@/utils/apiCalls/user'
 
 import { useAuth, useUser } from '@clerk/nextjs'
 import { useQuery } from '@tanstack/react-query'
+import router from 'next/router'
 
 // receiverIdd: string
 const TransactionPage = (): React.JSX.Element => {
     const { getToken } = useAuth()
-    const { user } = useUser()
     const [token, setToken] = useState<string>('')
+    const { user } = useUser()
+
+    const {} = useParams()
 
     const receiverId = 'user_2ncuxuDM3OEzHnstwawPctDPzYU'
     const userConnectedId = user?.id
+    // const userConnectedId = 'user_2ncIl6OmYzbFV4S9YW0FgpIhx8x'
 
     useEffect(() => {
         const fetchToken = async (): Promise<void> => {
             const fetchedToken = (await getToken()) ?? ''
-
             if (fetchedToken) {
-                setToken(fetchedToken)
+                setToken(String(fetchedToken))
             } else {
                 throw new Error('Aucun token trouvé.')
             }
@@ -40,7 +44,6 @@ const TransactionPage = (): React.JSX.Element => {
         queryFn: () => getUserById(receiverId, token),
         enabled: !!receiverId,
     })
-
     // React query to get my user's data
     const { data: myUser } = useQuery({
         queryKey: ['ConnectedUser', userConnectedId, token],
@@ -80,56 +83,26 @@ const TransactionPage = (): React.JSX.Element => {
     })
 
     const [selectedReceiverArticles, setSelectedReceiverArticles] = useState<
-        string[]
-    >([])
-    const [selectedMyArticles, setSelectedMyArticles] = useState<string[]>([])
+        string | null
+    >(null)
+    const [selectedMyArticles, setSelectedMyArticles] = useState<string | null>(
+        null,
+    )
 
     const handleSelectReceiverArticle = (articleId: string) => {
-        setSelectedReceiverArticles((prevSelected) =>
-            prevSelected.includes(articleId)
-                ? prevSelected.filter((id) => id !== articleId)
-                : [...prevSelected, articleId],
-        )
+        setSelectedReceiverArticles(articleId)
     }
 
     const handleSelectMyArticle = (articleId: string) => {
-        setSelectedMyArticles((prevSelected) =>
-            prevSelected.includes(articleId)
-                ? prevSelected.filter((id) => id !== articleId)
-                : [...prevSelected, articleId],
-        )
+        setSelectedMyArticles(articleId)
     }
 
-    /*
-     *     const transactionData = {
-     *         receiver: 'receiverUserId', // Remplace par l'ID du receiver réel
-     *         article: selectedReceiverArticle,
-     *         sender: 'senderUserId', // Remplace par l'ID du user connecté réel
-     *         delivery: {
-     *             _id: 'deliveryId', // Remplace par l'ID réel de la livraison
-     *             type: 'standard', // Remplace par le type réel de la livraison
-     *             packageWeight: 2.5, // Poids du colis
-     *             sent: new Date(),
-     *             cost: 10, // Coût de la livraison
-     *             qrCodeUrl: 'https://example.com/qrcode.png', // URL du QR code
-     *         },
-     *     }
-     */
-
-    /*
-     *     try {
-     *         const response = await axios.post('/transactions', transactionData)
-     *         console.log('Transaction créée :', response.data)
-     *         alert('Transaction créée avec succès!')
-     *     } catch (error) {
-     *         console.error(
-     *             'Erreur lors de la création de la transaction :',
-     *             error,
-     *         )
-     *         alert('Erreur lors de la création de la transaction.')
-     *     }
-     * }
-     */
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        router.push(
+            `/transaction/final?sender=${userConnectedId}&receiver=${receiverId}&articleSender=${selectedMyArticles}&articleReceiver=${selectedReceiverArticles}`,
+        )
+    }
 
     return (
         <div className='flex w-full flex-col items-center justify-center p-4'>
@@ -160,7 +133,7 @@ const TransactionPage = (): React.JSX.Element => {
                                                 article.id,
                                             )
                                         }}
-                                        className={`border p-4 ${selectedReceiverArticles.includes(article.id) ? 'border-green-500' : 'border-gray-300'} cursor-pointer`}
+                                        className={`border p-4 ${selectedReceiverArticles?.includes(article.id) ? 'border-green-500' : 'border-gray-300'} cursor-pointer`}
                                     >
                                         <Card className='h-60 w-40 text-center'>
                                             <CardContent className='flex h-40 items-center justify-center overflow-hidden'>
@@ -212,7 +185,7 @@ const TransactionPage = (): React.JSX.Element => {
                                         onClick={() => {
                                             handleSelectMyArticle(article.id)
                                         }}
-                                        className={`border p-4 ${selectedMyArticles.includes(article.id) ? 'border-green-500' : 'border-gray-300'} cursor-pointer`}
+                                        className={`border p-4 ${selectedMyArticles?.includes(article.id) ? 'border-green-500' : 'border-gray-300'} cursor-pointer`}
                                     >
                                         <Card className='h-60 w-40 text-center'>
                                             <CardContent className='flex h-40 items-center justify-center overflow-hidden'>
@@ -242,14 +215,15 @@ const TransactionPage = (): React.JSX.Element => {
                             )}
                         </div>
                     </div>
-
                     {/* Confirmation Button */}
-                    {/* <button
-                        onClick={handleCreateTransaction}
-                        className='rounded bg-teal-500 px-6 py-3 font-bold text-white'
-                    >
-                        Valider
-                    </button> */}
+                    <div className='mr-100 flex w-2 justify-end'>
+                        <button
+                            onClick={handleClick}
+                            className='justify-end rounded bg-teal-500 px-6 py-3 font-bold text-white'
+                        >
+                            Valider
+                        </button>
+                    </div>
                 </>
             )}
         </div>
