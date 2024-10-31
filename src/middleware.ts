@@ -4,12 +4,9 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 // Define a matcher for protected routes
 const isProtectedRoute = createRouteMatcher(['/onboarding'])
 const isProtectedAdminRoute = createRouteMatcher(['/admin'])
-
-const adminUserIds = new Set([
-    'user_2nZYiUeq2fax63x4hiRoQNA7Xyb',
-    'user_2',
-    'user_3',
-])
+const adminUserIds = new Set(
+    (process.env.NEXT_PUBLIC_ADMIN_USER_IDS || '').split(',')
+);
 
 export default clerkMiddleware((auth, req) => {
     // General protection for onboarding route
