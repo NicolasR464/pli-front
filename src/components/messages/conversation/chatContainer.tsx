@@ -3,12 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import React, { useEffect, useRef, useState } from 'react'
 import { Repeat } from 'react-feather'
+import Link from 'next/link'
 
 import { ChatHeader } from './chatHeader'
 import { ChatInput } from './chatInput'
 import { MessageBubble } from './messageBubble'
-import ProposeExchangeModal from './proposalModal'
-import StickySubheader from './stickySubHeader'
 import UserInfoCard from './userInfoCard'
 
 import { getMessagesByRoomID } from '@/utils/apiCalls/instantMessage'
@@ -17,6 +16,7 @@ import {
     sendMessageViaWebSocket,
 } from '@/utils/apiCalls/instantMessage/connectWebSocket'
 import { getUserInfo } from '@/utils/apiCalls/user'
+import { pagePaths } from '@/utils/constants'
 import { formatDate, groupMessagesByDate } from '@/utils/functions/messages'
 
 import { useAuth, useUser } from '@clerk/nextjs'
@@ -42,10 +42,6 @@ type WebSocketMessage = {
 }
 export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     const [messages, setMessages] = useState<Message[]>([])
-    const [showModal, setShowModal] = useState(false)
-    const [proposalMessages, setProposalMessages] = useState<
-        Record<string, string | null>
-    >({})
     const [contactName, setContactName] = useState<string>('Inconnu')
     const [contactAvatar, setContactAvatar] = useState<string>('')
     const [receiverId, setReceiverId] = useState<string | null>('')
@@ -143,32 +139,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
         sendMessageViaWebSocket(messageContent, user.id, receiverId, roomId)
     }
 
-    const handleProposeExchange = (
-        myArticle: string,
-        theirArticle: string,
-    ): string => {
-        const proposalMessage = `Je propose "${myArticle}" en échange de "${theirArticle}"`
-        if (proposalMessages[roomId] !== proposalMessage) {
-            setProposalMessages((prev) => ({
-                ...prev,
-                [roomId]: proposalMessage,
-            }))
-            handleSendMessage(proposalMessage)
-        }
-        return proposalMessage
-    }
-
-    const handleRefuseProposal = (): void => {
-        const refusalMessage = 'Je refuse la proposition'
-        if (proposalMessages[roomId] !== refusalMessage) {
-            handleSendMessage(refusalMessage)
-            setProposalMessages((prev) => ({
-                ...prev,
-                [roomId]: '',
-            }))
-        }
-    }
-
     const groupedMessages = groupMessagesByDate(messages)
 
     return (
@@ -193,17 +163,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
                 )}
             </div>
 
-            {!!proposalMessages[roomId] && (
-                <StickySubheader
-                    proposalMessage={proposalMessages[roomId] ?? ''}
-                    roomId={roomId}
-                    onModifyProposal={() => {
-                        setShowModal(true)
-                    }}
-                    onRefuseProposal={handleRefuseProposal}
-                />
-            )}
-
             <div className='flex-1 overflow-y-auto bg-gray-50 p-4'>
                 {Object.keys(groupedMessages).map((date) => (
                     <div key={date}>
@@ -224,25 +183,14 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
 
             <div className='sticky bottom-0 flex border-t border-gray-300 bg-white p-4'>
                 <ChatInput onSendMessage={handleSendMessage} />
-                <button
-                    onClick={() => {
-                        setShowModal(true)
-                    }}
-                    className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'
-                >
-                    {'Proposer un échange'}
+                <button className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'>
+                    <Link
+                        href={`${pagePaths.TRANSACTION}/recap?sender=${user?.id}&receiver=${receiverId}`}
+                    >
+                        {'Proposer un échange'}
+                    </Link>
                 </button>
             </div>
-
-            {!!showModal && (
-                <ProposeExchangeModal
-                    receiverId={receiverId ?? ''}
-                    onClose={() => {
-                        setShowModal(false)
-                    }}
-                    onPropose={handleProposeExchange}
-                />
-            )}
         </div>
     )
 }

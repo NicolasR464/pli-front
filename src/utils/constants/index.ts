@@ -19,6 +19,7 @@ export const pagePaths = {
     ONBOARDING: '/onboarding/',
     ARTICLES: '/articles/',
     MESSAGES: '/messagerie/',
+    TRANSACTION: '/transaction/',
 }
 
 /** Object containing notifications to the user for various cases, set in alphabetical order */
