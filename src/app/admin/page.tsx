@@ -1,6 +1,9 @@
-
 const AdminPage = (): React.JSX.Element => {
-  return <div>This is Admin Page</div>
+    return (
+        <main>
+            <h1>{'Admin Users Page'}</h1>
+        </main>
+    )
 }
 
 export default AdminPage

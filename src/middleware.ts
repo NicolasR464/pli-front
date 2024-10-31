@@ -4,27 +4,29 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 // Define a matcher for protected routes
 const isProtectedRoute = createRouteMatcher(['/onboarding'])
 const isProtectedAdminRoute = createRouteMatcher(['/admin'])
-const adminUserIds = ['user_2nZYiUeq2fax63x4hiRoQNA7Xyb', 'user_2', 'user_3'] // Replace these with actual user IDs
 
+const adminUserIds = new Set([
+    'user_2nZYiUeq2fax63x4hiRoQNA7Xyb',
+    'user_2',
+    'user_3',
+])
 
 export default clerkMiddleware((auth, req) => {
     // General protection for onboarding route
     if (isProtectedRoute(req)) {
         auth().protect()
     }
-
     // Protection with admin user check for admin route
     if (isProtectedAdminRoute(req)) {
-        const { userId } = auth()  // Retrieve userId from auth
-
+        const { userId } = auth()
         // Ensure the user is authenticated and is in the list of admin IDs
-        if (!userId || !adminUserIds.includes(userId)) {
+        if (!userId || !adminUserIds.has(userId)) {
             return new Response('Forbidden', { status: 403 })
         }
     }
+
+    return new Response('Admin', { status: 200 })
 })
-
-
 export const config = {
     matcher: [
         // Skip Next.js internals and all static files, unless found in search params
