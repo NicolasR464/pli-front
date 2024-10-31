@@ -70,7 +70,7 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
                     </option>
                     {allArticles.map((article) => (
                         <option
-                            key={article.id}
+                            key={article._id}
                             value={article.adTitle}
                         >
                             {article.adTitle}
@@ -94,7 +94,7 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
                     </option>
                     {allArticles.map((article) => (
                         <option
-                            key={article.id}
+                            key={article._id}
                             value={article.adTitle}
                         >
                             {article.adTitle}

@@ -48,8 +48,6 @@ module.exports = {
         'jest.setup.js',
         'src/components/shadcn/**',
         'tailwind.config.ts',
-        'src/components/**',
-        'src/utils/functions/toasterHelper.ts',
     ],
     overrides: [
         {

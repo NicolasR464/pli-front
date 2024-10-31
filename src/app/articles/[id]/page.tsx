@@ -14,8 +14,8 @@ import {
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
 import { Separator } from '@/components/shadcn/ui/separator'
-import Map from '@/components/Map'
 import InitialProposalModal from '@/components/messages/msgFromArticles/initialProposalModal'
+import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
