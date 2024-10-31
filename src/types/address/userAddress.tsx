@@ -14,15 +14,15 @@ export const GeopointsSchema = z.object({
  * @exports AddressSchema
  */
 export const AddressSchema = z.object({
-    label: z.string(),
+    label: z.string().optional(),
     housenumber: z.string().optional(),
     street: z.string().optional(),
-    city: z.string(),
-    postcode: z.string(),
-    citycode: z.string(),
+    city: z.string().optional(),
+    postcode: z.string().optional(),
+    citycode: z.string().optional(),
     floor: z.number().int().optional(),
     extra: z.string().optional(),
-    geopoints: GeopointsSchema,
+    geopoints: GeopointsSchema.optional(),
 })
 
 // Type inference

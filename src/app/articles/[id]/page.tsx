@@ -14,6 +14,7 @@ import {
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
 import { Separator } from '@/components/shadcn/ui/separator'
+import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
@@ -25,8 +26,7 @@ import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useQuery } from '@tanstack/react-query'
 
 const ArticlePage = (): React.JSX.Element => {
-    // Get token & id from URL in string to avoid type errors :
-    const jwtToken = String(process.env.NEXT_PUBLIC_JWT_TOKEN)
+    // Get id from URL in string to avoid type errors :
     const { id } = useParams()
     const articleId = String(id)
 
@@ -45,8 +45,8 @@ const ArticlePage = (): React.JSX.Element => {
 
     // React query to get user data
     const { data: user } = useQuery({
-        queryKey: ['user', ownerId, jwtToken],
-        queryFn: () => getUserById(ownerId, jwtToken),
+        queryKey: ['user', ownerId],
+        queryFn: () => getUserById(ownerId),
         enabled: !!ownerId,
     })
 
@@ -68,6 +68,10 @@ const ArticlePage = (): React.JSX.Element => {
         return (
             <p aria-live='assertive'>{'Oulah ! Une erreur est survenue..'}</p>
         )
+
+    const cityPosition = article?.address?.geopoints?.coordinates
+    const lat = cityPosition ? cityPosition[0] : undefined
+    const long = cityPosition ? cityPosition[1] : undefined
 
     return (
         <div>
@@ -297,6 +301,21 @@ const ArticlePage = (): React.JSX.Element => {
                 <p>{'Nous n’avons pas trouvé l’article !'}</p>
             )}
             <div>
+                {/* Section de la carte */}
+                <div>
+                    <div className='flex pb-4 pl-8'>
+                        <h2 className='text-2xl font-bold'>
+                            {article?.address?.city}{' '}
+                            {`(${article?.address?.postcode})`}
+                        </h2>
+                    </div>
+                    {!!lat && !!long && (
+                        <Map
+                            latitude={lat}
+                            longitude={long}
+                        />
+                    )}
+                </div>
                 {/* Action buttons */}
                 <div className='mb-6 mt-6 flex justify-center space-x-4'>
                     {/* add conditionnal rendering of this according to balance:
