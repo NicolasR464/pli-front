@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable unicorn/no-null */
 /* eslint-disable @typescript-eslint/require-array-sort-compare */
@@ -111,7 +115,7 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
                     </option>
                     {allArticles.map((article) => (
                         <option
-                            key={article._id}
+                            key={article.id}
                             value={article.adTitle}
                         >
                             {article.adTitle}
