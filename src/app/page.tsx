@@ -1,4 +1,5 @@
 import Hero from '@/components/designSystem/hero'
+import EmailSender from '@/components/EmailSender'
 import { Notification } from '@/components/Notification'
 import WelcomeMsg from '@/components/WelcomeMsg'
 
@@ -18,6 +19,8 @@ const Home = ({
             <Hero />
             {/* Display the welcome message if the onboarding search param is present */}
             {!!searchParams.onboarding && <WelcomeMsg />}
+
+            <EmailSender />
         </div>
     )
 }
