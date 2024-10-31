@@ -13,12 +13,10 @@ const Delivery = z.object({
 })
 
 export const TransactionSchema = z.object({
-    _id: z.string(),
-    version: z.number().int(),
     receiver: z.string(),
     article: z.string(),
     sender: z.string(),
-    delivery: Delivery,
+    delivery: Delivery.optional(),
 })
 
 export type Transaction = z.infer<typeof TransactionSchema>

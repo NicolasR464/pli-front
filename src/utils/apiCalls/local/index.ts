@@ -3,6 +3,8 @@ import type { ProductDataParams } from './mutations'
 import { localInstance } from '@/utils/axiosInstances/local'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
+import type { Article } from '@/types/article'
+
 import type { AxiosResponse } from 'axios'
 
 export type ImageAnalysis = {
@@ -33,6 +35,7 @@ export type ProductAnalysisResponse = {
 export type EmailParams = {
     senderEmail: string
     receiverEmail: string
+    article: Partial<Article>
 }
 
 export type EmailResponse = {
@@ -90,9 +93,19 @@ export const analyzeProductData = async (
 export const sendEmail = async (
     formData: EmailParams,
 ): Promise<EmailResponse> => {
-    const response: AxiosResponse<EmailResponse> = await localInstance.postForm(
+    const params = new URLSearchParams()
+    params.append('senderEmail', formData.senderEmail)
+    params.append('receiverEmail', formData.receiverEmail)
+    params.append('article', JSON.stringify(formData.article))
+
+    const response: AxiosResponse<EmailResponse> = await localInstance.post(
         apiEndpoints.SEND_EMAIL,
-        { formData },
+        params,
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        },
     )
 
     if (response.status !== 200)
