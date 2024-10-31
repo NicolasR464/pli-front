@@ -14,6 +14,7 @@ import {
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
 import { Separator } from '@/components/shadcn/ui/separator'
+import InitialProposalModal from '@/components/messages/msgFromArticles/initialProposalModal'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
@@ -23,7 +24,6 @@ import { formatDate } from '@/utils/functions/dates'
 
 // Ajustez le chemin d'importation
 import { useQuery } from '@tanstack/react-query'
-import InitialProposalModal from '@/components/messages/msgFromArticles/initialProposalModal'
 
 const ArticlePage = (): React.JSX.Element => {
     const [showExchangeModal, setShowExchangeModal] = useState(false)
