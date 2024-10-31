@@ -77,8 +77,7 @@ const ArticlePage = (): React.JSX.Element => {
     const openExchangeModal = () => {
         setShowExchangeModal(true)
     }
-    
-    
+
     return (
         <div>
             {article ? (
@@ -339,11 +338,13 @@ const ArticlePage = (): React.JSX.Element => {
                     >
                         {'Envoyer un message'}
                     </Button>
-                    {showExchangeModal && (
+                    {!!showExchangeModal && (
                         <InitialProposalModal
-                            onClose={() => setShowExchangeModal(false)}
+                            onClose={() => {
+                                setShowExchangeModal(false)
+                            }}
                             articleId={articleId}
-                            receiverId={ownerId || ''}
+                            receiverId={ownerId ?? ''}
                         />
                     )}
                 </div>{' '}

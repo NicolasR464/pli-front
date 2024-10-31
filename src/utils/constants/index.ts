@@ -17,6 +17,7 @@ export const pagePaths = {
     HOME: '/',
     /** Path to the onboarding page */
     ONBOARDING: '/onboarding/',
+    ARTICLES: '/articles/',
     MESSAGES: '/messagerie/',
 }
 

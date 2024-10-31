@@ -1,14 +1,10 @@
 'use client'
 import { useParams } from 'next/navigation'
-import {ChatContainer} from '@/components/messages/conversation/chatContainer'
-import { pagePaths } from '@/utils/constants'
-import { Bell } from 'react-feather'
-import Link from 'next/link'
 
-const MessagePage = () => {
+import { ChatContainer } from '@/components/messages/conversation/chatContainer'
+
+const MessagePage = (): React.JSX.Element => {
     const { id: roomId } = useParams()
-
-    if (!roomId) return null
 
     return (
         <div className='chat-page'>

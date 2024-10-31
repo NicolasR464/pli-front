@@ -1,10 +1,16 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable unicorn/no-null */
+/* eslint-disable @typescript-eslint/require-array-sort-compare */
 import React, { useEffect, useState } from 'react'
-import { getArticles, getArticleById } from '@/utils/apiCalls/article'
-import { getUserInfo } from '@/utils/apiCalls/user'
-import { useAuth, useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
-import { Article } from '@/types/article'
+
+import { getArticleById, getArticles } from '@/utils/apiCalls/article'
 import { sendMessage } from '@/utils/apiCalls/instantMessage'
+import { getUserInfo } from '@/utils/apiCalls/user'
+
+import type { Article } from '@/types/article'
+
+import { useAuth, useUser } from '@clerk/nextjs'
 
 type InitialProposalModalProps = {
     receiverId: string
@@ -32,7 +38,7 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
     const router = useRouter()
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (): Promise<void> => {
             const token = await getToken()
             if (!token) return
 
@@ -40,16 +46,16 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
             setAllArticles(articles)
 
             const articleData = await getArticleById(articleId)
-            setInitialArticleTitle(articleData?.adTitle || 'Article')
+            setInitialArticleTitle(articleData.adTitle)
 
             const receiverData = await getUserInfo(receiverId, token)
-            setReceiverName(receiverData.pseudo || 'Utilisateur')
+            setReceiverName(receiverData.pseudo)
         }
 
         fetchData()
     }, [getToken, receiverId, articleId])
 
-    const handleSubmitProposal = async () => {
+    const handleSubmitProposal = async (): Promise<void> => {
         const token = await getToken()
         if (!selectedMyArticle) {
             setError('Veuillez sélectionner un de vos articles')
@@ -63,19 +69,18 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
         try {
             await sendMessage(
                 roomID,
-                user?.id || '',
+                user?.id ?? '',
                 receiverId,
                 proposalMessage,
                 new Date(),
-                token || '',
+                token ?? '',
             )
 
             if (typeof window !== 'undefined') {
                 router.push(`/messagerie/${roomID}`)
             }
-        } catch (error) {
-            console.error("Erreur lors de l'envoi du message initial :", error)
-            setError("Erreur lors de l'envoi de la proposition")
+        } catch {
+            setError('Erreur lors de l’envoi de la proposition')
         }
     }
 
@@ -83,22 +88,26 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
             <div className='w-80 rounded-lg bg-white p-6'>
                 <h2 className='mb-4 text-lg font-semibold'>
-                    Commencer à discuter avec {receiverName}
+                    {'Commencer à discuter avec '}
+                    {receiverName}
                 </h2>
                 <p className='mb-2 text-gray-700'>
-                    Je souhaite échanger <strong>{initialArticleTitle}</strong>
+                    {'Je souhaite échanger '}
+                    <strong>{initialArticleTitle}</strong>
                 </p>
-                <label>En échange de mon article :</label>
+                <label>{'En échange de mon article :'}</label>
                 <select
-                    value={selectedMyArticle || ''}
-                    onChange={(e) => setSelectedMyArticle(e.target.value)}
+                    value={selectedMyArticle ?? ''}
+                    onChange={(e) => {
+                        setSelectedMyArticle(e.target.value)
+                    }}
                     className='mb-4 mt-2 block w-full rounded border border-gray-300 p-2'
                 >
                     <option
                         value=''
                         disabled
                     >
-                        Sélectionner un de mes articles
+                        {'Sélectionner un de mes articles'}
                     </option>
                     {allArticles.map((article) => (
                         <option
@@ -110,19 +119,21 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
                     ))}
                 </select>
 
-                {error && <p className='mb-2 text-red-500'>{error}</p>}
+                {!!error && <p className='mb-2 text-red-500'>{error}</p>}
 
                 <button
-                    onClick={handleSubmitProposal}
+                    onClick={() => {
+                        handleSubmitProposal()
+                    }}
                     className='w-full rounded bg-blue-500 py-2 text-white'
                 >
-                    Envoyer la proposition
+                    {'Envoyer la proposition'}
                 </button>
                 <button
                     onClick={onClose}
                     className='mt-2 w-full text-center text-gray-500'
                 >
-                    Annuler
+                    {'Annuler'}
                 </button>
             </div>
         </div>

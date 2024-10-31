@@ -1,6 +1,7 @@
-// StickySubheader.tsx
 import React from 'react'
 import Link from 'next/link'
+
+import { pagePaths } from '@/utils/constants'
 
 type StickySubheaderProps = {
     proposalMessage: string
@@ -11,7 +12,6 @@ type StickySubheaderProps = {
 
 const StickySubheader: React.FC<StickySubheaderProps> = ({
     proposalMessage,
-    roomId,
     onModifyProposal,
     onRefuseProposal,
 }) => {
@@ -23,16 +23,19 @@ const StickySubheader: React.FC<StickySubheaderProps> = ({
                     onClick={onModifyProposal}
                     className='rounded bg-blue-500 px-2 py-1 text-white'
                 >
-                    Modifier
+                    {'Modifier'}
                 </button>
                 <button
                     onClick={onRefuseProposal}
                     className='rounded bg-red-500 px-2 py-1 text-white'
                 >
-                    Refuser
+                    {'Refuser'}
                 </button>
-                <Link href={`/articles/`} className='rounded bg-green-500 px-2 py-1 text-white'>
-                        Accepter
+                <Link
+                    href={pagePaths.ARTICLES}
+                    className='rounded bg-green-500 px-2 py-1 text-white'
+                >
+                    {'Accepter'}
                 </Link>
             </div>
         </div>

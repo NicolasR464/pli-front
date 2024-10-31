@@ -65,6 +65,7 @@ import {
     addressObjectEmpty,
     ArticleFormDataSchema,
 } from '@/types/formValidations/adCreation'
+import type { User } from '@/types/user'
 
 import { useDebouncedCallback } from '@mantine/hooks'
 import {
@@ -99,14 +100,18 @@ const ArticleForm = (): React.JSX.Element => {
 
     // Data stored in Zustand stores
     const { address: storedAddresses, isPremium } = useUserStore(
-        (state) => state.user,
+        (state: { user: User }) => state.user,
     )
-    const analyzedImage = useArticleStore((state) => state.analysedImage)
+    const analyzedImage = useArticleStore(
+        (state: { analysedImage: any }) => state.analysedImage,
+    )
 
-    const setArticle = useArticleStore((state) => state.setArticle)
+    const setArticle = useArticleStore(
+        (state: { setArticle: Article }) => state.setArticle,
+    )
 
     const setOpenConfirmDialog = useArticleStore(
-        (state) => state.setOpenConfirmDialog,
+        (state: { setOpenConfirmDialog: any }) => state.setOpenConfirmDialog,
     )
 
     const form = useForm<ArticleFormData>({
@@ -499,11 +504,11 @@ const ArticleForm = (): React.JSX.Element => {
                                         <Calendar
                                             mode='single'
                                             selected={field.value}
-                                            onSelect={(date) => {
+                                            onSelect={(date: Date) => {
                                                 field.onChange(date)
                                                 setIsManufactureDateOpen(false)
                                             }}
-                                            disabled={(date) =>
+                                            disabled={(date: Date) =>
                                                 date > new Date() ||
                                                 date < new Date('1900-01-01')
                                             }
@@ -561,11 +566,11 @@ const ArticleForm = (): React.JSX.Element => {
                                         <Calendar
                                             mode='single'
                                             selected={field.value}
-                                            onSelect={(date) => {
+                                            onSelect={(date: Date) => {
                                                 field.onChange(date)
                                                 setIsPurchaseDateOpen(false)
                                             }}
-                                            disabled={(date) =>
+                                            disabled={(date: Date) =>
                                                 date > new Date() ||
                                                 date < new Date('1900-01-01')
                                             }
@@ -838,7 +843,7 @@ const ArticleForm = (): React.JSX.Element => {
                                                 </FormControl>
                                                 <SelectContent>
                                                     {storedAddresses.map(
-                                                        (address) => (
+                                                        (address: Address) => (
                                                             <SelectItem
                                                                 key={
                                                                     address.label

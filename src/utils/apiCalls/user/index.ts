@@ -93,9 +93,14 @@ export const getUserInfo = async (
 ): Promise<User> => {
     const headers = { Authorization: `Bearer ${token}` }
     const url = `${apiEndpoints.USERS}${userId}`
-    const response = await userInstance.get(url, { headers })
-    if (response.status !== 200)
+    const response: AxiosResponse<User> = await userInstance.get(url, {
+        headers,
+    })
+
+    if (response.status !== 200) {
         throw new Error(`Failed to fetch user with id ${String(userId)}`)
+    }
+
     return response.data
 }
 

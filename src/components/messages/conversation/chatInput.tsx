@@ -1,4 +1,3 @@
-// ChatInput.tsx
 import React, { useState } from 'react'
 
 type ChatInputProps = {
@@ -8,7 +7,7 @@ type ChatInputProps = {
 export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
     const [input, setInput] = useState('')
 
-    const handleSend = () => {
+    const handleSend = (): void => {
         if (input.trim()) {
             onSendMessage(input)
             setInput('')
@@ -16,7 +15,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
     }
 
     return (
-        <div className='w-3/4 items-center flex border-t border-gray-200 p-4'>
+        <div className='flex w-3/4 items-center border-t border-gray-200 p-4'>
             <input
                 type='text'
                 value={input}

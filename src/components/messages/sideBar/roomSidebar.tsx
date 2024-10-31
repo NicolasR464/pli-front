@@ -1,7 +1,11 @@
+/* eslint-disable no-await-in-loop */
 import React, { useEffect, useState } from 'react'
+
 import RoomSidebarItem from './roomSidebarItem'
+
 import { getInstantMsgs } from '@/utils/apiCalls/instantMessage'
 import { getUserInfo } from '@/utils/apiCalls/user'
+
 import { useAuth, useUser } from '@clerk/nextjs'
 
 type RoomData = {
@@ -25,8 +29,8 @@ const RoomSidebar: React.FC<RoomSidebarProps> = ({ onRoomSelect }) => {
     const { user } = useUser()
 
     useEffect(() => {
-        const fetchRooms = async () => {
-            const token = (await getToken()) || ''
+        const fetchRooms = async (): Promise<void> => {
+            const token = (await getToken()) ?? ''
             const userId = user?.id
 
             // Récupérer tous les messages de l'utilisateur actuel et les trier par date d'envoi (du plus récent au plus ancien)
@@ -42,32 +46,30 @@ const RoomSidebar: React.FC<RoomSidebarProps> = ({ onRoomSelect }) => {
             for (const message of sortedMessages) {
                 const roomId = message.roomID
                 if (
-                    !userRoomsMap[roomId] &&
+                    !Object.hasOwn(userRoomsMap, roomId) &&
                     (message.sender === userId || message.receiver === userId)
                 ) {
-                    // Déterminer `contactId` en fonction de qui est l'utilisateur connecté
                     const contactId =
-                        (message.sender === userId)
+                        message.sender === userId
                             ? message.receiver
                             : message.sender
-
-                    console.log(
-                        `Message details: { sender: ${message.sender}, receiver: ${message.receiver}, contactId: ${contactId}, userId: ${userId} }`,
-                    ) // Log pour vérification
 
                     userRoomsMap[roomId] = {
                         id: roomId,
                         name: `Room ${roomId}`,
                         lastMessage: message.message,
                         lastUpdated: message.sentAt,
-                        receiverInfo: null,
+                        receiverInfo: {
+                            avatar: '',
+                            username: '',
+                        },
                     }
 
                     // Récupérer les informations du contact et les ajouter comme `receiverInfo`
                     if (contactId && token) {
                         const contactData = await getUserInfo(contactId, token)
                         userRoomsMap[roomId].receiverInfo = {
-                            avatar: contactData.avatarUrl || '',
+                            avatar: contactData.avatarUrl ?? '',
                             username: contactData.pseudo,
                         }
                     }
@@ -91,7 +93,9 @@ const RoomSidebar: React.FC<RoomSidebarProps> = ({ onRoomSelect }) => {
                     <RoomSidebarItem
                         room={room}
                         key={room.id}
-                        onSelect={() => onRoomSelect(room.id)}
+                        onSelect={() => {
+                            onRoomSelect(room.id)
+                        }}
                     />
                 ))}
             </div>

@@ -1,4 +1,3 @@
-import { Bell } from 'react-feather'
 import { Toaster } from 'react-hot-toast'
 import type { Metadata } from 'next'
 import {
@@ -6,7 +5,6 @@ import {
     Quattrocento_Sans,
     Questrial,
 } from 'next/font/google'
-import Link from 'next/link'
 
 import { Button } from '@/components/shadcn/ui/button'
 
