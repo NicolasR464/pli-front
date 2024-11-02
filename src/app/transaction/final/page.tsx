@@ -54,14 +54,14 @@ const PostTransaction = (): React.JSX.Element => {
             }
         }
 
-        createTransactionWithToken()
+        // createTransactionWithToken()
     }, [createTransaction, getToken, paramsObject, searchParams])
 
     return (
         <div>
-            {'Transaction final'}
-            {JSON.stringify(paramsObject)}
-            {!!isTransactionCreated && 'Transaction created'}
+            <h1 className='text-center text-2xl font-bold'>
+                Transaction created !
+            </h1>
         </div>
     )
 }
