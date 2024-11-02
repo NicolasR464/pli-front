@@ -3,22 +3,29 @@
 
 import { useSendEmail } from '@/utils/apiCalls/local/mutations'
 
+import type { Article } from '@/types/article'
+
 import { Button } from '../shadcn/ui/button'
 
-const EmailSender = (): React.JSX.Element => {
+const EmailSender = ({
+    senderEmail,
+    receiverEmail,
+    article,
+}: {
+    readonly senderEmail: string
+    readonly receiverEmail: string
+    readonly article: Partial<Article>
+}): React.JSX.Element => {
     const { mutateAsync: sendEmail } = useSendEmail()
 
     const handleSendEmail = async (): Promise<void> => {
         await sendEmail(
             {
-                senderEmail: 'nicolas.rocagel@gmail.com',
-                receiverEmail: 'rocage_n@etna-alternance.net',
-                article: {
-                    _id: '123',
-                    adTitle: 'Article 1',
-                    imageUrls: ['https://example.com/image.jpg'],
-                },
+                senderEmail,
+                receiverEmail,
+                article,
             },
+
             {
                 onSuccess: () => {
                     console.log('email sent')
@@ -29,6 +36,7 @@ const EmailSender = (): React.JSX.Element => {
             },
         )
     }
+
     return (
         <div>
             <Button

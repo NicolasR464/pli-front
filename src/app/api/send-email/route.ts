@@ -16,6 +16,12 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     const receiverEmail = formData.get('receiverEmail')
     const articleParam = formData.get('article')
 
+    console.log({ senderEmail })
+    console.log(typeof senderEmail)
+
+    console.log({ receiverEmail })
+    console.log(articleParam)
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const article: Partial<Article> | undefined = articleParam
         ? JSON.parse(articleParam as string)
@@ -26,7 +32,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         senderEmail &&
         article?.imageUrls &&
         article.imageUrls.length > 0 &&
-        article._id
+        article.id
     ) {
         const mailBody = `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
@@ -36,7 +42,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
                 <img src="${article.imageUrls[0]}" alt="Article image" style="max-width: 300px; height: auto;"/>
             </div>
             <p><strong>${article.adTitle}</strong></p>
-            <p>Pour voir les détails, <a href="https://localhost:3000/${article._id}">cliquez ici</a></p>
+            <a href="http://localhost:3000/transaction/final?receiver=${receiverEmail}&sender=${senderEmail}&senderArticle=${article.id}">Je valide la transaction</a>
             <p>L’équipe TrocUp</p>
         </div>
     `

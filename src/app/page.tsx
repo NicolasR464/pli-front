@@ -18,9 +18,7 @@ const Home = ({
             <Notification />
             <Hero />
             {/* Display the welcome message if the onboarding search param is present */}
-            {!!searchParams.onboarding && <WelcomeMsg />}
-
-            <EmailSender />
+            <WelcomeMsg />
         </div>
     )
 }

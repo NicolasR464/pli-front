@@ -11,6 +11,7 @@ import ProductCard from '@/components/articleDisplay/ProductCard'
 import ProductDetails from '@/components/articleDisplay/ProductDetails'
 import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
+import EmailSender from '@/components/EmailSender'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
@@ -22,6 +23,10 @@ const ArticlePage = (): React.JSX.Element => {
     // Get id from URL in string to avoid type errors :
     const { id } = useParams()
     const articleId = String(id)
+
+    const { user: userSignedIn } = useUser()
+
+    console.log(userSignedIn)
 
     // React query to get article data
     const {
