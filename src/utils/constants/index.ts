@@ -19,14 +19,12 @@ export const pagePaths = {
     ONBOARDING: '/onboarding/',
 }
 
-/** Object containing notifications to the user for various cases, set in alphabetical order */
+/**
+ * Object containing notification message in a toaster for the user for various cases, set in alphabetical order
+ * - must have a label that will be the name of the URL query key
+ * - must have a type of SUCCESS, ERROR or INFO (will change the color of the toaster)
+ */
 export const userMessages = {
-    imageAnalysis: {
-        label: 'image-analysis',
-        type: {
-            ERROR: 'Erreur lors de l’analyse de l’image.',
-        },
-    },
     articleAnalysis: {
         label: 'article-analysis',
         type: {
@@ -38,6 +36,13 @@ export const userMessages = {
         type: {
             ERROR: 'Erreur lors de la création de l’article. Réessaye plus tard.',
             SUCCESS: 'L’article a été créé avec succès.',
+        },
+    },
+    imageAnalysis: {
+        label: 'image-analysis',
+
+        type: {
+            ERROR: 'Erreur lors de l’analyse de l’image.',
         },
     },
     onboarding: {
