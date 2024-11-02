@@ -20,9 +20,9 @@ export const pagePaths = {
 }
 
 /**
- * Object containing notification message in a toaster for the user for various cases, set in alphabetical order
+ * Object containing notification messages to use in pair with the Notification component for the user for various cases; set in alphabetical order.
  * - must have a label that will be the name of the URL query key
- * - must have a type of SUCCESS, ERROR or INFO (will change the color of the toaster)
+ * - must have a type of SUCCESS, ERROR or INFO (will change the color of the toaster) that will be the value of the URL query
  */
 export const userMessages = {
     articleAnalysis: {
