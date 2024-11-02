@@ -177,7 +177,10 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     cloudinaryForm.append('upload_preset', 'unsigned')
 
     //// Make the request to Cloudinary
-    const response = await axios.post(apiEndpoints.CLOUDINARY, cloudinaryForm)
+    const response = await axios.post(
+        apiEndpoints.thirdParty.CLOUDINARY,
+        cloudinaryForm,
+    )
 
     if (response.status !== 200)
         return NextResponse.json(

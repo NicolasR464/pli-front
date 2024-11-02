@@ -13,18 +13,20 @@ import type { AxiosResponse } from 'axios'
  */
 export const getArticles = async (): Promise<Article[]> => {
     const response: AxiosResponse<Article[]> = await articleInstance.get(
-        apiEndpoints.ARTICLES,
+        apiEndpoints.microServices.public.ARTICLES,
     )
 
     if (response.status !== 200)
-        throw new Error(`Failed to fetch ${apiEndpoints.ARTICLES}`)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
+        )
 
     return response.data
 }
 
 export const getArticleById = async (id: string): Promise<Article> => {
     const response: AxiosResponse<Article> = await articleInstance.get(
-        `${apiEndpoints.ARTICLES}${id}`,
+        `${apiEndpoints.microServices.public.ARTICLES}${id}`,
     )
     if (response.status !== 200)
         throw new Error(`Failed to fetch article with id ${String(id)}`)
@@ -59,10 +61,15 @@ export const createArticle = async (
     addAuthHeader(articleInstance, JWT)
 
     const response: AxiosResponse<Partial<Article>> =
-        await articleInstance.post(apiEndpoints.ARTICLES, article)
+        await articleInstance.post(
+            apiEndpoints.microServices.private.ARTICLES,
+            article,
+        )
 
     if (response.status !== 201)
-        throw new Error(`Failed to create ${apiEndpoints.ARTICLES}`)
+        throw new Error(
+            `Failed to create ${apiEndpoints.microServices.private.ARTICLES}`,
+        )
 
     return response.data
 }
