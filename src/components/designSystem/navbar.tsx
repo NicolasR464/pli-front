@@ -38,19 +38,30 @@ const Navbar: React.FC = () => {
 
     const router = useRouter()
 
-    // Utilisation de useQuery avec un typage correct pour récupérer les articles
-    const { data: allArticles = [], error } = useQuery<Article[]>({
+    // Utilisation de useQuery pour récupérer les articles
+    const {
+        data: allArticles = [],
+        error,
+        isLoading,
+    } = useQuery<Article[]>({
         queryKey: ['articles'],
         queryFn: getArticles,
     })
 
+    // Vérification des données dans la console
+    console.log(allArticles)
+
     // Filtrer les articles
-    const filteredArticles: Article[] = allArticles.filter((article: Article) =>
-        article.adTitle.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
+    const filteredArticles: Article[] = Array.isArray(allArticles)
+        ? allArticles.filter((article: Article) =>
+              article.adTitle.toLowerCase().includes(searchTerm.toLowerCase()),
+          )
+        : []
 
     // Gestion de la soumission de recherche
-    const handleSearchSubmit = (event: React.FormEvent): void => {
+    const handleSearchSubmit = (
+        event: React.FormEvent<HTMLFormElement>,
+    ): void => {
         event.preventDefault()
         if (searchTerm) {
             router.push(`/articles?query=${searchTerm}`)
@@ -86,7 +97,6 @@ const Navbar: React.FC = () => {
                             className='absolute right-2 top-2 text-gray-600'
                         >
                             {'🔍 '}
-                            {/* Icône de loupe */}
                         </button>
                     </form>
 
@@ -103,12 +113,12 @@ const Navbar: React.FC = () => {
                             {filteredArticles.length > 0 ? (
                                 filteredArticles.map((article: Article) => (
                                     <div
-                                        // eslint-disable-next-line no-underscore-dangle
-                                        key={article.id}
+                                        key={article.id || article.id}
                                         className='p-2 hover:bg-gray-200'
                                     >
-                                        {/* eslint-disable-next-line no-underscore-dangle*/}
-                                        <Link href={`/articles/${article.id}`}>
+                                        <Link
+                                            href={`/articles/${article.id || article.id}`}
+                                        >
                                             {article.adTitle}
                                         </Link>
                                     </div>
@@ -122,13 +132,13 @@ const Navbar: React.FC = () => {
 
                 {/* User authentication and icons */}
                 <div className='flex space-x-6 text-blueGreen-dark'>
-                    {/* Icone Home */}
                     <Link href={pagePaths.HOME}>
                         <Home
                             className='color-blueGreen-dark-active cursor-pointer'
                             strokeWidth={1.5}
                         />
                     </Link>
+
                     <SignedOut>
                         <SignInButton
                             forceRedirectUrl={pagePaths.HOME}
@@ -142,7 +152,6 @@ const Navbar: React.FC = () => {
                     </SignedOut>
 
                     <SignedIn>
-                        {/* Sheet pour profil et déconnexion */}
                         <Sheet>
                             <SheetTrigger asChild>
                                 <Link href={pagePaths.HOME}>
@@ -159,16 +168,8 @@ const Navbar: React.FC = () => {
                                     </h3>
                                 </SheetHeader>
                                 <div className='flex-grow'>
-                                    {/* Intégration du UserProfileCard */}
                                     <div className='p-4'>
                                         <UserProfileCard />
-                                    </div>
-                                    <div className='p-4'>
-                                        <Link href='https://deciding-reindeer-10.accounts.dev/user'>
-                                            <h4 className='font-display text-lg font-bold'>
-                                                {'Mes informations'}
-                                            </h4>
-                                        </Link>
                                     </div>
                                 </div>
 
@@ -190,28 +191,9 @@ const Navbar: React.FC = () => {
                     </SignedIn>
                 </div>
             </div>
-
-            {/* Secondary Menu avec catégories */}
-            <div className='flex justify-between bg-blueGreen-light-active py-2 align-middle'>
-                {Object.keys(products.categories).map((categoryKey) => {
-                    const keyTyped = categoryKey
-                    return (
-                        <div
-                            key={categoryKey}
-                            className='p-3 text-blueGreen-dark-active'
-                        >
-                            <Link
-                                href={`/articles?category=${encodeURIComponent(categoryKey)}`}
-                                className='block text-center text-text-3 hover:underline'
-                            >
-                                {products.categories[keyTyped].tag}
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
         </nav>
     )
 }
 
 export default Navbar
+
