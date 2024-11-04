@@ -10,7 +10,7 @@ import type { AxiosResponse } from 'axios'
  * Fetch all articles from the API.
  * @returns {Promise<Article[]>} An array of articles.
  */
-export interface ArticlesResponse {
+export type ArticlesResponse = {
     articles: Article[]
     hasNext: boolean
     limit: number

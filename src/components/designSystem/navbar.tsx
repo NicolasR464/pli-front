@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
     })
 
     // Affichage d'un message de chargement ou d'erreur
-    if (isLoading) return <p>{'Chargement en cours...'}</p>
+    if (isLoading) return <p>{'Chargement en cours…'}</p>
     if (error) return <p>{'Erreur lors du chargement des articles'}</p>
 
     // Vérification que les données récupérées contiennent bien des articles
