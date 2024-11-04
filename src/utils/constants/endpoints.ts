@@ -2,13 +2,12 @@ import { environment } from '@/types/environment'
 
 export const apiEndpoints = {
     // Micro services
-    USERS_PRIVATE: '/api/protected/users/',
-    USERS: '/api/public/users/',
-    ARTICLES_PRIVATE: '/api/protected/articles/',
-    ARTICLES: '/api/public/articles/',
-    TRANSACTIONS: 'api/transaction/',
-    TRANSACTIONS_PRIVATE: '/api/protected/transaction/',
-    /** @TODO Update the endpoint below  */
+    USERS_PRIVATE: 'api/protected/users/',
+    USERS: 'api/public/users/',
+    ARTICLES_PRIVATE: 'api/protected/articles/',
+    ARTICLES: 'api/public/articles/',
+    TRANSACTIONS: 'api/public/transaction/',
+    TRANSACTIONS_PRIVATE: 'api/protected/transaction/',
     INSTANT_MESSAGES: 'instantmsgs/',
 
     // Local API endpoints

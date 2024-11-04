@@ -40,23 +40,30 @@ const Navbar: React.FC = () => {
 
     // Utilisation de useQuery pour récupérer les articles
     const {
-        data: allArticles = [],
+        data: allArticlesResponse,
         error,
         isLoading,
-    } = useQuery<Article[]>({
+    } = useQuery<{
+        articles: Article[]
+        hasNext: boolean
+        limit: number
+        skip: number
+    }>({
         queryKey: ['articles'],
-        queryFn: getArticles,
+        queryFn: getArticles, // Assurez-vous que getArticles retourne bien un objet avec `articles`
     })
 
-    // Vérification des données dans la console
-    console.log(allArticles)
+    // Affichage d'un message de chargement ou d'erreur
+    if (isLoading) return <p>Chargement en cours...</p>
+    if (error) return <p>Erreur lors du chargement des articles</p>
+
+    // Vérification que les données récupérées contiennent bien des articles
+    const allArticles = allArticlesResponse?.articles || []
 
     // Filtrer les articles
-    const filteredArticles: Article[] = Array.isArray(allArticles)
-        ? allArticles.filter((article: Article) =>
-              article.adTitle.toLowerCase().includes(searchTerm.toLowerCase()),
-          )
-        : []
+    const filteredArticles: Article[] = allArticles.filter((article: Article) =>
+        article.adTitle.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
 
     // Gestion de la soumission de recherche
     const handleSearchSubmit = (
@@ -103,22 +110,13 @@ const Navbar: React.FC = () => {
                     {/* Suggestions de résultats de recherche */}
                     {!!searchTerm && (
                         <div className='absolute z-50 mt-2 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg'>
-                            {!!error && (
-                                <p className='text-signals-forbidden-normal-active p-2'>
-                                    {error instanceof Error
-                                        ? `Erreur: ${error.message}`
-                                        : 'Erreur inconnue'}
-                                </p>
-                            )}
                             {filteredArticles.length > 0 ? (
                                 filteredArticles.map((article: Article) => (
                                     <div
-                                        key={article.id || article.id}
+                                        key={article.id}
                                         className='p-2 hover:bg-gray-200'
                                     >
-                                        <Link
-                                            href={`/articles/${article.id || article.id}`}
-                                        >
+                                        <Link href={`/articles/${article.id}`}>
                                             {article.adTitle}
                                         </Link>
                                     </div>
@@ -191,9 +189,30 @@ const Navbar: React.FC = () => {
                     </SignedIn>
                 </div>
             </div>
+
+            {/* Secondary Menu avec catégories */}
+            <div className='flex justify-between bg-blueGreen-light-active py-2 align-middle'>
+                {Object.keys(products.categories).map((categoryKey) => {
+                    const keyTyped = categoryKey
+                    return (
+                        <div
+                            key={categoryKey}
+                            className='p-3 text-blueGreen-dark-active'
+                        >
+                            <Link
+                                href={`/articles?category=${encodeURIComponent(
+                                    categoryKey,
+                                )}`}
+                                className='block text-center text-text-3 hover:underline'
+                            >
+                                {products.categories[keyTyped].tag}
+                            </Link>
+                        </div>
+                    )
+                })}
+            </div>
         </nav>
     )
 }
 
 export default Navbar
-

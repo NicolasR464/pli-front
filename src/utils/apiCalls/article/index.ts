@@ -10,8 +10,15 @@ import type { AxiosResponse } from 'axios'
  * Fetch all articles from the API.
  * @returns {Promise<Article[]>} An array of articles.
  */
-export const getArticles = async (): Promise<Article[]> => {
-    const response: AxiosResponse<Article[]> = await articleInstance.get(
+export interface ArticlesResponse {
+    articles: Article[]
+    hasNext: boolean
+    limit: number
+    skip: number
+}
+
+export const getArticles = async (): Promise<ArticlesResponse> => {
+    const response: AxiosResponse<ArticlesResponse> = await articleInstance.get(
         apiEndpoints.ARTICLES,
     )
 
