@@ -50,15 +50,15 @@ const Navbar: React.FC = () => {
         skip: number
     }>({
         queryKey: ['articles'],
-        queryFn: getArticles, // Assurez-vous que getArticles retourne bien un objet avec `articles`
+        queryFn: getArticles,
     })
 
     // Affichage d'un message de chargement ou d'erreur
-    if (isLoading) return <p>Chargement en cours...</p>
-    if (error) return <p>Erreur lors du chargement des articles</p>
+    if (isLoading) return <p>{'Chargement en cours...'}</p>
+    if (error) return <p>{'Erreur lors du chargement des articles'}</p>
 
     // Vérification que les données récupérées contiennent bien des articles
-    const allArticles = allArticlesResponse?.articles || []
+    const allArticles = allArticlesResponse?.articles ?? []
 
     // Filtrer les articles
     const filteredArticles: Article[] = allArticles.filter((article: Article) =>
@@ -80,7 +80,9 @@ const Navbar: React.FC = () => {
             <div className='container mx-auto flex items-center justify-between py-4'>
                 {/* "Déposer une annonce" Button */}
                 <button className='rounded-md bg-blueGreen px-4 py-2 text-white hover:bg-blueGreen-hover active:bg-blueGreen-active'>
-                    {'Ajouter un objet à ma besace'}
+                    <Link href={pagePaths.ARTICLE_CREATION}>
+                        {'Ajouter un objet à ma besace'}
+                    </Link>
                 </button>
 
                 {/* Search bar */}
@@ -129,7 +131,7 @@ const Navbar: React.FC = () => {
                 </div>
 
                 {/* User authentication and icons */}
-                <div className='flex space-x-6 text-blueGreen-dark'>
+                <div className='flex justify-center space-x-6 text-center align-middle text-blueGreen-dark'>
                     <Link href={pagePaths.HOME}>
                         <Home
                             className='color-blueGreen-dark-active cursor-pointer'
