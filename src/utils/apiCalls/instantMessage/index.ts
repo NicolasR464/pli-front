@@ -93,7 +93,7 @@ export const deleteMessageById = async (
 ): Promise<void> => {
     const headers = getHeaders(token)
     const response = await instantMsgInstance.delete(
-        `${apiEndpoints.INSTANT_MESSAGES}/${msgId}`,
+        `${apiEndpoints.INSTANT_MESSAGES}${msgId}`,
         { headers },
     )
     if (response.status !== 200) {

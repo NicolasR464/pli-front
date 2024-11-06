@@ -79,7 +79,7 @@ export const getUserById = async (
     userId: string | undefined,
 ): Promise<User | undefined> => {
     const response: AxiosResponse<User> = await userInstance.get(
-        `${apiEndpoints.USERS}${userId}`,
+        `${apiEndpoints.USERS_PRIVATE}${userId}`,
     )
     if (response.status !== 200)
         throw new Error(`Failed to fetch user with id ${String(userId)}`)
