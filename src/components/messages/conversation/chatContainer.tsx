@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/consistent-return */
 import React, { useEffect, useRef, useState } from 'react'
 import { Repeat } from 'react-feather'
 import Link from 'next/link'
@@ -40,6 +41,7 @@ type WebSocketMessage = {
     receiver: string
     sentAt: string
 }
+
 export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     const [messages, setMessages] = useState<Message[]>([])
     const [contactName, setContactName] = useState<string>('Inconnu')
@@ -81,7 +83,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
                 setContactAvatar(otherParticipantInfo.avatarUrl ?? '')
             }
 
-            // Récupérer les infos de l'utilisateur connecté
             if (user?.id) {
                 const currentUser = await getUserInfo(user.id, token)
                 setCurrentUserInfo({
@@ -101,29 +102,34 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
             )
 
             const socket = connectWebSocketByRoomId(roomId)
-            socket.addEventListener('message', (event) => {
-                const newMessage: WebSocketMessage = JSON.parse(
-                    event.data,
-                ) as WebSocketMessage
-                if (
-                    newMessage.roomID === roomId &&
-                    !messageIds.current.has(newMessage._id)
-                ) {
-                    messageIds.current.add(newMessage._id)
-                    setMessages((prevMessages) => [
-                        ...prevMessages,
-                        {
-                            id: newMessage._id,
-                            content: newMessage.message,
-                            isSent: newMessage.sender === user?.id,
-                            sender: newMessage.sender,
-                            sentAt: new Date(newMessage.sentAt),
-                        },
-                    ])
+
+            if (socket) {
+                socket.addEventListener('message', (event) => {
+                    const newMessage: WebSocketMessage = JSON.parse(
+                        event.data,
+                    ) as WebSocketMessage
+                    if (
+                        newMessage.roomID === roomId &&
+                        !messageIds.current.has(newMessage._id)
+                    ) {
+                        messageIds.current.add(newMessage._id)
+                        setMessages((prevMessages) => [
+                            ...prevMessages,
+                            {
+                                id: newMessage._id,
+                                content: newMessage.message,
+                                isSent: newMessage.sender === user?.id,
+                                sender: newMessage.sender,
+                                sentAt: new Date(newMessage.sentAt),
+                            },
+                        ])
+                    }
+                })
+
+                // Cleanup to close WebSocket on unmount
+                return (): void => {
+                    socket.close()
                 }
-            })
-            return (): void => {
-                socket.close()
             }
         }
 
@@ -144,7 +150,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     return (
         <div className='flex h-screen flex-col'>
             <div className='flex justify-between border-b bg-blueGreen-light align-middle shadow-md'>
-                {/* Header pour le participant autre que l'utilisateur */}
                 <ChatHeader
                     contactName={contactName}
                     contactAvatar={contactAvatar}
@@ -153,7 +158,6 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
 
                 <Repeat className='mx-2 self-center text-gray-500' />
 
-                {/* Card sticky pour les infos de l'utilisateur connecté */}
                 {!!currentUserInfo && (
                     <UserInfoCard
                         avatarUrl={currentUserInfo.avatar}
