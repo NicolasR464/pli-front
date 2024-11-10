@@ -8,17 +8,17 @@ export const apiEndpoints = {
     microServices: {
         // Public endpoints
         public: {
-            USERS: '/api/users/',
-            ARTICLES: '/api/articles/',
-            TRANSACTIONS: '/api/transactions/',
-            INSTANT_MESSAGES: '/api/messages/',
+            USERS: 'api/users/',
+            ARTICLES: 'api/articles/',
+            TRANSACTIONS: 'api/transactions/',
+            INSTANT_MESSAGES: 'api/messages/',
         },
         // Private endpoints
         private: {
-            USERS: '/api/protected/users/',
-            ARTICLES: '/api/protected/articles/',
-            TRANSACTIONS: '/api/protected/transactions/',
-            INSTANT_MESSAGES: '/api/protected/messages/',
+            USERS: 'api/protected/users/',
+            ARTICLES: 'api/protected/articles/',
+            TRANSACTIONS: 'api/protected/transactions/',
+            INSTANT_MESSAGES: 'api/protected/messages/',
         },
     },
 
