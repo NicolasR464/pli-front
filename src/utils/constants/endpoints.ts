@@ -24,9 +24,9 @@ export const apiEndpoints = {
 
     // Local API endpoints
     local: {
-        IMAGE_ANALYSIS: 'image-analysis/',
-        PRODUCT_ANALYSIS: 'product-analysis/',
-        SEND_EMAIL: 'send-email/',
+        IMAGE_ANALYSIS: 'image-analysis',
+        PRODUCT_ANALYSIS: 'product-analysis',
+        SEND_EMAIL: 'send-email',
     },
 
     // Third party APIs
