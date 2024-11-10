@@ -30,37 +30,24 @@ export type ProductAnalysisResponse = {
     content: ProductAnalysis
 }
 
-// /**
-//  * Store and analyze an image by sending it to the local instance.
-//  * @param {File} file - The image file to be analyzed.
-//  * @returns {Promise<AnalysisResponse>} A promise that resolves to the analysis response.
-//  * @throws {Error} If the image analysis fails.
-//  */
-// export const analyzeImage = async (
-//     file: File,
-// ): Promise<ImageAnalysisResponse> => {
-//     const response: AxiosResponse<ImageAnalysisResponse> =
-//         await localInstance.postForm(apiEndpoints.local.IMAGE_ANALYSIS, {
-//             file,
-//         })
+/**
+ * Store and analyze an image by sending it to the local instance.
+ * @param {File} file - The image file to be analyzed.
+ * @returns {Promise<AnalysisResponse>} A promise that resolves to the analysis response.
+ * @throws {Error} If the image analysis fails.
+ */
+export const analyzeImage = async (
+    file: File,
+): Promise<ImageAnalysisResponse> => {
+    const response: AxiosResponse<ImageAnalysisResponse> =
+        await localInstance.postForm(apiEndpoints.local.IMAGE_ANALYSIS, {
+            file,
+        })
 
-// eslint-disable-next-line multiline-comment-style
-//     if (response.status !== 200)
-//         throw new Error(`Failed to fetch ${apiEndpoints.local.IMAGE_ANALYSIS}`)
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch ${apiEndpoints.local.IMAGE_ANALYSIS}`)
 
-// eslint-disable-next-line multiline-comment-style
-//     return response.data
-// }
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/require-await, @typescript-eslint/explicit-module-boundary-types
-export const analyzeImage = async () => {
-    fetch('https://trocup.fr/api/image-analysis/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        // ... rest of your fetch config
-    })
+    return response.data
 }
 
 /**
