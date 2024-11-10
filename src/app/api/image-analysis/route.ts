@@ -22,8 +22,16 @@ export async function OPTIONS() {
 // eslint-disable-next-line func-style, prefer-arrow-functions/prefer-arrow-functions, @typescript-eslint/require-await
 export async function POST(): Promise<NextResponse> {
     // eslint-disable-next-line no-console
-    console.log('🔥 test')
+    process.stdout.write('🔥 API endpoint called\n')
 
+    // Or even better, add more context:
+    process.stdout.write(
+        `${JSON.stringify({
+            timestamp: new Date().toISOString(),
+            event: 'image_analysis_called',
+            environment: process.env.VERCEL_ENV,
+        })}\n`,
+    )
     return NextResponse.json(
         { data: 'test' },
         {
