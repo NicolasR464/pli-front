@@ -21,6 +21,7 @@ export async function OPTIONS() {
  */
 // eslint-disable-next-line func-style, prefer-arrow-functions/prefer-arrow-functions, @typescript-eslint/require-await
 export async function POST(): Promise<NextResponse> {
+    // eslint-disable-next-line no-console
     console.log('🔥 test')
 
     return NextResponse.json(
