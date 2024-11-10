@@ -4,6 +4,7 @@ import { localInstance } from '@/utils/axiosInstances/local'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 export type ImageAnalysis = {
     imageUrl: string
@@ -39,10 +40,12 @@ export type ProductAnalysisResponse = {
 export const analyzeImage = async (
     file: File,
 ): Promise<ImageAnalysisResponse> => {
-    const response: AxiosResponse<ImageAnalysisResponse> =
-        await localInstance.postForm(apiEndpoints.local.IMAGE_ANALYSIS, {
+    const response: AxiosResponse<ImageAnalysisResponse> = await axios.postForm(
+        `/${apiEndpoints.local.IMAGE_ANALYSIS}`,
+        {
             file,
-        })
+        },
+    )
 
     if (response.status !== 200)
         throw new Error(`Failed to fetch ${apiEndpoints.local.IMAGE_ANALYSIS}`)
