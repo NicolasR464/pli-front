@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 
 /**
  * POST endpoint for storing and analyzing an image.
- * @param {NextRequest} request - The incoming request object.
  * @returns {Promise<NextResponse>} A response object with the analysis result or an error message.
  */
 // eslint-disable-next-line @typescript-eslint/require-await
