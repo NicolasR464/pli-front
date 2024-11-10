@@ -28,7 +28,7 @@ type PaginatedUsers = {
  */
 export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
-        await userInstance.get(apiEndpoints.USERS_PRIVATE, {
+        await userInstance.get(apiEndpoints.microServices.private.USERS, {
             params: {
                 skip: pageParam,
                 limit: paginationLimit,
@@ -58,7 +58,7 @@ export const createUser = async (
     addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
-        apiEndpoints.USERS_PRIVATE,
+        apiEndpoints.microServices.private.USERS,
         data,
     )
 
@@ -79,7 +79,7 @@ export const getUserById = async (
     userId: string | undefined,
 ): Promise<User | undefined> => {
     const response: AxiosResponse<User> = await userInstance.get(
-        `${apiEndpoints.USERS}${userId}`,
+        `${apiEndpoints.microServices.public.USERS}${userId}`,
     )
     if (response.status !== 200)
         throw new Error(`Failed to fetch user with id ${String(userId)}`)

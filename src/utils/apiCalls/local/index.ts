@@ -40,10 +40,12 @@ export const analyzeImage = async (
     file: File,
 ): Promise<ImageAnalysisResponse> => {
     const response: AxiosResponse<ImageAnalysisResponse> =
-        await localInstance.postForm(apiEndpoints.IMAGE_ANALYSIS, { file })
+        await localInstance.postForm(apiEndpoints.local.IMAGE_ANALYSIS, {
+            file,
+        })
 
     if (response.status !== 200)
-        throw new Error(`Failed to fetch ${apiEndpoints.IMAGE_ANALYSIS}`)
+        throw new Error(`Failed to fetch ${apiEndpoints.local.IMAGE_ANALYSIS}`)
 
     return response.data
 }
@@ -58,12 +60,14 @@ export const analyzeProductData = async (
     formData: ProductDataParams,
 ): Promise<ProductAnalysisResponse> => {
     const response: AxiosResponse<ProductAnalysisResponse> =
-        await localInstance.postForm(apiEndpoints.PRODUCT_ANALYSIS, {
+        await localInstance.postForm(apiEndpoints.local.PRODUCT_ANALYSIS, {
             formData,
         })
 
     if (response.status !== 200)
-        throw new Error(`Failed to fetch ${apiEndpoints.PRODUCT_ANALYSIS}`)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.local.PRODUCT_ANALYSIS}`,
+        )
 
     return response.data
 }
