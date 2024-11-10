@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 import type { ImageAnalysisResponse } from '@/utils/apiCalls/local'
-import { userMessages } from '@/utils/constants'
+import { corsHeaders, userMessages } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 import { mainFolder, subfolders } from '@/utils/constants/images'
 import { categoriesList, products } from '@/utils/constants/productValues'
@@ -159,7 +159,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     if (!image || !(image instanceof File)) {
         return NextResponse.json(
             { error: 'Invalid file upload' },
-            { status: 400, headers: { 'Access-Control-Allow-Origin': '*' } },
+            { status: 400, headers: corsHeaders },
         )
     }
     // STEP#1 : Upload the image to Cloudinary
@@ -187,7 +187,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             {
                 message: 'Image could not be uploaded on Cloudinary',
             },
-            { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } },
+            { status: 500, headers: corsHeaders },
         )
 
     const imageData = response.data as CloudinaryResponse
@@ -217,7 +217,5 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         azureFeatures,
     )
 
-    return NextResponse.json(azureAnalysis, {
-        headers: { 'Access-Control-Allow-Origin': '*' },
-    })
+    return NextResponse.json(azureAnalysis, { headers: corsHeaders })
 }
