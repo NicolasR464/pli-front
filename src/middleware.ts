@@ -7,6 +7,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 const isProtectedRoute = createRouteMatcher(['/onboarding'])
 
 // Create a custom middleware that combines Clerk and CORS
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
 const combinedMiddleware = async (req: NextRequest, event: NextFetchEvent) => {
     // Run Clerk middleware first
     const clerkResponse = await clerkMiddleware((auth) => {
