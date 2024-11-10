@@ -4,7 +4,6 @@ import { localInstance } from '@/utils/axiosInstances/local'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { AxiosResponse } from 'axios'
-import axios from 'axios'
 
 export type ImageAnalysis = {
     imageUrl: string
