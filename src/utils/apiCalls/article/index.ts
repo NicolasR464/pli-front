@@ -3,6 +3,7 @@ import { apiEndpoints } from '@/utils/constants/endpoints'
 
 import type { Article } from '@/types/article'
 
+import { getUserById } from '../user'
 import type { AxiosResponse } from 'axios'
 
 export const getArticles = async (): Promise<Article[]> => {
@@ -22,4 +23,18 @@ export const getArticleById = async (id: string): Promise<Article> => {
     if (response.status !== 200)
         throw new Error(`Failed to fetch article with id ${String(id)}`)
     return response.data
+}
+
+// Fonction pour récupérer les articles d'un utilisateur
+export const getArticlesByUser = async (
+    userId: string,
+    token: string,
+): Promise<Article[]> => {
+    const user = await getUserById(userId, token)
+    if (user?.articles) {
+        return Promise.all(
+            user.articles.map((articleId) => getArticleById(articleId)),
+        )
+    }
+    return []
 }

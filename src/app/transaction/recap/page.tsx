@@ -1,30 +1,34 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
+import Link from 'next/link'
 
-import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
+import ArticleList from '@/components/transacArticles/articleList'
 
-import { getArticleById } from '@/utils/apiCalls/article'
+import { useTransactionStore } from '@/stores/useTransaction'
+import { getArticlesByUser } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 
-import { useAuth, useUser } from '@clerk/nextjs'
-import { useQuery } from '@tanstack/react-query'
-import router from 'next/router'
+import type { Article } from '@/types/article'
+import type { User } from '@/types/user'
 
-// receiverIdd: string
+import { useAuth, useUser } from '@clerk/nextjs'
+import { useQueries } from '@tanstack/react-query'
+
 const TransactionPage = (): React.JSX.Element => {
     const { getToken } = useAuth()
     const [token, setToken] = useState<string>('')
+
+    // Get info from article/id page
+    const { owner, articlePageId } = useTransactionStore()
+    const ownerId = String(owner)
+    const initalArticle = String(articlePageId)
+
+    // Get connected user info
     const { user } = useUser()
-
-    const {} = useParams()
-
-    const receiverId = 'user_2ncuxuDM3OEzHnstwawPctDPzYU'
     const userConnectedId = user?.id
-    // const userConnectedId = 'user_2ncIl6OmYzbFV4S9YW0FgpIhx8x'
 
+    // useEffect to retreive connected user's token
     useEffect(() => {
         const fetchToken = async (): Promise<void> => {
             const fetchedToken = (await getToken()) ?? ''
@@ -34,195 +38,152 @@ const TransactionPage = (): React.JSX.Element => {
                 throw new Error('Aucun token trouvé.')
             }
         }
-
         fetchToken()
     }, [getToken])
 
-    // React query to get receiver user data
-    const { data: receiverUser } = useQuery({
-        queryKey: ['receiverUser', receiverId, token],
-        queryFn: () => getUserById(receiverId, token),
-        enabled: !!receiverId,
-    })
-    // React query to get my user's data
-    const { data: myUser } = useQuery({
-        queryKey: ['ConnectedUser', userConnectedId, token],
-        queryFn: () => getUserById(userConnectedId, token),
-        enabled: !!userConnectedId,
-    })
-
-    // get article by user :
-    const { data: receiverArticles } = useQuery({
-        queryKey: ['receiverArticles', receiverUser?.articles],
-        queryFn: async () => {
-            if (receiverUser?.articles) {
-                return Promise.all(
-                    receiverUser.articles.map((articleId) =>
-                        getArticleById(articleId),
-                    ),
-                )
-            }
-            return []
-        },
-        enabled: !!receiverUser?.articles,
-    })
-
-    const { data: myArticles } = useQuery({
-        queryKey: ['myArticles', myUser?.articles],
-        queryFn: async () => {
-            if (myUser?.articles) {
-                return Promise.all(
-                    myUser.articles.map((articleId) =>
-                        getArticleById(articleId),
-                    ),
-                )
-            }
-            return []
-        },
-        enabled: !!myUser?.articles,
+    // Get info about the owner + their articles and the connected user + their articles
+    const queries = useQueries({
+        queries: [
+            {
+                queryKey: ['ownerUser', ownerId, token],
+                queryFn: (): Promise<User | undefined> =>
+                    getUserById(ownerId, token),
+                enabled: !!ownerId && !!token,
+            },
+            {
+                queryKey: ['myUser', userConnectedId, token],
+                queryFn: (): Promise<User | undefined> =>
+                    getUserById(userConnectedId, token),
+                enabled: !!userConnectedId && !!token,
+            },
+            {
+                queryKey: ['ownerArticles', ownerId, token],
+                queryFn: (): Promise<Article[]> =>
+                    getArticlesByUser(ownerId, token),
+                enabled: !!ownerId,
+            },
+            {
+                queryKey: ['myArticles', userConnectedId, token],
+                queryFn: (): Promise<Article[]> => {
+                    if (userConnectedId) {
+                        return getArticlesByUser(userConnectedId, token)
+                    }
+                    return Promise.resolve([])
+                },
+                enabled: !!userConnectedId,
+            },
+        ],
     })
 
-    const [selectedReceiverArticles, setSelectedReceiverArticles] = useState<
-        string | null
-    >(null)
-    const [selectedMyArticles, setSelectedMyArticles] = useState<string | null>(
-        null,
-    )
+    const ownerUser = queries[0].data
+    const myUser = queries[1].data
+    const ownerArticles = queries[2].data
+    const myArticles = queries[3].data
 
-    const handleSelectReceiverArticle = (articleId: string) => {
-        setSelectedReceiverArticles(articleId)
+    //State for selected articles
+    const [selectedArticles, setSelectedArticles] = useState<
+        string | undefined
+    >(initalArticle)
+    const [selectedMyArticles, setSelectedMyArticles] = useState<
+        string | undefined
+    >()
+
+    // Function to handle selection of chosen articles
+    const handleSelectArticle = (articleId: string): void => {
+        setSelectedArticles(articleId)
     }
-
-    const handleSelectMyArticle = (articleId: string) => {
+    // Function to handle selection of articles to give
+    const handleSelectMyArticle = (articleId: string): void => {
         setSelectedMyArticles(articleId)
     }
-
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        router.push(
-            `/transaction/final?sender=${userConnectedId}&receiver=${receiverId}&articleSender=${selectedMyArticles}&articleReceiver=${selectedReceiverArticles}`,
-        )
+    // Function to redirect user to finalise transaction
+    const queryParams = {
+        sender: userConnectedId,
+        receiver: ownerId,
+        articleSender: selectedMyArticles,
+        articleReceiver: selectedArticles,
     }
 
+    // Find the selected articles using their IDs
+    const chosenArticle = ownerArticles?.find(
+        (article) => article._id === selectedArticles,
+    )
+    const givenArticle = myArticles?.find(
+        (article) => article._id === selectedMyArticles,
+    )
+
     return (
-        <div className='flex w-full flex-col items-center justify-center p-4'>
-            {!!myUser && !!receiverUser && (
+        <div className='flex w-full flex-col items-center justify-center bg-gray-50 p-4'>
+            {!!myUser && !!ownerUser && (
                 <>
-                    <h1 className='mb-2 text-xl font-bold'>
-                        {`Besace de ${receiverUser.pseudo}`}
+                    <h1 className='mb-4 text-3xl font-extrabold text-teal-600'>
+                        {`Besace de ${ownerUser.pseudo}`}
                     </h1>
-                    <p className='mb-4 text-gray-500'>
+                    <p className='mb-8 text-lg text-gray-600'>
                         {'Sélectionnez les produits qui vous intéressent !'}
                     </p>
 
                     {/* Receiver User's Articles */}
-                    <div className='mb-6 w-full max-w-lg bg-gray-100 p-4'>
-                        <h2 className='mb-2 font-bold'>
-                            {/* {`Nombre d’objet(s) : ${selectedReceiverArticles.length}`} */}
-                        </h2>
-                        <div className='flex space-x-4'>
-                            {receiverArticles && receiverArticles.length > 0 ? (
-                                receiverArticles.map((article, index) => (
-                                    <div
-                                        key={
-                                            article._id ||
-                                            `receiver-article-${index}`
-                                        }
-                                        onClick={() => {
-                                            handleSelectReceiverArticle(
-                                                article.id,
-                                            )
-                                        }}
-                                        className={`border p-4 ${selectedReceiverArticles?.includes(article.id) ? 'border-green-500' : 'border-gray-300'} cursor-pointer`}
-                                    >
-                                        <Card className='h-60 w-40 text-center'>
-                                            <CardContent className='flex h-40 items-center justify-center overflow-hidden'>
-                                                {' '}
-                                                {!!article.imageUrls[0] && (
-                                                    <Image
-                                                        src={
-                                                            article.imageUrls[0]
-                                                        }
-                                                        alt='Image de l’article'
-                                                        className='h-full w-full object-cover'
-                                                        width={160}
-                                                        height={160}
-                                                        priority
-                                                    />
-                                                )}
-                                            </CardContent>
-                                            <CardFooter className='flex justify-center'>
-                                                <p className='text-sm font-medium'>
-                                                    {article.adTitle}
-                                                </p>
-                                            </CardFooter>
-                                        </Card>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>{'Cet utilisateur n’a pas d’articles'}</p>
-                            )}
-                        </div>
-                    </div>
+                    <ArticleList
+                        articles={ownerArticles || []}
+                        selectedArticleId={selectedArticles}
+                        onSelectArticle={handleSelectArticle}
+                    />
 
-                    <h2 className='mb-2 text-xl font-bold'>
+                    <h2 className='mb-4 mt-8 text-3xl font-extrabold text-teal-600'>
                         {`Ma besace ${myUser.pseudo}`}
                     </h2>
+                    <p className='mb-8 text-lg text-gray-600'>
+                        {
+                            'Sélectionnez le produit que vous souhaitez donner en échange :'
+                        }
+                    </p>
 
                     {/* My User's Articles */}
-                    <div className='mb-6 w-full max-w-lg bg-gray-100 p-4'>
-                        <h2 className='mb-2 font-bold'>
-                            {/* {`Nombre d’objet(s) : ${selectedMyArticles.length}`} */}
-                        </h2>
-                        <div className='flex space-x-4'>
-                            {myArticles && myArticles.length > 0 ? (
-                                myArticles.map((article, index) => (
-                                    <div
-                                        key={
-                                            article._id ||
-                                            `receiver-article-${index}`
-                                        }
-                                        onClick={() => {
-                                            handleSelectMyArticle(article.id)
-                                        }}
-                                        className={`border p-4 ${selectedMyArticles?.includes(article.id) ? 'border-green-500' : 'border-gray-300'} cursor-pointer`}
-                                    >
-                                        <Card className='h-60 w-40 text-center'>
-                                            <CardContent className='flex h-40 items-center justify-center overflow-hidden'>
-                                                {!!article.imageUrls[0] && (
-                                                    <Image
-                                                        src={
-                                                            article.imageUrls[0]
-                                                        }
-                                                        alt='Image de l’article'
-                                                        className='h-full w-full object-cover'
-                                                        width={160}
-                                                        height={160}
-                                                        priority
-                                                    />
-                                                )}
-                                            </CardContent>
-                                            <CardFooter className='flex justify-center'>
-                                                <p className='text-sm font-medium'>
-                                                    {article.adTitle}
-                                                </p>
-                                            </CardFooter>
-                                        </Card>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>{'Vous n’avez pas d’articles'}</p>
-                            )}
+                    <ArticleList
+                        articles={myArticles ?? []}
+                        selectedArticleId={selectedMyArticles}
+                        onSelectArticle={handleSelectMyArticle}
+                    />
+
+                    {/* Exchange Recap */}
+                    {!!chosenArticle && !!givenArticle && (
+                        <div className='mx-auto mb-6 w-full max-w-3xl rounded-lg bg-gradient-to-r from-teal-50 to-teal-100 p-6 shadow-lg'>
+                            <p className='text-lg font-semibold text-gray-800'>
+                                <span className='text-xl font-bold text-teal-700'>
+                                    {'🎉 Vous souhaitez échanger votre produit'}{' '}
+                                    <strong>
+                                        {'"'}
+                                        {chosenArticle.adTitle}
+                                        {'"'}
+                                    </strong>{' '}
+                                    {'pour obtenir'}{' '}
+                                    <strong>
+                                        {'"'}
+                                        {givenArticle.adTitle}
+                                        {'"'}
+                                    </strong>
+                                    {'!'}
+                                </span>
+                                <br />
+                                <span className='flex justify-center text-sm text-gray-500'>
+                                    {'C’est un échange gagnant-gagnant ! 🤩'}
+                                </span>
+                            </p>
                         </div>
-                    </div>
+                    )}
+
                     {/* Confirmation Button */}
-                    <div className='mr-100 flex w-2 justify-end'>
-                        <button
-                            onClick={handleClick}
-                            className='justify-end rounded bg-teal-500 px-6 py-3 font-bold text-white'
+                    <div className='flex justify-center'>
+                        <Link
+                            href={{
+                                pathname: '/transaction/final',
+                                query: queryParams,
+                            }}
+                            className='transform justify-end rounded-xl bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-6 px-8 py-4 font-bold text-white shadow-lg shadow-xl transition-all hover:scale-105 hover:bg-yellow-600'
                         >
-                            Valider
-                        </button>
+                            {'Envoyer la proposition 🚀'}
+                        </Link>
                     </div>
                 </>
             )}
