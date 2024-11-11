@@ -18,24 +18,13 @@ export const POST = async (request: Request): Promise<NextResponse> => {
         await wait(1_000)
 
         // Return mock data
-        return NextResponse.json(
-            {
-                message: 'MOCK: Product data analyzed successfully.',
-                content: {
-                    productName: 'MOCK: Product name',
-                    estimatedValue: Math.floor(Math.random() * 100),
-                },
+        return NextResponse.json({
+            message: 'MOCK: Product data analyzed successfully.',
+            content: {
+                productName: 'MOCK: Product name',
+                estimatedValue: Math.floor(Math.random() * 100),
             },
-            {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods':
-                        'GET, POST, PUT, DELETE, OPTIONS',
-                    'Access-Control-Allow-Headers':
-                        'Content-Type, Authorization',
-                },
-            },
-        )
+        })
     }
 
     // Implement real Dataiku API call here
