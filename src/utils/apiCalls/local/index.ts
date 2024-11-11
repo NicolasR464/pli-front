@@ -99,7 +99,7 @@ export const sendEmail = async (
     params.append('article', JSON.stringify(formData.article))
 
     const response: AxiosResponse<EmailResponse> = await localInstance.post(
-        apiEndpoints.SEND_EMAIL,
+        apiEndpoints.local.SEND_EMAIL,
         params,
         {
             headers: {
@@ -109,7 +109,7 @@ export const sendEmail = async (
     )
 
     if (response.status !== 200)
-        throw new Error(`Failed to fetch ${apiEndpoints.SEND_EMAIL}`)
+        throw new Error(`Failed to fetch ${apiEndpoints.local.SEND_EMAIL}`)
 
     return response.data
 }
