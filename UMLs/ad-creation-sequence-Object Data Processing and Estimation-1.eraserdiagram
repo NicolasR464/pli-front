@@ -10,11 +10,13 @@ Cloudinary [icon: cloud, color: lightblue]
 Azure Cognitive Service [icon: azure-cognitive-services, color: lightblue]
 Dataiku Model [icon: tool, color: orange]
 Article MicroService [icon: server, color: purple]
-Database [icon: mongodb, color: red]
+User MicroService [icon: server, color: purple]
+Article Database [icon: mongodb, color: red]
+User Database [icon: mongodb, color: red]
 
 // Sequence of interactions
 User > Client: Upload image
-Client > Cloudinary: Send image
+Client > Cloudinary: Send buffer
 Cloudinary > Client: Return image URL
 Client > Azure Cognitive Service: Send image URL for analysis
 Azure Cognitive Service > Client: Return object type, brand, and model
@@ -36,6 +38,15 @@ User > Client: Accept User policy and estimated value
 
 Client > Article MicroService: Send data for validation
 
-Article MicroService > Article MicroService: JWT check (Clerk middleware) + Type validation 
-Article MicroService > Database: Store data in MongoDB
+Article MicroService > Article MicroService: JWT check (Clerk middleware) + Type validation
+
+Article MicroService > User MicroService: Send data to update user information
+
+User MicroService > User MicroService: JWT check (Clerk middleware)
+
+User MicroService > User Database: Store data in MongoDB
+
+User Database > Article MicroService: Returns a 201 code if CRUD successful
+
+Article MicroService > Article Database: Store data in MongoDB
 
