@@ -69,7 +69,14 @@ export const userMessages = {
     notLoggedIn: {
         label: 'not-logged-in',
         type: {
-            ERROR: 'Tu n’es pas connecté. Connecte-toi pour continuer.',
+            ERROR: 'Tu n’es pas connecté.e, connecte-toi pour continuer.',
+        },
+    },
+    requestSent: {
+        label: 'request-sent',
+        type: {
+            SUCCESS: 'Demande envoyée !',
+            ERROR: 'Une erreur est survenue lors de l’envoi de la demande.',
         },
     },
 }
