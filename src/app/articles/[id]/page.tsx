@@ -26,8 +26,6 @@ const ArticlePage = (): React.JSX.Element => {
 
     const { user: userSignedIn } = useUser()
 
-    console.log(userSignedIn)
-
     // React query to get article data
     const {
         data: article,

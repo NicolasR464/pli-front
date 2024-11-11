@@ -12,13 +12,17 @@ const EmailSender = ({
     receiverEmail,
     article,
 }: {
-    readonly senderEmail: string
-    readonly receiverEmail: string
+    readonly senderEmail: string | undefined
+    readonly receiverEmail: string | undefined
     readonly article: Partial<Article>
 }): React.JSX.Element => {
     const { mutateAsync: sendEmail } = useSendEmail()
 
     const handleSendEmail = async (): Promise<void> => {
+        if (!senderEmail || !receiverEmail) {
+            return
+        }
+
         await sendEmail(
             {
                 senderEmail,
