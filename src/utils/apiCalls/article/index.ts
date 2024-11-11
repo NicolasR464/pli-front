@@ -1,6 +1,7 @@
 import { articleInstance } from '@/utils/axiosInstances/article'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 import { addAuthHeader } from '@/utils/functions'
+import { addAuthHeader } from '@/utils/functions'
 
 import type { Article } from '@/types/article'
 
@@ -11,8 +12,13 @@ import type { AxiosResponse } from 'axios'
  * Fetch all articles from the API.
  * @returns {Promise<Article[]>} An array of articles.
  */
+/**
+ * Fetch all articles from the API.
+ * @returns {Promise<Article[]>} An array of articles.
+ */
 export const getArticles = async (): Promise<Article[]> => {
     const response: AxiosResponse<Article[]> = await articleInstance.get(
+        apiEndpoints.microServices.public.ARTICLES,
         apiEndpoints.microServices.public.ARTICLES,
     )
 
@@ -20,12 +26,16 @@ export const getArticles = async (): Promise<Article[]> => {
         throw new Error(
             `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
         )
+    throw new Error(
+        `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
+    )
 
     return response.data
 }
 
 export const getArticleById = async (id: string): Promise<Article> => {
     const response: AxiosResponse<Article> = await articleInstance.get(
+        `${apiEndpoints.microServices.public.ARTICLES}${id}`,
         `${apiEndpoints.microServices.public.ARTICLES}${id}`,
     )
     if (response.status !== 200)
