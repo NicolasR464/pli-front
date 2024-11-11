@@ -159,7 +159,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     if (!image || !(image instanceof File)) {
         return NextResponse.json(
             { error: 'Invalid file upload' },
-            { status: 400, headers: { 'Access-Control-Allow-Origin': '*' } },
+            {
+                status: 400,
+            },
         )
     }
     // STEP#1 : Upload the image to Cloudinary
@@ -187,7 +189,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
             {
                 message: 'Image could not be uploaded on Cloudinary',
             },
-            { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } },
+            {
+                status: 500,
+            },
         )
 
     const imageData = response.data as CloudinaryResponse
@@ -217,7 +221,5 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         azureFeatures,
     )
 
-    return NextResponse.json(azureAnalysis, {
-        headers: { 'Access-Control-Allow-Origin': '*' },
-    })
+    return NextResponse.json(azureAnalysis)
 }
