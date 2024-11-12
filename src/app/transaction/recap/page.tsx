@@ -1,116 +1,80 @@
+// TransactionPage.tsx
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-
+import React, { useState } from 'react'
+import { useTransactionStore } from '@/stores/transaction'
 import ArticleList from '@/components/transacArticles/articleList'
-
-import { useTransactionStore } from '@/stores/useTransaction'
-import { getArticlesByUser } from '@/utils/apiCalls/article'
-import { getUserById } from '@/utils/apiCalls/user'
-
-import type { Article } from '@/types/article'
-import type { User } from '@/types/user'
-
-import { useAuth, useUser } from '@clerk/nextjs'
-import { useQueries } from '@tanstack/react-query'
+import { useUser } from '@clerk/nextjs'
+import ExchangeRecap from '@/components/transacArticles/transacRecap'
+import ConfirmationButton from '@/components/transacArticles/confirmTransac'
+import useUserById from '@/hooks/useUserById'
+import useArticlesByUser from '@/hooks/useArticlesByUser'
 
 const TransactionPage = (): React.JSX.Element => {
-    const { getToken } = useAuth()
-    const [token, setToken] = useState<string>('')
+    // Transaction store :
 
-    // Get info from article/id page
-    const { owner, articlePageId } = useTransactionStore()
+    // Get info from article/id page and set variable with heir values
+    const { owner, articlePageId } = useTransactionStore((state) => ({
+        owner: state.owner,
+        articlePageId: state.articlePageId,
+    }))
     const ownerId = String(owner)
     const initalArticle = String(articlePageId)
+    // get params to send transaction request :
+    const { setQueryParams, queryParams } = useTransactionStore((state) => ({
+        setQueryParams: state.setQueryParams,
+        queryParams: state.queryParams,
+    }))
 
     // Get connected user info
     const { user } = useUser()
     const userConnectedId = user?.id
 
-    // useEffect to retreive connected user's token
-    useEffect(() => {
-        const fetchToken = async (): Promise<void> => {
-            const fetchedToken = (await getToken()) ?? ''
-            if (fetchedToken) {
-                setToken(String(fetchedToken))
-            } else {
-                throw new Error('Aucun token trouvé.')
-            }
-        }
-        fetchToken()
-    }, [getToken])
+    // Get info about the owner and their articles
+    const { data: ownerUser } = useUserById(ownerId)
+    const { data: ownerArticles } = useArticlesByUser(ownerId)
+    // Get info about the user and their articles
+    const { data: myUser } = useUserById(userConnectedId)
+    const { data: myArticles } = useArticlesByUser(userConnectedId)
 
-    // Get info about the owner + their articles and the connected user + their articles
-    const queries = useQueries({
-        queries: [
-            {
-                queryKey: ['ownerUser', ownerId, token],
-                queryFn: (): Promise<User | undefined> =>
-                    getUserById(ownerId, token),
-                enabled: !!ownerId && !!token,
-            },
-            {
-                queryKey: ['myUser', userConnectedId, token],
-                queryFn: (): Promise<User | undefined> =>
-                    getUserById(userConnectedId, token),
-                enabled: !!userConnectedId && !!token,
-            },
-            {
-                queryKey: ['ownerArticles', ownerId, token],
-                queryFn: (): Promise<Article[]> =>
-                    getArticlesByUser(ownerId, token),
-                enabled: !!ownerId,
-            },
-            {
-                queryKey: ['myArticles', userConnectedId, token],
-                queryFn: (): Promise<Article[]> => {
-                    if (userConnectedId) {
-                        return getArticlesByUser(userConnectedId, token)
-                    }
-                    return Promise.resolve([])
-                },
-                enabled: !!userConnectedId,
-            },
-        ],
-    })
-
-    const ownerUser = queries[0].data
-    const myUser = queries[1].data
-    const ownerArticles = queries[2].data
-    const myArticles = queries[3].data
-
-    //State for selected articles
+    // Article I want : selected state, select function and article recap
     const [selectedArticles, setSelectedArticles] = useState<
         string | undefined
     >(initalArticle)
+    const handleSelectArticle = (articleId: string): void => {
+        setSelectedArticles(articleId)
+        // Update queryParams when article is selected
+        setQueryParams({
+            sender: userConnectedId,
+            receiver: ownerId,
+            articleSender: selectedMyArticles,
+            articleReceiver: articleId,
+        })
+    }
+    const chosenArticle = ownerArticles?.find(
+        (article) => article.id === selectedArticles,
+    )
+
+    // Article I give in exchange : selected state, select function and article recap
     const [selectedMyArticles, setSelectedMyArticles] = useState<
         string | undefined
     >()
-
-    // Function to handle selection of chosen articles
-    const handleSelectArticle = (articleId: string): void => {
-        setSelectedArticles(articleId)
-    }
-    // Function to handle selection of articles to give
     const handleSelectMyArticle = (articleId: string): void => {
         setSelectedMyArticles(articleId)
-    }
-    // Function to redirect user to finalise transaction
-    const queryParams = {
-        sender: userConnectedId,
-        receiver: ownerId,
-        articleSender: selectedMyArticles,
-        articleReceiver: selectedArticles,
-    }
 
-    // Find the selected articles using their IDs
-    const chosenArticle = ownerArticles?.find(
-        (article) => article._id === selectedArticles,
-    )
+        // Update queryParams when article is selected
+        setQueryParams({
+            sender: userConnectedId,
+            receiver: ownerId,
+            articleSender: articleId,
+            articleReceiver: selectedArticles,
+        })
+    }
     const givenArticle = myArticles?.find(
-        (article) => article._id === selectedMyArticles,
+        (article) => article.id === selectedMyArticles,
     )
+    // Cannot send request if articles not selected
+    const isConfirmationDisabled = !(selectedArticles && selectedMyArticles)
 
     return (
         <div className='flex w-full flex-col items-center justify-center bg-gray-50 p-4'>
@@ -120,7 +84,7 @@ const TransactionPage = (): React.JSX.Element => {
                         {`Besace de ${ownerUser.pseudo}`}
                     </h1>
                     <p className='mb-8 text-lg text-gray-600'>
-                        {'Sélectionnez les produits qui vous intéressent !'}
+                        {"Sélectionnez l'article qui vous intéresse !"}
                     </p>
 
                     {/* Receiver User's Articles */}
@@ -135,7 +99,7 @@ const TransactionPage = (): React.JSX.Element => {
                     </h2>
                     <p className='mb-8 text-lg text-gray-600'>
                         {
-                            'Sélectionnez le produit que vous souhaitez donner en échange :'
+                            "Sélectionnez l'article que vous souhaitez donner en échange :"
                         }
                     </p>
 
@@ -147,44 +111,16 @@ const TransactionPage = (): React.JSX.Element => {
                     />
 
                     {/* Exchange Recap */}
-                    {!!chosenArticle && !!givenArticle && (
-                        <div className='mx-auto mb-6 w-full max-w-3xl rounded-lg bg-gradient-to-r from-teal-50 to-teal-100 p-6 shadow-lg'>
-                            <p className='text-lg font-semibold text-gray-800'>
-                                <span className='text-xl font-bold text-teal-700'>
-                                    {'🎉 Vous souhaitez échanger votre produit'}{' '}
-                                    <strong>
-                                        {'"'}
-                                        {chosenArticle.adTitle}
-                                        {'"'}
-                                    </strong>{' '}
-                                    {'pour obtenir'}{' '}
-                                    <strong>
-                                        {'"'}
-                                        {givenArticle.adTitle}
-                                        {'"'}
-                                    </strong>
-                                    {'!'}
-                                </span>
-                                <br />
-                                <span className='flex justify-center text-sm text-gray-500'>
-                                    {'C’est un échange gagnant-gagnant ! 🤩'}
-                                </span>
-                            </p>
-                        </div>
-                    )}
+                    <ExchangeRecap
+                        chosenArticle={chosenArticle}
+                        givenArticle={givenArticle}
+                    />
 
-                    {/* Confirmation Button */}
-                    <div className='flex justify-center'>
-                        <Link
-                            href={{
-                                pathname: '/transaction/final',
-                                query: queryParams,
-                            }}
-                            className='transform justify-end rounded-xl bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 p-6 px-8 py-4 font-bold text-white shadow-lg shadow-xl transition-all hover:scale-105 hover:bg-yellow-600'
-                        >
-                            {'Envoyer la proposition 🚀'}
-                        </Link>
-                    </div>
+                    {/* Pass queryParams to the ConfirmationButton */}
+                    <ConfirmationButton
+                        queryParams={queryParams}
+                        isDisabled={isConfirmationDisabled}
+                    />
                 </>
             )}
         </div>

@@ -22,11 +22,11 @@ const ArticleList = ({
                 {articles.length > 0 ? (
                     articles.map((article, index) => (
                         <ArticleCard
-                            key={article._id || `article-${index}`}
+                            key={article.id || `article-${index}`}
                             article={article}
                             isSelected={selectedArticleId === article.id}
                             onSelect={() => {
-                                onSelectArticle(article.id)
+                                if (article.id) onSelectArticle(article.id)
                             }}
                         />
                     ))

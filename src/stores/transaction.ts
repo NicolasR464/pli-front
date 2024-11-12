@@ -4,16 +4,26 @@ import { create } from 'zustand'
 type TransactionStore = {
     owner: string | undefined
     articlePageId: string | undefined
+    queryParams: { [key: string]: string | undefined }
     setTransactionInfo: (owner: string, articlePageId: string) => void
+    setQueryParams: (params: { [key: string]: string | undefined }) => void
 }
 
 // Créez un store pour gérer les informations de transaction
 export const useTransactionStore = create<TransactionStore>((set) => ({
     owner: undefined,
     articlePageId: undefined,
+    queryParams: {},
 
     // Fonction pour mettre à jour ces valeurs dans le store
     setTransactionInfo: (owner: string, articlePageId: string): void => {
         set({ owner, articlePageId })
+    },
+
+    // Fonction pour mettre à jour les query params dans le store
+    setQueryParams: (sendQueryParams: {
+        [key: string]: string | undefined
+    }): void => {
+        set({ queryParams: sendQueryParams })
     },
 }))
