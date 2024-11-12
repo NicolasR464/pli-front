@@ -32,20 +32,23 @@ const Navbar: React.FC = () => {
     const router = useRouter()
 
     // Utilisation de useQuery pour récupérer les articles
-    const { data: allArticlesResponse } = useQuery<{
-        articles: Article[]
-        hasNext: boolean
-        limit: number
-        skip: number
-    }>({
+    const { data: allArticlesResponse } = useQuery({
         queryKey: ['articles'],
-        queryFn: getArticles,
+        queryFn: async () => {
+            const articles = await getArticles()
+            return {
+                articles,
+                hasNext: false,
+                limit: 10,
+                skip: 0,
+            }
+        },
     })
 
     // Vérification que les données récupérées contiennent bien des articles
     const allArticles: Article[] =
         allArticlesResponse && Array.isArray(allArticlesResponse.articles)
-            ? (allArticlesResponse.articles as Article[])
+            ? allArticlesResponse.articles
             : []
 
     // Filtrer les articles
