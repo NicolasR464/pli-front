@@ -17,12 +17,15 @@ import axios from 'axios'
 export const getAddressSuggestions = async (
     input: string,
 ): Promise<AddressSuggestion[] | undefined> => {
-    const response = await axios.get<ApiGouvResponse>(apiEndpoints.API_GOUV, {
-        params: {
-            q: input,
-            limit: 15,
+    const response = await axios.get<ApiGouvResponse>(
+        apiEndpoints.thirdParty.API_GOUV,
+        {
+            params: {
+                q: input,
+                limit: 15,
+            },
         },
-    })
+    )
 
     const suggestions: AddressSuggestion[] = response.data.features.map(
         (feature: ApiGouvFeature) => ({
