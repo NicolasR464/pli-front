@@ -20,7 +20,7 @@ const ConfirmationButton: React.FC<ConfirmationButtonProps> = ({
         <div className='flex justify-center'>
             <Link
                 href={{
-                    pathname: '/transaction/final',
+                    pathname: '/',
                     query: queryParams,
                 }}
                 aria-label='Confirmer et envoyer la proposition de transaction'

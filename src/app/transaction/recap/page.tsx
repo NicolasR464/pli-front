@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 
+import AskLogin from '@/components/AskLogin'
 import ArticleList from '@/components/transacArticles/articleList'
 import ConfirmationButton from '@/components/transacArticles/confirmTransac'
 import ExchangeRecap from '@/components/transacArticles/transacRecap'
@@ -11,45 +12,18 @@ import { useTransactionStore } from '@/stores/transaction'
 import useArticlesByUser from '@/hooks/useArticlesByUser'
 import useUserById from '@/hooks/useUserById'
 import { useUser } from '@clerk/nextjs'
-import router from 'next/router'
 
 const TransactionPage = (): React.JSX.Element => {
     // Get connected user info
     const { user } = useUser()
     const userConnectedId = user?.id
 
-    // security check, only connected users can access this page
-    if (!user) {
-        return (
-            <div className='flex flex-col items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-teal-500 p-6 shadow-lg'>
-                <h1 className='mb-4 text-4xl font-bold text-white'>
-                    🔒 Oups, vous n'êtes pas connecté !
-                </h1>
-                <p className='mb-6 text-xl text-white'>
-                    Connectez-vous pour commencer un échange passionnant ! 🌟
-                </p>
-                <button
-                    onClick={() => router.push('/')}
-                    className='transform rounded-full bg-yellow-400 px-6 py-2 font-semibold text-black transition duration-300 hover:scale-105 hover:bg-yellow-500 hover:text-white'
-                >
-                    Se connecter
-                </button>
-                <div className='mt-6 animate-pulse'>
-                    <span className='text-xl text-white'>
-                        Prêt pour l'aventure ? 🚀
-                    </span>
-                </div>
-            </div>
-        )
-    }
-
     // Get info from article/id page and set variable with heir values
-    const { owner, articlePageId } = useTransactionStore((state) => ({
-        owner: state.owner,
-        articlePageId: state.articlePageId,
+    const { transacUser_b } = useTransactionStore((state) => ({
+        transacUser_b: state.transacUser_b,
     }))
-    const ownerId = String(owner)
-    const initalArticle = String(articlePageId)
+    const user_b_id = String(transacUser_b)
+
     // get params to send transaction request :
     const { setQueryParams, queryParams } = useTransactionStore((state) => ({
         setQueryParams: state.setQueryParams,
@@ -57,8 +31,8 @@ const TransactionPage = (): React.JSX.Element => {
     }))
 
     // Get info about the owner and their articles
-    const { data: ownerUser } = useUserById(ownerId)
-    const { data: ownerArticles } = useArticlesByUser(ownerId)
+    const { data: user_b_data } = useUserById(user_b_id)
+    const { data: user_b_articles } = useArticlesByUser(user_b_id)
     // Get info about the user and their articles
     const { data: myUser } = useUserById(userConnectedId)
     const { data: myArticles } = useArticlesByUser(userConnectedId)
@@ -66,36 +40,73 @@ const TransactionPage = (): React.JSX.Element => {
     //create selected state article I want and the one I exchange
     const [selectedArticles, setSelectedArticles] = useState<
         string | undefined
-    >(initalArticle)
+    >()
     const [selectedMyArticles, setSelectedMyArticles] = useState<
         string | undefined
     >()
 
-    // handle select function : article I want and article I give
-    const handleSelectArticle = (articleId: string): void => {
-        setSelectedArticles(articleId)
-        // Update queryParams when article is selected
-        setQueryParams({
-            sender: userConnectedId,
-            receiver: ownerId,
-            articleSender: selectedMyArticles,
-            articleReceiver: articleId,
-        })
-    }
-    const handleSelectMyArticle = (articleId: string): void => {
-        setSelectedMyArticles(articleId)
+    // handle select function : article I want
+    const handleSelectArticle = (article_b_id: string): void => {
+        setSelectedArticles(article_b_id)
 
-        // Update queryParams when article is selected
-        setQueryParams({
-            sender: userConnectedId,
-            receiver: ownerId,
-            articleSender: articleId,
-            articleReceiver: selectedArticles,
-        })
+        // Find the article requested (article I want)
+        const chosenArticle = user_b_articles?.find(
+            (article) => article.id === article_b_id,
+        )
+        const givenArticle = myArticles?.find(
+            (article) => article.id === selectedMyArticles,
+        )
+
+        if (chosenArticle && givenArticle) {
+            // Update queryParams when article is selected
+            setQueryParams({
+                user_a: userConnectedId,
+                user_b: user_b_id,
+                article_a: selectedMyArticles,
+                article_a_title: givenArticle.adTitle,
+                article_a_image: givenArticle.imageUrls[0],
+                article_a_delivery: givenArticle.deliveryType,
+
+                article_b: article_b_id,
+                article_b_title: chosenArticle.adTitle,
+                article_b_image: chosenArticle.imageUrls[0],
+                article_b_delivery: chosenArticle.deliveryType,
+            })
+        }
+    }
+
+    // handle select function : article I give
+    const handleSelectMyArticle = (article_a_id: string): void => {
+        setSelectedMyArticles(article_a_id)
+
+        // Find the article offered (article I give)
+        const givenArticle = myArticles?.find(
+            (article) => article.id === article_a_id,
+        )
+        const chosenArticle = user_b_articles?.find(
+            (article) => article.id === selectedArticles,
+        )
+
+        if (givenArticle && chosenArticle) {
+            // Update queryParams when article is selected
+            setQueryParams({
+                user_a: userConnectedId,
+                user_b: user_b_id,
+                article_a: article_a_id,
+                article_a_title: givenArticle.adTitle,
+                article_a_image: givenArticle.imageUrls[0],
+                article_a_delivery: givenArticle.deliveryType,
+
+                article_b: selectedArticles,
+                article_b_title: chosenArticle.adTitle,
+                article_b_image: chosenArticle.imageUrls[0],
+                article_b_delivery: chosenArticle.deliveryType,
+            })
+        }
     }
 
     // Get selected articles data for the recap
-    const chosenArticle = ownerArticles?.find(
+    const chosenArticle = user_b_articles?.find(
         (article) => article.id === selectedArticles,
     )
     const givenArticle = myArticles?.find(
@@ -107,18 +118,19 @@ const TransactionPage = (): React.JSX.Element => {
 
     return (
         <div className='flex w-full flex-col items-center justify-center bg-gray-50 p-4'>
-            {!!myUser && !!ownerUser && (
+            {/* Check if user and user_b_data are available */}
+            {user && myUser && user_b_data ? (
                 <>
                     <h1 className='mb-4 text-3xl font-extrabold text-teal-600'>
-                        {`Besace de ${ownerUser.pseudo}`}
+                        {`Besace de ${user_b_data.pseudo}`}
                     </h1>
                     <p className='mb-8 text-lg text-gray-600'>
                         {'Sélectionnez l’article qui vous intéresse !'}
                     </p>
 
-                    {/* Receiver User's Articles */}
+                    {/* Other User's Articles */}
                     <ArticleList
-                        articles={ownerArticles ?? []}
+                        articles={user_b_articles ?? []}
                         selectedArticleId={selectedArticles}
                         onSelectArticle={handleSelectArticle}
                     />
@@ -151,6 +163,8 @@ const TransactionPage = (): React.JSX.Element => {
                         isDisabled={isConfirmationDisabled}
                     />
                 </>
+            ) : (
+                <AskLogin />
             )}
         </div>
     )
