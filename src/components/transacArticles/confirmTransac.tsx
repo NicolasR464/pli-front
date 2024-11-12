@@ -3,19 +3,19 @@ import Link from 'next/link'
 
 // Request param needed for transaction with their types :
 type ConfirmationButtonProps = {
-    queryParams: { [key: string]: string | undefined }
+    queryParams: Record<string, string | undefined>
     isDisabled: boolean
 }
 
+const handleKeyUp = (event: React.KeyboardEvent): void => {
+    if (event.key === 'Enter' || event.key === ' ') {
+        ;(event.target as HTMLAnchorElement).click()
+    }
+}
 const ConfirmationButton: React.FC<ConfirmationButtonProps> = ({
     queryParams,
     isDisabled,
 }) => {
-    const handleKeyUp = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            ;(event.target as HTMLAnchorElement).click()
-        }
-    }
     return (
         <div className='flex justify-center'>
             <Link

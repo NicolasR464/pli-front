@@ -1,8 +1,18 @@
-import { useQuery } from '@tanstack/react-query'
 import { getUserById } from '@/utils/apiCalls/user'
 
-const useUserById = (userId: string | undefined) => {
-    const { data, isLoading, isError, error } = useQuery({
+import type { User } from '@/types/user'
+
+import { useQuery } from '@tanstack/react-query'
+
+type UseUserByIdResult = {
+    data: User | undefined
+    isLoading: boolean
+    isError: boolean
+    error: unknown
+}
+
+const useUserById = (userId: string | undefined): UseUserByIdResult => {
+    const { data, isLoading, isError, error } = useQuery<User | undefined>({
         queryKey: ['user', userId],
         queryFn: () => {
             if (!userId) {

@@ -1,8 +1,9 @@
 'use client'
 import React from 'react'
-import { Article } from '@/types/article'
 
-interface ExchangeRecapProps {
+import type { Article } from '@/types/article'
+
+type ExchangeRecapProps = {
     chosenArticle: Article | undefined
     givenArticle: Article | undefined
 }
@@ -11,7 +12,8 @@ const ExchangeRecap: React.FC<ExchangeRecapProps> = ({
     chosenArticle,
     givenArticle,
 }) => {
-    if (!chosenArticle || !givenArticle) return undefined
+    if (!chosenArticle || !givenArticle)
+        return <p style={{ display: 'none' }}>{'Aucun échange sélectionné'}</p>
 
     return (
         <div className='mx-auto mb-6 w-full max-w-3xl rounded-lg bg-gradient-to-r from-teal-50 to-teal-100 p-6 shadow-lg'>
@@ -20,7 +22,8 @@ const ExchangeRecap: React.FC<ExchangeRecapProps> = ({
                     {'🎉 Vous souhaitez échanger votre article'}{' '}
                     <strong>{`"${chosenArticle.adTitle}"`}</strong>{' '}
                     {'pour obtenir'}{' '}
-                    <strong>{`"${givenArticle.adTitle}"`}</strong>!
+                    <strong>{`"${givenArticle.adTitle}"`}</strong>
+                    {'!'}
                 </span>
                 <br />
                 <span className='flex justify-center text-sm text-gray-500'>

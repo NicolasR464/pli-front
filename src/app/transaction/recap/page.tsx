@@ -1,14 +1,16 @@
-// TransactionPage.tsx
 'use client'
 
 import React, { useState } from 'react'
-import { useTransactionStore } from '@/stores/transaction'
+
 import ArticleList from '@/components/transacArticles/articleList'
-import { useUser } from '@clerk/nextjs'
-import ExchangeRecap from '@/components/transacArticles/transacRecap'
 import ConfirmationButton from '@/components/transacArticles/confirmTransac'
-import useUserById from '@/hooks/useUserById'
+import ExchangeRecap from '@/components/transacArticles/transacRecap'
+
+import { useTransactionStore } from '@/stores/transaction'
+
 import useArticlesByUser from '@/hooks/useArticlesByUser'
+import useUserById from '@/hooks/useUserById'
+import { useUser } from '@clerk/nextjs'
 
 const TransactionPage = (): React.JSX.Element => {
     // Transaction store :
@@ -37,10 +39,15 @@ const TransactionPage = (): React.JSX.Element => {
     const { data: myUser } = useUserById(userConnectedId)
     const { data: myArticles } = useArticlesByUser(userConnectedId)
 
-    // Article I want : selected state, select function and article recap
+    //create selected state article I want and the one I exchange
     const [selectedArticles, setSelectedArticles] = useState<
         string | undefined
     >(initalArticle)
+    const [selectedMyArticles, setSelectedMyArticles] = useState<
+        string | undefined
+    >()
+
+    // handle select function : article I want and article I give
     const handleSelectArticle = (articleId: string): void => {
         setSelectedArticles(articleId)
         // Update queryParams when article is selected
@@ -51,14 +58,6 @@ const TransactionPage = (): React.JSX.Element => {
             articleReceiver: articleId,
         })
     }
-    const chosenArticle = ownerArticles?.find(
-        (article) => article.id === selectedArticles,
-    )
-
-    // Article I give in exchange : selected state, select function and article recap
-    const [selectedMyArticles, setSelectedMyArticles] = useState<
-        string | undefined
-    >()
     const handleSelectMyArticle = (articleId: string): void => {
         setSelectedMyArticles(articleId)
 
@@ -70,9 +69,15 @@ const TransactionPage = (): React.JSX.Element => {
             articleReceiver: selectedArticles,
         })
     }
+
+    // Get selected articles data for the recap
+    const chosenArticle = ownerArticles?.find(
+        (article) => article.id === selectedArticles,
+    )
     const givenArticle = myArticles?.find(
         (article) => article.id === selectedMyArticles,
     )
+
     // Cannot send request if articles not selected
     const isConfirmationDisabled = !(selectedArticles && selectedMyArticles)
 
@@ -84,12 +89,12 @@ const TransactionPage = (): React.JSX.Element => {
                         {`Besace de ${ownerUser.pseudo}`}
                     </h1>
                     <p className='mb-8 text-lg text-gray-600'>
-                        {"Sélectionnez l'article qui vous intéresse !"}
+                        {'Sélectionnez l’article qui vous intéresse !'}
                     </p>
 
                     {/* Receiver User's Articles */}
                     <ArticleList
-                        articles={ownerArticles || []}
+                        articles={ownerArticles ?? []}
                         selectedArticleId={selectedArticles}
                         onSelectArticle={handleSelectArticle}
                     />
@@ -99,7 +104,7 @@ const TransactionPage = (): React.JSX.Element => {
                     </h2>
                     <p className='mb-8 text-lg text-gray-600'>
                         {
-                            "Sélectionnez l'article que vous souhaitez donner en échange :"
+                            'Sélectionnez l’article que vous souhaitez donner en échange :'
                         }
                     </p>
 
