@@ -1,11 +1,11 @@
 import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
 
-interface Product {
+type Product = {
     id: number
     title: string
 }
 
-interface ProductCardProps {
+type ProductCardProps = {
     product: Product
 }
 

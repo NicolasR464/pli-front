@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface ArticleDetailsProps {
+type ArticleDetailsProps = {
     dimensions: {
         length?: number
         width?: number

@@ -1,15 +1,17 @@
 import React from 'react'
+import Image from 'next/image'
+
 import {
     Avatar,
-    AvatarImage,
     AvatarFallback,
+    AvatarImage,
 } from '@/components/shadcn/ui/avatar'
-import Image from 'next/image'
+
 import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
 import { formatDate } from '@/utils/functions/dates'
 
-interface SellerInfoProps {
-    avatarUrl: string | null | undefined // avatarUrl peut être string, null ou undefined
+type SellerInfoProps = {
+    avatarUrl: string | null | undefined
     name: string
     pseudo: string
     address:
@@ -24,8 +26,8 @@ interface SellerInfoProps {
               extra?: string
               geopoints?: { type: string; coordinates: number[] }
           }[]
-        | undefined // address sous forme de tableau d'objets
-    lastConnected: Date // La dernière connexion sous forme de Date
+        | undefined
+    lastConnected: Date
 }
 
 const SellerInfo: React.FC<SellerInfoProps> = ({
@@ -59,12 +61,12 @@ const SellerInfo: React.FC<SellerInfoProps> = ({
                 <strong>{'Pseudo : '}</strong>
                 {pseudo}
             </p>
-            {address && address.length > 0 && (
+            {!!address && address.length > 0 && (
                 <p>
                     <strong>{'Adresse : '}</strong>
                     {address[0].street ? `${address[0].street}, ` : ''}
                     {address[0].city ? `${address[0].city}, ` : ''}
-                    {address[0].postcode ? `${address[0].postcode}` : ''}
+                    {address[0].postcode ? String(address[0].postcode) : ''}
                 </p>
             )}
             <p>

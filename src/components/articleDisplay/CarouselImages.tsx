@@ -1,4 +1,7 @@
 import React from 'react'
+import Image from 'next/image'
+
+import { Card, CardContent } from '@/components/shadcn/ui/card'
 import {
     Carousel,
     CarouselContent,
@@ -6,10 +9,8 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/shadcn/ui/carousel'
-import { Card, CardContent } from '@/components/shadcn/ui/card'
-import Image from 'next/image'
 
-interface CarouselImagesProps {
+type CarouselImagesProps = {
     imageUrls: string[]
 }
 

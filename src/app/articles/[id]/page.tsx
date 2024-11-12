@@ -4,19 +4,18 @@ import { useParams } from 'next/navigation'
 
 import { Button } from '@/components/shadcn/ui/button'
 import { Separator } from '@/components/shadcn/ui/separator'
+import ArticleDetails from '@/components/articleDisplay/ArticleDetails'
+import CarouselImages from '@/components/articleDisplay/CarouselImages'
+import ProductActions from '@/components/articleDisplay/ProductAction'
+import ProductCard from '@/components/articleDisplay/ProductCard'
+import ProductDetails from '@/components/articleDisplay/ProductDetails'
+import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 
 import { useQuery } from '@tanstack/react-query'
-
-import CarouselImages from '@/components/articleDisplay/CarouselImages'
-import ArticleDetails from '@/components/articleDisplay/ArticleDetails'
-import SellerInfo from '@/components/articleDisplay/SellerInfo'
-import ProductActions from '@/components/articleDisplay/ProductAction'
-import ProductDetails from '@/components/articleDisplay/ProductDetails'
-import ProductCard from '@/components/articleDisplay/ProductCard'
 
 const ArticlePage = (): React.JSX.Element => {
     // Get id from URL in string to avoid type errors :
@@ -79,7 +78,7 @@ const ArticlePage = (): React.JSX.Element => {
                         <h2 className='text-2xl font-bold'>{'Description'}</h2>
                         <p className='mb-4 mt-2'>{article.description}</p>
 
-                        {article.dimensions && (
+                        {!!article.dimensions && (
                             <ArticleDetails dimensions={article.dimensions} />
                         )}
 
@@ -88,13 +87,6 @@ const ArticlePage = (): React.JSX.Element => {
                             <h2 className='text-2xl font-bold'>
                                 {'Conditions de ventes'}{' '}
                             </h2>
-                            <p className='mt-2'>
-                                {'Livraison en '}
-                                {article.deliveryType} {': Lorem'}
-                                {
-                                    'ipsum dolor sit amet consectetur. Lorem ipsum'
-                                }
-                            </p>
                         </div>
                     </div>
                     {/* Product details and seller info */}
@@ -102,9 +94,9 @@ const ArticlePage = (): React.JSX.Element => {
                         <h1 className='mb-4 text-4xl font-bold'>
                             {article.adTitle}{' '}
                         </h1>
-                        {user && (
+                        {!!user && (
                             <SellerInfo
-                                avatarUrl={user.avatarUrl ?? null}
+                                avatarUrl={user.avatarUrl ?? undefined}
                                 lastConnected={
                                     user.activityStatus.lastConnected
                                 }
@@ -116,6 +108,21 @@ const ArticlePage = (): React.JSX.Element => {
 
                         {/* Product details */}
                         <ProductDetails article={article} />
+                        {/* Section de la carte */}
+                        <div>
+                            <div className='flex pb-4 pl-8'>
+                                <h2 className='text-2xl font-bold'>
+                                    {article.address?.city}{' '}
+                                    {`(${article.address?.postcode})`}
+                                </h2>
+                            </div>
+                            {!!lat && !!long && (
+                                <Map
+                                    latitude={lat}
+                                    longitude={long}
+                                />
+                            )}
+                        </div>
 
                         {/* Action buttons */}
                         <ProductActions />
@@ -125,21 +132,6 @@ const ArticlePage = (): React.JSX.Element => {
                 <p>{'Nous n’avons pas trouvé l’article !'}</p>
             )}
             <div>
-                {/* Section de la carte */}
-                <div>
-                    <div className='flex pb-4 pl-8'>
-                        <h2 className='text-2xl font-bold'>
-                            {article?.address?.city}{' '}
-                            {`(${article?.address?.postcode})`}
-                        </h2>
-                    </div>
-                    {!!lat && !!long && (
-                        <Map
-                            latitude={lat}
-                            longitude={long}
-                        />
-                    )}
-                </div>
                 {/* Action buttons */}
                 <ProductActions />
 
