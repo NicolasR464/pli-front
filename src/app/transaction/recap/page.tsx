@@ -11,9 +11,37 @@ import { useTransactionStore } from '@/stores/transaction'
 import useArticlesByUser from '@/hooks/useArticlesByUser'
 import useUserById from '@/hooks/useUserById'
 import { useUser } from '@clerk/nextjs'
+import router from 'next/router'
 
 const TransactionPage = (): React.JSX.Element => {
-    // Transaction store :
+    // Get connected user info
+    const { user } = useUser()
+    const userConnectedId = user?.id
+
+    // security check, only connected users can access this page
+    if (!user) {
+        return (
+            <div className='flex flex-col items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-teal-500 p-6 shadow-lg'>
+                <h1 className='mb-4 text-4xl font-bold text-white'>
+                    🔒 Oups, vous n'êtes pas connecté !
+                </h1>
+                <p className='mb-6 text-xl text-white'>
+                    Connectez-vous pour commencer un échange passionnant ! 🌟
+                </p>
+                <button
+                    onClick={() => router.push('/')}
+                    className='transform rounded-full bg-yellow-400 px-6 py-2 font-semibold text-black transition duration-300 hover:scale-105 hover:bg-yellow-500 hover:text-white'
+                >
+                    Se connecter
+                </button>
+                <div className='mt-6 animate-pulse'>
+                    <span className='text-xl text-white'>
+                        Prêt pour l'aventure ? 🚀
+                    </span>
+                </div>
+            </div>
+        )
+    }
 
     // Get info from article/id page and set variable with heir values
     const { owner, articlePageId } = useTransactionStore((state) => ({
@@ -27,10 +55,6 @@ const TransactionPage = (): React.JSX.Element => {
         setQueryParams: state.setQueryParams,
         queryParams: state.queryParams,
     }))
-
-    // Get connected user info
-    const { user } = useUser()
-    const userConnectedId = user?.id
 
     // Get info about the owner and their articles
     const { data: ownerUser } = useUserById(ownerId)

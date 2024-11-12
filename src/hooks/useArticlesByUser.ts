@@ -14,7 +14,7 @@ type UseArticlesByUserResult = {
 const useArticlesByUser = (
     userId: string | undefined,
 ): UseArticlesByUserResult => {
-    // Appel de useQuery pour récupérer les articles d'un utilisateur
+    // useQuery to get article info by user
     const { data, isLoading, isError, error } = useQuery<Article[]>({
         queryKey: ['articles', userId],
         queryFn: () => {

@@ -10,7 +10,7 @@ type UseUserByIdResult = {
     isError: boolean
     error: unknown
 }
-
+// Get info from the user
 const useUserById = (userId: string | undefined): UseUserByIdResult => {
     const { data, isLoading, isError, error } = useQuery<User | undefined>({
         queryKey: ['user', userId],
