@@ -91,7 +91,7 @@ export const getUserInfo = async (
     token: string,
 ): Promise<User> => {
     const headers = { Authorization: `Bearer ${token}` }
-    const url = `${apiEndpoints.USERS}${userId}`
+    const url = `${apiEndpoints.microServices.public.USERS}${userId}`
     const response: AxiosResponse<User> = await userInstance.get(url, {
         headers,
     })

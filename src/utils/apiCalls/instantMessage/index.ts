@@ -18,17 +18,21 @@ type RoomData = {
 }
 
 // 1. Fonction pour récupérer tous les messages
-export const getInstantMsgs = async (): Promise<InstantMessage[]> => {
+export const getInstantMsgs = async (
+    token: string,
+): Promise<InstantMessage[]> => {
+    const headers = getHeaders(token)
     const response: AxiosResponse<InstantMessage[]> =
         await instantMsgInstance.get(
             apiEndpoints.microServices.private.INSTANT_MESSAGES,
+            { headers },
         )
 
     if (response.status !== 200)
         throw new Error(
             `Failed to fetch ${apiEndpoints.microServices.private.INSTANT_MESSAGES}`,
         )
-      return response.data
+    return response.data
 }
 
 // 2. Fonction pour créer un message
@@ -44,7 +48,7 @@ export const sendMessage = async (
     const messageData = { roomID, sender, receiver, message, sentAt }
     const response: AxiosResponse<InstantMessage> =
         await instantMsgInstance.post(
-            apiEndpoints.INSTANT_MESSAGES,
+            apiEndpoints.microServices.private.INSTANT_MESSAGES,
             messageData,
             { headers },
         )
@@ -61,7 +65,7 @@ export const getInstantMsgById = async (
     const headers = getHeaders(token)
     const response: AxiosResponse<InstantMessage> =
         await instantMsgInstance.get(
-            `${apiEndpoints.INSTANT_MESSAGES}${msgId}`,
+            `${apiEndpoints.microServices.private.INSTANT_MESSAGES}${msgId}`,
             { headers },
         )
     if (response.status !== 200) {
@@ -78,7 +82,7 @@ export const getMessagesByRoomID = async (
     const headers = getHeaders(token)
     const response: AxiosResponse<InstantMessage[]> =
         await instantMsgInstance.get(
-            `${apiEndpoints.INSTANT_MESSAGES}rooms/${roomID}`,
+            `${apiEndpoints.microServices.private.INSTANT_MESSAGES}rooms/${roomID}`,
             { headers },
         )
     if (response.status !== 200) {
@@ -94,7 +98,7 @@ export const deleteMessageById = async (
 ): Promise<void> => {
     const headers = getHeaders(token)
     const response = await instantMsgInstance.delete(
-        `${apiEndpoints.INSTANT_MESSAGES}${msgId}`,
+        `${apiEndpoints.microServices.private.INSTANT_MESSAGES}${msgId}`,
         { headers },
     )
     if (response.status !== 200) {
