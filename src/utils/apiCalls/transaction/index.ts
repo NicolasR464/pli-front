@@ -7,10 +7,14 @@ import type { AxiosResponse } from 'axios'
 
 export const getTransactions = async (): Promise<Transaction[]> => {
     const response: AxiosResponse<Transaction[]> =
-        await transactionInstance.get(apiEndpoints.TRANSACTIONS)
+        await transactionInstance.get(
+            apiEndpoints.microServices.private.TRANSACTIONS,
+        )
 
     if (response.status !== 200)
-        throw new Error(`Failed to fetch ${apiEndpoints.TRANSACTIONS}`)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.private.TRANSACTIONS}`,
+        )
 
     return response.data
 }

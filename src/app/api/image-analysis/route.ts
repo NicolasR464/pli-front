@@ -159,7 +159,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     if (!image || !(image instanceof File)) {
         return NextResponse.json(
             { error: 'Invalid file upload' },
-            { status: 400 },
+            {
+                status: 400,
+            },
         )
     }
     // STEP#1 : Upload the image to Cloudinary
@@ -177,14 +179,19 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     cloudinaryForm.append('upload_preset', 'unsigned')
 
     //// Make the request to Cloudinary
-    const response = await axios.post(apiEndpoints.CLOUDINARY, cloudinaryForm)
+    const response = await axios.post(
+        apiEndpoints.thirdParty.CLOUDINARY,
+        cloudinaryForm,
+    )
 
     if (response.status !== 200)
         return NextResponse.json(
             {
                 message: 'Image could not be uploaded on Cloudinary',
             },
-            { status: 500 },
+            {
+                status: 500,
+            },
         )
 
     const imageData = response.data as CloudinaryResponse

@@ -18,16 +18,17 @@ type RoomData = {
 }
 
 // 1. Fonction pour récupérer tous les messages
-export const getInstantMsgs = async (
-    token: string,
-): Promise<InstantMessage[]> => {
-    const headers = getHeaders(token)
+export const getInstantMsgs = async (): Promise<InstantMessage[]> => {
     const response: AxiosResponse<InstantMessage[]> =
-        await instantMsgInstance.get(apiEndpoints.INSTANT_MESSAGES, { headers })
-    if (response.status !== 200) {
-        throw new Error(`Failed to fetch ${apiEndpoints.INSTANT_MESSAGES}`)
-    }
-    return response.data
+        await instantMsgInstance.get(
+            apiEndpoints.microServices.private.INSTANT_MESSAGES,
+        )
+
+    if (response.status !== 200)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.private.INSTANT_MESSAGES}`,
+        )
+      return response.data
 }
 
 // 2. Fonction pour créer un message
