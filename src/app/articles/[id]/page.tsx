@@ -1,29 +1,22 @@
 'use client'
 import { useState } from 'react'
-import Image from 'next/image'
 import { useParams } from 'next/navigation'
 
-import { Avatar, AvatarImage } from '@/components/shadcn/ui/avatar'
 import { Button } from '@/components/shadcn/ui/button'
-import { Card, CardContent, CardFooter } from '@/components/shadcn/ui/card'
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from '@/components/shadcn/ui/carousel'
 import { Separator } from '@/components/shadcn/ui/separator'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
-import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
-import { formatDate } from '@/utils/functions/dates'
 
-// Ajustez le chemin d'importation
-import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useQuery } from '@tanstack/react-query'
+
+import CarouselImages from '@/components/articleDisplay/CarouselImages'
+import ArticleDetails from '@/components/articleDisplay/ArticleDetails'
+import SellerInfo from '@/components/articleDisplay/SellerInfo'
+import ProductActions from '@/components/articleDisplay/ProductAction'
+import ProductDetails from '@/components/articleDisplay/ProductDetails'
+import ProductCard from '@/components/articleDisplay/ProductCard'
 
 const ArticlePage = (): React.JSX.Element => {
     // Get id from URL in string to avoid type errors :
@@ -80,83 +73,15 @@ const ArticlePage = (): React.JSX.Element => {
                     {' '}
                     {/* Carousel section */}
                     <div className='flex w-full flex-col md:w-1/2 md:pr-4'>
-                        <Carousel
-                            className='mx-auto w-full max-w-md'
-                            aria-label='Carousel des images des articles'
-                        >
-                            <CarouselContent>
-                                {article.imageUrls.map(
-                                    (imageUrl) =>
-                                        // Vérifier que l'image n'est pas vide
-                                        imageUrl && (
-                                            <CarouselItem
-                                                key={String(imageUrl)}
-                                            >
-                                                <div className='p-1'>
-                                                    <Card>
-                                                        <CardContent className='flex aspect-square items-center justify-center p-6'>
-                                                            <Image
-                                                                src={imageUrl}
-                                                                alt='Image de l’article'
-                                                                className='h-full w-full object-cover'
-                                                                width={250}
-                                                                height={250}
-                                                            />
-                                                        </CardContent>
-                                                    </Card>
-                                                </div>
-                                            </CarouselItem>
-                                        ),
-                                )}
-                            </CarouselContent>
-                            <CarouselPrevious
-                                className='ml-4'
-                                aria-label='Image précédente'
-                            />
-                            <CarouselNext
-                                className='mr-4'
-                                aria-label='Image suivante'
-                            />
-                        </Carousel>
+                        <CarouselImages imageUrls={article.imageUrls} />
 
                         {/* Description section */}
-                        <div className='mt-4'>
-                            {!!article.dimensions && (
-                                <>
-                                    <h2 className='text-2xl font-bold'>
-                                        {'Description'}
-                                    </h2>
-                                    <p className='mb-4 mt-2'>
-                                        {article.description}
-                                    </p>
-                                    <p>
-                                        <strong>{'Dimensions :'}</strong>
-                                    </p>
-                                    <ul className='mt-2 list-inside list-disc'>
-                                        <li>
-                                            {' '}
-                                            {'Longueur :'}{' '}
-                                            {article.dimensions.length} {'cm'}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            {'Largeur : '}
-                                            {article.dimensions.width} {'cm'}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            {'Hauteur :'}{' '}
-                                            {article.dimensions.height} {'cm'}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            {'Poids : '}
-                                            {article.dimensions.weight} {'kg'}
-                                        </li>
-                                    </ul>
-                                </>
-                            )}
-                        </div>
+                        <h2 className='text-2xl font-bold'>{'Description'}</h2>
+                        <p className='mb-4 mt-2'>{article.description}</p>
+
+                        {article.dimensions && (
+                            <ArticleDetails dimensions={article.dimensions} />
+                        )}
 
                         {/* Sales condition section */}
                         <div className='mt-4'>
@@ -169,15 +94,6 @@ const ArticlePage = (): React.JSX.Element => {
                                 {
                                     'ipsum dolor sit amet consectetur. Lorem ipsum'
                                 }
-                                {
-                                    'dolor sit amet consectetur. Lorem ipsum dolor'
-                                }
-                                {
-                                    'sit amet consectetur. Lorem ipsum dolor sit amet'
-                                }
-                                {'consectetur. Lorem ipsum dolor sit amet'}
-                                {'consectetur. Lorem ipsum dolor sit amet'}
-                                {'consectetur.'}
                             </p>
                         </div>
                     </div>
@@ -186,115 +102,23 @@ const ArticlePage = (): React.JSX.Element => {
                         <h1 className='mb-4 text-4xl font-bold'>
                             {article.adTitle}{' '}
                         </h1>
-
-                        {/* Seller information */}
-                        <div className='mb-4 flex items-center'>
-                            {!!user && (
-                                <>
-                                    <Avatar>
-                                        {!!user.avatarUrl && (
-                                            <AvatarImage
-                                                src={user.avatarUrl}
-                                                alt='Avatar du user'
-                                                className='h-15 w-15 rounded-full'
-                                            />
-                                        )}
-                                        <AvatarFallback>
-                                            {user.name}
-                                        </AvatarFallback>
-                                        {!user.avatarUrl && (
-                                            <Image
-                                                src={avatarPlaceholder}
-                                                alt='Avatar'
-                                                width={100}
-                                                height={100}
-                                                priority
-                                            />
-                                        )}
-                                    </Avatar>
-
-                                    <div className='ml-4'>
-                                        <p>
-                                            <strong>{'Pseudo : '}</strong>{' '}
-                                            {user.pseudo}
-                                        </p>
-                                        <p>
-                                            {!!user.address &&
-                                                user.address.length > 0 && (
-                                                    <>
-                                                        <strong>
-                                                            {' Ville'}
-                                                        </strong>{' '}
-                                                        {user.address[0].city}
-                                                        {','}{' '}
-                                                        <strong>
-                                                            {' '}
-                                                            {'Code Postal :'}
-                                                        </strong>{' '}
-                                                        {
-                                                            user.address[0]
-                                                                .postcode
-                                                        }{' '}
-                                                    </>
-                                                )}
-                                        </p>
-                                        <p>
-                                            <strong>
-                                                {'Dernière connexion le :'}{' '}
-                                            </strong>{' '}
-                                            {formatDate(
-                                                user.activityStatus
-                                                    .lastConnected,
-                                            )}
-                                        </p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
+                        {user && (
+                            <SellerInfo
+                                avatarUrl={user.avatarUrl ?? null}
+                                lastConnected={
+                                    user.activityStatus.lastConnected
+                                }
+                                pseudo={user.pseudo}
+                                name={user.name}
+                                address={user.address}
+                            />
+                        )}
 
                         {/* Product details */}
-                        <div className='text-gray-700'>
-                            <p>
-                                {' '}
-                                {!!article.manufactureDate && (
-                                    <>
-                                        <strong>{'Année: '}</strong>
-                                        {formatDate(article.manufactureDate)}
-                                    </>
-                                )}
-                            </p>
-                            <p>
-                                {/*TO DO à traduire */}
-                                <strong>{'État : '}</strong> {article.state}
-                            </p>
-                            <p>
-                                {article.brand ? (
-                                    <>
-                                        <strong>{'Marque : '}</strong>
-                                        {article.brand}
-                                    </>
-                                ) : (
-                                    <p>{' Pas de marque précisée'}</p>
-                                )}
-                            </p>
-                            {/* Action buttons */}
-                            <div className='mt-6 flex justify-center space-x-4'>
-                                {/* add conditionnal rendering of this according to balance:
-                                 */}
-                                <Button
-                                    className='bg-teal-500 text-white'
-                                    aria-label='Je veux acheter cet article'
-                                >
-                                    {'Je le veux !'}
-                                </Button>
-                                <Button
-                                    className='bg-teal-200 text-teal-700'
-                                    aria-label='Envoyer un message au vendeur'
-                                >
-                                    {'Envoyer un message'}
-                                </Button>
-                            </div>{' '}
-                        </div>
+                        <ProductDetails article={article} />
+
+                        {/* Action buttons */}
+                        <ProductActions />
                     </div>
                 </div>
             ) : (
@@ -317,26 +141,11 @@ const ArticlePage = (): React.JSX.Element => {
                     )}
                 </div>
                 {/* Action buttons */}
-                <div className='mb-6 mt-6 flex justify-center space-x-4'>
-                    {/* add conditionnal rendering of this according to balance:
-                     */}
-                    <Button
-                        className='bg-teal-500 text-white'
-                        aria-label='Je veux acheter cet article'
-                    >
-                        {'Je le veux !'}
-                    </Button>
-                    <Button
-                        className='bg-teal-200 text-teal-700'
-                        aria-label='Envoyer un message au vendeur'
-                    >
-                        {'Envoyer un message'}
-                    </Button>
-                </div>{' '}
+                <ProductActions />
+
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}
                 <div className='mt-8 w-full'>
-                    {/* Tabs (Besace user / Similaire) */}
                     <div className='mb-6 flex justify-center'>
                         <Button
                             className={`${
@@ -367,34 +176,10 @@ const ArticlePage = (): React.JSX.Element => {
                     {/* Product cards */}
                     <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
                         {articles.map((art, index) => (
-                            <Card
+                            <ProductCard
                                 key={art.id || index}
-                                className='text-center'
-                            >
-                                <CardContent>
-                                    <p className='text-sm font-medium'>
-                                        {art.title}
-                                    </p>
-                                </CardContent>
-                                <CardFooter className='flex justify-center'>
-                                    <button className='text-gray-500'>
-                                        <svg
-                                            // xmlns='^http:\/\/www.w3.org/2000/svg'
-                                            fill='none'
-                                            viewBox='0 0 24 24'
-                                            strokeWidth={1.5}
-                                            stroke='currentColor'
-                                            className='h-6 w-6'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
-                                            />
-                                        </svg>
-                                    </button>
-                                </CardFooter>
-                            </Card>
+                                product={art}
+                            />
                         ))}
                     </div>
                 </div>
