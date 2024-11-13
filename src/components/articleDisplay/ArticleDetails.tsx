@@ -12,7 +12,7 @@ type ArticleDetailsProps = {
 const ArticleDetails: React.FC<ArticleDetailsProps> = ({ dimensions }) => (
     <div className='mt-4'>
         <p>
-            <strong>{'Dimensions :'}</strong>
+            <h2 className='text-2xl font-bold'>{'Dimensions :'}</h2>
         </p>
         <ul className='mt-2 list-inside list-disc'>
             <li>{`Longueur : ${dimensions.length} cm`}</li>

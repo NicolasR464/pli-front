@@ -10,6 +10,7 @@ import ProductActions from '@/components/articleDisplay/ProductAction'
 import ProductCard from '@/components/articleDisplay/ProductCard'
 import ProductDetails from '@/components/articleDisplay/ProductDetails'
 import SellerInfo from '@/components/articleDisplay/SellerInfo'
+import { ConditionsTroc } from '@/components/ConditionsTroc'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
@@ -84,9 +85,12 @@ const ArticlePage = (): React.JSX.Element => {
 
                         {/* Sales condition section */}
                         <div className='mt-4'>
-                            <h2 className='text-2xl font-bold'>
-                                {'Conditions de ventes'}{' '}
-                            </h2>
+                            <div className='App'>
+                                <h2 className='text-2xl font-bold'>
+                                    {'Les règles du jeu :'}
+                                </h2>
+                                <ConditionsTroc />
+                            </div>
                         </div>
                     </div>
                     {/* Product details and seller info */}
@@ -110,11 +114,12 @@ const ArticlePage = (): React.JSX.Element => {
                         <ProductDetails article={article} />
                         {/* Section de la carte */}
                         <div>
-                            <div className='flex pb-4 pl-8'>
-                                <h2 className='text-2xl font-bold'>
+                            <div className='mt-8 flex pb-4 pl-8'>
+                                <strong className='text-2xl font-bold'>
+                                    {'📍 L’article se situe à …'}{' '}
                                     {article.address?.city}{' '}
                                     {`(${article.address?.postcode})`}
-                                </h2>
+                                </strong>
                             </div>
                             {!!lat && !!long && (
                                 <Map
