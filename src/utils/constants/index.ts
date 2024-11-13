@@ -17,6 +17,14 @@ export const pagePaths = {
     HOME: '/',
     /** Path to the onboarding page */
     ONBOARDING: '/onboarding/',
+    /** Path to Articles page */
+    ARTICLES: '/articles/',
+    /** Path to Article creation page */
+    ARTICLE_CREATION: '/article/new/',
+    /** Path to messages page */
+    MESSAGES: '/messagerie/',
+    /** Path to transactions page */
+    TRANSACTION: '/transaction/',
 }
 
 /**

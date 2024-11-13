@@ -6,19 +6,14 @@ import {
     Questrial,
 } from 'next/font/google'
 
-import { Button } from '@/components/shadcn/ui/button'
+import Footer from '@/components/designSystem/footer'
+import Navbar from '@/components/designSystem/navbar'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
-import {
-    ClerkProvider,
-    SignedIn,
-    SignedOut,
-    SignInButton,
-    SignOutButton,
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -71,26 +66,13 @@ const Layout = ({
             >
                 <ReactQueryProvider>
                     <header>
-                        <SignedOut>
-                            <SignInButton
-                                forceRedirectUrl={pagePaths.HOME}
-                                signUpForceRedirectUrl={pagePaths.ONBOARDING}
-                                mode='modal'
-                            >
-                                <Button>{'🚀 Connexion'}</Button>
-                            </SignInButton>
-                        </SignedOut>
-                        <SignedIn>
-                            <SignOutButton redirectUrl={pagePaths.HOME}>
-                                <Button>{'Déconnexion'}</Button>
-                            </SignOutButton>
-                        </SignedIn>
+                        <Navbar />
                     </header>
-
-                    <main>
+                    <main className='flex-grow'>
                         <Toaster />
                         {children}
                     </main>
+                    <Footer />
                 </ReactQueryProvider>
             </body>
         </html>
