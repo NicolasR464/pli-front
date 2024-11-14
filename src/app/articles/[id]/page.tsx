@@ -76,22 +76,14 @@ const ArticlePage = (): React.JSX.Element => {
                         <CarouselImages imageUrls={article.imageUrls} />
 
                         {/* Description section */}
-                        <h2 className='text-2xl font-bold'>{'Description'}</h2>
+                        <h2 className='mt-4 text-2xl font-bold'>
+                            {'Description'}
+                        </h2>
                         <p className='mb-4 mt-2'>{article.description}</p>
 
                         {!!article.dimensions && (
                             <ArticleDetails dimensions={article.dimensions} />
                         )}
-
-                        {/* Sales condition section */}
-                        <div className='mt-4'>
-                            <div className='App'>
-                                <h2 className='text-2xl font-bold'>
-                                    {'Les règles du jeu :'}
-                                </h2>
-                                <ConditionsTroc />
-                            </div>
-                        </div>
                     </div>
                     {/* Product details and seller info */}
                     <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
@@ -137,6 +129,15 @@ const ArticlePage = (): React.JSX.Element => {
                 <p>{'Nous n’avons pas trouvé l’article !'}</p>
             )}
             <div>
+                {/* Sales condition section */}
+                <div className='mt-2'>
+                    <div className='App mx-auto max-w-4xl rounded-lg border border-gray-300 bg-gray-100 p-6 text-center'>
+                        <h2 className='text-2xl font-bold'>
+                            {'Les règles du jeu :'}
+                        </h2>
+                        <ConditionsTroc />
+                    </div>
+                </div>
                 {/* Action buttons */}
                 <ProductActions />
 
