@@ -28,7 +28,7 @@ const config = {
                     light: '#e8eaec',
                     'light-hover': '#dce0e3',
                     'light-active': '#b7bfc4',
-                    DEFAULT: '#173141',  // Normal
+                    DEFAULT: '#173141',
                     hover: '#152c3b',
                     active: '#122734',
                     dark: '#112531',
@@ -88,12 +88,20 @@ const config = {
             },
             keyframes: {
                 'accordion-down': {
-                    from: { height: '0' },
-                    to: { height: 'var(--radix-accordion-content-height)' },
+                    from: {
+                        height: '0',
+                    },
+                    to: {
+                        height: 'var(--radix-accordion-content-height)',
+                    },
                 },
                 'accordion-up': {
-                    from: { height: 'var(--radix-accordion-content-height)' },
-                    to: { height: '0' },
+                    from: {
+                        height: 'var(--radix-accordion-content-height)',
+                    },
+                    to: {
+                        height: '0',
+                    },
                 },
             },
             animation: {
@@ -108,25 +116,20 @@ const config = {
                 wider: '0.05em',
             },
             fontFamily: {
-                display: ['Carrois Gothic SC', 'sans-serif'], // Pour les titres Display
-                heading: ['Century Gothic', 'sans-serif'],   // Pour les titres H1 à H6
-                body: ['Quattrocento Sans', 'serif'],        // Pour le texte courant
+                display: ['Carrois Gothic SC', 'sans-serif'],
+                heading: ['Century Gothic', 'sans-serif'],
+                body: ['Quattrocento Sans', 'serif'],
             },
             fontSize: {
-                // Taille pour les styles Display
                 'display-1': ['149px', { lineHeight: '1.2' }],
                 'display-2': ['119px', { lineHeight: '1.2' }],
                 'display-3': ['95px', { lineHeight: '1.2' }],
-                
-                // Taille pour les titres (Heading)
                 h1: ['76px', { lineHeight: '1.2' }],
                 h2: ['61px', { lineHeight: '1.2' }],
                 h3: ['49px', { lineHeight: '1.2' }],
                 h4: ['39px', { lineHeight: '1.2' }],
                 h5: ['31px', { lineHeight: '1.2' }],
                 h6: ['25px', { lineHeight: '1.2' }],
-                
-                // Taille pour le texte Body
                 'text-1': ['20px', { lineHeight: '1.6' }],
                 'text-2': ['16px', { lineHeight: '1.6' }],
                 'text-3': ['15px', { lineHeight: '1.6' }],
