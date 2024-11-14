@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-// Définir un type pour les données du store
+// Define a type for the store's data
 type TransactionStore = {
     transacUser_b: string | undefined
     queryParams: Record<string, string | undefined>
@@ -9,21 +9,20 @@ type TransactionStore = {
 }
 
 /**
- * Ce store est utilisé pour gérer les informations relatives à une transaction.
- * Il permet de suivre l'identifiant du propriétaire, l'identifiant de la page de l'article,
- * ainsi que les paramètres de requête associés à la transaction.
+ * This store is used to manage information related to a transaction.
+ * It tracks the owner ID,
+ * as well as the query parameters associated with the transaction.
  */
 export const useTransactionStore = create<TransactionStore>((set) => ({
     transacUser_b: undefined,
-    transacArticle_b: undefined,
     queryParams: {},
 
-    // Fonction pour mettre à jour ces valeurs dans le store
+    // Function to update these values in the store
     setTransactionInfo: (transacUser_b: string): void => {
         set({ transacUser_b })
     },
 
-    // Fonction pour mettre à jour les query params dans le store. Elle prend un objet contenant les paramètre de la requête sous forme de clé-valeur
+    // Function to update the query parameters in the store (object containing the query parameters as key-value pairs)
     setQueryParams: (
         sendQueryParams: Record<string, string | undefined>,
     ): void => {

@@ -31,7 +31,12 @@ const ArticleList = ({
                         />
                     ))
                 ) : (
-                    <p>{'Aucun article disponible'}</p>
+                    <p
+                        role='alert'
+                        aria-live='assertive'
+                    >
+                        {'Aucun article disponible'}
+                    </p>
                 )}
             </div>
         </div>
