@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable import/newline-after-import */
 'use client'
 
 import React, { useState } from 'react'
@@ -18,45 +16,14 @@ import {
 } from '@/components/shadcn/ui/sheet'
 import UserProfileCard from './userCard'
 
-import { getArticles } from '@/utils/apiCalls/article'
 import { pagePaths } from '@/utils/constants'
 import { products } from '@/utils/constants/productValues'
 
-import type { Article } from '@/types/article'
-
 import { SignedIn, SignedOut, SignInButton, SignOutButton } from '@clerk/nextjs'
-import { useQuery } from '@tanstack/react-query'
 
 const Navbar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('')
     const router = useRouter()
-
-    // Utilisation de useQuery pour récupérer les articles
-    const { data: allArticlesResponse } = useQuery({
-        queryKey: ['articles'],
-        queryFn: async () => {
-            const articles = await getArticles()
-            return {
-                articles,
-                hasNext: false,
-                limit: 10,
-                skip: 0,
-            }
-        },
-    })
-
-    // Vérification que les données récupérées contiennent bien des articles
-    const allArticles: Article[] =
-        allArticlesResponse && Array.isArray(allArticlesResponse.articles)
-            ? allArticlesResponse.articles
-            : []
-
-    // Filtrer les articles
-    const filteredArticles: Article[] = Array.isArray(allArticles)
-        ? allArticles.filter((article: Article) =>
-              article.adTitle.toLowerCase().includes(searchTerm.toLowerCase()),
-          )
-        : []
 
     // Gestion de la soumission de recherche
     const handleSearchSubmit = (
@@ -64,7 +31,8 @@ const Navbar: React.FC = () => {
     ): void => {
         event.preventDefault()
         if (searchTerm) {
-            router.push(`/articles?query=${searchTerm}`)
+            // Redirection vers `/articles` avec le paramètre `query`
+            router.push(`/articles?query=${encodeURIComponent(searchTerm)}`)
         }
     }
 
@@ -99,25 +67,6 @@ const Navbar: React.FC = () => {
                             {'🔍 '}
                         </button>
                     </form>
-
-                    {!!searchTerm && (
-                        <div className='absolute z-50 mt-2 max-h-60 w-full overflow-auto rounded-md border bg-white shadow-lg'>
-                            {filteredArticles.length > 0 ? (
-                                filteredArticles.map((article: Article) => (
-                                    <div
-                                        key={article.id}
-                                        className='p-2 hover:bg-gray-200'
-                                    >
-                                        <Link href={`/articles/${article.id}`}>
-                                            {article.adTitle}
-                                        </Link>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className='p-2'>{'Aucun article trouvé'}</p>
-                            )}
-                        </div>
-                    )}
                 </div>
 
                 <div className='flex justify-center space-x-6 text-center align-middle text-blueGreen-dark'>

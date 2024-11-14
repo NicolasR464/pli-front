@@ -1,9 +1,8 @@
-/* eslint-disable no-inline-comments */
-/* eslint-disable line-comment-position */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
 
@@ -28,6 +27,9 @@ const formatDateToFrench = (dateString: string): string => {
 }
 
 export const ArticlesList = (): React.JSX.Element => {
+    const searchParams = useSearchParams()
+    const category = searchParams.get('category')
+
     const {
         data: articles,
         fetchNextPage,
@@ -37,15 +39,15 @@ export const ArticlesList = (): React.JSX.Element => {
         isError,
         refetch,
     } = useSuspenseInfiniteQuery({
-        queryKey: ['allArticles'],
-        queryFn: ({ pageParam = 0 }) => getAllArticles(pageParam, 30),
+        queryKey: ['allArticles', category],
+        queryFn: ({ pageParam = 0 }) =>
+            getAllArticles(pageParam, 30, category ?? undefined),
         getNextPageParam: (lastPage) =>
             lastPage.hasNext ? lastPage.nextCursor : undefined,
         initialPageParam: 0,
     })
 
     const router = useRouter()
-
     const previousScrollPosition = useRef(0)
 
     useEffect(() => {
@@ -87,40 +89,47 @@ export const ArticlesList = (): React.JSX.Element => {
 
     return (
         <div className='grid grid-cols-3 p-3'>
-            {!isError &&
-                articles.pages.length > 0 &&
-                articles.pages.map((page) =>
-                    page.articles.map((article) => (
-                        <Card
-                            key={article.id}
-                            className='hover:scale-102 m-2 transform cursor-pointer flex-col transition duration-200 ease-in-out hover:bg-gray-50 hover:shadow-md'
-                            onClick={() => {
-                                router.push(`/articles/${article.id}`)
-                            }}
-                        >
-                            <CardHeader>
-                                <img
-                                    src={article.imageUrls[0]}
-                                    alt='#'
-                                />
-                            </CardHeader>
-                            <CardContent>
-                                <CardTitle className='pb-1'>
-                                    {article.adTitle}
-                                </CardTitle>
-                                <div className='flex'>
-                                    <div>{article.price}</div>
-                                    <div>{' €'}</div>
-                                </div>
-                            </CardContent>
-                            <CardFooter className='flex-col items-start'>
-                                <div>{article.address?.city}</div>
-                                <div>
-                                    {formatDateToFrench(article.createdAt)}
-                                </div>
-                            </CardFooter>
-                        </Card>
-                    )),
+            {articles.pages[0].articles === null && (
+                <p className='col-span-3 text-center'>
+                    {'Aucun article disponible pour cette catégorie.'}
+                </p>
+            )}
+
+            {articles.pages.length > 0 &&
+                articles.pages.map(
+                    (page) =>
+                        Array.isArray(page.articles) &&
+                        page.articles.map((article) => (
+                            <Card
+                                key={article.id}
+                                className='hover:scale-102 m-2 transform cursor-pointer flex-col transition duration-200 ease-in-out hover:bg-gray-50 hover:shadow-md'
+                                onClick={() => {
+                                    router.push(`/articles/${article.id}`)
+                                }}
+                            >
+                                <CardHeader>
+                                    <img
+                                        src={article.imageUrls[0]}
+                                        alt='#'
+                                    />
+                                </CardHeader>
+                                <CardContent>
+                                    <CardTitle className='pb-1'>
+                                        {article.adTitle}
+                                    </CardTitle>
+                                    <div className='flex'>
+                                        <div>{article.price}</div>
+                                        <div>{' €'}</div>
+                                    </div>
+                                </CardContent>
+                                <CardFooter className='flex-col items-start'>
+                                    <div>{article.address?.city}</div>
+                                    <div>
+                                        {formatDateToFrench(article.createdAt)}
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        )),
                 )}
 
             <div>{!!isFetching && <SkeletonAvatarTxt />}</div>
