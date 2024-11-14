@@ -6,7 +6,6 @@ import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
-import { rqKeys } from '@/utils/constants'
 
 import {
     Card,
@@ -38,7 +37,7 @@ export const ArticlesList = (): React.JSX.Element => {
         isError,
         refetch,
     } = useSuspenseInfiniteQuery({
-        queryKey: [rqKeys.ARTICLES],
+        queryKey: ['allArticles'],
         queryFn: ({ pageParam = 0 }) => getAllArticles(pageParam, 30),
         getNextPageParam: (lastPage) =>
             lastPage.hasNext ? lastPage.nextCursor : undefined,
