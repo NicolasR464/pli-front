@@ -96,5 +96,3 @@ export const ConditionsTroc = (): React.JSX.Element => (
         </AccordionItem>
     </Accordion>
 )
-
-export default ConditionsTroc
