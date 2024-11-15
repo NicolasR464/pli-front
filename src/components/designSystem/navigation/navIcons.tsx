@@ -30,7 +30,7 @@ const NavigationIcons: React.FC = () => {
 
             <Link
                 href={pagePaths.ARTICLES || '/'}
-                aria-label='Favoris'
+                aria-label='Piscine - Voir tous les articles'
             >
                 <svg
                     xmlns='http://www.w3.org/2000/svg'
