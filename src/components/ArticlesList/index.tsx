@@ -41,7 +41,7 @@ export const ArticlesList = (): React.JSX.Element => {
     } = useSuspenseInfiniteQuery({
         queryKey: ['allArticles', category],
         queryFn: ({ pageParam = 0 }) =>
-            getAllArticles(pageParam, 30, category ?? undefined),
+            getAllArticles(pageParam, 30, category ?? undefined, 'AVAILABLE'),
         getNextPageParam: (lastPage) =>
             lastPage.hasNext ? lastPage.nextCursor : undefined,
         initialPageParam: 0,

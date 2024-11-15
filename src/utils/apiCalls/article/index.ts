@@ -16,16 +16,26 @@ export const getAllArticles = async (
     page: number,
     limit = 30,
     category?: string,
+    status?: string,
 ): Promise<PaginatedArticlesResponse> => {
     const skip = page * limit
 
     // Construction des paramètres de requête
-    const params: { skip: number; limit: number; category?: string } = {
+    const params: {
+        skip: number
+        limit: number
+        category?: string
+        status?: string
+    } = {
         skip,
         limit,
     }
     if (category) {
         params.category = category
+    }
+
+    if (status) {
+        params.status = status
     }
 
     // Exécution de la requête
