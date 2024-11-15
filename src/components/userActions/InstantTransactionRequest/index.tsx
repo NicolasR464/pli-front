@@ -7,12 +7,11 @@ import { notify } from '@/utils/functions/toasterHelper'
 import { NotificationType } from '@/types'
 import type { Article } from '@/types/article'
 
-import { Button } from '../shadcn/ui/button'
+import { Button } from '@/components/shadcn/ui/button'
 
-const EmailSender = ({
-    senderEmail,
-    receiverEmail,
-    article,
+const InstantTransactionRequest = ({
+    userB,
+    articleB,
 }: {
     readonly senderEmail: string | undefined
     readonly receiverEmail: string | undefined
@@ -20,16 +19,22 @@ const EmailSender = ({
 }): React.JSX.Element => {
     const { mutateAsync: sendEmail, isSuccess: emailSent } = useSendEmail()
 
+    // TODO : Get userA from useUser store
+
     const handleSendEmail = async (): Promise<void> => {
-        if (!senderEmail || !receiverEmail) {
+        if (!userA || !userB || !articleB) {
+            notify({
+                message: userMessages.requestSent.type.ERROR,
+                type: NotificationType.enum.ERROR,
+            })
             return
         }
 
         await sendEmail(
             {
-                senderEmail,
-                receiverEmail,
-                article,
+                userA,
+                userB,
+                articleB,
             },
 
             {
@@ -65,4 +70,4 @@ const EmailSender = ({
     )
 }
 
-export default EmailSender
+export default InstantTransactionRequest
