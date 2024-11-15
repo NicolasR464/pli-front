@@ -17,11 +17,11 @@ export type ArticlesResponse = {
     skip: number
 }
 
-export const getArticles = async (): Promise<Article[]> => {
-    const response: AxiosResponse<Article[]> = await articleInstance.get(
+export const getArticles = async (): Promise<ArticlesResponse> => {
+    const response: AxiosResponse<ArticlesResponse> = await articleInstance.get(
         apiEndpoints.microServices.public.ARTICLES,
     )
-
+    console.log('API response:', response.data)
     if (response.status !== 200)
         throw new Error(
             `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,

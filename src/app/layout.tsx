@@ -7,7 +7,7 @@ import {
 } from 'next/font/google'
 
 import Footer from '@/components/designSystem/footer'
-import Navbar from '@/components/designSystem/navbar'
+import Navbar from '@/components/designSystem/navigation/navbar'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
