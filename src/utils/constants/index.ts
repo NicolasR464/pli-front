@@ -4,7 +4,7 @@ export const paginationLimit = 20
 /** The list of React Query keys  */
 export const rqKeys = {
     USERS: 'users',
-    ARTICLES: 'articles',
+    ARTICLES: 'allArticles',
 }
 
 /** Object containing page paths used throughout the application, set in alphabetical order */

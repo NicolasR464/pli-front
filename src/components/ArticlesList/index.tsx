@@ -5,7 +5,10 @@ import { useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
+import { rqKeys } from '@/utils/constants'
 import { formatDate } from '@/utils/functions/dates'
+
+import { StatusSchema } from '@/types/article'
 
 import {
     Card,
@@ -30,9 +33,14 @@ export const ArticlesList = (): React.JSX.Element => {
         isError,
         refetch,
     } = useSuspenseInfiniteQuery({
-        queryKey: ['allArticles', category],
+        queryKey: [rqKeys.ARTICLES, category],
         queryFn: ({ pageParam = 0 }) =>
-            getAllArticles(pageParam, 30, category ?? undefined, 'AVAILABLE'),
+            getAllArticles(
+                pageParam,
+                30,
+                category ?? undefined,
+                StatusSchema.Enum.AVAILABLE,
+            ),
         getNextPageParam: (lastPage) =>
             lastPage.hasNext ? lastPage.nextCursor : undefined,
         initialPageParam: 0,
