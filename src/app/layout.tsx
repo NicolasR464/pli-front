@@ -11,6 +11,7 @@ import Navbar from '@/components/designSystem/navbar'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
+import UserStoreProvider from '@/utils/providers/UserStoreProvider'
 
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -69,6 +70,7 @@ const Layout = ({
                         <Navbar />
                     </header>
                     <main className='flex-grow'>
+                        <UserStoreProvider />
                         <Toaster />
                         {children}
                     </main>
