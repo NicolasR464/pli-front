@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
+import { formatDate } from '@/utils/functions/dates'
 
 import {
     Card,
@@ -15,16 +16,6 @@ import {
 } from '../shadcn/ui/card'
 import SkeletonAvatarTxt from '../skeletons/SkeletonAvatarTxt'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
-
-const formatDateToFrench = (dateString: string): string => {
-    const date = new Date(dateString)
-    const options: Intl.DateTimeFormatOptions = {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-    }
-    return date.toLocaleDateString('fr-FR', options)
-}
 
 export const ArticlesList = (): React.JSX.Element => {
     const searchParams = useSearchParams()
@@ -124,9 +115,7 @@ export const ArticlesList = (): React.JSX.Element => {
                                 </CardContent>
                                 <CardFooter className='flex-col items-start'>
                                     <div>{article.address?.city}</div>
-                                    <div>
-                                        {formatDateToFrench(article.createdAt)}
-                                    </div>
+                                    <div>{formatDate(article.createdAt)}</div>
                                 </CardFooter>
                             </Card>
                         )),
