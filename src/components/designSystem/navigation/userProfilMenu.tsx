@@ -1,4 +1,7 @@
 import React from 'react'
+import { User } from 'react-feather'
+
+import { Button } from '@/components/shadcn/ui/button'
 import {
     Sheet,
     SheetClose,
@@ -8,12 +11,10 @@ import {
     SheetTrigger,
 } from '@/components/shadcn/ui/sheet'
 
-import { SignOutButton } from '@clerk/nextjs'
-import { Button } from '@/components/shadcn/ui/button'
 import UserProfileCard from '../userCard'
-import { User } from 'react-feather'
+import { SignOutButton } from '@clerk/nextjs'
 
-const UserProfileMenu = () => (
+const UserProfileMenu: React.FC = () => (
     <Sheet>
         <SheetTrigger asChild>
             <User
@@ -26,7 +27,7 @@ const UserProfileMenu = () => (
             className='w-full sm:max-w-lg'
         >
             <SheetHeader>
-                <h3 className='text-lg font-bold'>Mon Profil</h3>
+                <h3 className='text-lg font-bold'>{'Mon Profil'}</h3>
             </SheetHeader>
             <div className='flex-grow p-4'>
                 <UserProfileCard />
@@ -34,7 +35,7 @@ const UserProfileMenu = () => (
             <SheetFooter>
                 <SignOutButton>
                     <Button className='bg-darkBlue text-white hover:bg-blueGreen'>
-                        Déconnexion
+                        {'Déconnexion'}
                     </Button>
                 </SignOutButton>
                 <SheetClose />

@@ -1,4 +1,8 @@
 'use client'
+
+import React from 'react'
+import Link from 'next/link'
+
 import { Button } from '@/components/shadcn/ui/button'
 import {
     Sheet,
@@ -7,12 +11,11 @@ import {
     SheetFooter,
     SheetHeader,
 } from '@/components/shadcn/ui/sheet'
-import React, { useState } from 'react'
 import SearchBar from './searchBar'
-import { products } from '@/utils/constants/productValues'
-import Link from 'next/link'
 
-interface CategoriesMenuProps {
+import { products } from '@/utils/constants/productValues'
+
+type CategoriesMenuProps = {
     isOpen: boolean
     setIsOpen: (isOpen: boolean) => void
 }
@@ -21,18 +24,19 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     isOpen,
     setIsOpen,
 }) => {
-    const [searchTerm, setSearchTerm] = useState('')
     const sortedCategories = Object.keys(products.categories).sort((a, b) =>
         products.categories[a].tag.localeCompare(products.categories[b].tag),
     )
     return (
         <>
             <Button
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                    setIsOpen(true)
+                }}
                 className='hidden-above-1399 visible-above-425 hidden-below-425 text-text-3 text-blueGreen-dark-active hover:underline'
                 aria-label='Ouvrir le menu des catégories'
             >
-                Catégories
+                {'Catégories'}
             </Button>
 
             <Sheet
@@ -44,11 +48,10 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
                     className='w-full sm:max-w-lg'
                 >
                     <SheetHeader>
-                        <h2 className='text-xl font-semibold'>TROCUP</h2>
+                        <h2 className='text-xl font-semibold'>{'TROCUP'}</h2>
                         {/* Barre de recherche */}
-                        <div className='visible-below-425 hidden p-4 '>
-                            <SearchBar
-                            />
+                        <div className='visible-below-425 hidden p-4'>
+                            <SearchBar />
                         </div>
                     </SheetHeader>
                     {/* Catégories */}

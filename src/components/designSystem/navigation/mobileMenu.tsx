@@ -1,20 +1,12 @@
-'use client'
-
 import React from 'react'
+import { Home, MessageSquare, PlusCircle, User } from 'react-feather'
 import Link from 'next/link'
-import { Home, PlusCircle, MessageSquare, User } from 'react-feather'
-import { SignedIn, SignedOut, SignInButton, SignOutButton } from '@clerk/nextjs'
-import { Button } from '@/components/shadcn/ui/button'
-import {
-    Sheet,
-    SheetContent,
-    SheetFooter,
-    SheetHeader,
-    SheetTrigger,
-    SheetClose,
-} from '@/components/shadcn/ui/sheet'
-import UserProfileCard from '../userCard'
+
+import UserProfileMenu from './userProfilMenu'
+
 import { pagePaths } from '@/utils/constants'
+
+import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs'
 
 const MobileNavigationBar: React.FC = () => {
     return (
@@ -33,10 +25,10 @@ const MobileNavigationBar: React.FC = () => {
             {/* Icône Favoris */}
             <Link
                 href={pagePaths.ARTICLES || '/'}
-                aria-label='Favoris'
+                aria-label='Piscine - VOIR LES ARTICLES'
             >
                 <svg
-                    xmlns='http://www.w3.org/2000/svg'
+                    xmlns='https://www.w3.org/2000/svg'
                     height='24'
                     viewBox='0 0 24 24'
                     width='24'
@@ -76,38 +68,13 @@ const MobileNavigationBar: React.FC = () => {
                 </SignInButton>
             </SignedOut>
             <SignedIn>
-                <Sheet>
-                    <SheetTrigger asChild>
-                        <User
-                            className='cursor-pointer text-blueGreen-dark'
-                            strokeWidth={1.5}
-                        />
-                    </SheetTrigger>
-                    <SheetContent
-                        side='right'
-                        className='w-full sm:max-w-lg'
-                    >
-                        <SheetHeader>
-                            <h3 className='text-lg font-bold'>Mon Profil</h3>
-                        </SheetHeader>
-                        <div className='flex-grow p-4'>
-                            <UserProfileCard />
-                        </div>
-                        <SheetFooter>
-                            <SignOutButton redirectUrl={pagePaths.HOME || '/'}>
-                                <Button className='bg-darkBlue text-white hover:bg-blueGreen'>
-                                    Déconnexion
-                                </Button>
-                            </SignOutButton>
-                            <SheetClose />
-                        </SheetFooter>
-                    </SheetContent>
-                </Sheet>
+                {/* Sheet pour afficher le profil utilisateur */}
+                <UserProfileMenu />
             </SignedIn>
 
             {/* Icône Messages */}
             <Link
-                href='/messages'
+                href={pagePaths.MESSAGES || '/'}
                 aria-label='Messages'
             >
                 <MessageSquare

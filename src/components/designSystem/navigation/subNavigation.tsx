@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 
-interface SubNavigationProps {
-    categories: { [key: string]: { tag: string } }
+type SubNavigationProps = {
+    categories: Record<string, { tag: string }>
 }
 
 const SubNavigation: React.FC<SubNavigationProps> = ({ categories }) => {

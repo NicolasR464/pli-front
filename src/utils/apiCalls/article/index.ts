@@ -6,6 +6,64 @@ import type { Article } from '@/types/article'
 
 import type { AxiosResponse } from 'axios'
 
+type PaginatedArticlesResponse = {
+    articles: Article[]
+    hasNext: boolean
+    nextCursor?: number
+}
+
+export const getAllArticles = async (
+    page: number,
+    limit = 30,
+    category?: string,
+    status?: string,
+): Promise<PaginatedArticlesResponse> => {
+    const skip = page * limit
+
+    // Construction des paramètres de requête
+    const params: {
+        skip: number
+        limit: number
+        category?: string
+        status?: string
+    } = {
+        skip,
+        limit,
+    }
+    if (category) {
+        params.category = category
+    }
+
+    if (status) {
+        params.status = status
+    }
+
+    // Exécution de la requête
+    const response: AxiosResponse<PaginatedArticlesResponse> =
+        await articleInstance.get(apiEndpoints.microServices.public.ARTICLES, {
+            params,
+        })
+
+    if (response.status !== 200) {
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
+        )
+    }
+
+    const { articles = [], hasNext } = response.data
+
+    // Retourne une réponse par défaut si la catégorie ne contient aucun article
+    return {
+        articles,
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        hasNext: hasNext ?? false,
+        nextCursor:
+            Array.isArray(articles) && articles.length === limit
+                ? page + 1
+                : undefined,
+    }
+}
+
 /**
  * Fetch all articles from the API.
  * @returns {Promise<Article[]>} An array of articles.
@@ -17,11 +75,11 @@ export type ArticlesResponse = {
     skip: number
 }
 
-export const getArticles = async (): Promise<ArticlesResponse> => {
-    const response: AxiosResponse<ArticlesResponse> = await articleInstance.get(
+export const getArticles = async (): Promise<Article[]> => {
+    const response: AxiosResponse<Article[]> = await articleInstance.get(
         apiEndpoints.microServices.public.ARTICLES,
     )
-    console.log('API response:', response.data)
+
     if (response.status !== 200)
         throw new Error(
             `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
