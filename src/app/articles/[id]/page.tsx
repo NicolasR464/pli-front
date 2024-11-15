@@ -12,7 +12,7 @@ import ProductCard from '@/components/articleDisplay/ProductCard'
 import ProductDetails from '@/components/articleDisplay/ProductDetails'
 import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
-import EmailSender from '@/components/EmailSender'
+import InstantTransactionRequest from '@/components/userActions/InstantTransactionRequest'
 import Map from '@/components/Map'
 
 import { getArticleById } from '@/utils/apiCalls/article'
@@ -42,7 +42,7 @@ const ArticlePage = (): React.JSX.Element => {
     const ownerId = article?.owner
 
     // React query to get user data
-    const { data: user } = useQuery({
+    const { data: userB } = useQuery({
         queryKey: ['user', ownerId],
         queryFn: () => getUserById(ownerId),
         enabled: !!ownerId,
