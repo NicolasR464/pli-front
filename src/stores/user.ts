@@ -5,8 +5,9 @@ import { immer } from 'zustand/middleware/immer'
 import type { User } from '@/types/user'
 
 type UserStore = {
-    user: User
+    user: Partial<User>
     setUserData: (userData: Partial<User>) => void
+    resetUserData: () => void
 }
 
 /**
@@ -17,23 +18,14 @@ export const useUserStore = create<UserStore>()(
     persist(
         immer((set) => ({
             user: {
-                id: '',
-                version: 0,
                 pseudo: '',
-                name: '',
-                surname: '',
-                email: '',
-                phoneNumber: undefined,
-                activityStatus: {
-                    lastConnected: new Date(),
-                    birthday: new Date(),
-                },
-                birthDate: new Date(),
-                avatarUrl: undefined,
+                avatarUrl: '',
                 isPremium: false,
-                credit: undefined,
-                articles: undefined,
-                debit: undefined,
+                credit: 0,
+                balance: 0,
+                articles: [],
+                comments: [],
+                favoriteArticles: [],
             },
 
             setUserData: (userData: Partial<User>): void => {
@@ -42,9 +34,9 @@ export const useUserStore = create<UserStore>()(
                 })
             },
 
-            deleteStoredUserData: (): void => {
+            resetUserData: (): void => {
                 set((state) => {
-                    state.user = {} as User
+                    state.user = {} as Partial<User>
                 })
             },
         })),
