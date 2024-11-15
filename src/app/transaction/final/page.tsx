@@ -49,6 +49,9 @@ const PostTransaction = (): React.JSX.Element => {
                         onSuccess: () => {
                             setIsTransactionCreated(true)
                         },
+                        onError: () => {
+                            setIsTransactionCreated(false)
+                        },
                     },
                 )
             }
@@ -60,7 +63,9 @@ const PostTransaction = (): React.JSX.Element => {
     return (
         <div>
             <h1 className='text-center text-2xl font-bold'>
-                Transaction created !
+                {isTransactionCreated
+                    ? 'Transaction créée !'
+                    : 'Une erreur est survenue lors de la création de la transaction.'}
             </h1>
         </div>
     )

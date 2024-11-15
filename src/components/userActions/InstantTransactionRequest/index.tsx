@@ -64,7 +64,7 @@ const InstantTransactionRequest = ({
                 className='bg-teal-500 text-white'
                 aria-label='Je veux acheter cet article'
             >
-                {emailSent ? 'Demande envoyée !' : 'Je le veux !'}
+                {emailSent ? 'Demande envoyée !' : 'Je veux !'}
             </Button>
         </div>
     )
