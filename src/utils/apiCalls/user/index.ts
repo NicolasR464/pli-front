@@ -79,6 +79,7 @@ export const getUserById = async (
     userId: string | undefined | null,
 ): Promise<User | undefined> => {
     if (!userId) return undefined
+    console.log('🚀 CALLED')
 
     const response: AxiosResponse<User> = await userInstance.get(
         `${apiEndpoints.microServices.public.USERS}${userId}`,

@@ -15,11 +15,12 @@ const UserStoreProvider = (): undefined => {
     const setUserData = useUserStore((state) => state.setUserData)
     const resetUserData = useUserStore((state) => state.resetUserData)
     const userStore = useUserStore((state) => state.user)
+    const hasStoreHydrated = useUserStore((state) => state.hasHydrated)
 
     const { data: userQuery } = useQuery({
         queryKey: [rqKeys.USER, userId],
         queryFn: () => getUserById(userId),
-        enabled: !!userId,
+        enabled: !!userId && !userStore.pseudo && hasStoreHydrated,
     })
 
     useEffect(() => {

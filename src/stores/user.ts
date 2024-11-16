@@ -8,6 +8,8 @@ type UserStore = {
     user: Partial<User>
     setUserData: (userData: Partial<User>) => void
     resetUserData: () => void
+    hasHydrated: boolean
+    setHasHydrated: (state: boolean) => void
 }
 
 /**
@@ -28,6 +30,11 @@ export const useUserStore = create<UserStore>()(
                 favoriteArticles: [],
             },
 
+            hasHydrated: false,
+            setHasHydrated: (state: boolean): void => {
+                set({ hasHydrated: state })
+            },
+
             setUserData: (userData: Partial<User>): void => {
                 set((state) => {
                     state.user = { ...state.user, ...userData }
@@ -42,6 +49,9 @@ export const useUserStore = create<UserStore>()(
         })),
         {
             name: 'user-store',
+            onRehydrateStorage: () => (state) => {
+                state?.setHasHydrated(true)
+            },
         },
     ),
 )
