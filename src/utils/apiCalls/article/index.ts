@@ -15,14 +15,33 @@ type PaginatedArticlesResponse = {
 export const getAllArticles = async (
     page: number,
     limit = 30,
+    category?: string,
+    status?: string,
 ): Promise<PaginatedArticlesResponse> => {
     const skip = page * limit
+
+    // Construction des paramètres de requête
+    const params: {
+        skip: number
+        limit: number
+        category?: string
+        status?: string
+    } = {
+        skip,
+        limit,
+    }
+    if (category) {
+        params.category = category
+    }
+
+    if (status) {
+        params.status = status
+    }
+
+    // Exécution de la requête
     const response: AxiosResponse<PaginatedArticlesResponse> =
         await articleInstance.get(apiEndpoints.microServices.public.ARTICLES, {
-            params: {
-                skip,
-                limit,
-            },
+            params,
         })
 
     if (response.status !== 200) {
@@ -31,12 +50,17 @@ export const getAllArticles = async (
         )
     }
 
-    const { articles, hasNext } = response.data
+    const { articles = [], hasNext } = response.data
 
+    // Retourne une réponse par défaut si la catégorie ne contient aucun article
     return {
         articles,
-        hasNext,
-        nextCursor: articles.length === limit ? page + 1 : undefined,
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        hasNext: hasNext ?? false,
+        nextCursor:
+            Array.isArray(articles) && articles.length === limit
+                ? page + 1
+                : undefined,
     }
 }
 
