@@ -4,6 +4,7 @@ export const paginationLimit = 20
 /** The list of React Query keys  */
 export const rqKeys = {
     USERS: 'users',
+    USER: 'user',
 }
 
 /** Object containing page paths used throughout the application, set in alphabetical order */
@@ -17,6 +18,14 @@ export const pagePaths = {
     HOME: '/',
     /** Path to the onboarding page */
     ONBOARDING: '/onboarding/',
+    /** Path to Articles page */
+    ARTICLES: '/articles/',
+    /** Path to Article creation page */
+    ARTICLE_CREATION: '/article/new/',
+    /** Path to messages page */
+    MESSAGES: '/messagerie/',
+    /** Path to transactions page */
+    TRANSACTION: '/transaction/',
 }
 
 /**
