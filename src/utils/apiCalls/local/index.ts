@@ -1,46 +1,15 @@
-import type { ProductDataParams } from './mutations'
-
 import { localInstance } from '@/utils/axiosInstances/local'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
-import type { Article } from '@/types/article'
+import type {
+    EmailParams,
+    EmailResponse,
+    ImageAnalysisResponse,
+    ProductAnalysisResponse,
+    ProductDataParams,
+} from '@/types/mutations/local'
 
 import type { AxiosResponse } from 'axios'
-
-export type ImageAnalysis = {
-    imageUrl: string
-    brand: string
-    tags: string[]
-    objectIdentified: string
-    category: string
-    subCategory: string
-    state: string
-}
-
-export type ImageAnalysisResponse = {
-    message: string
-    content: ImageAnalysis
-}
-
-type ProductAnalysis = {
-    productName: string
-    estimatedValue: number
-}
-
-export type ProductAnalysisResponse = {
-    message: string
-    content: ProductAnalysis
-}
-
-export type EmailParams = {
-    senderEmail: string
-    receiverEmail: string
-    article: Partial<Article>
-}
-
-export type EmailResponse = {
-    message: string
-}
 
 /**
  * Store and analyze an image by sending it to the local instance.
@@ -90,17 +59,16 @@ export const analyzeProductData = async (
  * @returns {Promise<EmailResponse>} A promise that resolves to the email response.
  * @throws {Error} If the email sending fails.
  */
-export const sendEmail = async (
-    formData: EmailParams,
-): Promise<EmailResponse> => {
-    const params = new URLSearchParams()
-    params.append('senderEmail', formData.senderEmail)
-    params.append('receiverEmail', formData.receiverEmail)
-    params.append('article', JSON.stringify(formData.article))
-
+export const sendEmail = async ({
+    contentData,
+    emailType,
+}: EmailParams): Promise<EmailResponse> => {
     const response: AxiosResponse<EmailResponse> = await localInstance.post(
         apiEndpoints.local.SEND_EMAIL,
-        params,
+        {
+            contentData,
+            emailType,
+        },
         {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

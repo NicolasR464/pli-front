@@ -3,26 +3,15 @@
 import type {
     EmailParams,
     EmailResponse,
-    ImageAnalysis,
     ImageAnalysisResponse,
     ProductAnalysisResponse,
-} from './index'
-
-import type { Article } from '@/types/article'
+    ProductDataParams,
+    UploadImageParams,
+} from '@/types/mutations/local'
 
 import { analyzeImage, analyzeProductData, sendEmail } from '.'
 import type { UseMutationResult } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
-
-type UploadImageParams = {
-    file: File
-}
-
-export type ProductDataParams = {
-    formData: Partial<Article> & {
-        analysedImageData?: Partial<ImageAnalysis>
-    }
-}
 
 /**
  * Custom hook for storing and analyzing the content of an image using React Query's useMutation.
@@ -53,7 +42,7 @@ export const useProductDataAnalysis = (): UseMutationResult<
 }
 
 /**
- * Custom hook for sending an email by using React Query's useMutation.
+ * Custom hook for sending an email to a user (for anything, transaction requests, etc.) by using React Query's useMutation.
  */
 export const useSendEmail = (): UseMutationResult<
     EmailResponse,
@@ -61,6 +50,6 @@ export const useSendEmail = (): UseMutationResult<
     EmailParams
 > => {
     return useMutation<EmailResponse, Error, EmailParams>({
-        mutationFn: (formData) => sendEmail(formData),
+        mutationFn: (data) => sendEmail(data),
     })
 }

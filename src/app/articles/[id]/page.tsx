@@ -13,6 +13,7 @@ import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
 import InstantTransactionRequest from '@/components/userActions/InstantTransactionRequest'
 import Map from '@/components/Map'
+import InstantTransactionRequest from '@/components/userActions/InstantTransactionRequest'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
