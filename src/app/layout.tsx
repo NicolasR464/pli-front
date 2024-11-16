@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         locale: 'fr_FR',
-        url: 'https://troc-up.vercel.app',
+        url: 'https://trocup.fr',
         siteName: 'TrocUp',
     },
     other: {

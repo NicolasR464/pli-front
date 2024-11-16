@@ -14,17 +14,17 @@ const UserStoreProvider = (): undefined => {
 
     const setUserData = useUserStore((state) => state.setUserData)
     const resetUserData = useUserStore((state) => state.resetUserData)
-    const userStore = useUserStore((state) => state.user)
+    const userDataStore = useUserStore((state) => state.user)
     const hasStoreHydrated = useUserStore((state) => state.hasHydrated)
 
     const { data: userQuery } = useQuery({
         queryKey: [rqKeys.USER, userId],
         queryFn: () => getUserById(userId),
-        enabled: !!userId && !userStore.pseudo && hasStoreHydrated,
+        enabled: !!userId && !userDataStore.pseudo && hasStoreHydrated,
     })
 
     useEffect(() => {
-        if (isLoaded && isSignedIn && userQuery && !userStore.pseudo) {
+        if (isLoaded && isSignedIn && userQuery && !userDataStore.pseudo) {
             setUserData({
                 pseudo: userQuery.pseudo,
                 avatarUrl: userQuery.avatarUrl,
@@ -34,14 +34,15 @@ const UserStoreProvider = (): undefined => {
             })
         }
 
-        if (!isSignedIn && userStore.pseudo) resetUserData()
+        // Empty the user data in local storage if the user logged out
+        if (!isSignedIn && userDataStore.pseudo) resetUserData()
     }, [
         isLoaded,
         isSignedIn,
         userId,
         setUserData,
         userQuery,
-        userStore,
+        userDataStore,
         resetUserData,
     ])
 

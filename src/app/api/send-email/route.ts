@@ -1,13 +1,19 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
+import { EmailTypeSchema } from '@/types'
 import type { Article } from '@/types/article'
 import { environment } from '@/types/environment'
+import { TransactionTypesSchema } from '@/types/transaction/actions'
 
 import type { MailDataRequired } from '@sendgrid/mail'
 import mail from '@sendgrid/mail'
 
 mail.setApiKey(environment.SENDGRID_API_KEY)
+
+const sendgridTemplateIDs = {
+    TRANSACTION_REQUEST_1ToM: 'd-5c5f77fe1ad44491b80b1bf551d3fa2b',
+}
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     const formData = await request.formData()
@@ -21,44 +27,20 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         : undefined
 
     if (
-        receiverEmail &&
-        senderEmail &&
-        article?.imageUrls &&
-        article.imageUrls.length > 0 &&
-        article.id
+        emailType === EmailTypeSchema.enum.TRANSACTION_REQUEST &&
+        transactionType === TransactionTypesSchema.enum.ONE_TO_MANY
     ) {
-        const mailBody = `
-        <div style="font-family: Arial, sans-serif; padding: 20px; text-align: center;">
-           
-            <h2>Nouvelle demande sur TrocUp!</h2>
-
-            <p>Quelqu’un est intéressé.e par votre article:</p>
-
-            <div style="margin: 20px 0;">
-                <img src="${article.imageUrls[0]}" alt="Article image" style="max-width: 300px; height: auto; margin: 0 auto;"/>
-            </div>
-
-            <p><strong>${article.adTitle}</strong></p>
-
-            <a href="http://localhost:3000/transaction/final?receiver=${String(receiverEmail)}&sender=${String(senderEmail)}&senderArticle=${article.id}&validation=true" style="display: inline-block; margin: 10px; padding: 10px 20px; border: 2px solid green; border-radius: 5px; color: green; text-decoration: none;">J’accepte</a>
-
-            <a href="http://localhost:3000/transaction/final?receiver=${String(receiverEmail)}&sender=${String(senderEmail)}&senderArticle=${article.id}&validation=false" style="display: inline-block; margin: 10px; padding: 10px 20px; border: 2px solid red; border-radius: 5px; color: red; text-decoration: none;">Je refuse</a>
-
-            <div style="width: 100%; text-align: center;">
-                <img src="https://res.cloudinary.com/etna-assets/image/upload/v1723194846/Fichier_33_4x_cbaogn.png" alt="TrocUp logo" style="width: 200px; height: auto; margin: 0 auto;"/>
-            </div>
-        </div>
-    `
         const message: MailDataRequired = {
             to: receiverEmail as string,
             from: senderEmail as string,
             subject: 'Nouvelle demande sur TrocUp !',
-            content: [
-                {
-                    type: 'text/html',
-                    value: mailBody,
-                },
-            ],
+            templateId: sendgridTemplateIDs.TRANSACTION_REQUEST_1ToM,
+            dynamicTemplateData: {
+                userApseudo: userA.pseudo,
+                articleAtitle: userB.email,
+                articleAimage: article.adTitle,
+                transactionId: transaction.id,
+            },
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
