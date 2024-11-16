@@ -49,9 +49,12 @@ export const useUserStore = create<UserStore>()(
         })),
         {
             name: 'user-store',
-            onRehydrateStorage: () => (state) => {
-                state?.setHasHydrated(true)
-            },
+            onRehydrateStorage:
+                () =>
+                // eslint-disable-next-line unicorn/consistent-function-scoping
+                (state: UserStore | undefined): void => {
+                    state?.setHasHydrated(true)
+                },
         },
     ),
 )
