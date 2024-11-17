@@ -5,8 +5,11 @@ import { immer } from 'zustand/middleware/immer'
 import type { User } from '@/types/user'
 
 type UserStore = {
-    user: User
+    user: Partial<User>
     setUserData: (userData: Partial<User>) => void
+    resetUserData: () => void
+    hasHydrated: boolean
+    setHasHydrated: (state: boolean) => void
 }
 
 /**
@@ -17,23 +20,19 @@ export const useUserStore = create<UserStore>()(
     persist(
         immer((set) => ({
             user: {
-                id: '',
-                version: 0,
                 pseudo: '',
-                name: '',
-                surname: '',
-                email: '',
-                phoneNumber: undefined,
-                activityStatus: {
-                    lastConnected: new Date(),
-                    birthday: new Date(),
-                },
-                birthDate: new Date(),
-                avatarUrl: undefined,
+                avatarUrl: '',
                 isPremium: false,
-                credit: undefined,
-                articles: undefined,
-                debit: undefined,
+                credit: 0,
+                balance: 0,
+                articles: [],
+                comments: [],
+                favoriteArticles: [],
+            },
+
+            hasHydrated: false,
+            setHasHydrated: (state: boolean): void => {
+                set({ hasHydrated: state })
             },
 
             setUserData: (userData: Partial<User>): void => {
@@ -42,14 +41,20 @@ export const useUserStore = create<UserStore>()(
                 })
             },
 
-            deleteStoredUserData: (): void => {
+            resetUserData: (): void => {
                 set((state) => {
-                    state.user = {} as User
+                    state.user = {} as Partial<User>
                 })
             },
         })),
         {
             name: 'user-store',
+            onRehydrateStorage:
+                () =>
+                // eslint-disable-next-line unicorn/consistent-function-scoping
+                (state: UserStore | undefined): void => {
+                    state?.setHasHydrated(true)
+                },
         },
     ),
 )

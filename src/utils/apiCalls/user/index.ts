@@ -76,29 +76,43 @@ export const createUser = async (
  * @returns {Promise<User>|undefined} A promise that resolves with user information.
  */
 export const getUserById = async (
-    userId: string | undefined,
+    userId: string | undefined | null,
 ): Promise<User | undefined> => {
+    if (!userId) return undefined
+
     const response: AxiosResponse<User> = await userInstance.get(
         `${apiEndpoints.microServices.public.USERS}${userId}`,
     )
+
     if (response.status !== 200)
         throw new Error(`Failed to fetch user with id ${String(userId)}`)
+
     return response.data
 }
 
-export const getUserInfo = async (
+/**
+ * Updates an existing user.
+ * @param {string} userId The ID of the user to update.
+ * @param {Partial<User>} data The updated user data.
+ * @param {string} JWT The JWT token for authentication.
+ * @returns {Promise<User>} A promise that resolves to the updated user.
+ */
+export const updateUser = async (
     userId: string,
-    token: string,
+    data: Partial<User>,
+    JWT: string,
 ): Promise<User> => {
-    const headers = { Authorization: `Bearer ${token}` }
-    const url = `${apiEndpoints.microServices.public.USERS}${userId}`
-    const response: AxiosResponse<User> = await userInstance.get(url, {
-        headers,
-    })
+    if (!JWT) throw new Error('No JWT provided')
 
-    if (response.status !== 200) {
-        throw new Error(`Failed to fetch user with id ${String(userId)}`)
-    }
+    addAuthHeader(userInstance, JWT)
+
+    const response: AxiosResponse<User> = await userInstance.put(
+        `${apiEndpoints.microServices.private.USERS}${userId}`,
+        data,
+    )
+
+    if (response.status !== 200)
+        throw new Error(`Failed to update user with id ${userId}`)
 
     return response.data
 }
