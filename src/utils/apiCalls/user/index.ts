@@ -76,13 +76,17 @@ export const createUser = async (
  * @returns {Promise<User>|undefined} A promise that resolves with user information.
  */
 export const getUserById = async (
-    userId: string | undefined,
+    userId: string | undefined | null,
 ): Promise<User | undefined> => {
+    if (!userId) return undefined
+
     const response: AxiosResponse<User> = await userInstance.get(
         `${apiEndpoints.microServices.public.USERS}${userId}`,
     )
+
     if (response.status !== 200)
         throw new Error(`Failed to fetch user with id ${String(userId)}`)
+
     return response.data
 }
 
