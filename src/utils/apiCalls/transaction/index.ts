@@ -1,4 +1,7 @@
-import type { TransactionParams } from './mutations'
+import type {
+    ConfirmTransactionParams,
+    PreTransactionParams,
+} from './mutations'
 
 import { transactionInstance } from '@/utils/axiosInstances/transaction'
 import { apiEndpoints } from '@/utils/constants/endpoints'
@@ -24,13 +27,13 @@ export const getTransactions = async (): Promise<Transaction[]> => {
 
 /**
  * Function to create a new transaction.
- * @param {TransactionParams} data - The transaction data to create.
+ * @param {PreTransactionParams} data - The transaction data to create.
  * @param {string} JWT - The JSON Web Token for authentication.
  * @returns {Promise<TransactionResponse>} The created transaction.
  */
-export const createTransaction = async (
-    data: TransactionParams['data'],
-    JWT: TransactionParams['JWT'],
+export const createPreTransaction = async (
+    data: PreTransactionParams['data'],
+    JWT: PreTransactionParams['JWT'],
 ): Promise<Transaction> => {
     addAuthHeader(transactionInstance, JWT)
 
@@ -73,6 +76,31 @@ export const getTransactionsByUser = async (
     if (response.status !== 200)
         throw new Error(
             `Failed to fetch transactions for user ${String(userId)}`,
+        )
+
+    return response.data
+}
+
+/**
+ * Function to confirm a transaction.
+ * @param {ConfirmTransactionParams} data - The transaction data to confirm.
+ * @param {string} JWT - The JSON Web Token for authentication.
+ * @returns {Promise<Transaction>} The confirmed transaction.
+ */
+export const confirmTransaction = async (
+    data: ConfirmTransactionParams['data'],
+    JWT: ConfirmTransactionParams['JWT'],
+): Promise<Transaction> => {
+    addAuthHeader(transactionInstance, JWT)
+
+    const response: AxiosResponse<Transaction> = await transactionInstance.post(
+        apiEndpoints.microServices.private.TRANSACTIONS,
+        data,
+    )
+
+    if (response.status !== 200)
+        throw new Error(
+            `Failed to confirm ${apiEndpoints.microServices.private.TRANSACTIONS}`,
         )
 
     return response.data

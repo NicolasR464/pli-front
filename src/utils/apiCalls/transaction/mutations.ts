@@ -3,11 +3,11 @@ import type { Transaction } from '@/types/transaction'
 import type { TransactionStates } from '@/types/transaction/actions'
 import type { User } from '@/types/user'
 
-import { createTransaction } from '.'
+import { confirmTransaction, createPreTransaction } from '.'
 import type { UseMutationResult } from '@tanstack/react-query'
 import { useMutation } from '@tanstack/react-query'
 
-export type TransactionParams = {
+export type PreTransactionParams = {
     data: {
         userA: User['id']
         userB: User['id']
@@ -18,15 +18,36 @@ export type TransactionParams = {
     JWT: string
 }
 
+export type ConfirmTransactionParams = {
+    data: {
+        id: Transaction['id']
+        state: TransactionStates
+    }
+    JWT: string
+}
+
 /**
  * Custom hook for sending an email by using React Query's useMutation.
  */
-export const useCreateTransaction = (): UseMutationResult<
+export const useCreatePreTransaction = (): UseMutationResult<
     Transaction,
     Error,
-    TransactionParams
+    PreTransactionParams
 > => {
-    return useMutation<Transaction, Error, TransactionParams>({
-        mutationFn: ({ data, JWT }) => createTransaction(data, JWT),
+    return useMutation<Transaction, Error, PreTransactionParams>({
+        mutationFn: ({ data, JWT }) => createPreTransaction(data, JWT),
+    })
+}
+
+/**
+ * Custom hook for confirming a transaction.
+ */
+export const useConfirmTransaction = (): UseMutationResult<
+    Transaction,
+    Error,
+    ConfirmTransactionParams
+> => {
+    return useMutation<Transaction, Error, ConfirmTransactionParams>({
+        mutationFn: ({ data, JWT }) => confirmTransaction(data, JWT),
     })
 }
