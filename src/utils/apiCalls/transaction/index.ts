@@ -35,9 +35,10 @@ export const getTransactionsByUser = async (
 
     addAuthHeader(transactionInstance, JWT)
 
-    const response: AxiosResponse<Transaction[]> = await transactionInstance.get(
-        `${apiEndpoints.microServices.private.TRANSACTIONS}users/${userId}`,
-    )
+    const response: AxiosResponse<Transaction[]> =
+        await transactionInstance.get(
+            `${apiEndpoints.microServices.private.TRANSACTIONS}users/${userId}`,
+        )
 
     if (response.status !== 200)
         throw new Error(

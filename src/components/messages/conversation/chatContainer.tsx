@@ -75,9 +75,8 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
             setReceiverId(otherParticipantId ?? '')
 
             if (otherParticipantId) {
-                const otherParticipantInfo = await getUserById(
-                    otherParticipantId,
-                )
+                const otherParticipantInfo =
+                    await getUserById(otherParticipantId)
                 setContactName(otherParticipantInfo?.pseudo ?? '')
                 setContactAvatar(otherParticipantInfo?.avatarUrl ?? '')
             }

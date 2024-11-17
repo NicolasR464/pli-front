@@ -10,12 +10,9 @@ import UserProfileCard from '../designSystem/userCard'
 
 // Composants spécifiques à chaque section
 
-
 const UserDashboard: React.FC = () => {
-    const [activeSection, setActiveSection] = useState<string>('info') // Section principale active
-    const [activeSubSection, setActiveSubSection] = useState<string | null>(
-        null,
-    ) // Sous-section active (utile pour certaines sections)
+    const [activeSection, setActiveSection] = useState<string>('info')
+    const [activeSubSection, setActiveSubSection] = useState<string | ''>()
 
     // Liste des sections avec icônes
     const sections = [
@@ -52,7 +49,7 @@ const UserDashboard: React.FC = () => {
                         href='https://help.website.com'
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='text-blue-500 underline'
+                        className='text-blueGreen-dark underline'
                     >
                         Accéder au centre d'aide
                     </a>

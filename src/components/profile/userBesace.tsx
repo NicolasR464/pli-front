@@ -155,7 +155,7 @@ const UserBesace: React.FC = () => {
                     <div className='flex gap-4'>
                         <button
                             type='submit'
-                            className='rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blueGreen-dark'
+                            className='rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
                         >
                             Enregistrer
                         </button>
@@ -199,7 +199,7 @@ const UserBesace: React.FC = () => {
                                         setSelectedArticle(article)
                                         setIsEditing(true)
                                     }}
-                                    className='rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blueGreen-dark'
+                                    className='rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
                                 >
                                     Modifier
                                 </button>
