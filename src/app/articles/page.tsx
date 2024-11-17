@@ -1,14 +1,30 @@
-import Image from 'next/image'
+import { Suspense } from 'react'
 
-import { RegistrationForm } from '@/components/forms/userRegistration'
+import { ArticlesList } from '@/components/ArticlesList'
+import SkeletonAvatarTxt from '@/components/skeletons/SkeletonAvatarTxt'
 
-import { trocUpLogos } from '@/utils/constants/images'
+import { getQueryClient } from '@/utils/providers/getQueryClient'
 
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
+
+/** Display all articles data. */
 const Articles = (): React.JSX.Element => {
+    const queryClient = getQueryClient()
+
+    // Placeholder pendant le chargement des articles (10 éléments simulés)
+    const skeletons = []
+    for (let inc = 0; inc < 10; inc++) {
+        skeletons.push(<SkeletonAvatarTxt key={inc} />)
+    }
+
     return (
-        <div className='flex h-screen flex-col items-center justify-start'>
-            
-        </div>
+        <main>
+            <HydrationBoundary state={dehydrate(queryClient)}>
+                <Suspense fallback={skeletons}>
+                    <ArticlesList />
+                </Suspense>
+            </HydrationBoundary>
+        </main>
     )
 }
 

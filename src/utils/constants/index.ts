@@ -4,6 +4,7 @@ export const paginationLimit = 20
 /** The list of React Query keys  */
 export const rqKeys = {
     USERS: 'users',
+    ARTICLES: 'allArticles',
     USER: 'user',
 }
 
