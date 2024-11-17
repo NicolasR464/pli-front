@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { DeliveryTypeSchema } from '../article'
 
 const Delivery = z.object({
-    _id: z.string(),
+    id: z.string(),
     type: DeliveryTypeSchema,
     packageWeight: z.number().positive(),
     sent: z.date(),
@@ -13,6 +13,7 @@ const Delivery = z.object({
 })
 
 export const TransactionSchema = z.object({
+    id: z.string(),
     receiver: z.string(),
     article: z.string(),
     sender: z.string(),

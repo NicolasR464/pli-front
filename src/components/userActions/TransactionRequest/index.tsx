@@ -1,36 +1,33 @@
+/* eslint-disable no-console */
 'use client'
+
+import { useState } from 'react'
 
 import { Button } from '@/components/shadcn/ui/button'
 
 import { useUserStore } from '@/stores/user'
 import { useSendEmail } from '@/utils/apiCalls/local/mutations'
+import { useCreateTransaction } from '@/utils/apiCalls/transaction/mutations'
 import { userMessages } from '@/utils/constants'
 import { notify } from '@/utils/functions/toasterHelper'
 
 import { EmailTypeSchema, NotificationType } from '@/types'
-import type { Article } from '@/types/article'
+import {
+    type PartialArticleFields,
+    TransactionStatesSchema,
+} from '@/types/transaction/actions'
 import type { User } from '@/types/user'
 
-/**
- * Fields of the article that are required for the transaction request
- * @exports ArticleFields
- */
-type ArticleFields = {
-    adTitle: Article['adTitle']
-    description: Article['description']
-    /** Get the first image url of the article - imageUrls[0] */
-    imageUrl: Article['imageUrls'][number]
-}
+import { useAuth } from '@clerk/nextjs'
 
 /**
  * Props for the TransactionRequest component
- * @exports TransactionRequestProps
  */
 type TransactionRequestProps = {
     readonly userB: Partial<User>
-    readonly articleB: ArticleFields
+    readonly articleB: PartialArticleFields
     // If the transaction is 1to1, the articleA info is required
-    readonly articleA?: ArticleFields
+    readonly articleA?: PartialArticleFields
 }
 
 /**
@@ -48,9 +45,15 @@ const TransactionRequest = ({
     articleA = undefined,
 }: TransactionRequestProps): React.JSX.Element => {
     const { mutateAsync: sendEmail, isSuccess: emailSent } = useSendEmail()
+    const { getToken } = useAuth()
+
+    const { mutateAsync: createTransaction } = useCreateTransaction()
 
     // The userA is the user who is sending the request
     const userA = useUserStore((state) => state.user)
+    const { userId: userIdA } = useAuth()
+
+    const [buttonText, setButtonText] = useState('Je veux !')
 
     if (articleA) {
         // @TODO : For 1to1 transactions, do a post request to transaction service - to do a pre-transaction
@@ -59,15 +62,54 @@ const TransactionRequest = ({
         console.log('articleA', articleA)
     }
 
-    const handleSendEmail = async (): Promise<void> => {
-        if (!userA.pseudo || !userB.email || !articleB.adTitle) {
+    const handleTransactionRequest = async (): Promise<void> => {
+        const JWT = await getToken({ template: 'trocup-1' })
+
+        if (!JWT || !userIdA || !userB.id) {
             notify({
                 message: userMessages.requestSent.type.ERROR,
                 type: NotificationType.enum.ERROR,
             })
-
             return
         }
+
+        const { id: transactionID } = await createTransaction(
+            {
+                data: {
+                    userA: userIdA,
+                    userB: userB.id,
+                    articleB: {
+                        id: articleB.id,
+                        price: articleB.price,
+                    },
+                    ...(articleA && {
+                        articleA: {
+                            id: articleA.id,
+                            price: articleA.price,
+                        },
+                    }),
+                    state: TransactionStatesSchema.enum.PENDING,
+                },
+                JWT,
+            },
+            {
+                onError: (error: unknown) => {
+                    if (
+                        error &&
+                        typeof error === 'object' &&
+                        'status' in error &&
+                        error.status === 409
+                    ) {
+                        setButtonText('Demande déjà envoyée !')
+                    } else {
+                        notify({
+                            message: userMessages.requestSent.type.ERROR,
+                            type: NotificationType.enum.ERROR,
+                        })
+                    }
+                },
+            },
+        )
 
         await sendEmail(
             {
@@ -75,6 +117,7 @@ const TransactionRequest = ({
                     userA,
                     userB,
                     articleB,
+                    transactionID,
                 },
                 emailType: EmailTypeSchema.enum.TRANSACTION_REQUEST,
             },
@@ -85,6 +128,8 @@ const TransactionRequest = ({
                         message: userMessages.requestSent.type.SUCCESS,
                         type: NotificationType.enum.SUCCESS,
                     })
+
+                    setButtonText('Demande envoyée !')
                 },
                 onError: () => {
                     notify({
@@ -101,12 +146,12 @@ const TransactionRequest = ({
             <Button
                 disabled={emailSent}
                 onClick={() => {
-                    handleSendEmail()
+                    handleTransactionRequest()
                 }}
                 className='bg-teal-500 text-white'
-                aria-label='Je veux acheter cet article'
+                aria-label='transaction request'
             >
-                {emailSent ? 'Demande envoyée !' : 'Je veux !'}
+                {buttonText}
             </Button>
         </div>
     )

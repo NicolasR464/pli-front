@@ -1,4 +1,4 @@
-import type { TransactionParams, TransactionResponse } from './mutations'
+import type { TransactionParams } from './mutations'
 
 import { transactionInstance } from '@/utils/axiosInstances/transaction'
 import { apiEndpoints } from '@/utils/constants/endpoints'
@@ -31,14 +31,21 @@ export const getTransactions = async (): Promise<Transaction[]> => {
 export const createTransaction = async (
     data: TransactionParams['data'],
     JWT: TransactionParams['JWT'],
-): Promise<TransactionResponse> => {
+): Promise<Transaction> => {
     addAuthHeader(transactionInstance, JWT)
 
-    const response: AxiosResponse<TransactionResponse> =
-        await transactionInstance.post(apiEndpoints.TRANSACTIONS, data)
+    // eslint-disable-next-line no-console
+    console.log('data', data)
+
+    const response: AxiosResponse<Transaction> = await transactionInstance.post(
+        apiEndpoints.microServices.private.TRANSACTIONS,
+        data,
+    )
 
     if (response.status !== 201)
-        throw new Error(`Failed to fetch ${apiEndpoints.TRANSACTIONS}`)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.private.TRANSACTIONS}`,
+        )
 
     return response.data
 }

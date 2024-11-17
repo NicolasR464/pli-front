@@ -69,11 +69,6 @@ export const sendEmail = async ({
             contentData,
             emailType,
         },
-        {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        },
     )
 
     if (response.status !== 200)

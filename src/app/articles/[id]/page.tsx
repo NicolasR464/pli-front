@@ -14,7 +14,7 @@ import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
 import InstantTransactionRequest from '@/components/userActions/InstantTransactionRequest'
 import Map from '@/components/Map'
-import InstantTransactionRequest from '@/components/userActions/InstantTransactionRequest'
+import TransactionRequest from '@/components/userActions/TransactionRequest'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
@@ -26,8 +26,6 @@ const ArticlePage = (): React.JSX.Element => {
     // Get id from URL in string to avoid type errors :
     const { id } = useParams()
     const articleId = String(id)
-
-    const { user: userSignedIn } = useUser()
 
     // React query to get article data
     const {

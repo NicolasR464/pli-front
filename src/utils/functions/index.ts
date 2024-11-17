@@ -45,7 +45,7 @@ export const getRandomAvatarUrl = (): string => {
  */
 export const getRandomUserPseudonym = (): string => {
     const randomPseudo = uniqueNamesGenerator({
-        dictionaries: [adjectives, animals, colors],
+        dictionaries: [adjectives, colors, animals],
         separator: ' ',
         length: 3,
         style: 'capital',
