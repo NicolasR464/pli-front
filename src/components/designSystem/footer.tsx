@@ -68,10 +68,10 @@ const Footer: React.FC = () => {
                     <ul className='space-y-2'>
                         <li>
                             <Link
-                                href='/faq'
+                                href='/aide'
                                 className='font-body text-grey-dark hover:underline'
                             >
-                                {'FAQ'}
+                                {'Aide'}
                             </Link>
                         </li>
                         <li>
@@ -88,6 +88,22 @@ const Footer: React.FC = () => {
                                 className='font-body text-grey-dark hover:underline'
                             >
                                 {'Retours'}
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href='cgu'
+                                className='font-body text-grey-dark hover:underline'
+                            >
+                                {'Condition Générales d\'utilisation'}
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href='/cgv'
+                                className='font-body text-grey-dark hover:underline'
+                            >
+                                {'Condition Générales de vente'}
                             </Link>
                         </li>
                     </ul>

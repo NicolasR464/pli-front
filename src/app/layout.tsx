@@ -1,5 +1,8 @@
+'use client';  // Ajoute cette ligne pour indiquer que ce fichier est un composant client
+
+import { usePathname } from 'next/navigation'; // Ajoute ce hook pour obtenir le pathname actuel
 import { Toaster } from 'react-hot-toast'
-import type { Metadata } from 'next'
+import { Metadata } from 'next'
 import {
     Carrois_Gothic_SC,
     Quattrocento_Sans,
@@ -14,8 +17,6 @@ import ReactQueryProvider from '@/utils/providers/ReactQuery'
 
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-
-// const inter = Inter({ subsets: ['latin'] })
 
 // eslint-disable-next-line new-cap
 const carroisGothic = Carrois_Gothic_SC({
@@ -34,48 +35,37 @@ const questrial = Questrial({
     subsets: ['latin'],
 })
 
-export const metadata: Metadata = {
-    title: 'TrocUp',
-    description: 'Le troc 2.0',
-    icons: {
-        icon: '/trocup_icon.ico',
-    },
-    openGraph: {
-        type: 'website',
-        locale: 'fr_FR',
-        url: 'https://troc-up.vercel.app',
-        siteName: 'TrocUp',
-    },
-    other: {
-        custom: ['utf8'],
-    },
-}
-
 const Layout = ({
     children,
 }: Readonly<{
     children: React.ReactNode
-}>): React.JSX.Element => (
-    <ClerkProvider
-        signUpFallbackRedirectUrl={pagePaths.ONBOARDING}
-        afterSignOutUrl={pagePaths.HOME}
-    >
-        <html lang='en'>
-            <body
-                className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
-            >
-                <ReactQueryProvider>
-                    <header>
-                        <Navbar />
-                    </header>
-                    <main className='flex-grow'>
-                        <Toaster />
-                        {children}
-                    </main>
-                    <Footer />
-                </ReactQueryProvider>
-            </body>
-        </html>
-    </ClerkProvider>
-)
+}>): React.JSX.Element => {
+    const pathname = usePathname(); // Récupère le chemin actuel
+
+    return (
+        <ClerkProvider
+            signUpFallbackRedirectUrl={pagePaths.ONBOARDING}
+            afterSignOutUrl={pagePaths.HOME}
+        >
+            <html lang='en'>
+                <body
+                    className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
+                >
+                    <ReactQueryProvider>
+                        <header>
+                            {/* N'affiche pas Navbar si sur '/aide'*/}
+                            {pathname !== '/aide' && <Navbar />}
+                        </header>
+                        <main className='flex-grow'>
+                            <Toaster />
+                            {children}
+                        </main>
+                        <Footer />
+                    </ReactQueryProvider>
+                </body>
+            </html>
+        </ClerkProvider>
+    )
+}
+
 export default Layout
