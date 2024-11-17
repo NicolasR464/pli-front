@@ -23,8 +23,7 @@ const UserDashboard: React.FC = () => {
             icon: <CreditCard />,
         },
         { id: 'transactions', label: 'Mes Transactions', icon: <List /> },
-        { id: 'bag', label: 'Ma besace', icon: <ShoppingBag /> },
-        { id: 'help', label: 'Help center', icon: <HelpCircle /> },
+        { id: 'bag', label: 'Ma besace', icon: <ShoppingBag /> }
     ]
 
     // Fonction pour rendre le contenu principal
@@ -43,17 +42,6 @@ const UserDashboard: React.FC = () => {
                 return <Transactions />
             case 'bag':
                 return <UserBesace />
-            case 'help':
-                return (
-                    <a
-                        href='https://help.website.com'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-blueGreen-dark underline'
-                    >
-                        Accéder au centre d'aide
-                    </a>
-                )
             default:
                 return <p>{'Sélectionnez une section dans le menu.'}</p>
         }
@@ -85,6 +73,17 @@ const UserDashboard: React.FC = () => {
                                 <span>{section.label}</span>
                             </li>
                         ))}
+                        <li>
+                            <a
+                                href='/'
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='flex cursor-pointer items-center gap-3 rounded-lg p-3 text-left text-h6 text-blueGreen-dark-active'
+                            >
+                                <HelpCircle />
+                                Help Center
+                            </a>
+                        </li>
                     </ul>
                 </aside>
 
