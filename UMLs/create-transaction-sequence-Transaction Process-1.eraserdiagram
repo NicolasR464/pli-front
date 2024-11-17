@@ -1,0 +1,45 @@
+sequence-diagram
+
+title Transaction Process
+
+UserA [icon: user, color: lightblue] > System [icon: server, color: gray]: Clicks "I want" button
+activate UserA
+System > TransactionService [icon: cloud, color: orange]: Create pre-transaction with "PENDING" state
+alt [label: 1-to-1 transaction, color: lightgreen] {
+  System > ArticleService [icon: cloud, color: purple]: Update article as UNAVAILABLE
+}
+System > EmailService [icon: mail, color: red]: Send validation email to UserB
+EmailService > UserB [icon: user, color: lightblue]: Email with Transaction ID, UserA's data, ArticleB details
+
+UserB > System: Clicks "valider" link
+activate UserB
+System > TransactionService: Update TransactionState to "APPROVED"
+System > ArticleService: Mark Article as UNAVAILABLE
+System > UserService [icon: cloud, color: yellow]: Process Updates
+par [label: Update balances and credits] {
+  UserService > UserA: Update balance
+  UserService > UserB: Update credit, articles array, balance
+}
+
+alt [label: 1-to-1 transaction, color: lightgreen] {
+  par [label: Remove articles from users] {
+    System > UserA: Remove ArticleA
+    System > UserB: Remove ArticleB
+  }
+  par [label: Adjust credits] {
+    System > UserA: Update credit (subtract priceA)
+    System > UserB: Update credit (subtract priceB)
+  }
+}
+else [label: 1-to-M transaction, color: lightcoral] {
+  UserA > System: Takes 1M
+  par [label: Adjust balances and credits] {
+    System > UserA: Decrease balance by priceB
+    System > UserB: Increase balance by priceB
+    System > UserB: Decrease credit by priceB
+  }
+  System > UserB: Remove ArticleB ID from articles array
+}
+deactivate UserA
+deactivate UserB
+
