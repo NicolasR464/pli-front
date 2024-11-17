@@ -45,12 +45,12 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
             >
                 <SheetContent
                     side='left'
-                    className='w-full sm:max-w-lg'
+                    className='w-full overflow-visible sm:max-w-lg'
                 >
-                    <SheetHeader>
+                    <SheetHeader className='relative'>
                         <h2 className='text-xl font-semibold'>{'TROCUP'}</h2>
                         {/* Barre de recherche */}
-                        <div className='visible-below-425 hidden p-4'>
+                        <div className='visible-below-425 relative hidden p-4'>
                             <SearchBar />
                         </div>
                     </SheetHeader>

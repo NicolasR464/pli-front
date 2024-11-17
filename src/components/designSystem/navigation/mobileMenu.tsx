@@ -60,7 +60,7 @@ const MobileNavigationBar: React.FC = () => {
 
             {/* Gestion des utilisateurs */}
             <SignedOut>
-                <SignInButton>
+                <SignInButton mode='modal'>
                     <User
                         className='cursor-pointer text-blueGreen-dark'
                         strokeWidth={1.5}

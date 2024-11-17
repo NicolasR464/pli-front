@@ -17,7 +17,6 @@ import { products } from '@/utils/constants/productValues'
 
 const Navbar: React.FC = () => {
     const [isCategorySheetOpen, setIsCategorySheetOpen] = useState(false)
-
     return (
         <nav className='sticky z-50 w-full border-b border-grey-light bg-white px-0 shadow-sm'>
             <div className='flex min-w-max items-center justify-between py-0'>
