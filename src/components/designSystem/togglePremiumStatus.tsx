@@ -1,9 +1,12 @@
-import React from 'react'
-import { useAuth, useUser } from '@clerk/nextjs'
-import { updateUser } from '@/utils/apiCalls/user'
+import React, { useState } from 'react'
+
 import { useUserStore } from '@/stores/user'
+import { updateUser } from '@/utils/apiCalls/user'
+
+import { useAuth, useUser } from '@clerk/nextjs'
 
 const TogglePremiumButton: React.FC = () => {
+    const [errorMessage, setErrorMessage] = useState<string>('')
     const { user: clerkUser } = useUser()
     const { getToken } = useAuth()
 
@@ -13,65 +16,53 @@ const TogglePremiumButton: React.FC = () => {
         setUserData: state.setUserData,
     }))
 
-    const handleUpgradeToPremium = async () => {
-        if (!clerkUser || !user) {
-            console.error('Utilisateur introuvable.')
-            return
-        }
-
+    const handleUpgradeToPremium = async (): Promise<void> => {
         try {
-            console.log('togglePremiumStatus called with userId:', clerkUser.id)
             const token = (await getToken()) ?? ''
-            if (!token) {
-                console.error('JWT introuvable.')
-                return
-            }
 
             // Prépare les données utilisateur pour passer à Premium
             const updatedUserData = {
                 ...user,
-                isPremium: true, // Forcer le statut premium à true
+                isPremium: true,
             }
 
-            console.log('Données envoyées à l’API :', updatedUserData)
-
-            // Met à jour les données côté backend
-            const updatedUser = await updateUser(
-                clerkUser.id,
-                updatedUserData,
-                token,
-            )
-
-            console.log('Réponse de l’API :', updatedUser)
+            await updateUser(clerkUser?.id ?? '', updatedUserData, token)
 
             // Met à jour le store utilisateur localement
             setUserData({
                 ...user,
                 isPremium: true,
             })
-            console.log(
-                'Statut premium mis à jour dans le store :',
-                updatedUser.isPremium,
-            )
-        } catch (error) {
-            console.error(
-                'Erreur lors de la mise à jour du statut premium :',
-                error,
+        } catch {
+            setErrorMessage(
+                `Erreur lors de la mise à jour du statut premium. Veuillez réesseyer`,
             )
         }
     }
+    return (
+        <div>
+            {/* Affichage du message d'erreur */}
+            {!!errorMessage && (
+                <p className='mt-2 text-sm text-red-500'>{errorMessage}</p>
+            )}
 
-    return user?.isPremium ? (
-        <p className='mt-4 text-lg font-semibold text-yellow-dark'>
-            Compte Premium
-        </p>
-    ) : (
-        <button
-            onClick={handleUpgradeToPremium}
-            className='mt-4 rounded-md bg-yellow-dark px-4 py-2 text-white hover:bg-yellow-dark-hover'
-        >
-            Obtenir Premium
-        </button>
+            {/* Contenu du bouton */}
+            {user.isPremium ? (
+                <p className='mt-4 text-lg font-semibold text-yellow-dark'>
+                    {'Compte Premium'}
+                </p>
+            ) : (
+                <button
+                    type='button'
+                    onClick={() => {
+                        void handleUpgradeToPremium()
+                    }}
+                    className='mt-4 rounded-md bg-yellow-dark px-4 py-2 text-white hover:bg-yellow-dark-hover'
+                >
+                    {'Obtenir Premium'}
+                </button>
+            )}
+        </div>
     )
 }
 

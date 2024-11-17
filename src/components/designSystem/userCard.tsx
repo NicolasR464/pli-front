@@ -1,23 +1,21 @@
 import React from 'react'
 import Image from 'next/image'
 
-import { useUser } from '@clerk/nextjs'
-import { useUserStore } from '@/stores/user'
 import TogglePremiumButton from './togglePremiumStatus'
 
+import { useUserStore } from '@/stores/user'
+
+import { useUser } from '@clerk/nextjs'
+
 const UserProfileCard: React.FC = () => {
-    const { isSignedIn, user: clerkUser } = useUser()
+    const { user: clerkUser } = useUser()
     const { user } = useUserStore((state) => ({
         user: state.user,
     }))
 
-    if (!user) {
-        return <p>{'Chargement des informations utilisateur…'}</p>
-    }
-
     // Formatage de la date de dernière connexion
     const lastLoginDate = clerkUser?.lastSignInAt
-        ? new Date(clerkUser?.lastSignInAt).toLocaleDateString('fr-FR', {
+        ? new Date(clerkUser.lastSignInAt).toLocaleDateString('fr-FR', {
               year: 'numeric',
               month: 'short',
               day: 'numeric',
@@ -29,7 +27,7 @@ const UserProfileCard: React.FC = () => {
             {/* Avatar utilisateur */}
             <div className='mb-4 flex justify-center'>
                 <Image
-                    src={user.avatarUrl || '/default-avatar.png'}
+                    src={user.avatarUrl ?? '/default-avatar.png'}
                     alt='User avatar'
                     width={100}
                     height={100}

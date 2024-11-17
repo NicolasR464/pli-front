@@ -116,4 +116,3 @@ export const updateUser = async (
 
     return response.data
 }
-
