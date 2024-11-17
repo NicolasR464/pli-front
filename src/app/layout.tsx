@@ -69,12 +69,14 @@ const Layout = ({
                     <header>
                         <Navbar />
                     </header>
-                    <main className='flex-grow'>
-                        <UserStoreProvider />
-                        <Toaster />
-                        {children}
-                    </main>
-                    <Footer />
+                    <div className='flex min-h-screen flex-col'>
+                        <main className='flex-grow'>
+                            <UserStoreProvider />
+                            <Toaster />
+                            {children}
+                        </main>
+                        <Footer />
+                    </div>
                 </ReactQueryProvider>
             </body>
         </html>
