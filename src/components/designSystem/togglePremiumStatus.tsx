@@ -55,7 +55,7 @@ const TogglePremiumButton: React.FC = () => {
                 <button
                     type='button'
                     onClick={() => {
-                        void handleUpgradeToPremium()
+                        handleUpgradeToPremium()
                     }}
                     className='mt-4 rounded-md bg-yellow-dark px-4 py-2 text-white hover:bg-yellow-dark-hover'
                 >
