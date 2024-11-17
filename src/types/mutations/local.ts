@@ -1,6 +1,5 @@
 import type { Article } from '@/types/article'
 import type { EmailType } from '@/types/index'
-import type { Transaction } from '@/types/transaction'
 import type { PartialArticleFields } from '@/types/transaction/actions'
 import type { User } from '@/types/user'
 

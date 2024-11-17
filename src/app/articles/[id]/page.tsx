@@ -11,9 +11,7 @@ import ProductCard from '@/components/articleDisplay/ProductCard'
 import ProductDetails from '@/components/articleDisplay/ProductDetails'
 import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
-import InstantTransactionRequest from '@/components/userActions/InstantTransactionRequest'
 import Map from '@/components/Map'
-import TransactionRequest from '@/components/userActions/TransactionRequest'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
@@ -38,8 +36,8 @@ const ArticlePage = (): React.JSX.Element => {
     // Type and store id in a variable to avoid errors
     const ownerId = article?.owner
 
-    // React query to get user data
-    const { data: userB } = useQuery({
+    // React query to get article owner data
+    const { data: user } = useQuery({
         queryKey: ['user', ownerId],
         queryFn: () => getUserById(ownerId),
         enabled: !!ownerId,
@@ -124,7 +122,17 @@ const ArticlePage = (): React.JSX.Element => {
                         </div>
 
                         {/* Action buttons */}
-                        <ProductActions />
+                        <ProductActions
+                            userB={{
+                                id: article.owner,
+                                email: user?.email ?? '',
+                            }}
+                            articleB={{
+                                id: article.id,
+                                adTitle: article.adTitle,
+                                imageUrl: article.imageUrls[0],
+                            }}
+                        />
                     </div>
                 </div>
             ) : (
@@ -141,7 +149,19 @@ const ArticlePage = (): React.JSX.Element => {
                     </div>
                 </div>
                 {/* Action buttons */}
-                <ProductActions />
+                {!!article && !!user && (
+                    <ProductActions
+                        userB={{
+                            id: article.owner,
+                            email: user.email,
+                        }}
+                        articleB={{
+                            id: article.id,
+                            adTitle: article.adTitle,
+                            imageUrl: article.imageUrls[0],
+                        }}
+                    />
+                )}
 
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
+import { TransactionStatesSchema } from './actions'
+
 import { DeliveryTypeSchema } from '../article'
 
 const Delivery = z.object({
@@ -14,9 +16,10 @@ const Delivery = z.object({
 
 export const TransactionSchema = z.object({
     id: z.string(),
-    receiver: z.string(),
-    article: z.string(),
-    sender: z.string(),
+    userA: z.string(),
+    userB: z.string(),
+    articleB: z.string(),
+    state: TransactionStatesSchema,
     delivery: Delivery.optional(),
 })
 
