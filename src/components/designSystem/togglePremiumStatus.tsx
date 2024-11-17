@@ -13,7 +13,7 @@ const TogglePremiumButton: React.FC = () => {
         setUserData: state.setUserData,
     }))
 
-    const handleTogglePremium = async () => {
+    const handleUpgradeToPremium = async () => {
         if (!clerkUser || !user) {
             console.error('Utilisateur introuvable.')
             return
@@ -22,21 +22,18 @@ const TogglePremiumButton: React.FC = () => {
         try {
             console.log('togglePremiumStatus called with userId:', clerkUser.id)
             const token = (await getToken()) ?? ''
-            console.log(token)
-
             if (!token) {
                 console.error('JWT introuvable.')
                 return
             }
 
-            // Prépare les nouvelles données utilisateur
-            const newIsPremium = user.isPremium === true ? false : true
+            // Prépare les données utilisateur pour passer à Premium
             const updatedUserData = {
                 ...user,
-                isPremium: newIsPremium, // Force explicitement true ou false
+                isPremium: true, // Forcer le statut premium à true
             }
 
-            console.log("Données envoyées à l'API :", updatedUserData)
+            console.log('Données envoyées à l’API :', updatedUserData)
 
             // Met à jour les données côté backend
             const updatedUser = await updateUser(
@@ -45,19 +42,12 @@ const TogglePremiumButton: React.FC = () => {
                 token,
             )
 
-            console.log("Réponse de l'API :", updatedUser)
-
-            // Vérifiez si la réponse reflète correctement le changement
-            if (updatedUser.isPremium !== newIsPremium) {
-                console.error(
-                    "Le backend n'a pas mis à jour correctement le statut premium.",
-                )
-            }
+            console.log('Réponse de l’API :', updatedUser)
 
             // Met à jour le store utilisateur localement
             setUserData({
                 ...user,
-                isPremium: newIsPremium,
+                isPremium: true,
             })
             console.log(
                 'Statut premium mis à jour dans le store :',
@@ -66,20 +56,21 @@ const TogglePremiumButton: React.FC = () => {
         } catch (error) {
             console.error(
                 'Erreur lors de la mise à jour du statut premium :',
+                error,
             )
         }
     }
 
-    return (
+    return user?.isPremium ? (
+        <p className='mt-4 text-lg font-semibold text-yellow-dark'>
+            Compte Premium
+        </p>
+    ) : (
         <button
-            onClick={handleTogglePremium}
-            className={`mt-4 rounded-md px-4 py-2 text-white ${
-                user?.isPremium
-                    ? 'text-yellow-dark'
-                    : 'bg-yellow-dark hover:bg-yellow-dark-hover'
-            }`}
+            onClick={handleUpgradeToPremium}
+            className='mt-4 rounded-md bg-yellow-dark px-4 py-2 text-white hover:bg-yellow-dark-hover'
         >
-            {user?.isPremium ? 'Compte Premium' : 'Obtenir Premium'}
+            Obtenir Premium
         </button>
     )
 }

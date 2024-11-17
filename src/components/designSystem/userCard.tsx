@@ -3,9 +3,7 @@ import Image from 'next/image'
 
 import { useUser } from '@clerk/nextjs'
 import { useUserStore } from '@/stores/user'
-import togglePremiumStatus from '../profil/togglePremiumStatus'
-import { Button } from '../shadcn/ui/button'
-import TogglePremiumButton from '../profil/togglePremiumStatus'
+import TogglePremiumButton from './togglePremiumStatus'
 
 const UserProfileCard: React.FC = () => {
     const { isSignedIn, user: clerkUser } = useUser()
