@@ -103,7 +103,7 @@ const Transactions: React.FC = () => {
                                     transaction.delivery.sent,
                                 ).toLocaleDateString('fr-FR')}
                             </p>
-                            <p className='text-sm font-semibold text-blue-600'>
+                            <p className='text-sm font-semibold text-blueGreen-dark'>
                                 {transaction.delivery.type}
                             </p>
                         </div>

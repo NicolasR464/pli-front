@@ -163,7 +163,7 @@ const PaymentMethods: React.FC = () => {
                             value={formData.iban}
                             onChange={handleChange}
                             required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500'
+                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active focus:ring-blueGreen-dark-active'
                         />
                     </div>
 
@@ -182,7 +182,7 @@ const PaymentMethods: React.FC = () => {
                             value={formData.bic}
                             onChange={handleChange}
                             required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500'
+                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active focus:ring-blueGreen-dark-active'
                         />
                     </div>
 
@@ -190,7 +190,7 @@ const PaymentMethods: React.FC = () => {
                     <div className='flex gap-4'>
                         <button
                             type='submit'
-                            className='rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+                            className='rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
                         >
                             Enregistrer
                         </button>
@@ -214,7 +214,7 @@ const PaymentMethods: React.FC = () => {
                     </p>
                     <button
                         onClick={() => setIsEditing(true)}
-                        className='mt-4 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
+                        className='mt-4 rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
                     >
                         Modifier
                     </button>

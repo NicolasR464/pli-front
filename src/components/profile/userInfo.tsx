@@ -301,7 +301,7 @@ const UserInfo: React.FC = () => {
                     <div className='flex gap-4'>
                         <button
                             type='submit'
-                            className='rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blue-600'
+                            className='rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blueGreen-dark'
                         >
                             Enregistrer
                         </button>
@@ -345,7 +345,7 @@ const UserInfo: React.FC = () => {
                     </p>
                     <button
                         onClick={() => setIsEditing(true)}
-                        className='mt-4 rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blue-600'
+                        className='mt-4 rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blueGreen-dark'
                     >
                         Modifier
                     </button>
