@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import { getArticleById, getArticles } from '@/utils/apiCalls/article'
 import { sendMessage } from '@/utils/apiCalls/instantMessage'
-import { getUserInfo } from '@/utils/apiCalls/user'
+import { getUserById } from '@/utils/apiCalls/user'
 
 import type { Article } from '@/types/article'
 
@@ -48,8 +48,8 @@ const InitialProposalModal: React.FC<InitialProposalModalProps> = ({
             const articleData = await getArticleById(articleId)
             setInitialArticleTitle(articleData.adTitle)
 
-            const receiverData = await getUserInfo(receiverId, token)
-            setReceiverName(receiverData.pseudo)
+            const receiverData = await getUserById(receiverId)
+            setReceiverName(receiverData?.pseudo ?? '')
         }
 
         fetchData()

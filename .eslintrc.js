@@ -61,6 +61,7 @@ module.exports = {
         },
     ],
     rules: {
+        'no-underscore-dangle': 'off',
         camelcase: 'off',
         'capitalized-comments': 'off',
         complexity: 'off',
@@ -89,7 +90,7 @@ module.exports = {
         'unicorn/prefer-set-has': 'off',
         'jsdoc/check-tag-names': 'off',
         'react/jsx-max-depth': 'off',
-
+        'no-underscore-dangle': 'off',
         'react/jsx-no-leaked-render': [
             'error',
             { validStrategies: ['coerce'] },

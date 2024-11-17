@@ -11,10 +11,11 @@ import { usePathname } from 'next/navigation'
 
 // Ajoute ce hook pour obtenir le pathname actuel
 import Footer from '@/components/designSystem/footer'
-import Navbar from '@/components/designSystem/navbar'
+import Navbar from '@/components/designSystem/navigation/navbar'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
+import UserStoreProvider from '@/utils/providers/UserStoreProvider'
 
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -40,6 +41,7 @@ const Layout = ({
     children,
 }: Readonly<{
     children: React.ReactNode
+
 }>): React.JSX.Element => {
     const pathname = usePathname() // Récupère le chemin actuel
 
@@ -68,5 +70,4 @@ const Layout = ({
         </ClerkProvider>
     )
 }
-
 export default Layout
