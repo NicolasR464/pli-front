@@ -36,9 +36,7 @@ const AccordionDemo: React.FC = () => {
                 <div className='relative w-full'>
                     {/* Conteneur du logo et du texte */}
                     <div className='absolute left-0 top-0 z-20 flex flex-col items-center gap-y-1 p-4'>
-                        <Link
-                            href='/'
-                        >
+                        <Link href='/'>
                             <img
                                 src='/logo.png'
                                 alt='Logo'
@@ -46,7 +44,7 @@ const AccordionDemo: React.FC = () => {
                             />
                         </Link>
                         <div className='text-lg font-semibold text-white'>
-                            {'Centre d\’aide'}
+                            {'Centre d’aide'}
                         </div>
                     </div>
 
@@ -124,7 +122,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/qu-est-ce-que-trocup'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Qu\’est-ce que Trocup ?'}
+                                            {'Qu’est-ce que Trocup ?'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -140,7 +138,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Qu\’est-ce l\’abonnement premium'}
+                                            {'Qu’est-ce l’abonnement premium'}
                                             {'Trocup ?'}
                                         </a>
                                     </li>
@@ -152,7 +150,7 @@ const AccordionDemo: React.FC = () => {
                                             {
                                                 'Pourquoi dois-je fournir une pièce'
                                             }
-                                            {'d\’identité ?'}
+                                            {'d’identité ?'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -180,7 +178,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'Comment fonctionne le dépôt d\’une'
+                                                'Comment fonctionne le dépôt d’une'
                                             }
                                             {'annonce ?'}
                                         </a>
@@ -288,7 +286,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'J\’ai oublié mon mot de passe ?'}
+                                            {'J’ai oublié mon mot de passe ?'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -356,7 +354,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'Pourquoi l\’utilisation d\’une IA ?'
+                                                'Pourquoi l’utilisation d’une IA ?'
                                             }
                                         </a>
                                     </li>
@@ -365,7 +363,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Comment l\’IA évalue-t-elle les'}
+                                            {'Comment l’IA évalue-t-elle les'}
                                             {'articles ?'}
                                         </a>
                                     </li>
@@ -374,7 +372,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Est-ce que l\’IA est fiable ?'}
+                                            {'Est-ce que l’IA est fiable ?'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -383,7 +381,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {'Peut-on contester une évaluation'}
-                                            {'faite par l\’IA ?'}
+                                            {'faite par l’IA ?'}
                                         </a>
                                     </li>
                                 </ul>
@@ -423,7 +421,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'L\’objet reçu n\’est pas le bon, que'
+                                                'L’objet reçu n’est pas le bon, que'
                                             }
                                             {'faire ?'}
                                         </a>
@@ -433,7 +431,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Je n\’ai pas reçu mon objet ?'}
+                                            {'Je n’ai pas reçu mon objet ?'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -442,7 +440,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'L\’objet est arrivé cassé, que faire'
+                                                'L’objet est arrivé cassé, que faire'
                                             }
                                             {'?'}
                                         </a>
@@ -453,7 +451,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'L\’objet troqué a été égaré par la'
+                                                'L’objet troqué a été égaré par la'
                                             }
                                             {
                                                 'société de livraison, que faire ?'
@@ -501,7 +499,7 @@ const AccordionDemo: React.FC = () => {
                                             {
                                                 'Comment puis-je faire confiance à'
                                             }
-                                            {'l\’évaluation par l\’IA ?'}
+                                            {'l’évaluation par l’IA ?'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -528,7 +526,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/qu-est-ce-que-trocup'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Je n\’arrive pas à me connecter'}
+                                            {'Je n’arrive pas à me connecter'}
                                         </a>
                                     </li>
                                     <li className='mt-2 text-[#30BBB4]'>
@@ -536,7 +534,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Mon annonce n\’est toujours pas'}
+                                            {'Mon annonce n’est toujours pas'}
                                             {'publié'}
                                         </a>
                                     </li>
@@ -546,7 +544,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'Mon annonce n\’est plus disponible'
+                                                'Mon annonce n’est plus disponible'
                                             }
                                             {'sur le site'}
                                         </a>
@@ -557,7 +555,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'J\’ai supprimé mon annonce par erreur'
+                                                'J’ai supprimé mon annonce par erreur'
                                             }
                                         </a>
                                     </li>
@@ -566,7 +564,7 @@ const AccordionDemo: React.FC = () => {
                                             href='/creer-un-projet'
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
-                                            {'Le troqueur n\’est pas venu au'}
+                                            {'Le troqueur n’est pas venu au'}
                                             {'rendez-vous'}
                                         </a>
                                     </li>
@@ -596,7 +594,7 @@ const AccordionDemo: React.FC = () => {
                                             className='font-bold hover:bg-[#f0f8ff] hover:underline'
                                         >
                                             {
-                                                'J\’ai reçu des messages innapropriés,'
+                                                'J’ai reçu des messages innapropriés,'
                                             }
                                             {'que faire ?'}
                                         </a>

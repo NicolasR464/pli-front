@@ -10,7 +10,6 @@ const config = {
     ],
     prefix: '',
     theme: {
-
         container: {
             center: true,
             padding: '2rem',
@@ -120,7 +119,6 @@ const config = {
                 display: ['Carrois Gothic SC', 'sans-serif'], // Pour les titres Display
                 heading: ['Century Gothic', 'sans-serif'], // Pour les titres H1 à H6
                 body: ['Quattrocento Sans', 'serif'], // Pour le texte courant
-
             },
             fontSize: {
                 'display-1': ['149px', { lineHeight: '1.2' }],
@@ -146,7 +144,6 @@ const config = {
                 'text-6': ['10px', { lineHeight: '1.6' }],
             },
         },
-
     },
     plugins: [require('tailwindcss-animate')],
 } satisfies Config

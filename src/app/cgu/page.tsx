@@ -17,7 +17,7 @@ const CGU = () => {
 
                     {/* Texte au centre de l'image */}
                     <h1 className='absolute inset-0 flex translate-y-[-12px] items-center justify-center text-5xl font-bold text-white'>
-                        {'Conditions Générales d\’utilisation'}
+                        {'Conditions Générales d’utilisation'}
                     </h1>
                 </div>
             </section>
@@ -30,17 +30,17 @@ const CGU = () => {
                     </h2>
                     <p className='text-justify leading-relaxed text-gray-600'>
                         {
-                            'Les présentes Conditions Générales d\’Utilisation (CGU)'
+                            'Les présentes Conditions Générales d’Utilisation (CGU)'
                         }
-                        {'régissent l\’utilisation de la plateforme de troc'}
+                        {'régissent l’utilisation de la plateforme de troc'}
                         {
                             '(ci-après dénommée « la Plateforme »). En accédant et en'
                         }
                         {
-                            'utilisant la Plateforme, l\’utilisateur (ci-après dénommé'
+                            'utilisant la Plateforme, l’utilisateur (ci-après dénommé'
                         }
                         {
-                            '« l\’Utilisateur ») accepte sans réserve les présentes'
+                            '« l’Utilisateur ») accepte sans réserve les présentes'
                         }
                         {'CGU.'}
                     </p>
@@ -52,19 +52,19 @@ const CGU = () => {
                         {'1. Objet de la Plateforme'}
                     </h2>
                     <p className='text-justify leading-relaxed text-gray-600'>
-                        {'La Plateforme est un service d\’échanges entre'}
+                        {'La Plateforme est un service d’échanges entre'}
                         {
                             'particuliers permettant aux Utilisateurs de publier des'
                         }
                         {'annonces de produits disponibles pour le troc. La'}
                         {
-                            'Plateforme met l\’accent sur l\’expérience utilisateur, la'
+                            'Plateforme met l’accent sur l’expérience utilisateur, la'
                         }
                         {
                             'sécurité et la transparence des échanges. Les présentes'
                         }
                         {
-                            'CGU encadrent l\’ensemble des services proposés, que ce'
+                            'CGU encadrent l’ensemble des services proposés, que ce'
                         }
                         {'soit en mode gratuit ou en mode Premium.'}
                     </p>
@@ -82,12 +82,12 @@ const CGU = () => {
                     <p className='justify leading-relaxed text-gray-600'>
                         {'Pour utiliser les services de la Plateforme,'}
                         {
-                            'l\’Utilisateur doit créer un compte en fournissant des'
+                            'l’Utilisateur doit créer un compte en fournissant des'
                         }
                         {
-                            'informations exactes et à jour. La création d\’un compte'
+                            'informations exactes et à jour. La création d’un compte'
                         }
-                        {'entraîne l\’acceptation des présentes CGU.'}
+                        {'entraîne l’acceptation des présentes CGU.'}
                     </p>
 
                     <h3 className='mb-2 text-xl font-semibold text-gray-600'>
@@ -101,7 +101,7 @@ const CGU = () => {
                             {'la présence de publicités.'}
                         </li>
                         <li>
-                            {'Boost d\’article : L\’Utilisateur peut booster un'}
+                            {'Boost d’article : L’Utilisateur peut booster un'}
                             {
                                 'article moyennant 2€ pour une meilleure visibilité.'
                             }
@@ -114,7 +114,7 @@ const CGU = () => {
                     <ul className='list-inside list-disc space-y-2 text-gray-600'>
                         <li>
                             {
-                                'Boost d\’articles gratuits : Trois boosts gratuits'
+                                'Boost d’articles gratuits : Trois boosts gratuits'
                             }
                             {'par mois sont inclus.'}
                         </li>
@@ -128,7 +128,7 @@ const CGU = () => {
                 {/* Section 3 */}
                 <section className='mb-8 border-t border-gray-300 pt-8'>
                     <h2 className='mb-4 text-2xl font-semibold text-gray-700'>
-                        {'3. Obligations de l\’Utilisateur'}
+                        {'3. Obligations de l’Utilisateur'}
                     </h2>
                     <ul className='justify list-inside list-disc space-y-2 text-gray-600'>
                         <li>
@@ -142,11 +142,11 @@ const CGU = () => {
                                 'Publier des produits de qualité : Se limiter à des'
                             }
                             {
-                                'articles en bon état et pertinents pour l\’échange.'
+                                'articles en bon état et pertinents pour l’échange.'
                             }
                         </li>
                         <li>
-                            {'Favoriser l\’échange collectif : Participer'}
+                            {'Favoriser l’échange collectif : Participer'}
                             {'activement et positivement aux échanges.'}
                         </li>
                     </ul>
@@ -156,7 +156,7 @@ const CGU = () => {
                 <section className='mb-8 border-t border-gray-300 pt-8'>
                     <h2 className='mb-4 text-2xl font-semibold text-gray-700'>
                         {
-                            '4. Limites et Conditions d\’Utilisation de la Plateforme'
+                            '4. Limites et Conditions d’Utilisation de la Plateforme'
                         }
                     </h2>
 
@@ -164,7 +164,7 @@ const CGU = () => {
                         {'4.1 Limite de Publication'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'L\’Utilisateur peut publier un maximum de cinq (5)'}
+                        {'L’Utilisateur peut publier un maximum de cinq (5)'}
                         {'articles simultanément sur la Plateforme.'}
                     </p>
 
@@ -211,27 +211,27 @@ const CGU = () => {
                     </p>
 
                     <h3 className='mb-2 text-xl font-semibold text-gray-600'>
-                        {'5.2 Contestation d\’un Objet Non Conforme'}
+                        {'5.2 Contestation d’un Objet Non Conforme'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'En cas de réception d\’un objet non conforme,'}
-                        {'l\’Utilisateur dispose de cinq (5) jours ouvrés pour'}
+                        {'En cas de réception d’un objet non conforme,'}
+                        {'l’Utilisateur dispose de cinq (5) jours ouvrés pour'}
                         {
-                            'contester l\’échange. La Plateforme pourra procéder à un'
+                            'contester l’échange. La Plateforme pourra procéder à un'
                         }
                         {'prélèvement SEPA si nécessaire.'}
                     </p>
 
                     <h3 className='mb-2 text-xl font-semibold text-gray-600'>
-                        {'5.3 Conditions d\’Utilisation du Mode "One-to-Many"'}
+                        {'5.3 Conditions d’Utilisation du Mode "One-to-Many"'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
                         {'Le mode "one-to-many" est accessible uniquement aux'}
                         {'Utilisateurs Premium ayant effectué trois (3)'}
                         {'transactions réussies et ayant une note moyenne'}
-                        {'supérieure à 4/5. La prise d\’objets est limitée à'}
+                        {'supérieure à 4/5. La prise d’objets est limitée à'}
                         {'hauteur de 75% de la valeur de la besace de'}
-                        {'l\’Utilisateur concerné.'}
+                        {'l’Utilisateur concerné.'}
                     </p>
                 </section>
 
@@ -239,19 +239,19 @@ const CGU = () => {
                 <section className='mb-8 border-t border-gray-300 pt-8'>
                     <h2 className='mb-4 text-2xl font-semibold text-gray-700'>
                         {
-                            '6. Résiliation et Interruption de l\’Abonnement Premium'
+                            '6. Résiliation et Interruption de l’Abonnement Premium'
                         }
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
                         {'Si un Utilisateur interrompt son abonnement Premium'}
-                        {'alors qu\’il est redevable d\’un montant dû à la'}
+                        {'alors qu’il est redevable d’un montant dû à la'}
                         {
-                            'Plateforme, il s\’engage à payer la somme restante. Toute'
+                            'Plateforme, il s’engage à payer la somme restante. Toute'
                         }
                         {'violation des présentes CGU pourra entraîner la'}
-                        {'suspension temporaire ou définitive de l\’abonnement'}
+                        {'suspension temporaire ou définitive de l’abonnement'}
                         {
-                            'Premium de l\’Utilisateur, sans remboursement possible.'
+                            'Premium de l’Utilisateur, sans remboursement possible.'
                         }
                     </p>
                 </section>
@@ -270,7 +270,7 @@ const CGU = () => {
                             'communiquées aux Utilisateurs et entreront en vigueur'
                         }
                         {'dans un délai de sept (7) jours. En continuant à'}
-                        {'utiliser la Plateforme après ce délai, l\’Utilisateur'}
+                        {'utiliser la Plateforme après ce délai, l’Utilisateur'}
                         {'accepte les modifications.'}
                     </p>
                 </section>
@@ -281,16 +281,16 @@ const CGU = () => {
                         {'8. Responsabilité de la Plateforme'}
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'La Plateforme n\’est en aucun cas responsable des'}
+                        {'La Plateforme n’est en aucun cas responsable des'}
                         {'dommages indirects pouvant survenir du fait de'}
                         {
-                            'l\’utilisation du site ou de ses services. L\’Utilisateur'
+                            'l’utilisation du site ou de ses services. L’Utilisateur'
                         }
                         {'reconnaît que la Plateforme agit uniquement comme'}
                         {
                             'intermédiaire dans les échanges et que toute transaction'
                         }
-                        {'s\’effectue sous sa propre responsabilité.'}
+                        {'s’effectue sous sa propre responsabilité.'}
                     </p>
                 </section>
 
@@ -302,13 +302,13 @@ const CGU = () => {
                     <p className='justify leading-relaxed text-gray-600'>
                         {'Les informations personnelles recueillies lors de la'}
                         {
-                            'création d\’un compte sont traitées conformément à notre'
+                            'création d’un compte sont traitées conformément à notre'
                         }
                         {
-                            'Politique de Confidentialité. L\’Utilisateur dispose d\’un'
+                            'Politique de Confidentialité. L’Utilisateur dispose d’un'
                         }
                         {
-                            'droit d\’accès, de modification, et de suppression de ses'
+                            'droit d’accès, de modification, et de suppression de ses'
                         }
                         {'données personnelles en contactant le support.'}
                     </p>
@@ -326,9 +326,9 @@ const CGU = () => {
                         {
                             'cas de litige, les parties conviennent de rechercher une'
                         }
-                        {'solution amiable avant d\’entamer toute procédure'}
+                        {'solution amiable avant d’entamer toute procédure'}
                         {
-                            'judiciaire. A défaut d\’accord, les tribunaux compétents'
+                            'judiciaire. A défaut d’accord, les tribunaux compétents'
                         }
                         {
                             'de [Ville] seront seuls habilités à trancher le litige.'
@@ -343,15 +343,15 @@ const CGU = () => {
                             'En accédant et en utilisant la Plateforme, vous acceptez'
                         }
                         {'pleinement les présentes Conditions Générales'}
-                        {'d\’Utilisation.'}
+                        {'d’Utilisation.'}
                     </p>
                     <p className='justify mt-4 leading-relaxed text-gray-600'>
                         {'Ces CGU couvrent les principales conditions'}
                         {
-                            'd\’utilisation de la Plateforme de troc et protègent les'
+                            'd’utilisation de la Plateforme de troc et protègent les'
                         }
                         {
-                            'intérêts de l\’entreprise tout en clarifiant les droits'
+                            'intérêts de l’entreprise tout en clarifiant les droits'
                         }
                         {'et obligations des Utilisateurs. Assurez-vous de les'}
                         {
@@ -367,7 +367,7 @@ const CGU = () => {
                 {/* Points Clés */}
                 <section className='mb-8 border-t border-gray-300 pt-8'>
                     <h2 className='mb-4 text-2xl font-semibold text-gray-700'>
-                        {'Conditions Générales d\’Utilisation - Points Clés'}
+                        {'Conditions Générales d’Utilisation - Points Clés'}
                     </h2>
                     <ul className='justify list-inside list-disc space-y-2 text-gray-600'>
                         <li>
@@ -375,19 +375,19 @@ const CGU = () => {
                             {'Gratuit :\r'}
                             {'Accès aux services avec publicités et boost\r'}
                             {
-                                'd\’article payant (2€). Premium (4,99€/mois) : Pas de\r'
+                                'd’article payant (2€). Premium (4,99€/mois) : Pas de\r'
                             }
                             {'publicités, 3 boosts gratuits par mois, accès\r'}
                             {
                                 'exclusif de 3 jours aux nouveaux articles, et accès\r'
                             }
                             {
-                                'au mode d\’échange "one-to-many" après 3 échanges\r'
+                                'au mode d’échange "one-to-many" après 3 échanges\r'
                             }
                             {'réussis.\r'}
                         </li>
                         <li>
-                            <strong>{'Limites d\’Utilisation :'}</strong>{' '}
+                            <strong>{'Limites d’Utilisation :'}</strong>{' '}
                             {'Maximum de\r'}
                             {
                                 '5 articles publiés simultanément par utilisateur.\r'
@@ -422,7 +422,7 @@ const CGU = () => {
                         <li>
                             <strong>{'Résiliation et Sanctions :'}</strong>{' '}
                             {'En cas\r'}
-                            {'d\’arrêt de l\’abonnement Premium, règlement des\r'}
+                            {'d’arrêt de l’abonnement Premium, règlement des\r'}
                             {
                                 'montants dus obligatoire. Suspension temporaire ou\r'
                             }
@@ -436,7 +436,7 @@ const CGU = () => {
                             }
                             {'Confidentialité. La Plateforme agit comme\r'}
                             {
-                                'intermédiaire, les échanges s\’effectuent sous la\r'
+                                'intermédiaire, les échanges s’effectuent sous la\r'
                             }
                             {'responsabilité des utilisateurs.\r'}
                         </li>

@@ -41,7 +41,6 @@ const Layout = ({
     children,
 }: Readonly<{
     children: React.ReactNode
-
 }>): React.JSX.Element => {
     const pathname = usePathname() // Récupère le chemin actuel
 
