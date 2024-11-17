@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
     title: 'TrocUp',
@@ -15,4 +15,4 @@ export const metadata: Metadata = {
     other: {
         custom: ['utf8'],
     },
-};
+}

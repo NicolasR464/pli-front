@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
                                 href='cgu'
                                 className='font-body text-grey-dark hover:underline'
                             >
-                                {'Condition Générales d\'utilisation'}
+                                {'Condition Générales d’utilisation'}
                             </Link>
                         </li>
                         <li>

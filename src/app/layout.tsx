@@ -1,6 +1,5 @@
-'use client';  // Ajoute cette ligne pour indiquer que ce fichier est un composant client
+'use client' // Ajoute cette ligne pour indiquer que ce fichier est un composant client
 
-import { usePathname } from 'next/navigation'; // Ajoute ce hook pour obtenir le pathname actuel
 import { Toaster } from 'react-hot-toast'
 import { Metadata } from 'next'
 import {
@@ -8,7 +7,9 @@ import {
     Quattrocento_Sans,
     Questrial,
 } from 'next/font/google'
+import { usePathname } from 'next/navigation'
 
+// Ajoute ce hook pour obtenir le pathname actuel
 import Footer from '@/components/designSystem/footer'
 import Navbar from '@/components/designSystem/navbar'
 
@@ -40,7 +41,7 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => {
-    const pathname = usePathname(); // Récupère le chemin actuel
+    const pathname = usePathname() // Récupère le chemin actuel
 
     return (
         <ClerkProvider
