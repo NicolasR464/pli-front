@@ -4,6 +4,7 @@ import { addAuthHeader } from '@/utils/functions'
 
 import type { Article } from '@/types/article'
 
+import { getUserById } from '../user'
 import type { AxiosResponse } from 'axios'
 
 type PaginatedArticlesResponse = {
@@ -84,10 +85,19 @@ export const getArticles = async (): Promise<Article[]> => {
         throw new Error(
             `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
         )
+    throw new Error(
+        `Failed to fetch ${apiEndpoints.microServices.public.ARTICLES}`,
+    )
 
     return response.data
 }
 
+/**
+ * Fetch a specific article by its ID.
+ * @param {string} id - The ID of the article to fetch.
+ * @returns {Promise<Article>} The article with the given ID.
+ * @throws {Error} If the request fails or the article cannot be found.
+ */
 export const getArticleById = async (id: string): Promise<Article> => {
     const response: AxiosResponse<Article> = await articleInstance.get(
         `${apiEndpoints.microServices.public.ARTICLES}${id}`,
@@ -97,6 +107,21 @@ export const getArticleById = async (id: string): Promise<Article> => {
     return response.data
 }
 
+/**
+ * Fetch all articles belonging to a specific user.
+ * @param {string} userId - The ID of the user whose articles are to be fetched.
+ * @returns {Promise<Article[]>} An array of articles belonging to the user.
+ * @throws {Error} If the user cannot be found or their articles cannot be retrieved.
+ */
+export const getArticlesByUser = async (userId: string): Promise<Article[]> => {
+    const user = await getUserById(userId)
+    if (user?.articles) {
+        return Promise.all(
+            user.articles.map((articleId) => getArticleById(articleId)),
+        )
+    }
+    return []
+}
 /**
  * Create a new article.
  * @param {Partial<Article>} article - The article to create.
