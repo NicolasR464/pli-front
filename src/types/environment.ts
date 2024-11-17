@@ -64,10 +64,10 @@ export const environment = createEnv({
         NEXT_PUBLIC_CLOUDINARY_KEY: z.string(),
         NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: z.string(),
         NEXT_PUBLIC_LOCAL_API_URL: z.string(),
-        NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL: z.string().url(),
-        NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL: z.string().url(),
-        NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string().url(),
-        NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: z.string().url(),
+        NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL: z.string(),
+        NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL: z.string(),
+        NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string(),
+        NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: z.string(),
     },
 
     /** Also add your client-side env variables here to avoid TS errors. */
