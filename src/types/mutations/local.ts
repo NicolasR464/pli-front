@@ -1,5 +1,8 @@
-import type { Article } from '../article'
-import type { EmailType } from '../index'
+import type { Article } from '@/types/article'
+import type { EmailType } from '@/types/index'
+import type { Transaction } from '@/types/transaction'
+import type { PartialArticleFields } from '@/types/transaction/actions'
+import type { User } from '@/types/user'
 
 export type ImageAnalysis = {
     imageUrl: string
@@ -26,8 +29,17 @@ export type ProductAnalysisResponse = {
     content: ProductAnalysis
 }
 
+/**
+ * Data to be used in the email template, should be flexible.
+ */
 export type EmailParams = {
-    contentData: unknown
+    contentData: {
+        userA?: Partial<User>
+        userB?: Partial<User>
+        articleA?: PartialArticleFields
+        articleB?: PartialArticleFields
+        transactionID?: string
+    }
     emailType: EmailType
 }
 

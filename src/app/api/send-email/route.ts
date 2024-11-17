@@ -2,9 +2,8 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 import { EmailTypeSchema } from '@/types'
-import type { Article } from '@/types/article'
 import { environment } from '@/types/environment'
-import { TransactionTypesSchema } from '@/types/transaction/actions'
+import type { EmailParams } from '@/types/mutations/local'
 
 import type { MailDataRequired } from '@sendgrid/mail'
 import mail from '@sendgrid/mail'
@@ -16,30 +15,30 @@ const sendgridTemplateIDs = {
 }
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
-    const formData = await request.formData()
-    const senderEmail = formData.get('senderEmail')
-    const receiverEmail = formData.get('receiverEmail')
-    const articleParam = formData.get('article')
+    const { contentData, emailType } = (await request.json()) as EmailParams
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const article: Partial<Article> | undefined = articleParam
-        ? JSON.parse(articleParam as string)
-        : undefined
+    const { userA, userB, articleB, transactionID } = contentData
 
     if (
         emailType === EmailTypeSchema.enum.TRANSACTION_REQUEST &&
-        transactionType === TransactionTypesSchema.enum.ONE_TO_MANY
+        !('articleA' in contentData) &&
+        userA &&
+        userB &&
+        articleB &&
+        transactionID
     ) {
+        // This is a request for a 1 to M transaction
+
         const message: MailDataRequired = {
-            to: receiverEmail as string,
-            from: senderEmail as string,
-            subject: 'Nouvelle demande sur TrocUp !',
+            to: userB.email,
+            from: environment.FROM_EMAIL,
             templateId: sendgridTemplateIDs.TRANSACTION_REQUEST_1ToM,
             dynamicTemplateData: {
+                subject: 'Nouvelle demande sur TrocUp !',
                 userApseudo: userA.pseudo,
-                articleAtitle: userB.email,
-                articleAimage: article.adTitle,
-                transactionId: transaction.id,
+                articleAtitle: articleB.adTitle,
+                articleAimage: articleB.imageUrl,
+                transactionID,
             },
         }
 
@@ -59,5 +58,5 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         )
     }
 
-    return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
+    return NextResponse.json({ message: 'Nothing' })
 }
