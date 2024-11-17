@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { getTransactionsByUser } from '@/utils/apiCalls/transaction'
 import { getArticleById } from '@/utils/apiCalls/article'
+import TransactionItem from './transactionItem'
 
 type Transaction = {
     _id: string
@@ -17,11 +18,10 @@ type Transaction = {
         cost: number
         qrCodeUrl: string
     }
-}
-
-type Article = {
-    adTitle: string
-    imageUrls: string[]
+    articleData: {
+        adTitle: string
+        imageUrls: string[]
+    }
 }
 
 const Transactions: React.FC = () => {
@@ -82,32 +82,10 @@ const Transactions: React.FC = () => {
             <h1 className='text-xl font-semibold'>Mes Transactions</h1>
             <div className='mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                 {transactions.map((transaction) => (
-                    <div
+                    <TransactionItem
                         key={transaction._id}
-                        className='flex rounded-lg border p-4 shadow-md'
-                    >
-                        {/* Image de l'article */}
-                        <img
-                            src={transaction.articleData?.imageUrls[0]}
-                            alt={transaction.articleData?.adTitle}
-                            className='mr-4 h-24 w-24 rounded-md object-cover'
-                        />
-                        {/* Informations de la transaction */}
-                        <div className='flex flex-col justify-between'>
-                            <h2 className='text-lg font-bold'>
-                                {transaction.articleData?.adTitle ||
-                                    'Article inconnu'}
-                            </h2>
-                            <p className='text-sm text-gray-600'>
-                                {new Date(
-                                    transaction.delivery.sent,
-                                ).toLocaleDateString('fr-FR')}
-                            </p>
-                            <p className='text-sm font-semibold text-blueGreen-dark'>
-                                {transaction.delivery.type}
-                            </p>
-                        </div>
-                    </div>
+                        transaction={transaction}
+                    />
                 ))}
             </div>
         </div>

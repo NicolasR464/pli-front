@@ -5,6 +5,7 @@ import {
     updateArticle,
     deleteArticle,
 } from '@/utils/apiCalls/article'
+import BesaceItem from './besaceItem'
 import { Article } from '@/types/article'
 
 const UserBesace: React.FC = () => {
@@ -15,7 +16,6 @@ const UserBesace: React.FC = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [loading, setLoading] = useState(true)
 
-    // Récupérer les articles de l'utilisateur
     useEffect(() => {
         const fetchArticles = async () => {
             if (!clerkUser) return
@@ -35,17 +35,6 @@ const UserBesace: React.FC = () => {
         fetchArticles()
     }, [clerkUser])
 
-    // Gère les changements dans les champs du formulaire
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        const { name, value } = e.target
-        if (selectedArticle) {
-            setSelectedArticle((prev) => ({ ...prev!, [name]: value }))
-        }
-    }
-
-    // Gère la soumission des modifications d'article
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!selectedArticle) return
@@ -74,7 +63,6 @@ const UserBesace: React.FC = () => {
         }
     }
 
-    // Supprimer un article
     const handleDelete = async (articleId: string) => {
         try {
             const token = await getToken()
@@ -100,7 +88,6 @@ const UserBesace: React.FC = () => {
         <div>
             <h1 className='text-xl font-semibold'>Ma Besace</h1>
             {isEditing && selectedArticle ? (
-                // Formulaire d'édition d'article
                 <form
                     onSubmit={handleSubmit}
                     className='mt-4 flex flex-col gap-4'
@@ -117,7 +104,12 @@ const UserBesace: React.FC = () => {
                             id='adTitle'
                             name='adTitle'
                             value={selectedArticle.adTitle}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                                setSelectedArticle((prev) => ({
+                                    ...prev!,
+                                    adTitle: e.target.value,
+                                }))
+                            }
                             className='mt-1 w-full rounded-md border p-2'
                         />
                     </div>
@@ -132,7 +124,12 @@ const UserBesace: React.FC = () => {
                             id='description'
                             name='description'
                             value={selectedArticle.description}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                                setSelectedArticle((prev) => ({
+                                    ...prev!,
+                                    description: e.target.value,
+                                }))
+                            }
                             className='mt-1 w-full rounded-md border p-2'
                         />
                     </div>
@@ -148,7 +145,12 @@ const UserBesace: React.FC = () => {
                             id='price'
                             name='price'
                             value={selectedArticle.price}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                                setSelectedArticle((prev) => ({
+                                    ...prev!,
+                                    price: parseFloat(e.target.value),
+                                }))
+                            }
                             className='mt-1 w-full rounded-md border p-2'
                         />
                     </div>
@@ -172,45 +174,17 @@ const UserBesace: React.FC = () => {
                     </div>
                 </form>
             ) : (
-                // Liste des articles
                 <div className='mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                     {articles.map((article) => (
-                        <div
+                        <BesaceItem
                             key={article.id}
-                            className='rounded-lg border p-4 shadow-md'
-                        >
-                            <img
-                                src={article.imageUrls[0]}
-                                alt={article.adTitle}
-                                className='mb-4 w-full rounded-md'
-                            />
-                            <h2 className='text-lg font-bold'>
-                                {article.adTitle}
-                            </h2>
-                            <p className='text-sm text-gray-600'>
-                                {article.description}
-                            </p>
-                            <p className='text-lg font-semibold'>
-                                {article.price} €
-                            </p>
-                            <div className='mt-4 flex justify-between'>
-                                <button
-                                    onClick={() => {
-                                        setSelectedArticle(article)
-                                        setIsEditing(true)
-                                    }}
-                                    className='rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
-                                >
-                                    Modifier
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(article.id)}
-                                    className='rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600'
-                                >
-                                    Supprimer
-                                </button>
-                            </div>
-                        </div>
+                            article={article}
+                            onEdit={() => {
+                                setSelectedArticle(article)
+                                setIsEditing(true)
+                            }}
+                            onDelete={() => handleDelete(article.id)}
+                        />
                     ))}
                 </div>
             )}

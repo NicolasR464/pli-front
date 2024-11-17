@@ -2,10 +2,10 @@
 import React, { useState } from 'react'
 import { User, CreditCard, List, ShoppingBag, HelpCircle } from 'react-feather'
 
-import UserInfo from './userInfo'
-import PaymentMethods from './userPaiementMethode'
-import Transactions from './userTransactions'
-import UserBesace from './userBesace'
+import UserInfo from './items/informations/userInfo'
+import PaymentMethods from './items/informations/userPaiementMethode'
+import Transactions from './items/transaction/userTransactions'
+import UserBesace from './items/besace/userBesace'
 import UserProfileCard from '../designSystem/userCard'
 
 // Composants spécifiques à chaque section
