@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import RoomSidebarItem from './roomSidebarItem'
 
 import { getInstantMsgs } from '@/utils/apiCalls/instantMessage'
-import { getUserInfo } from '@/utils/apiCalls/user'
+import { getUserById } from '@/utils/apiCalls/user'
 
 import { useAuth, useUser } from '@clerk/nextjs'
 
@@ -67,10 +67,10 @@ const RoomSidebar: React.FC<RoomSidebarProps> = ({ onRoomSelect }) => {
 
                     // Récupérer les informations du contact et les ajouter comme `receiverInfo`
                     if (contactId && token) {
-                        const contactData = await getUserInfo(contactId, token)
+                        const contactData = await getUserById(contactId)
                         userRoomsMap[roomId].receiverInfo = {
-                            avatar: contactData.avatarUrl ?? '',
-                            username: contactData.pseudo,
+                            avatar: contactData?.avatarUrl ?? '',
+                            username: contactData?.pseudo ?? '',
                         }
                     }
                 }

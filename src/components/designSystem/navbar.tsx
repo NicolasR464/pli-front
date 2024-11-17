@@ -163,19 +163,20 @@ const Navbar: React.FC = () => {
                                 </div>
                                 <SheetFooter className='absolute bottom-0 left-0 flex w-full justify-start p-4'>
                                     <SignOutButton redirectUrl={pagePaths.HOME}>
-                                        <Button className='bg-darkBlue text-white hover:bg-blueGreen'>
+                                        {/* <Button className='bg-darkBlue text-white hover:bg-blueGreen bottom-0 flex justify-center'>
                                             {'Déconnexion'}
-                                        </Button>
+                                        </Button> */}
                                     </SignOutButton>
                                     <SheetClose />
                                 </SheetFooter>
                             </SheetContent>
                         </Sheet>
-
-                        <Bell
-                            className='color-blueGreen-dark-active cursor-pointer'
-                            strokeWidth={1.5}
-                        />
+                        <Link href={pagePaths.MESSAGES}>
+                            <Bell
+                                className='color-blueGreen-dark-active cursor-pointer'
+                                strokeWidth={1.5}
+                            />
+                        </Link>
                     </SignedIn>
                 </div>
             </div>

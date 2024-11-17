@@ -2,17 +2,24 @@ import React from 'react'
 import Image from 'next/image'
 
 import { useUser } from '@clerk/nextjs'
+import { useUserStore } from '@/stores/user'
+import togglePremiumStatus from '../profil/togglePremiumStatus'
+import { Button } from '../shadcn/ui/button'
+import TogglePremiumButton from '../profil/togglePremiumStatus'
 
 const UserProfileCard: React.FC = () => {
-    const { user } = useUser()
+    const { isSignedIn, user: clerkUser } = useUser()
+    const { user } = useUserStore((state) => ({
+        user: state.user,
+    }))
 
     if (!user) {
         return <p>{'Chargement des informations utilisateur…'}</p>
     }
 
     // Formatage de la date de dernière connexion
-    const lastLoginDate = user.lastSignInAt
-        ? new Date(user.lastSignInAt).toLocaleDateString('fr-FR', {
+    const lastLoginDate = clerkUser?.lastSignInAt
+        ? new Date(clerkUser?.lastSignInAt).toLocaleDateString('fr-FR', {
               year: 'numeric',
               month: 'short',
               day: 'numeric',
@@ -24,7 +31,7 @@ const UserProfileCard: React.FC = () => {
             {/* Avatar utilisateur */}
             <div className='mb-4 flex justify-center'>
                 <Image
-                    src={user.imageUrl}
+                    src={user.avatarUrl || '/default-avatar.png'}
                     alt='User avatar'
                     width={100}
                     height={100}
@@ -34,7 +41,7 @@ const UserProfileCard: React.FC = () => {
 
             {/* Nom utilisateur */}
             <h2 className='text-neutrals-blacks-normal font-heading text-lg font-bold'>
-                {user.fullName ?? 'Utilisateur'}
+                {user.pseudo ?? 'Utilisateur'}
             </h2>
 
             {/* Dernière connexion */}
@@ -44,9 +51,9 @@ const UserProfileCard: React.FC = () => {
             </p>
 
             {/* Bouton premium */}
-            <button className='mt-4 rounded-md bg-yellow px-4 py-2 text-white hover:bg-yellow-hover'>
-                {'Get Premium'}
-            </button>
+            <div className='bottom-0 flex justify-center align-middle'>
+                <TogglePremiumButton />
+            </div>
         </div>
     )
 }
