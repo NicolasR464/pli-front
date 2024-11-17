@@ -7,10 +7,11 @@ import {
 } from 'next/font/google'
 
 import Footer from '@/components/designSystem/footer'
-import Navbar from '@/components/designSystem/navbar'
+import Navbar from '@/components/designSystem/navigation/navbar'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
+import UserStoreProvider from '@/utils/providers/UserStoreProvider'
 
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -68,11 +69,14 @@ const Layout = ({
                     <header>
                         <Navbar />
                     </header>
-                    <main className='flex-grow'>
-                        <Toaster />
-                        {children}
-                    </main>
-                    <Footer />
+                    <div className='flex min-h-screen flex-col'>
+                        <main className='flex-grow'>
+                            <UserStoreProvider />
+                            <Toaster />
+                            {children}
+                        </main>
+                        <Footer />
+                    </div>
                 </ReactQueryProvider>
             </body>
         </html>
