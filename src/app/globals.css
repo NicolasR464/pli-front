@@ -67,3 +67,26 @@
         @apply bg-background text-foreground;
     }
 }
+
+@media (max-width: 600px) {
+    .hidden-below-425 {
+        display: none !important;
+    }
+    .visible-below-425 {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1399px) {
+    .hidden-below-1399 {
+        display: none !important;
+    }
+    .visible-above-425 {
+        display: flex !important;
+    }
+}
+@media (min-width: 1399px) {
+    .hidden-above-1399 {
+        display: none !important;
+    }
+}
