@@ -16,7 +16,7 @@ import {
     connectWebSocketByRoomId,
     sendMessageViaWebSocket,
 } from '@/utils/apiCalls/instantMessage/connectWebSocket'
-import { getUserInfo } from '@/utils/apiCalls/user'
+import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths } from '@/utils/constants'
 import { formatDate, groupMessagesByDate } from '@/utils/functions/messages'
 
@@ -75,19 +75,18 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
             setReceiverId(otherParticipantId ?? '')
 
             if (otherParticipantId) {
-                const otherParticipantInfo = await getUserInfo(
+                const otherParticipantInfo = await getUserById(
                     otherParticipantId,
-                    token,
                 )
-                setContactName(otherParticipantInfo.pseudo)
-                setContactAvatar(otherParticipantInfo.avatarUrl ?? '')
+                setContactName(otherParticipantInfo?.pseudo ?? '')
+                setContactAvatar(otherParticipantInfo?.avatarUrl ?? '')
             }
 
             if (user?.id) {
-                const currentUser = await getUserInfo(user.id, token)
+                const currentUser = await getUserById(user.id)
                 setCurrentUserInfo({
-                    avatar: currentUser.avatarUrl ?? '',
-                    username: currentUser.pseudo ?? 'Utilisateur',
+                    avatar: currentUser?.avatarUrl ?? '',
+                    username: currentUser?.pseudo ?? 'Utilisateur',
                 })
             }
 
