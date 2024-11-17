@@ -88,6 +88,5 @@
 @media (min-width: 1399px) {
     .hidden-above-1399 {
         display: none !important;
-        }
+    }
 }
-

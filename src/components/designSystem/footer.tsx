@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
     const routes = ['Accueil', 'Produits', 'À propos', 'Contact']
 
     return (
-        <footer className='bg-blueGreen-light py-8 bottom-0'>
+        <footer className='bottom-0 bg-blueGreen-light py-8'>
             <div className='container mx-auto grid grid-cols-1 gap-8 md:grid-cols-4'>
                 {/* Section 1 : Informations */}
                 <div>

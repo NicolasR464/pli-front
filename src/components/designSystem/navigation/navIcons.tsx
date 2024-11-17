@@ -49,9 +49,7 @@ const NavigationIcons: React.FC = () => {
 
             {/* Connexion ou profil utilisateur */}
             <SignedOut>
-                <SignInButton
-                    mode='modal'
-                >
+                <SignInButton mode='modal'>
                     <Button className='w-full border border-blueGreen-light-hover bg-transparent text-blueGreen-dark hover:bg-blueGreen-dark hover:text-white'>
                         {'🚀 Connexion'}
                     </Button>

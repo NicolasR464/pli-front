@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars*/
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions*/
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+
 import { products } from '@/utils/constants/productValues'
 
 type Suggestion = {
@@ -15,32 +18,30 @@ const SearchBar: React.FC = () => {
         { name: string; type: 'category' | 'subcategory' }[]
     >([])
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ): void => {
         const input = e.target.value
         setSearchTerm(input)
 
         if (input) {
-            console.log(input);
-            
             const suggestions: Suggestion[] = Object.entries(
                 products.categories,
-            ).flatMap(([key, category]) => {
-                console.log('catégorie', category.tag);
-                
+            ).flatMap(([_key, category]) => {
                 // Chercher dans les tags des catégories et sous-catégories
-                const categoryMatch: Suggestion | null = category.tag
+                const categoryMatch: Suggestion | '' = category.tag
                     .toLowerCase()
                     .includes(input.toLowerCase())
                     ? { name: category.tag, type: 'category' }
-                    : null
+                    : ''
 
-                const subCategoryMatches: Suggestion[] = Object.entries(
+                const subCategoryMatches: Suggestion[] = Object.values(
                     category.subcategories,
                 )
-                    .filter(([_, subTag]) =>
+                    .filter((subTag) =>
                         subTag.toLowerCase().includes(input.toLowerCase()),
                     )
-                    .map(([_, subTag]) => ({
+                    .map((subTag) => ({
                         name: subTag,
                         type: 'subcategory',
                     }))
@@ -49,7 +50,6 @@ const SearchBar: React.FC = () => {
                     ? [categoryMatch, ...subCategoryMatches]
                     : subCategoryMatches
             })
-            console.log('Filtered suggestions:', suggestions)
             setFilteredSuggestions(suggestions)
         } else {
             setFilteredSuggestions([])
@@ -57,7 +57,7 @@ const SearchBar: React.FC = () => {
     }
 
     // Gestion de la sélection d'une suggestion
-    const handleSuggestionClick = (suggestion: string) => {
+    const handleSuggestionClick = (suggestion: string): void => {
         setSearchTerm(suggestion)
         setFilteredSuggestions([])
         router.push(`/articles?query=${encodeURIComponent(suggestion)}`)
@@ -91,18 +91,21 @@ const SearchBar: React.FC = () => {
             {/* Liste des suggestions */}
             {filteredSuggestions.length > 0 && (
                 <ul className='absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-lg'>
-                    {filteredSuggestions.map((suggestion, index) => (
+                    {filteredSuggestions.map((suggestion) => (
                         <li
-                            key={index}
+                            key={suggestion.name}
                             className='cursor-pointer px-4 py-2 hover:bg-gray-100'
-                            onClick={() =>
+                            onClick={() => {
                                 handleSuggestionClick(suggestion.name)
-                            }
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleSuggestionClick(suggestion.name)
+                                }
+                            }}
                         >
-                            {suggestion.type === 'category' ? (
+                            {suggestion.type === 'category' && (
                                 <strong>{suggestion.name}</strong>
-                            ) : (
-                                suggestion.name
                             )}
                         </li>
                     ))}
