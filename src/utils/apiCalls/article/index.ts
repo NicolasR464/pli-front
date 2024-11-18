@@ -138,13 +138,13 @@ export const createArticle = async (
 
     const response: AxiosResponse<Partial<Article>> =
         await articleInstance.post(
-            apiEndpoints.microServices.private.ARTICLES,
+            apiEndpoints.microServices.protected.ARTICLES,
             article,
         )
 
     if (response.status !== 201)
         throw new Error(
-            `Failed to create ${apiEndpoints.microServices.private.ARTICLES}`,
+            `Failed to create ${apiEndpoints.microServices.protected.ARTICLES}`,
         )
 
     return response.data

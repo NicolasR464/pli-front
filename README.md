@@ -40,6 +40,7 @@ pnpm install
 -   [Eraser](https://docs.eraser.io/docs/what-is-eraser) to make diagrams/UMLs (folder named `UMLs`). Download the plugin to visualize diagrams (plugin id: EraserLabs.eraserlabs)
 -   [Clerk](https://clerk.com/) for user authentication
 -   [React-hot-toast](https://react-hot-toast.com/docs/toast) for toasters (user notifications)
+-   We use [JSDoc](https://jsdoc.app/) to document the code.
 
 ### Getting Started
 

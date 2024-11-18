@@ -14,12 +14,12 @@ import type { AxiosResponse } from 'axios'
 export const getTransactions = async (): Promise<Transaction[]> => {
     const response: AxiosResponse<Transaction[]> =
         await transactionInstance.get(
-            apiEndpoints.microServices.private.TRANSACTIONS,
+            apiEndpoints.microServices.protected.TRANSACTIONS,
         )
 
     if (response.status !== 200)
         throw new Error(
-            `Failed to fetch ${apiEndpoints.microServices.private.TRANSACTIONS}`,
+            `Failed to fetch ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
         )
 
     return response.data
@@ -41,13 +41,13 @@ export const createPreTransaction = async (
     console.log('data', data)
 
     const response: AxiosResponse<Transaction> = await transactionInstance.post(
-        apiEndpoints.microServices.private.TRANSACTIONS,
+        apiEndpoints.microServices.protected.TRANSACTIONS,
         data,
     )
 
     if (response.status !== 201)
         throw new Error(
-            `Failed to fetch ${apiEndpoints.microServices.private.TRANSACTIONS}`,
+            `Failed to fetch ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
         )
 
     return response.data
@@ -66,13 +66,13 @@ export const confirmTransaction = async (
     addAuthHeader(transactionInstance, JWT)
 
     const response: AxiosResponse<Transaction> = await transactionInstance.post(
-        apiEndpoints.microServices.private.TRANSACTIONS,
+        apiEndpoints.microServices.protected.TRANSACTIONS,
         data,
     )
 
     if (response.status !== 200)
         throw new Error(
-            `Failed to confirm ${apiEndpoints.microServices.private.TRANSACTIONS}`,
+            `Failed to confirm ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
         )
 
     return response.data

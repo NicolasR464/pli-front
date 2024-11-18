@@ -1,15 +1,24 @@
+// eslint-disable-next-line simple-import-sort/imports
 import React from 'react'
 
 import { Button } from '@/components/shadcn/ui/button'
-import type { TransactionRequestProps } from '@/components/userActions/TransactionRequest'
-import TransactionRequest from '@/components/userActions/TransactionRequest'
+import type { TransactionRequestProps } from '@/components/transactions/userActions/TransactionRequest'
+import TransactionRequest from '@/components/transactions/userActions/TransactionRequest'
 
+/**
+ * This component handles the actions related to a product, including 1toM transaction requests and messaging the seller.
+ * It uses the TransactionRequest and RequestDialog components to manage transaction requests.
+ * The button allows users to send a message to the owner of the product.
+ * @param {object} props - Component props
+ * @param {object} props.userB - The user receiving the transaction request
+ * @param {object} props.articleB - The article involved in the transaction
+ */
 const ProductActions: React.FC<TransactionRequestProps> = ({
     userB,
     articleB,
 }) => (
     <div className='mb-6 mt-6 flex justify-center space-x-4'>
-        {/* Transaction 1-to-M request */}
+        {/* Transaction 1-to-M request dialog */}
         <TransactionRequest
             userB={userB}
             articleB={articleB}

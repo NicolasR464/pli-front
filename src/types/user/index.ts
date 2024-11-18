@@ -14,7 +14,7 @@ export const UserSchema = z.object({
     pseudo: z.string(),
     name: z.string(),
     surname: z.string(),
-    address: AddressSchema.array().optional(),
+    addresses: AddressSchema.array().optional(),
     email: z.string().email(),
     sexe: z.enum(['masculin', 'féminin', 'autre']).optional(),
     phoneNumber: z.string().optional(),
