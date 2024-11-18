@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
 import { rqKeys } from '@/utils/constants'
@@ -107,7 +108,7 @@ export const ArticlesList = (): React.JSX.Element => {
                                 }}
                             >
                                 <CardHeader>
-                                    <img
+                                    <Image
                                         src={article.imageUrls[0]}
                                         alt='#'
                                     />

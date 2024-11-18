@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import {
     Accordion,
@@ -37,9 +38,11 @@ const AccordionDemo: React.FC = () => {
                     {/* Conteneur du logo et du texte */}
                     <div className='absolute left-0 top-0 z-20 flex flex-col items-center gap-y-1 p-4'>
                         <Link href='/'>
-                            <img
+                            <Image
                                 src='/logo.png'
                                 alt='Logo'
+                                width={128}
+                                height={128}
                                 className='w-32'
                             />
                         </Link>
@@ -85,10 +88,13 @@ const AccordionDemo: React.FC = () => {
                     </div>
 
                     {/* Image de fond */}
-                    <img
+                    <Image
                         src='/heroAide.png'
-                        alt='Illustrative de la plateforme Trocup'
-                        className='h-80 w-full shadow-lg'
+                        alt='Illustration de la plateforme Trocup'
+                        layout='responsive'
+                        width={1920}
+                        height={1000}
+                        className='w-full max-h-[290px] object-cover shadow-lg'
                     />
 
                     {/* Texte au centre de l'image */}

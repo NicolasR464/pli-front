@@ -1,17 +1,21 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { } from 'react'
+import Image from 'next/image'
 
-const CGV = () => {
+const CGV: React.FC = (): JSX.Element => {
     return (
         <div>
             <section className='hero-section relative flex items-center justify-center'>
                 <div className='relative w-full'>
                     {/* Image de fond */}
-                    <img
+                    <Image
                         src='/heroAide.png'
-                        alt='Image illustrative de la plateforme Trocup'
-                        className='h-80 w-full shadow-lg'
+                        alt='Illustration de la plateforme Trocup'
+                        layout='responsive'
+                        width={1920}
+                        height={1000}
+                        className='w-full max-h-[290px] object-cover shadow-lg'
                     />
 
                     {/* Texte au centre de l'image */}

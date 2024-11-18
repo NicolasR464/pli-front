@@ -1,7 +1,6 @@
-'use client' // Ajoute cette ligne pour indiquer que ce fichier est un composant client
+'use client' 
 
 import { Toaster } from 'react-hot-toast'
-import { Metadata } from 'next'
 import {
     Carrois_Gothic_SC,
     Quattrocento_Sans,
@@ -15,7 +14,6 @@ import Navbar from '@/components/designSystem/navigation/navbar'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
-import UserStoreProvider from '@/utils/providers/UserStoreProvider'
 
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
