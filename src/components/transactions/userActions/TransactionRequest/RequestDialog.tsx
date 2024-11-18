@@ -17,10 +17,16 @@ const RequestDialog: React.FC = () => {
     const openRequestDialog = useTransactionStore(
         (state) => state.openRequestDialog,
     )
+    const setOpenRequestDialog = useTransactionStore(
+        (state) => state.setOpenRequestDialog,
+    )
 
     return (
-        <Dialog open={openRequestDialog}>
-            <DialogContent className='sm:max-w-[425px]'>
+        <Dialog
+            open={openRequestDialog}
+            onOpenChange={setOpenRequestDialog}
+        >
+            <DialogContent className='sm:max-w-[600px] md:max-w-[800px]'>
                 <DialogHeader>
                     <DialogTitle className='text-center'>
                         {'Demande d’échange'}

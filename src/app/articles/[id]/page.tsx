@@ -13,6 +13,7 @@ import ProductDetails from '@/components/articleDisplay/ProductDetails'
 import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
 import Map from '@/components/Map'
+import TransactionRequest from '@/components/transactions/userActions/TransactionRequest'
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
@@ -135,6 +136,8 @@ const ArticlePage = (): React.JSX.Element => {
                                 id: article.id,
                                 adTitle: article.adTitle,
                                 imageUrl: article.imageUrls[0],
+                                address: article.address,
+                                deliveryType: article.deliveryType,
                             }}
                         />
                     </div>
@@ -154,7 +157,7 @@ const ArticlePage = (): React.JSX.Element => {
                 </div>
                 {/* Action buttons */}
                 {!!article && !!user && (
-                    <ProductActions
+                    <TransactionRequest
                         userB={{
                             id: article.owner,
                             email: user.email,
@@ -163,6 +166,8 @@ const ArticlePage = (): React.JSX.Element => {
                             id: article.id,
                             adTitle: article.adTitle,
                             imageUrl: article.imageUrls[0],
+                            address: article.address,
+                            deliveryType: article.deliveryType,
                         }}
                     />
                 )}

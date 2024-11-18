@@ -62,7 +62,7 @@ import { ChevronsUpDown, House, UserPen } from 'lucide-react'
  * and a pseudonym.
  * @returns {React.JSX.Element} The rendered registration form
  */
-export const UserRegistrationForm = (): React.JSX.Element => {
+const UserRegistrationForm = (): React.JSX.Element => {
     const { mutateAsync, isPending } = useCreateUser()
     const [imageLoaded, setImageLoaded] = useState(false)
     const { getToken } = useAuth()
@@ -155,7 +155,7 @@ export const UserRegistrationForm = (): React.JSX.Element => {
         const dataToSend = {
             avatarUrl,
             pseudo: pseudo.trim(),
-            ...(addressObject && { address: [addressObject] }),
+            ...(addressObject && { addresses: [addressObject] }),
             createdAt: new Date().toISOString(),
         }
 
@@ -171,7 +171,7 @@ export const UserRegistrationForm = (): React.JSX.Element => {
                         avatarUrl,
                     })
 
-                    router.push(`${pagePaths.HOME}?onboardingSuccess=true`)
+                    router.push(`${pagePaths.HOME}?onboarding=SUCCESS`)
                 },
                 onError: (errorMsg) => {
                     if (
@@ -182,7 +182,7 @@ export const UserRegistrationForm = (): React.JSX.Element => {
                         return
                     }
 
-                    router.push(`${pagePaths.HOME}?onboardingSuccess=false`)
+                    router.push(`${pagePaths.HOME}?onboarding=ERROR`)
                 },
             },
         )
@@ -264,12 +264,15 @@ export const UserRegistrationForm = (): React.JSX.Element => {
                                         disabled={!imageLoaded}
                                         type='button'
                                         onClick={() => {
+                                            // First set loading state
                                             setImageLoaded(false)
 
-                                            setValue(
-                                                'avatarUrl',
-                                                getRandomAvatarUrl(),
-                                            )
+                                            // Get new avatar URL
+                                            const newAvatarUrl =
+                                                getRandomAvatarUrl()
+
+                                            // Update form value
+                                            setValue('avatarUrl', newAvatarUrl)
                                         }}
                                     >
                                         <UserPen className='mr-2 h-4 w-4' />
@@ -342,31 +345,20 @@ export const UserRegistrationForm = (): React.JSX.Element => {
                                                         'text-muted-foreground',
                                                 )}
                                                 onClick={() => {
-                                                    setOpen(true)
+                                                    if (!open) setOpen(true)
                                                 }}
                                             >
                                                 {!!field.value &&
-                                                    !!addressObject &&
-                                                    Object.keys(addressObject)
-                                                        .length === 0 &&
+                                                    !addressObject &&
                                                     field.value}
-
-                                                {!!addressObject &&
-                                                    Object.keys(addressObject)
-                                                        .length > 0 &&
-                                                    addressObject.label}
-
-                                                {!field.value &&
-                                                    !!addressObject &&
-                                                    Object.keys(addressObject)
-                                                        .length === 0 &&
+                                                {addressObject?.label ??
                                                     'Rentre ton adresse'}
                                                 <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                                             </Button>
                                         </FormControl>
                                     </PopoverTrigger>
 
-                                    <PopoverContent className='w-[300px] p-0'>
+                                    <PopoverContent className='w-[420px] p-0'>
                                         <Command>
                                             <CommandInput
                                                 value={field.value}
@@ -377,11 +369,17 @@ export const UserRegistrationForm = (): React.JSX.Element => {
                                                             ',',
                                                             '',
                                                         )
-
                                                     field.onChange(
                                                         sanitizedValue,
                                                     )
 
+                                                    // Reset addressObject when input changes
+                                                    setValue(
+                                                        'addressObject',
+                                                        undefined,
+                                                    )
+
+                                                    // Fetch new suggestions
                                                     fetchAddressSuggestions(
                                                         sanitizedValue,
                                                     )
@@ -421,6 +419,12 @@ export const UserRegistrationForm = (): React.JSX.Element => {
                                                                                 .properties
                                                                                 .label,
                                                                         },
+                                                                    )
+                                                                    setValue(
+                                                                        'addressInput',
+                                                                        suggestion
+                                                                            .properties
+                                                                            .label,
                                                                     )
                                                                     setOpen(
                                                                         false,
@@ -462,3 +466,5 @@ export const UserRegistrationForm = (): React.JSX.Element => {
         </Form>
     )
 }
+
+export default UserRegistrationForm
