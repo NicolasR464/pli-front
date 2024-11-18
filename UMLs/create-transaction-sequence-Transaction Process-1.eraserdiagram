@@ -14,8 +14,8 @@ EmailService > UserB [icon: user, color: lightblue]: Email with Transaction ID, 
 UserB > System: Clicks "valider" link
 activate UserB
 System > TransactionService: Update TransactionState to "APPROVED"
-System > ArticleService: Mark Article as UNAVAILABLE
-System > UserService [icon: cloud, color: yellow]: Process Updates
+TransactionService > ArticleService: Mark Article as UNAVAILABLE
+TransactionService > UserService [icon: cloud, color: yellow]: Process Updates
 par [label: Update balances and credits] {
   UserService > UserA: Update balance
   UserService > UserB: Update credit, articles array, balance
