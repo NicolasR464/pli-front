@@ -1,5 +1,5 @@
-import ArticleForm from '@/components/forms/adCreation'
-import ImageProcessing from '@/components/forms/imageProcessing'
+import ArticleForm from '@/components/forms/ArticleForm'
+import ImageProcessing from '@/components/forms/ImageDropZone'
 import ConfirmDialog from './ConfirmDialog'
 
 const newArticle = (): React.JSX.Element => {

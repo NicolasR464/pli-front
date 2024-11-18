@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 'use client'
 
-import { useState } from 'react'
-
 import { Button } from '@/components/shadcn/ui/button'
 import RequestDialog from './RequestDialog'
 
