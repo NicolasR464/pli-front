@@ -13,8 +13,8 @@ const CGV: React.FC = (): React.JSX.Element => {
                         src='/heroAide.png'
                         alt='Illustration de la plateforme Trocup'
                         layout='responsive'
-                        width={1920}
-                        height={1000}
+                        width={1_920}
+                        height={1_000}
                         className='max-h-[290px] w-full object-cover shadow-lg'
                     />
 

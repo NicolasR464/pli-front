@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import {
     Accordion,
@@ -17,7 +17,9 @@ import { pagePaths } from '@/utils/constants'
 import { SignedIn, SignedOut, SignInButton, SignOutButton } from '@clerk/nextjs'
 
 /**
- *
+ * Un composant qui affiche une démonstration de l'utilisation d'un accordéon.
+ * Il vérifie d'abord si le rendu est côté client, puis affiche un contenu
+ * dynamique pour le composant.
  */
 const AccordionDemo: React.FC = (): React.JSX.Element => {
     const [isClient, setIsClient] = useState(false)
@@ -92,8 +94,8 @@ const AccordionDemo: React.FC = (): React.JSX.Element => {
                         src='/heroAide.png'
                         alt='Illustration de la plateforme Trocup'
                         layout='responsive'
-                        width={1920}
-                        height={1000}
+                        width={1_920}
+                        height={1_000}
                         className='max-h-[290px] w-full object-cover shadow-lg'
                     />
 

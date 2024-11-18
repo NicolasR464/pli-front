@@ -40,7 +40,8 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => {
-    const pathname = usePathname() // Récupère le chemin actuel
+    // Récupère le chemin actuel
+    const pathname = usePathname()
 
     return (
         <ClerkProvider
@@ -54,7 +55,6 @@ const Layout = ({
                     <ReactQueryProvider>
                         <header>
                             {/* N'affiche pas Navbar si sur '/aide' */}
-
                             {pathname !== '/aide' && <Navbar />}
                         </header>
                         <main className='flex-grow'>

@@ -2,8 +2,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
 import { rqKeys } from '@/utils/constants'
