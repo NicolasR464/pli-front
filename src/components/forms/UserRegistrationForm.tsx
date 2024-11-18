@@ -62,7 +62,7 @@ import { ChevronsUpDown, House, UserPen } from 'lucide-react'
  * and a pseudonym.
  * @returns {React.JSX.Element} The rendered registration form
  */
-export const RegistrationForm = (): React.JSX.Element => {
+export const UserRegistrationForm = (): React.JSX.Element => {
     const { mutateAsync, isPending } = useCreateUser()
     const [imageLoaded, setImageLoaded] = useState(false)
     const { getToken } = useAuth()

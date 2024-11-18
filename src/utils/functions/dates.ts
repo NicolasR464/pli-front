@@ -1,7 +1,7 @@
 import type { ISO8601DateTime } from '@/types'
 
 /**
- * Returns the current date.
+ * Returns the current date in ISO8601 format.
  * @returns {ISO8601DateTime} The current date.
  */
 export const getPresentDate = (): ISO8601DateTime => {

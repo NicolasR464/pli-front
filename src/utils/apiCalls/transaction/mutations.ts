@@ -1,4 +1,4 @@
-import type { Article } from '@/types/article'
+import type { Address, Article } from '@/types/article'
 import type { Transaction } from '@/types/transaction'
 import type { TransactionStates } from '@/types/transaction/actions'
 import type { User } from '@/types/user'
@@ -13,6 +13,7 @@ export type PreTransactionParams = {
         userB: User['id']
         articleB: Partial<Article>
         articleA?: Partial<Article>
+        address?: Partial<Address>
         state: TransactionStates
     }
     JWT: string

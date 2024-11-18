@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 
 import AskLogin from '@/components/AskLogin'
-import ArticleList from '@/components/transacArticles/articleList'
-import ConfirmationButton from '@/components/transacArticles/confirmTransac'
-import ExchangeRecap from '@/components/transacArticles/transacRecap'
+import ArticleList from '@/components/transactions/ArticleList'
+import ConfirmationButton from '@/components/transactions/ConfirmTransac'
+import ExchangeRecap from '@/components/transactions/TransacRecap'
 
 import { useTransactionStore } from '@/stores/transaction'
 

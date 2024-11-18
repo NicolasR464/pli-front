@@ -29,7 +29,7 @@ type PaginatedUsers = {
  */
 export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
-        await userInstance.get(apiEndpoints.microServices.private.USERS, {
+        await userInstance.get(apiEndpoints.microServices.protected.USERS, {
             params: {
                 skip: pageParam,
                 limit: paginationLimit,
@@ -59,7 +59,7 @@ export const createUser = async (
     addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
-        apiEndpoints.microServices.private.USERS,
+        apiEndpoints.microServices.protected.USERS,
         data,
     )
 
@@ -126,7 +126,7 @@ export const updateUser = async (
     addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<User> = await userInstance.put(
-        `${apiEndpoints.microServices.private.USERS}${userId}`,
+        `${apiEndpoints.microServices.protected.USERS}${userId}`,
         data,
     )
 

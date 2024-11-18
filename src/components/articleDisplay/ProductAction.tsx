@@ -2,14 +2,22 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/shadcn/ui/button'
-import type { TransactionRequestProps } from '@/components/userActions/TransactionRequest'
-import TransactionRequest from '@/components/userActions/TransactionRequest'
+import type { TransactionRequestProps } from '@/components/transactions/userActions/TransactionRequest'
+import TransactionRequest from '@/components/transactions/userActions/TransactionRequest'
 
 import { sendMessage } from '@/utils/apiCalls/instantMessage'
 
 import { useAuth, useUser } from '@clerk/nextjs'
 
 
+/**
+ * This component handles the actions related to a product, including 1toM transaction requests and messaging the seller.
+ * It uses the TransactionRequest and RequestDialog components to manage transaction requests.
+ * The button allows users to send a message to the owner of the product.
+ * @param {object} props - Component props
+ * @param {object} props.userB - The user receiving the transaction request
+ * @param {object} props.articleB - The article involved in the transaction
+ */
 const ProductActions: React.FC<TransactionRequestProps> = ({
     userB,
     articleB,
