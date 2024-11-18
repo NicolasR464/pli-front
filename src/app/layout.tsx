@@ -1,4 +1,4 @@
-'use client' 
+'use client'
 
 import { Toaster } from 'react-hot-toast'
 import {
@@ -53,7 +53,8 @@ const Layout = ({
                 >
                     <ReactQueryProvider>
                         <header>
-                            {/* N'affiche pas Navbar si sur '/aide'*/}
+                            {/* N'affiche pas Navbar si sur '/aide' */}
+
                             {pathname !== '/aide' && <Navbar />}
                         </header>
                         <main className='flex-grow'>

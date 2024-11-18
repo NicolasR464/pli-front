@@ -1,9 +1,9 @@
 'use client'
 
-import React, { } from 'react'
+import React from 'react'
 import Image from 'next/image'
 
-const CGU: React.FC = (): JSX.Element => {
+const CGU: React.FC = (): React.JSX.Element => {
     return (
         <div>
             {/* Ajout de la section Hero */}
@@ -16,7 +16,7 @@ const CGU: React.FC = (): JSX.Element => {
                         layout='responsive'
                         width={1920}
                         height={1000}
-                        className='w-full max-h-[290px] object-cover shadow-lg'
+                        className='max-h-[290px] w-full object-cover shadow-lg'
                     />
 
                     {/* Texte au centre de l'image */}

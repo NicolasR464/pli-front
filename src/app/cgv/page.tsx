@@ -1,9 +1,9 @@
 'use client'
 
-import React, { } from 'react'
+import React from 'react'
 import Image from 'next/image'
 
-const CGV: React.FC = (): JSX.Element => {
+const CGV: React.FC = (): React.JSX.Element => {
     return (
         <div>
             <section className='hero-section relative flex items-center justify-center'>
@@ -15,7 +15,7 @@ const CGV: React.FC = (): JSX.Element => {
                         layout='responsive'
                         width={1920}
                         height={1000}
-                        className='w-full max-h-[290px] object-cover shadow-lg'
+                        className='max-h-[290px] w-full object-cover shadow-lg'
                     />
 
                     {/* Texte au centre de l'image */}

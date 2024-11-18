@@ -19,7 +19,7 @@ import { SignedIn, SignedOut, SignInButton, SignOutButton } from '@clerk/nextjs'
 /**
  *
  */
-const AccordionDemo: React.FC = () => {
+const AccordionDemo: React.FC = (): React.JSX.Element => {
     const [isClient, setIsClient] = useState(false)
 
     useEffect(() => {
@@ -94,7 +94,7 @@ const AccordionDemo: React.FC = () => {
                         layout='responsive'
                         width={1920}
                         height={1000}
-                        className='w-full max-h-[290px] object-cover shadow-lg'
+                        className='max-h-[290px] w-full object-cover shadow-lg'
                     />
 
                     {/* Texte au centre de l'image */}
