@@ -84,8 +84,6 @@ const PreTransactionForm: React.FC = () => {
         enabled: !!userIdA,
     })
 
-    console.log('🔥 userA:', userA)
-
     const setOpenRequestDialog = useTransactionStore(
         (state) => state.setOpenRequestDialog,
     )
@@ -158,9 +156,21 @@ const PreTransactionForm: React.FC = () => {
      * @returns {Promise<void>}
      */
     const onSubmit = async (data: PreTransactionFormData): Promise<void> => {
+        if (userA?.id === userB.id) {
+            notify({
+                message: 'Tu ne peux pas faire un échange avec toi-même',
+                type: NotificationType.enum.ERROR,
+            })
+
+            setOpenRequestDialog(false)
+
+            return
+        }
+
         if (
             !data.newAddressObject.label &&
-            !data.registeredAddressObject.label
+            !data.registeredAddressObject.label &&
+            articleB?.deliveryType !== DeliveryTypeSchema.enum.PICKUP
         ) {
             setError('savedUserAddressLabel', {
                 message: 'Tu dois choisir une adresse',
