@@ -65,15 +65,29 @@ export const confirmTransaction = async (
 ): Promise<Transaction> => {
     addAuthHeader(transactionInstance, JWT)
 
-    const response: AxiosResponse<Transaction> = await transactionInstance.post(
-        apiEndpoints.microServices.protected.TRANSACTIONS,
-        data,
-    )
+    console.log('🔥 confirmTransaction')
 
-    if (response.status !== 200)
-        throw new Error(
-            `Failed to confirm ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
+    console.log(data)
+
+    const response: AxiosResponse<Transaction> =
+        await transactionInstance.patch(
+            apiEndpoints.microServices.protected.TRANSACTION_FINAL.replace(
+                ':id',
+                data.id,
+            ),
+            { state: data.state },
         )
+
+    if (response.status !== 200) {
+        console.log(response)
+
+        throw new Error(
+            `Failed to confirm ${apiEndpoints.microServices.protected.TRANSACTION_FINAL.replace(
+                ':id',
+                data.id,
+            )}`,
+        )
+    }
 
     return response.data
 }

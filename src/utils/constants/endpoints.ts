@@ -18,6 +18,7 @@ export const apiEndpoints = {
             USERS: 'api/protected/users/',
             ARTICLES: 'api/protected/articles/',
             TRANSACTIONS: 'api/protected/transactions/',
+            TRANSACTION_FINAL: 'api/protected/transactions/:id/complete',
             INSTANT_MESSAGES: 'api/protected/messages/',
         },
     },
