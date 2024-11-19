@@ -75,4 +75,10 @@ export const userMessages = {
             ERROR: 'Une erreur est survenue lors de l’envoi de la demande.',
         },
     },
+    transactionDuplicate: {
+        label: 'transaction-duplicate',
+        type: {
+            ERROR: 'Cette transaction existe déjà',
+        },
+    },
 }
