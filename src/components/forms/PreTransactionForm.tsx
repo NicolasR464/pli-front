@@ -223,11 +223,20 @@ const PreTransactionForm: React.FC = () => {
                     })
                     setOpenRequestDialog(false)
                 },
-                onError: () => {
-                    notify({
-                        message: userMessages.requestSent.type.ERROR,
-                        type: NotificationType.enum.ERROR,
-                    })
+                onError: (error) => {
+                    if ('status' in error && error.status === 409) {
+                        notify({
+                            message:
+                                userMessages.transactionDuplicate.type.ERROR,
+                            type: NotificationType.enum.ERROR,
+                        })
+                    } else {
+                        notify({
+                            message: userMessages.requestSent.type.ERROR,
+                            type: NotificationType.enum.ERROR,
+                        })
+                    }
+
                     setOpenRequestDialog(false)
                 },
             },
@@ -298,7 +307,6 @@ const PreTransactionForm: React.FC = () => {
                         DeliveryTypeSchema.enum.PICKUP && (
                         <>
                             {!!userA &&
-                                'addresses' in userA &&
                                 Array.isArray(userA.addresses) &&
                                 userA.addresses.length > 0 && (
                                     <div className='flex justify-center'>
@@ -403,7 +411,8 @@ const PreTransactionForm: React.FC = () => {
                                         />
                                     </div>
                                 )}
-                            {/* Article Address Input */}
+
+                            {/* Address Input */}
                             <div className='flex justify-center'>
                                 <FormField
                                     control={control}
