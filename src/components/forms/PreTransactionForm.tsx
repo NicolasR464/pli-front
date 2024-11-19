@@ -238,6 +238,8 @@ const PreTransactionForm: React.FC = () => {
                     }
 
                     setOpenRequestDialog(false)
+
+                    return
                 },
             },
         )
