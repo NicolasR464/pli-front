@@ -169,6 +169,9 @@ const UserRegistrationForm = (): React.JSX.Element => {
                     setUserData({
                         pseudo,
                         avatarUrl,
+                        isPremium: false,
+                        credit: 0,
+                        balance: 0,
                     })
 
                     router.push(`${pagePaths.HOME}?onboarding=SUCCESS`)
