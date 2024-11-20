@@ -17,6 +17,7 @@ import { pagePaths } from '@/utils/constants'
 
 import UserProfileCard from '../userCard'
 import { SignOutButton } from '@clerk/nextjs'
+import TogglePremiumButton from '../togglePremiumStatus';
 
 const UserProfileMenu: React.FC = () => {
     const { user } = useUserStore((state) => ({
@@ -44,6 +45,7 @@ const UserProfileMenu: React.FC = () => {
                         avatarUrl={user.avatarUrl}
                         lastSignInAt={user.activityStatus?.lastConnected}
                     />
+                    <TogglePremiumButton/>
                     <ul>
                         <li>
                             <Link
