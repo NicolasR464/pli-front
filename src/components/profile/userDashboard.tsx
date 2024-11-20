@@ -3,9 +3,9 @@
 import React, { useState } from 'react'
 import { List, ShoppingBag, User } from 'react-feather'
 
-import UserBesace from './items/besace/UserBesace'
-import UserInfo from './items/informations/UserInfo'
-import Transactions from './items/transaction/UserTransactions'
+import UserBesace from './items/besace/userBesace'
+import UserInfo from './items/informations/userInfo'
+import Transactions from './items/transaction/userTransactions'
 
 import { useUserStore } from '@/stores/user'
 
