@@ -19,13 +19,9 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
     onPropose,
 }) => {
     const [allArticles, setAllArticles] = useState<Article[]>([])
-    const [selectedMyArticle, setSelectedMyArticle] = useState<string | null>(
-        null,
-    )
-    const [selectedTheirArticle, setSelectedTheirArticle] = useState<
-        string | null
-    >(null)
-    const [error, setError] = useState<string | null>(null)
+    const [selectedMyArticle, setSelectedMyArticle] = useState<string>('')
+    const [selectedTheirArticle, setSelectedTheirArticle] = useState<string>('')
+    const [error, setError] = useState<string>('')
 
     const { getToken } = useAuth()
 
@@ -56,7 +52,7 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
                 </h2>
                 <label>{'Je propose'}</label>
                 <select
-                    value={selectedMyArticle ?? ''}
+                    value={selectedMyArticle}
                     onChange={(e) => {
                         setSelectedMyArticle(e.target.value)
                     }}
@@ -80,7 +76,7 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
 
                 <label>{'En échange de ton'}</label>
                 <select
-                    value={selectedTheirArticle ?? ''}
+                    value={selectedTheirArticle}
                     onChange={(e) => {
                         setSelectedTheirArticle(e.target.value)
                     }}

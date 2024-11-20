@@ -187,7 +187,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
                 <ChatInput onSendMessage={handleSendMessage} />
                 <button className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'>
                     <Link
-                        href={`${pagePaths.TRANSACTION}/recap?sender=${user?.id}&receiver=${receiverId}`}
+                        href={`${pagePaths.USERS}/${user?.id}/${pagePaths.TRANSACTION}/recap`}
                     >
                         {'Proposer un échange'}
                     </Link>

@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
 import { Button } from '@/components/shadcn/ui/button'
@@ -16,6 +17,7 @@ import TransactionRequest from '@/components/transactions/userActions/Transactio
 
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
+import { pagePaths } from '@/utils/constants'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -91,17 +93,19 @@ const ArticlePage = (): React.JSX.Element => {
                         <h1 className='mb-4 text-4xl font-bold'>
                             {article.adTitle}{' '}
                         </h1>
-                        {!!user && (
-                            <SellerInfo
-                                avatarUrl={user.avatarUrl ?? undefined}
-                                lastConnected={
-                                    user.activityStatus.lastConnected
-                                }
-                                pseudo={user.pseudo}
-                                name={user.name}
-                                address={user.addresses}
-                            />
-                        )}
+                        <Link href={`${pagePaths.USERS}${user?.id}`}>
+                            {!!user && (
+                                <SellerInfo
+                                    avatarUrl={user.avatarUrl ?? undefined}
+                                    lastConnected={
+                                        user.activityStatus.lastConnected
+                                    }
+                                    pseudo={user.pseudo}
+                                    name={user.name}
+                                    address={user.address}
+                                />
+                            )}
+                        </Link>
 
                         {/* Product details */}
                         <ProductDetails article={article} />
@@ -167,6 +171,10 @@ const ArticlePage = (): React.JSX.Element => {
                         }}
                     />
                 )}
+                <ProductActions
+                    sellerId={user?.id ?? ''}
+                    articleTitle={article?.adTitle ?? ''}
+                />
 
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}
