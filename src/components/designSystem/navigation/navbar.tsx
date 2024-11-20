@@ -10,7 +10,7 @@ import CategoriesMenu from './CategorieMenu'
 import MobileNavigationBar from './MobileMenu'
 import NavigationIcons from './NavIcons'
 import SearchBar from './SearchBar'
-import SubNavigation from './subNavigation'
+import SubNavigation from './SubNavigation'
 
 import { pagePaths } from '@/utils/constants'
 import { products } from '@/utils/constants/productValues'

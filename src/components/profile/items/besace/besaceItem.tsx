@@ -1,29 +1,23 @@
 import React from 'react'
+
+import { Button } from '@/components/shadcn/ui/button'
 import {
     Card,
-    CardHeader,
-    CardTitle,
     CardContent,
     CardDescription,
     CardFooter,
+    CardHeader,
+    CardTitle,
 } from '@/components/shadcn/ui/card'
-import { Button } from '@/components/shadcn/ui/button'
+
+import type { Article } from '@/types/article'
 
 type BesaceItemProps = {
-    article: {
-        id: string
-        adTitle: string
-        description: string
-        price: number
-        imageUrls: string[]
-    }
+    article: Article
     onDelete: () => void
 }
 
-const BesaceItem: React.FC<BesaceItemProps> = ({
-    article,
-    onDelete,
-}) => {
+const BesaceItem: React.FC<BesaceItemProps> = ({ article, onDelete }) => {
     return (
         <Card className='w-full'>
             <CardHeader>
@@ -41,7 +35,7 @@ const BesaceItem: React.FC<BesaceItemProps> = ({
                     {article.description}
                 </CardDescription>
                 <p className='text-lg font-semibold text-blueGreen-dark-active'>
-                    {article.price} €
+                    {article.price} {'€'}
                 </p>
             </CardContent>
             <CardFooter className='flex justify-between'>
@@ -49,7 +43,7 @@ const BesaceItem: React.FC<BesaceItemProps> = ({
                     variant='destructive'
                     onClick={onDelete}
                 >
-                    Supprimer
+                    {'Supprimer'}
                 </Button>
             </CardFooter>
         </Card>

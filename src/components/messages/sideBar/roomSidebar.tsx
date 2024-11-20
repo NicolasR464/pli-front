@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import React, { useEffect, useState } from 'react'
 
 import RoomSidebarItem from './RoomSidebarItem'
@@ -33,53 +32,84 @@ const RoomSidebar: React.FC<RoomSidebarProps> = ({ onRoomSelect }) => {
             const token = (await getToken()) ?? ''
             const userId = user?.id
 
-            // Récupérer tous les messages de l'utilisateur actuel et les trier par date d'envoi (du plus récent au plus ancien)
-            const allMessages = await getInstantMsgs(token)
-            const sortedMessages = allMessages.sort(
-                (a, b) =>
-                    new Date(b.sentAt).getTime() - new Date(a.sentAt).getTime(),
-            )
+            try {
+                const allMessages = await getInstantMsgs(token)
+                const sortedMessages = allMessages.sort(
+                    (a, b) =>
+                        new Date(b.sentAt).getTime() -
+                        new Date(a.sentAt).getTime(),
+                )
 
-            // Parcourir les messages pour ne garder que le plus récent de chaque room
-            const userRoomsMap: Record<string, RoomData> = {}
+                const userRoomsMap: Record<string, RoomData> = {}
+                const contactIds = new Set<string>()
 
-            for (const message of sortedMessages) {
-                const roomId = message.roomID
-                if (
-                    !Object.hasOwn(userRoomsMap, roomId) &&
-                    (message.sender === userId || message.receiver === userId)
-                ) {
-                    const contactId =
-                        message.sender === userId
-                            ? message.receiver
-                            : message.sender
+                for (const message of sortedMessages) {
+                    const roomId = message.roomID
+                    if (
+                        !Object.hasOwn(userRoomsMap, roomId) &&
+                        (message.sender === userId ||
+                            message.receiver === userId)
+                    ) {
+                        const contactId =
+                            message.sender === userId
+                                ? message.receiver
+                                : message.sender
 
-                    userRoomsMap[roomId] = {
-                        id: roomId,
-                        name: `Room ${roomId}`,
-                        lastMessage: message.message,
-                        lastUpdated: message.sentAt,
-                        receiverInfo: {
-                            avatar: '',
-                            username: '',
-                        },
-                    }
+                        userRoomsMap[roomId] = {
+                            id: roomId,
+                            name: `Room ${roomId}`,
+                            lastMessage: message.message,
+                            lastUpdated: message.sentAt,
+                            receiverInfo: {
+                                avatar: '',
+                                username: '',
+                            },
+                        }
 
-                    // Récupérer les informations du contact et les ajouter comme `receiverInfo`
-                    if (contactId && token) {
-                        const contactData = await getUserById(contactId)
-                        userRoomsMap[roomId].receiverInfo = {
-                            avatar: contactData?.avatarUrl ?? '',
-                            username: contactData?.pseudo ?? '',
+                        if (contactId) {
+                            contactIds.add(contactId)
                         }
                     }
                 }
+
+                const contactInfos = await Promise.all(
+                    Array.from(contactIds).map(async (contactId) => {
+                        try {
+                            return {
+                                id: contactId,
+                                ...(await getUserById(contactId)),
+                            }
+                        } catch {
+                            return {
+                                id: contactId,
+                                avatarUrl: '',
+                                pseudo: 'Utilisateur inconnu',
+                            }
+                        }
+                    }),
+                )
+
+                for (const contact of contactInfos) {
+                    for (const room of Object.values(userRoomsMap)) {
+                        if (
+                            room.receiverInfo &&
+                            room.receiverInfo.avatar === '' &&
+                            room.receiverInfo.username === ''
+                        ) {
+                            room.receiverInfo = {
+                                avatar: contact.avatarUrl ?? '',
+                                username: contact.pseudo ?? '',
+                            }
+                        }
+                    }
+                }
+
+                setRooms(Object.values(userRoomsMap))
+            } catch {
+                // Stocker une erreur générique dans l'état
+                throw new Error('Erreur lors de la récupération des messages.')
             }
-
-            // Mettre à jour le state avec la liste des rooms
-            setRooms(Object.values(userRoomsMap))
         }
-
         fetchRooms()
     }, [getToken, user])
 

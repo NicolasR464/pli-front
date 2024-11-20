@@ -16,7 +16,7 @@ const SubNavigation: React.FC<SubNavigationProps> = ({ categories }) => {
                 <Link
                     key={categoryKey}
                     href={`/articles?category=${encodeURIComponent(categoryKey)}`}
-                    className='whitespace-nowrap text-blueGreen-dark-active hover:underline text-text-4'
+                    className='whitespace-nowrap text-text-4 text-blueGreen-dark-active hover:underline'
                 >
                     {categories[categoryKey].tag}
                 </Link>

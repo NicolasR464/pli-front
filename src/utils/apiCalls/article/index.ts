@@ -173,9 +173,7 @@ export const updateArticle = async (
     )
 
     if (response.status !== 200)
-        throw new Error(
-            `Failed to update article with id ${String(articleId)}`,
-        )
+        throw new Error(`Failed to update article with id ${String(articleId)}`)
 
     return response.data
 }
@@ -200,7 +198,5 @@ export const deleteArticle = async (
     )
 
     if (response.status !== 200)
-        throw new Error(
-            `Failed to delete article with id ${String(articleId)}`,
-        )
+        throw new Error(`Failed to delete article with id ${String(articleId)}`)
 }

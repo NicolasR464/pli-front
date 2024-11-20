@@ -1,21 +1,20 @@
 import React from 'react'
 import Image from 'next/image'
 
-import TogglePremiumButton from './TogglePremiumStatus'
+type UserProfileCardProps = {
+    pseudo: string
+    avatarUrl?: string
+    lastSignInAt?: Date | null
+}
 
-import { useUserStore } from '@/stores/user'
-
-import { useUser } from '@clerk/nextjs'
-
-const UserProfileCard: React.FC = () => {
-    const { user: clerkUser } = useUser()
-    const { user } = useUserStore((state) => ({
-        user: state.user,
-    }))
-
+const UserProfileCard: React.FC<UserProfileCardProps> = ({
+    pseudo,
+    avatarUrl,
+    lastSignInAt,
+}) => {
     // Formatage de la date de dernière connexion
-    const lastLoginDate = clerkUser?.lastSignInAt
-        ? new Date(clerkUser.lastSignInAt).toLocaleDateString('fr-FR', {
+    const lastLoginDate = lastSignInAt
+        ? new Date(lastSignInAt).toLocaleDateString('fr-FR', {
               year: 'numeric',
               month: 'short',
               day: 'numeric',
@@ -27,7 +26,7 @@ const UserProfileCard: React.FC = () => {
             {/* Avatar utilisateur */}
             <div className='mb-4 flex justify-center'>
                 <Image
-                    src={user.avatarUrl ?? '/default-avatar.png'}
+                    src={avatarUrl ?? '/default-avatar.png'}
                     alt='User avatar'
                     width={100}
                     height={100}
@@ -37,7 +36,7 @@ const UserProfileCard: React.FC = () => {
 
             {/* Nom utilisateur */}
             <h2 className='text-neutrals-blacks-normal font-heading text-lg font-bold'>
-                {user.pseudo ?? 'Utilisateur'}
+                {pseudo}
             </h2>
 
             {/* Dernière connexion */}
@@ -45,11 +44,6 @@ const UserProfileCard: React.FC = () => {
                 {'Dernière connexion : '}
                 {lastLoginDate}
             </p>
-
-            {/* Bouton premium */}
-            <div className='bottom-0 flex justify-center align-middle'>
-                <TogglePremiumButton />
-            </div>
         </div>
     )
 }

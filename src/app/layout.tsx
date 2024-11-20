@@ -6,7 +6,7 @@ import {
     Questrial,
 } from 'next/font/google'
 
-import Footer from '@/components/designSystem/footer'
+import Footer from '@/components/designSystem/Footer'
 import Navbar from '@/components/designSystem/navigation/Navbar'
 
 import { pagePaths } from '@/utils/constants'

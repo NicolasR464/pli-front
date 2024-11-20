@@ -29,7 +29,9 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     )
 
     // Fonction pour fermer la Sheet
-    const closeSheet = () => setIsOpen(false)
+    const closeSheet = (): void => {
+        setIsOpen(false)
+    }
 
     return (
         <>
@@ -55,9 +57,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
                         <h2 className='text-xl font-semibold'>{'TROCUP'}</h2>
                         {/* Barre de recherche */}
                         <div className='visible-below-425 relative hidden p-4'>
-                            <SearchBar
-                                onSearchSubmit={closeSheet} // Fermer la Sheet après une recherche
-                            />
+                            <SearchBar onSearchSubmit={closeSheet} />
                         </div>
                     </SheetHeader>
                     {/* Catégories */}
@@ -71,7 +71,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
                                     key={categoryKey}
                                     href={`/articles?category=${encodeURIComponent(categoryKey)}`}
                                     className='p-3 text-blueGreen-dark-active hover:underline'
-                                    onClick={closeSheet} // Fermer la Sheet après un clic sur un lien
+                                    onClick={closeSheet}
                                 >
                                     {products.categories[categoryKey].tag}
                                 </Link>

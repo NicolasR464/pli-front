@@ -15,7 +15,7 @@ const Hero: React.FC = () => {
                 {/* Texte fixé en bas */}
                 <div className='absolute bottom-5 left-0 right-0 flex flex-col items-center justify-center px-4 text-center text-white sm:px-6 md:px-8'>
                     <p className='mt-6 font-heading font-light drop-shadow-md sm:text-h6 md:text-h5 lg:text-h4'>
-                        Plonge dans la Piscine & Commence ton troc
+                        {'Plonge dans la Piscine & Commence ton troc'}
                     </p>
                 </div>
             </div>

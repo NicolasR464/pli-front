@@ -96,19 +96,25 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
             {/* Liste des suggestions */}
             {filteredSuggestions.length > 0 && (
                 <ul className='absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-lg'>
-                    {filteredSuggestions.map((suggestion, index) => (
+                    {filteredSuggestions.map((suggestion) => (
                         <li
-                            key={index}
-                            className='cursor-pointer px-4 py-2 hover:bg-gray-100'
-                            onClick={() =>
-                                handleSuggestionClick(suggestion.name)
-                            }
+                            key={`${suggestion.name}-${suggestion.type}`}
+                            className='px-4 py-2 hover:bg-gray-100'
                         >
-                            {suggestion.type === 'category' ? (
-                                <strong>{suggestion.name}</strong>
-                            ) : (
-                                suggestion.name
-                            )}
+                            <button
+                                type='button'
+                                className='w-full cursor-pointer text-left'
+                                onClick={() => {
+                                    handleSuggestionClick(suggestion.name)
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        handleSuggestionClick(suggestion.name)
+                                    }
+                                }}
+                            >
+                                {suggestion.name}
+                            </button>
                         </li>
                     ))}
                 </ul>

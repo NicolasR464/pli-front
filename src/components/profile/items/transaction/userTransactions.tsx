@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useAuth, useUser } from '@clerk/nextjs'
-import { getTransactionsByUser } from '@/utils/apiCalls/transaction'
-import { getArticleById } from '@/utils/apiCalls/article'
+
 import TransactionItem from './TransactionItem'
+
+import { getArticleById } from '@/utils/apiCalls/article'
+import { getTransactionsByUser } from '@/utils/apiCalls/transaction'
+
+import { useAuth, useUser } from '@clerk/nextjs'
 
 type Transaction = {
     _id: string
@@ -29,16 +32,16 @@ const Transactions: React.FC = () => {
     const { getToken } = useAuth()
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string>('')
 
     // Récupérer les transactions de l'utilisateur
     useEffect(() => {
-        const fetchTransactions = async () => {
+        const fetchTransactions = async (): Promise<void> => {
             if (!clerkUser) return
             try {
                 const token = await getToken()
                 if (!token) {
-                    console.error('JWT introuvable.')
-                    return
+                    throw new Error('JWT introuvable.')
                 }
 
                 const userTransactions = await getTransactionsByUser(
@@ -54,16 +57,21 @@ const Transactions: React.FC = () => {
                         )
                         return {
                             ...transaction,
+                            delivery: {
+                                ...transaction.delivery,
+                                sent: new Date(
+                                    transaction.delivery.sent,
+                                ).toISOString(),
+                            },
                             articleData: article,
                         }
                     }),
                 )
 
                 setTransactions(transactionsWithArticles)
-            } catch (error) {
-                console.error(
-                    'Erreur lors de la récupération des transactions :',
-                    error,
+            } catch {
+                setError(
+                    'Erreur lors de la mise à jour des informations utilisateur.',
                 )
             } finally {
                 setLoading(false)
@@ -74,12 +82,17 @@ const Transactions: React.FC = () => {
     }, [clerkUser, getToken])
 
     if (loading) {
-        return <p>Chargement des transactions...</p>
+        return <p>{'Chargement des transactions…'}</p>
     }
 
     return (
         <div>
-            <h1 className='text-xl font-semibold'>Mes Transactions</h1>
+            <h1 className='text-xl font-semibold'>{'Mes Transactions'}</h1>
+            {error.trim() && (
+                <div className='mb-4 rounded-lg bg-red-100 p-4 text-red-700'>
+                    {error}
+                </div>
+            )}
             <div className='mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                 {transactions.map((transaction) => (
                     <TransactionItem

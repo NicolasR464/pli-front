@@ -1,30 +1,32 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useAuth, useUser } from '@clerk/nextjs'
-import { getUserById, updateUser } from '@/utils/apiCalls/user'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
+import { Button } from '@/components/shadcn/ui/button'
 import {
     Form,
+    FormControl,
     FormField,
     FormItem,
     FormLabel,
-    FormControl,
     FormMessage,
 } from '@/components/shadcn/ui/form'
 import { Input } from '@/components/shadcn/ui/input'
-import { Button } from '@/components/shadcn/ui/button'
 
-// Validation avec Zod
+import { getUserById, updateUser } from '@/utils/apiCalls/user'
+
+import { useAuth, useUser } from '@clerk/nextjs'
+
+// Schéma de validation avec Zod
 const userSchema = z.object({
-    pseudo: z.string().nonempty('Le pseudo est obligatoire.'),
-    name: z.string().nonempty('Le nom est obligatoire.'),
-    surname: z.string().nonempty('Le prénom est obligatoire.'),
+    pseudo: z.string().min(1, 'Le pseudo est obligatoire.'),
+    name: z.string().min(1, 'Le nom est obligatoire.'),
+    surname: z.string().min(1, 'Le prénom est obligatoire.'),
     email: z.string().email('Adresse email invalide.'),
-    sexe: z.string().optional(),
+    sexe: z.enum(['masculin', 'féminin', 'autre']).optional(),
     phoneNumber: z.string().optional(),
     birthDate: z.string().optional(),
 })
@@ -35,7 +37,8 @@ const UserInfo: React.FC = () => {
     const { user: clerkUser } = useUser()
     const { getToken } = useAuth()
     const [loading, setLoading] = useState(true)
-    const [isEditing, setIsEditing] = useState(false) // Mode édition ou vue
+    const [isEditing, setIsEditing] = useState(false)
+    const [error, setError] = useState<string>('')
 
     const form = useForm<UserFormValues>({
         resolver: zodResolver(userSchema),
@@ -44,42 +47,38 @@ const UserInfo: React.FC = () => {
             name: '',
             surname: '',
             email: '',
-            sexe: '',
+            sexe: undefined,
             phoneNumber: '',
             birthDate: '',
         },
     })
 
+    // Chargement des données utilisateur
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUserData = async (): Promise<void> => {
             try {
                 if (!clerkUser) return
+
                 const token = await getToken()
-                if (!token) {
-                    console.error('JWT non trouvé')
-                    return
-                }
+                if (!token) throw new Error('JWT introuvable.')
 
                 const fullUserData = await getUserById(clerkUser.id)
                 if (fullUserData) {
                     form.reset({
-                        pseudo: fullUserData.pseudo || '',
-                        name: fullUserData.name || '',
-                        surname: fullUserData.surname || '',
-                        email: fullUserData.email || '',
-                        sexe: fullUserData.sexe || '',
-                        phoneNumber: fullUserData.phoneNumber || '',
-                        birthDate: fullUserData.birthDate
-                            ? new Date(fullUserData.birthDate)
-                                  .toISOString()
-                                  .split('T')[0]
-                            : '',
+                        pseudo: fullUserData.pseudo,
+                        name: fullUserData.name,
+                        surname: fullUserData.surname,
+                        email: fullUserData.email,
+                        sexe: fullUserData.sexe,
+                        phoneNumber: fullUserData.phoneNumber,
+                        birthDate: new Date(fullUserData.birthDate)
+                            .toISOString()
+                            .split('T')[0],
                     })
                 }
-            } catch (error) {
-                console.error(
-                    'Erreur lors de la récupération des données utilisateur :',
-                    error,
+            } catch {
+                setError(
+                    'Erreur lors de la récupération des données utilisateur.',
                 )
             } finally {
                 setLoading(false)
@@ -89,26 +88,17 @@ const UserInfo: React.FC = () => {
         fetchUserData()
     }, [clerkUser, getToken, form])
 
-    const handleSubmit = async (values: UserFormValues) => {
+    // Soumission du formulaire
+    const handleSubmit = async (values: UserFormValues): Promise<void> => {
         try {
             const token = await getToken()
-            if (!token) {
-                console.error('JWT non trouvé')
-                return
-            }
+            if (!token) throw new Error('JWT introuvable.')
 
-            if (!clerkUser) {
-                console.error('Utilisateur introuvable.')
-                return
-            }
+            if (!clerkUser) throw new Error('Utilisateur introuvable.')
 
             const fullUserData = await getUserById(clerkUser.id)
-            if (!fullUserData) {
-                console.error(
-                    'Impossible de récupérer les données utilisateur.',
-                )
-                return
-            }
+            if (!fullUserData)
+                throw new Error('Données utilisateur introuvables.')
 
             const updatedUserData = {
                 ...fullUserData,
@@ -119,26 +109,40 @@ const UserInfo: React.FC = () => {
             }
 
             await updateUser(clerkUser.id, updatedUserData, token)
-            setIsEditing(false) // Quitter le mode édition
-            console.log('Utilisateur mis à jour.')
-        } catch (error) {
-            console.error(
-                'Erreur lors de la mise à jour des informations utilisateur :',
-                error,
+            setIsEditing(false)
+        } catch {
+            setError(
+                'Erreur lors de la mise à jour des informations utilisateur.',
             )
         }
     }
 
-    if (loading) {
-        return <p>Chargement des informations utilisateur...</p>
-    }
+    if (loading) return <p>{'Chargement des informations utilisateur…'}</p>
 
     return (
         <div>
+            {error.trim() && (
+                <div className='mb-4 rounded-lg bg-red-100 p-4 text-red-700'>
+                    {error}
+                </div>
+            )}
             {isEditing ? (
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(handleSubmit)}
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            form.handleSubmit((values) =>
+                                handleSubmit(values).catch(
+                                    (error_: unknown) => {
+                                        setError(
+                                            error_ instanceof Error
+                                                ? error_.message
+                                                : 'Erreur inattendue.',
+                                        )
+                                    },
+                                ),
+                            )()
+                        }}
                         className='grid gap-6'
                     >
                         {/* Pseudo - Champ unique */}
@@ -148,7 +152,7 @@ const UserInfo: React.FC = () => {
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Pseudo</FormLabel>
+                                        <FormLabel>{'Pseudo'}</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -160,12 +164,13 @@ const UserInfo: React.FC = () => {
 
                         {/* Autres champs en grille 2 colonnes */}
                         <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                            {/* Nom */}
                             <FormField
                                 name='name'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Nom</FormLabel>
+                                        <FormLabel>{'Nom'}</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -173,12 +178,13 @@ const UserInfo: React.FC = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/* Prénom */}
                             <FormField
                                 name='surname'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Prénom</FormLabel>
+                                        <FormLabel>{'Prénom'}</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -186,12 +192,13 @@ const UserInfo: React.FC = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/* Email */}
                             <FormField
                                 name='email'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Email</FormLabel>
+                                        <FormLabel>{'Email'}</FormLabel>
                                         <FormControl>
                                             <Input
                                                 type='email'
@@ -202,25 +209,29 @@ const UserInfo: React.FC = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/* Sexe */}
                             <FormField
                                 name='sexe'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Sexe</FormLabel>
+                                        <FormLabel>{'Sexe'}</FormLabel>
                                         <FormControl>
                                             <select
                                                 className='w-full rounded-md border-gray-300 p-2'
                                                 {...field}
                                             >
                                                 <option value=''>
-                                                    Sélectionnez
+                                                    {'Sélectionnez'}
                                                 </option>
-                                                <option value='M'>
-                                                    Masculin
+                                                <option value='masculin'>
+                                                    {'Masculin'}
                                                 </option>
-                                                <option value='F'>
-                                                    Féminin
+                                                <option value='féminin'>
+                                                    {'Féminin'}
+                                                </option>
+                                                <option value='autre'>
+                                                    {'Autre'}
                                                 </option>
                                             </select>
                                         </FormControl>
@@ -228,13 +239,14 @@ const UserInfo: React.FC = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/* Numéro de téléphone */}
                             <FormField
                                 name='phoneNumber'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
-                                            Numéro de téléphone
+                                            {'Numéro de téléphone'}
                                         </FormLabel>
                                         <FormControl>
                                             <Input {...field} />
@@ -243,12 +255,15 @@ const UserInfo: React.FC = () => {
                                     </FormItem>
                                 )}
                             />
+                            {/* Date de naissance */}
                             <FormField
                                 name='birthDate'
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Date de naissance</FormLabel>
+                                        <FormLabel>
+                                            {'Date de naissance'}
+                                        </FormLabel>
                                         <FormControl>
                                             <Input
                                                 type='date'
@@ -265,16 +280,18 @@ const UserInfo: React.FC = () => {
                         <div className='flex justify-end gap-4'>
                             <Button
                                 type='button'
-                                onClick={() => setIsEditing(false)}
+                                onClick={() => {
+                                    setIsEditing(false)
+                                }}
                                 className='bg-gray-200 text-black hover:bg-gray-300'
                             >
-                                Annuler
+                                {'Annuler'}
                             </Button>
                             <Button
                                 type='submit'
                                 className='bg-blueGreen-dark text-white'
                             >
-                                Enregistrer
+                                {'Enregistrer'}
                             </Button>
                         </div>
                     </form>
@@ -284,27 +301,29 @@ const UserInfo: React.FC = () => {
                     {/* Mode vue */}
                     <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
                         <p>
-                            <strong>Pseudo :</strong> {form.getValues('pseudo')}
+                            <strong>{'Pseudo :'}</strong>{' '}
+                            {form.getValues('pseudo')}
                         </p>
                         <p>
-                            <strong>Nom :</strong> {form.getValues('name')}
+                            <strong>{'Nom :'}</strong> {form.getValues('name')}
                         </p>
                         <p>
-                            <strong>Prénom :</strong>{' '}
+                            <strong>{'Prénom :'}</strong>{' '}
                             {form.getValues('surname')}
                         </p>
                         <p>
-                            <strong>Email :</strong> {form.getValues('email')}
+                            <strong>{'Email :'}</strong>{' '}
+                            {form.getValues('email')}
                         </p>
                         <p>
-                            <strong>Sexe :</strong> {form.getValues('sexe')}
+                            <strong>{'Sexe :'}</strong> {form.getValues('sexe')}
                         </p>
                         <p>
-                            <strong>Téléphone :</strong>{' '}
+                            <strong>{'Téléphone :'}</strong>{' '}
                             {form.getValues('phoneNumber')}
                         </p>
                         <p>
-                            <strong>Date de naissance :</strong>{' '}
+                            <strong>{'Date de naissance :'}</strong>{' '}
                             {form.getValues('birthDate')}
                         </p>
                     </div>
@@ -312,10 +331,12 @@ const UserInfo: React.FC = () => {
                     {/* Bouton Modifier */}
                     <Button
                         type='button'
-                        onClick={() => setIsEditing(true)}
+                        onClick={() => {
+                            setIsEditing(false)
+                        }}
                         className='mt-4 bg-blueGreen-dark text-white'
                     >
-                        Modifier
+                        {'Modifier'}
                     </Button>
                 </div>
             )}
