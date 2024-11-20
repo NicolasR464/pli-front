@@ -11,6 +11,34 @@ import type { Transaction } from '@/types/transaction'
 
 import type { AxiosResponse } from 'axios'
 
+/**
+ * Function to get a transaction by its ID.
+ * @param {string} id - The ID of the transaction to fetch.
+ * @param {string} JWT - The JSON Web Token for authentication.
+ * @returns {Promise<Transaction>} The transaction.
+ */
+export const getTransaction = async (
+    id: string,
+    JWT: string,
+): Promise<Transaction> => {
+    addAuthHeader(transactionInstance, JWT)
+
+    const response: AxiosResponse<Transaction> = await transactionInstance.get(
+        apiEndpoints.microServices.protected.TRANSACTIONS + id,
+    )
+
+    if (response.status !== 200)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
+        )
+
+    return response.data
+}
+
+/**
+ * Function to get all transactions.
+ * @returns {Promise<Transaction[]>} The transactions.
+ */
 export const getTransactions = async (): Promise<Transaction[]> => {
     const response: AxiosResponse<Transaction[]> =
         await transactionInstance.get(
@@ -36,9 +64,6 @@ export const createPreTransaction = async (
     JWT: PreTransactionParams['JWT'],
 ): Promise<Transaction> => {
     addAuthHeader(transactionInstance, JWT)
-
-    // eslint-disable-next-line no-console
-    console.log('data', data)
 
     const response: AxiosResponse<Transaction> = await transactionInstance.post(
         apiEndpoints.microServices.protected.TRANSACTIONS,
@@ -93,10 +118,6 @@ export const confirmTransaction = async (
 ): Promise<Transaction> => {
     addAuthHeader(transactionInstance, JWT)
 
-    console.log('🔥 confirmTransaction')
-
-    console.log(data)
-
     const response: AxiosResponse<Transaction> =
         await transactionInstance.patch(
             apiEndpoints.microServices.protected.TRANSACTION_FINAL.replace(
@@ -107,8 +128,6 @@ export const confirmTransaction = async (
         )
 
     if (response.status !== 200) {
-        console.log(response)
-
         throw new Error(
             `Failed to confirm ${apiEndpoints.microServices.protected.TRANSACTION_FINAL.replace(
                 ':id',

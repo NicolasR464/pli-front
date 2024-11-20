@@ -122,6 +122,7 @@ export const getArticlesByUser = async (userId: string): Promise<Article[]> => {
     }
     return []
 }
+
 /**
  * Create a new article.
  * @param {Partial<Article>} article - The article to create.

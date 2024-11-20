@@ -188,12 +188,6 @@ const PreTransactionForm: React.FC = () => {
             return
         }
 
-        console.log('JWT:', JWT)
-        console.log('userA:', userA)
-        console.log('userB:', userB)
-        console.log('articleB:', articleB)
-        console.log('data:', data)
-
         const transactionData: PreTransactionParams = {
             data: {
                 userA: userA.id,
