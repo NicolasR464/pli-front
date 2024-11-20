@@ -11,7 +11,7 @@ import {
     SheetFooter,
     SheetHeader,
 } from '@/components/shadcn/ui/sheet'
-import SearchBar from './SearchBar'
+import SearchBar from './searchBar'
 
 import { products } from '@/utils/constants/productValues'
 

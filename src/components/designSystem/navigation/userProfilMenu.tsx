@@ -15,7 +15,7 @@ import {
 import { useUserStore } from '@/stores/user'
 import { pagePaths } from '@/utils/constants'
 
-import UserProfileCard from '../UserCard'
+import UserProfileCard from '../userCard'
 import { SignOutButton } from '@clerk/nextjs'
 
 const UserProfileMenu: React.FC = () => {

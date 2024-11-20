@@ -1,4 +1,4 @@
-import Hero from '@/components/designSystem/Hero'
+import Hero from '@/components/designSystem/hero'
 import { Notification } from '@/components/Notification'
 import WelcomeMsg from '@/components/WelcomeMsg'
 

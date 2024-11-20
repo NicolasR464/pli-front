@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 
-import UserProfileCard from '@/components/designSystem/UserCard'
+import UserProfileCard from '@/components/designSystem/userCard'
 
 import { getUserById } from '@/utils/apiCalls/user'
 
@@ -15,7 +15,7 @@ type UserData = {
 
 const UserPage: React.FC = () => {
     const params = useParams()
-    const id = Array.isArray(params.id) ? params.id[0] : params.id 
+    const id = Array.isArray(params.id) ? params.id[0] : params.id
 
     const [user, setUser] = useState<UserData>()
     const [loading, setLoading] = useState(true)

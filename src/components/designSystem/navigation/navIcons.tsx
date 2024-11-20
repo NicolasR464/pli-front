@@ -3,7 +3,7 @@ import { Home, MessageSquare } from 'react-feather'
 import Link from 'next/link'
 
 import { Button } from '@/components/shadcn/ui/button'
-import UserProfileMenu from './UserProfilMenu'
+import UserProfileMenu from './userProfilMenu'
 
 import { pagePaths } from '@/utils/constants'
 

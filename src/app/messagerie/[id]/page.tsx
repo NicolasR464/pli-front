@@ -1,7 +1,7 @@
 'use client'
 import { useParams } from 'next/navigation'
 
-import { ChatContainer } from '@/components/messages/conversation/ChatContainer'
+import { ChatContainer } from '@/components/messages/conversation/chatContainer'
 
 const MessagePage = (): React.JSX.Element => {
     const { id: roomId } = useParams()

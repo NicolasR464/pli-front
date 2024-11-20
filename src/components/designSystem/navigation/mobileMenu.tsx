@@ -2,7 +2,7 @@ import React from 'react'
 import { Home, MessageSquare, PlusCircle, User } from 'react-feather'
 import Link from 'next/link'
 
-import UserProfileMenu from './UserProfilMenu'
+import UserProfileMenu from './userProfilMenu'
 
 import { pagePaths } from '@/utils/constants'
 

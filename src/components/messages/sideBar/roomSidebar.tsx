@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import RoomSidebarItem from './RoomSidebarItem'
+import RoomSidebarItem from './roomSidebarItem'
 
 import { getInstantMsgs } from '@/utils/apiCalls/instantMessage'
 import { getUserById } from '@/utils/apiCalls/user'
