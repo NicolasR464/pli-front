@@ -23,8 +23,8 @@ export const UserSchema = z.object({
     avatarUrl: z.string().url().optional(),
     isPremium: z.boolean(),
     favoriteArticles: z.array(z.string()).optional(),
-    credit: z.number().int().optional(),
-    balance: z.number().int().optional(),
+    credit: z.number().negative(),
+    balance: z.number(),
     comments: z.array(z.string()).optional(),
     articles: z.array(z.string()).optional(),
 })
