@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import { List, ShoppingBag, User } from 'react-feather'
 
