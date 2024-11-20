@@ -8,7 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/shadcn/ui/card'
-import BesaceItem from './besaceItem'
+import BesaceItem from './BesaceItem'
 
 import { deleteArticle, getArticlesByUser } from '@/utils/apiCalls/article'
 

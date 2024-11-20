@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
+import TransactionItem from '@/components/profile/items/transaction/transactionItem'
+
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getTransactionsByUser } from '@/utils/apiCalls/transaction'
 
 import { useAuth, useUser } from '@clerk/nextjs'
-import TransactionItem from './TransactionItem'
 
 type Transaction = {
     _id: string

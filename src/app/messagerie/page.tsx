@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
 
-import { ChatContainer } from '@/components/messages/conversation/chatContainer'
-import RoomSidebar from '@/components/messages/sideBar/roomSidebar'
+import { ChatContainer } from '@/components/messages/conversation/ChatContainer'
+import RoomSidebar from '@/components/messages/sideBar/RoomSidebar'
 
 const Messagerie = (): React.JSX.Element => {
     const [selectedRoomId, setSelectedRoomId] = useState<string | null>('')

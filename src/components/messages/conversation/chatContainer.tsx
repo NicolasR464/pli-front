@@ -6,6 +6,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Repeat } from 'react-feather'
 import Link from 'next/link'
 
+import { ChatHeader } from './ChatHeader'
+import { ChatInput } from './ChatInput'
+import { MessageBubble } from './MessageBubble'
+import UserInfoCard from './UserInfoCard'
+
 import { getMessagesByRoomID } from '@/utils/apiCalls/instantMessage'
 import {
     connectWebSocketByRoomId,
@@ -16,10 +21,6 @@ import { pagePaths } from '@/utils/constants'
 import { formatDate, groupMessagesByDate } from '@/utils/functions/messages'
 
 import { useAuth, useUser } from '@clerk/nextjs'
-import { ChatHeader } from './ChatHeader'
-import { ChatInput } from './ChatInput'
-import { MessageBubble } from './MessageBubble'
-import UserInfoCard from './UserInfoCard'
 
 type Message = {
     id: string
@@ -186,7 +187,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
                 <ChatInput onSendMessage={handleSendMessage} />
                 <button className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'>
                     <Link
-                        href={`${pagePaths.TRANSACTION}/recap?sender=${user?.id}&receiver=${receiverId}`}
+                        href={`${pagePaths.USERS}/${user?.id}/${pagePaths.TRANSACTION}/recap`}
                     >
                         {'Proposer un échange'}
                     </Link>

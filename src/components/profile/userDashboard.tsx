@@ -3,12 +3,13 @@
 import React, { useState } from 'react'
 import { List, ShoppingBag, User } from 'react-feather'
 
-import { useUserStore } from '@/stores/user'
-
-import UserProfileCard from '../designSystem/userCard'
 import UserBesace from './items/besace/UserBesace'
 import UserInfo from './items/informations/UserInfo'
 import Transactions from './items/transaction/UserTransactions'
+
+import { useUserStore } from '@/stores/user'
+
+import UserProfileCard from '../designSystem/userCard'
 
 const UserDashboard: React.FC = () => {
     const [activeSection, setActiveSection] = useState<string>('info')
