@@ -6,10 +6,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Repeat } from 'react-feather'
 import Link from 'next/link'
 
-import { ChatHeader } from './ChatHeader'
-import { ChatInput } from './ChatInput'
-import { MessageBubble } from './MessageBubble'
-import UserInfoCard from './UserInfoCard'
+import { ChatHeader } from './chatHeader'
+import { ChatInput } from './chatInput'
+import { MessageBubble } from './messageBubble'
+import UserInfoCard from './userInfoCard'
 
 import { getMessagesByRoomID } from '@/utils/apiCalls/instantMessage'
 import {
