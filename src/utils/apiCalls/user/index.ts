@@ -89,6 +89,7 @@ export const getUserById = async (
 
     return response.data
 }
+
 /**
  * Updates an existing user.
  * @param {string} userId The ID of the user to update.

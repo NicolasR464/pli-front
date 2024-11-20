@@ -1,4 +1,4 @@
-import UserDashboard from '@/components/profile/userDashboard'
+import UserDashboard from '@/components/profile/UserDashboard'
 
 const MyProfile = (): React.JSX.Element => {
     return (

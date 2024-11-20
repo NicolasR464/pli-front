@@ -1,32 +1,22 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-
-import { pagePaths } from '@/utils/constants'
-
-import { Button } from '../shadcn/ui/button'
 
 const Hero: React.FC = () => {
     return (
-        <section className='relative bg-blueGreen-light'>
-            {/* Image de fond */}
-            <Image
-                src='https://res.cloudinary.com/ddtptgbnn/image/upload/v1729613788/Home_2_fs4jqd.png'
-                alt='Hero Background'
-                className='h-full w-full'
-                width='3000'
-                height='300'
-            />
-            <div className='container mx-auto px-6 lg:px-8'>
-                <div className='flex flex-col items-center text-center'>
-                    {/* Call to Action */}
-                    <div className='mt-8'>
-                        <Link href={pagePaths.ARTICLES}>
-                            <Button className='rounded-md bg-blueGreen px-6 py-3 text-lg font-semibold text-white hover:bg-blueGreen-hover'>
-                                {'Voir la Piscine'}
-                            </Button>
-                        </Link>
-                    </div>
+        <section className='relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px]'>
+            <div>
+                <Image
+                    src='https://res.cloudinary.com/ddtptgbnn/image/upload/v1732098673/Home_3_joppks.png'
+                    alt='Hero Background'
+                    className='object-cover'
+                    layout='fill'
+                    priority
+                />
+                {/* Texte fixé en bas */}
+                <div className='absolute bottom-5 left-0 right-0 flex flex-col items-center justify-center px-4 text-center text-white sm:px-6 md:px-8'>
+                    <p className='mt-6 font-heading font-light drop-shadow-md sm:text-h6 md:text-h5 lg:text-h4'>
+                        Plonge dans la Piscine & Commence ton troc
+                    </p>
                 </div>
             </div>
         </section>

@@ -1,24 +1,55 @@
-import React, { useState, useEffect } from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { getUserById, updateUser } from '@/utils/apiCalls/user'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+
+import {
+    Form,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from '@/components/shadcn/ui/form'
+import { Input } from '@/components/shadcn/ui/input'
+import { Button } from '@/components/shadcn/ui/button'
+
+// Validation avec Zod
+const userSchema = z.object({
+    pseudo: z.string().nonempty('Le pseudo est obligatoire.'),
+    name: z.string().nonempty('Le nom est obligatoire.'),
+    surname: z.string().nonempty('Le prénom est obligatoire.'),
+    email: z.string().email('Adresse email invalide.'),
+    sexe: z.string().optional(),
+    phoneNumber: z.string().optional(),
+    birthDate: z.string().optional(),
+})
+
+type UserFormValues = z.infer<typeof userSchema>
 
 const UserInfo: React.FC = () => {
-    const { user: clerkUser } = useUser() // Utilisateur récupéré via Clerk
-    const { getToken } = useAuth() // JWT pour l'authentification
+    const { user: clerkUser } = useUser()
+    const { getToken } = useAuth()
+    const [loading, setLoading] = useState(true)
+    const [isEditing, setIsEditing] = useState(false) // Mode édition ou vue
 
-    const [isEditing, setIsEditing] = useState(false) // Mode édition
-    const [formData, setFormData] = useState({
-        pseudo: '',
-        name: '',
-        surname: '',
-        email: '',
-        sexe: '',
-        phoneNumber: '',
-        birthDate: '',
+    const form = useForm<UserFormValues>({
+        resolver: zodResolver(userSchema),
+        defaultValues: {
+            pseudo: '',
+            name: '',
+            surname: '',
+            email: '',
+            sexe: '',
+            phoneNumber: '',
+            birthDate: '',
+        },
     })
-    const [loading, setLoading] = useState(true) // Indicateur de chargement
 
-    // Récupérer les données utilisateur au chargement
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -31,8 +62,7 @@ const UserInfo: React.FC = () => {
 
                 const fullUserData = await getUserById(clerkUser.id)
                 if (fullUserData) {
-                    // Mettre à jour les données du formulaire avec les données existantes
-                    setFormData({
+                    form.reset({
                         pseudo: fullUserData.pseudo || '',
                         name: fullUserData.name || '',
                         surname: fullUserData.surname || '',
@@ -42,7 +72,7 @@ const UserInfo: React.FC = () => {
                         birthDate: fullUserData.birthDate
                             ? new Date(fullUserData.birthDate)
                                   .toISOString()
-                                  .split('T')[0] // Format YYYY-MM-DD
+                                  .split('T')[0]
                             : '',
                     })
                 }
@@ -52,25 +82,14 @@ const UserInfo: React.FC = () => {
                     error,
                 )
             } finally {
-                setLoading(false) // Arrêter l'indicateur de chargement
+                setLoading(false)
             }
         }
 
         fetchUserData()
-    }, [clerkUser, getToken])
+    }, [clerkUser, getToken, form])
 
-    // Gère les changements dans les champs du formulaire
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    ) => {
-        const { name, value } = e.target
-        setFormData((prev) => ({ ...prev, [name]: value }))
-    }
-
-    // Gère la soumission du formulaire
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
+    const handleSubmit = async (values: UserFormValues) => {
         try {
             const token = await getToken()
             if (!token) {
@@ -91,66 +110,24 @@ const UserInfo: React.FC = () => {
                 return
             }
 
-            // Prépare les données à mettre à jour
             const updatedUserData = {
-                ...fullUserData, // Inclut toutes les informations actuelles
-                ...formData, // Écrase uniquement les champs modifiables
-                birthDate: formData.birthDate
-                    ? new Date(formData.birthDate)
-                    : fullUserData.birthDate, // Conversion
+                ...fullUserData,
+                ...values,
+                birthDate: values.birthDate
+                    ? new Date(values.birthDate)
+                    : fullUserData.birthDate,
             }
 
-            console.log('Données envoyées :', updatedUserData)
-
-            // Validation locale avant l'envoi
-            if (
-                !updatedUserData.pseudo ||
-                !updatedUserData.email ||
-                !updatedUserData.name
-            ) {
-                console.error(
-                    'Données utilisateur incomplètes',
-                    updatedUserData,
-                )
-                return
-            }
-
-            // Met à jour les données utilisateur via l'API
-            const updatedUser = await updateUser(
-                clerkUser.id,
-                updatedUserData,
-                token,
-            )
-
-            console.log('Utilisateur mis à jour :', updatedUser)
-
-            // Mettre à jour les données locales avec les nouvelles données
-            setFormData({
-                pseudo: updatedUser.pseudo,
-                name: updatedUser.name,
-                surname: updatedUser.surname,
-                email: updatedUser.email,
-                sexe: updatedUser.sexe,
-                phoneNumber: updatedUser.phoneNumber,
-                birthDate: updatedUser.birthDate
-                    ? new Date(updatedUser.birthDate)
-                          .toISOString()
-                          .split('T')[0]
-                    : '',
-            })
+            await updateUser(clerkUser.id, updatedUserData, token)
             setIsEditing(false) // Quitter le mode édition
+            console.log('Utilisateur mis à jour.')
         } catch (error) {
-            if (error.response) {
-                console.error('Erreur du serveur :', error.response.data)
-            } else {
-                console.error(
-                    'Erreur lors de la mise à jour des informations utilisateur :',
-                    error,
-                )
-            }
+            console.error(
+                'Erreur lors de la mise à jour des informations utilisateur :',
+                error,
+            )
         }
     }
-
 
     if (loading) {
         return <p>Chargement des informations utilisateur...</p>
@@ -159,196 +136,187 @@ const UserInfo: React.FC = () => {
     return (
         <div>
             {isEditing ? (
-                // Formulaire d'édition
-                <form
-                    onSubmit={handleSubmit}
-                    className='flex flex-col gap-4'
-                >
-                    {/* Pseudo */}
-                    <div>
-                        <label
-                            htmlFor='pseudo'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Pseudo
-                        </label>
-                        <input
-                            type='text'
-                            id='pseudo'
-                            name='pseudo'
-                            value={formData.pseudo}
-                            onChange={handleChange}
-                            required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active focus:ring-blueGreen-dark-active'
-                        />
-                    </div>
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(handleSubmit)}
+                        className='grid gap-6'
+                    >
+                        {/* Pseudo - Champ unique */}
+                        <div className='col-span-full'>
+                            <FormField
+                                name='pseudo'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Pseudo</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
 
-                    {/* Nom */}
-                    <div>
-                        <label
-                            htmlFor='name'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Nom
-                        </label>
-                        <input
-                            type='text'
-                            id='name'
-                            name='name'
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active  focus:ring-blueGreen-dark-active '
-                        />
-                    </div>
+                        {/* Autres champs en grille 2 colonnes */}
+                        <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                            <FormField
+                                name='name'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Nom</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name='surname'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Prénom</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name='email'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type='email'
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name='sexe'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Sexe</FormLabel>
+                                        <FormControl>
+                                            <select
+                                                className='w-full rounded-md border-gray-300 p-2'
+                                                {...field}
+                                            >
+                                                <option value=''>
+                                                    Sélectionnez
+                                                </option>
+                                                <option value='M'>
+                                                    Masculin
+                                                </option>
+                                                <option value='F'>
+                                                    Féminin
+                                                </option>
+                                            </select>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name='phoneNumber'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>
+                                            Numéro de téléphone
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name='birthDate'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Date de naissance</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type='date'
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
 
-                    {/* Prénom */}
-                    <div>
-                        <label
-                            htmlFor='surname'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Prénom
-                        </label>
-                        <input
-                            type='text'
-                            id='surname'
-                            name='surname'
-                            value={formData.surname}
-                            onChange={handleChange}
-                            required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active  focus:ring-blueGreen-dark-active '
-                        />
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                        <label
-                            htmlFor='email'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Email
-                        </label>
-                        <input
-                            type='email'
-                            id='email'
-                            name='email'
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active  focus:ring-blueGreen-dark-active '
-                        />
-                    </div>
-
-                    {/* Sexe */}
-                    <div>
-                        <label
-                            htmlFor='sexe'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Sexe
-                        </label>
-                        <select
-                            id='sexe'
-                            name='sexe'
-                            value={formData.sexe}
-                            onChange={handleChange}
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active  focus:ring-blueGreen-dark-active '
-                        >
-                            <option value=''>Sélectionnez</option>
-                            <option value='M'>Masculin</option>
-                            <option value='F'>Féminin</option>
-                        </select>
-                    </div>
-
-                    {/* Téléphone */}
-                    <div>
-                        <label
-                            htmlFor='phoneNumber'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Numéro de téléphone
-                        </label>
-                        <input
-                            type='tel'
-                            id='phoneNumber'
-                            name='phoneNumber'
-                            value={formData.phoneNumber}
-                            onChange={handleChange}
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active  focus:ring-blueGreen-dark-active '
-                        />
-                    </div>
-
-                    {/* Date de naissance */}
-                    <div>
-                        <label
-                            htmlFor='birthDate'
-                            className='block text-sm font-medium text-blueGreen-dark-active '
-                        >
-                            Date de naissance
-                        </label>
-                        <input
-                            type='date'
-                            id='birthDate'
-                            name='birthDate'
-                            value={formData.birthDate}
-                            onChange={handleChange}
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active  focus:ring-blueGreen-dark-active '
-                        />
-                    </div>
-
-                    {/* Boutons */}
-                    <div className='flex gap-4'>
-                        <button
-                            type='submit'
-                            className='rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blueGreen-dark'
-                        >
-                            Enregistrer
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => setIsEditing(false)}
-                            className='rounded-md bg-gray-300 px-4 py-2 hover:bg-gray-400'
-                        >
-                            Annuler
-                        </button>
-                    </div>
-                </form>
+                        {/* Boutons */}
+                        <div className='flex justify-end gap-4'>
+                            <Button
+                                type='button'
+                                onClick={() => setIsEditing(false)}
+                                className='bg-gray-200 text-black hover:bg-gray-300'
+                            >
+                                Annuler
+                            </Button>
+                            <Button
+                                type='submit'
+                                className='bg-blueGreen-dark text-white'
+                            >
+                                Enregistrer
+                            </Button>
+                        </div>
+                    </form>
+                </Form>
             ) : (
-                // Affichage des informations utilisateur
                 <div>
-                    <p>
-                        <strong>Pseudo :</strong>{' '}
-                        {formData.pseudo || 'Non défini'}
-                    </p>
-                    <p>
-                        <strong>Nom :</strong> {formData.name || 'Non défini'}
-                    </p>
-                    <p>
-                        <strong>Prénom :</strong>{' '}
-                        {formData.surname || 'Non défini'}
-                    </p>
-                    <p>
-                        <strong>Email :</strong>{' '}
-                        {formData.email || 'Non défini'}
-                    </p>
-                    <p>
-                        <strong>Sexe :</strong> {formData.sexe || 'Non défini'}
-                    </p>
-                    <p>
-                        <strong>Téléphone :</strong>{' '}
-                        {formData.phoneNumber || 'Non défini'}
-                    </p>
-                    <p>
-                        <strong>Date de naissance :</strong>{' '}
-                        {formData.birthDate || 'Non défini'}
-                    </p>
-                    <button
+                    {/* Mode vue */}
+                    <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                        <p>
+                            <strong>Pseudo :</strong> {form.getValues('pseudo')}
+                        </p>
+                        <p>
+                            <strong>Nom :</strong> {form.getValues('name')}
+                        </p>
+                        <p>
+                            <strong>Prénom :</strong>{' '}
+                            {form.getValues('surname')}
+                        </p>
+                        <p>
+                            <strong>Email :</strong> {form.getValues('email')}
+                        </p>
+                        <p>
+                            <strong>Sexe :</strong> {form.getValues('sexe')}
+                        </p>
+                        <p>
+                            <strong>Téléphone :</strong>{' '}
+                            {form.getValues('phoneNumber')}
+                        </p>
+                        <p>
+                            <strong>Date de naissance :</strong>{' '}
+                            {form.getValues('birthDate')}
+                        </p>
+                    </div>
+
+                    {/* Bouton Modifier */}
+                    <Button
+                        type='button'
                         onClick={() => setIsEditing(true)}
-                        className='mt-4 rounded-md bg-blueGreen-dark-active  px-4 py-2 text-white hover:bg-blueGreen-dark'
+                        className='mt-4 bg-blueGreen-dark text-white'
                     >
                         Modifier
-                    </button>
+                    </Button>
                 </div>
             )}
         </div>

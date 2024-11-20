@@ -5,8 +5,17 @@ import {
     updateArticle,
     deleteArticle,
 } from '@/utils/apiCalls/article'
-import BesaceItem from './besaceItem'
+import BesaceItem from './BesaceItem'
 import { Article } from '@/types/article'
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/shadcn/ui/card'
+import { Button } from '@/components/shadcn/ui/button'
+import Link from 'next/link'
 
 const UserBesace: React.FC = () => {
     const { user: clerkUser } = useUser()
@@ -35,34 +44,6 @@ const UserBesace: React.FC = () => {
         fetchArticles()
     }, [clerkUser])
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        if (!selectedArticle) return
-
-        try {
-            const token = await getToken()
-            if (!token) {
-                console.error('JWT introuvable.')
-                return
-            }
-
-            const updatedArticle = await updateArticle(
-                selectedArticle.id,
-                selectedArticle,
-                token,
-            )
-            setArticles((prev) =>
-                prev.map((article) =>
-                    article.id === updatedArticle.id ? updatedArticle : article,
-                ),
-            )
-            setSelectedArticle(null)
-            setIsEditing(false)
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour de l’article :', error)
-        }
-    }
-
     const handleDelete = async (articleId: string) => {
         try {
             const token = await getToken()
@@ -87,107 +68,39 @@ const UserBesace: React.FC = () => {
     return (
         <div>
             <h1 className='text-xl font-semibold'>Ma Besace</h1>
-            {isEditing && selectedArticle ? (
-                <form
-                    onSubmit={handleSubmit}
-                    className='mt-4 flex flex-col gap-4'
-                >
-                    <div>
-                        <label
-                            htmlFor='adTitle'
-                            className='block text-sm font-medium'
-                        >
-                            Titre
-                        </label>
-                        <input
-                            type='text'
-                            id='adTitle'
-                            name='adTitle'
-                            value={selectedArticle.adTitle}
-                            onChange={(e) =>
-                                setSelectedArticle((prev) => ({
-                                    ...prev!,
-                                    adTitle: e.target.value,
-                                }))
-                            }
-                            className='mt-1 w-full rounded-md border p-2'
-                        />
-                    </div>
-                    <div>
-                        <label
-                            htmlFor='description'
-                            className='block text-sm font-medium'
-                        >
-                            Description
-                        </label>
-                        <textarea
-                            id='description'
-                            name='description'
-                            value={selectedArticle.description}
-                            onChange={(e) =>
-                                setSelectedArticle((prev) => ({
-                                    ...prev!,
-                                    description: e.target.value,
-                                }))
-                            }
-                            className='mt-1 w-full rounded-md border p-2'
-                        />
-                    </div>
-                    <div>
-                        <label
-                            htmlFor='price'
-                            className='block text-sm font-medium'
-                        >
-                            Prix
-                        </label>
-                        <input
-                            type='number'
-                            id='price'
-                            name='price'
-                            value={selectedArticle.price}
-                            onChange={(e) =>
-                                setSelectedArticle((prev) => ({
-                                    ...prev!,
-                                    price: parseFloat(e.target.value),
-                                }))
-                            }
-                            className='mt-1 w-full rounded-md border p-2'
-                        />
-                    </div>
-                    <div className='flex gap-4'>
-                        <button
-                            type='submit'
-                            className='rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
-                        >
-                            Enregistrer
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => {
-                                setIsEditing(false)
-                                setSelectedArticle(null)
-                            }}
-                            className='rounded-md bg-gray-300 px-4 py-2 hover:bg-gray-400'
-                        >
-                            Annuler
-                        </button>
-                    </div>
-                </form>
-            ) : (
-                <div className='mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {articles.map((article) => (
-                        <BesaceItem
-                            key={article.id}
-                            article={article}
-                            onEdit={() => {
-                                setSelectedArticle(article)
-                                setIsEditing(true)
-                            }}
-                            onDelete={() => handleDelete(article.id)}
-                        />
-                    ))}
-                </div>
-            )}
+            <div className='mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+                {/* Liste des articles */}
+                {articles.map((article) => (
+                    <BesaceItem
+                        key={article.id}
+                        article={article}
+                        onEdit={() => {
+                            setSelectedArticle(article)
+                            setIsEditing(true)
+                        }}
+                        onDelete={() => handleDelete(article.id)}
+                    />
+                ))}
+
+                {/* Carte vide pour l'ajout */}
+                <Card className='border-2 border-dashed border-gray-300'>
+                    <CardHeader>
+                        <CardTitle className='flex justify-center'>
+                            Ajouter un article
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className='flex items-center justify-center'>
+                        <Link href='/article/new'>
+                            <Button
+                                variant='outline'
+                                size='icon'
+                            >
+                                +
+                            </Button>
+                        </Link>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     )
 }

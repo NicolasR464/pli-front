@@ -2,14 +2,13 @@
 import React, { useState } from 'react'
 import { User, CreditCard, List, ShoppingBag, HelpCircle } from 'react-feather'
 
-import UserInfo from './items/informations/userInfo'
-import PaymentMethods from './items/informations/userPaiementMethode'
-import Transactions from './items/transaction/userTransactions'
-import UserBesace from './items/besace/userBesace'
-import UserProfileCard from '../designSystem/userCard'
+import UserInfo from './items/informations/UserInfo'
+import PaymentMethods from './items/informations/UserPaiementMethode'
+import Transactions from './items/transaction/UserTransactions'
+import UserBesace from './items/besace/UserBesace'
+import UserProfileCard from '../designSystem/UserCard'
 
 // Composants spécifiques à chaque section
-
 const UserDashboard: React.FC = () => {
     const [activeSection, setActiveSection] = useState<string>('info')
     const [activeSubSection, setActiveSubSection] = useState<string | ''>()
@@ -23,7 +22,7 @@ const UserDashboard: React.FC = () => {
             icon: <CreditCard />,
         },
         { id: 'transactions', label: 'Mes Transactions', icon: <List /> },
-        { id: 'bag', label: 'Ma besace', icon: <ShoppingBag /> }
+        { id: 'bag', label: 'Ma besace', icon: <ShoppingBag /> },
     ]
 
     // Fonction pour rendre le contenu principal
@@ -57,7 +56,7 @@ const UserDashboard: React.FC = () => {
             {/* Contenu principal */}
             <div className='flex h-full'>
                 {/* Sidebar gauche */}
-                <aside className='w-1/2 border-r bg-white px-4'>
+                <aside className='sticky top-0 h-screen w-16 border-r bg-white md:w-1/2 md:min-w-[320px]'>
                     <ul className='flex flex-col gap-4 p-4'>
                         {sections.map((section) => (
                             <li
@@ -70,20 +69,11 @@ const UserDashboard: React.FC = () => {
                                 }`}
                             >
                                 <span className='text-xl'>{section.icon}</span>
-                                <span>{section.label}</span>
+                                <span className='hidden md:inline'>
+                                    {section.label}
+                                </span>
                             </li>
                         ))}
-                        <li>
-                            <a
-                                href='/'
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                className='flex cursor-pointer items-center gap-3 rounded-lg p-3 text-left text-h6 text-blueGreen-dark-active'
-                            >
-                                <HelpCircle />
-                                Help Center
-                            </a>
-                        </li>
                     </ul>
                 </aside>
 

@@ -1,25 +1,48 @@
-import React, { useState, useEffect } from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { getUserById, updateUser } from '@/utils/apiCalls/user'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+
+import {
+    Form,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from '@/components/shadcn/ui/form'
+import { Input } from '@/components/shadcn/ui/input'
+import { Button } from '@/components/shadcn/ui/button'
+
+// Schéma de validation avec Zod
+const bankInfoSchema = z.object({
+    iban: z.string().nonempty('L’IBAN est obligatoire.'),
+    bic: z.string().nonempty('Le BIC est obligatoire.'),
+})
+
+type BankInfoFormValues = z.infer<typeof bankInfoSchema>
 
 const PaymentMethods: React.FC = () => {
-    const { user: clerkUser } = useUser() // Utilisateur récupéré via Clerk
-    const { getToken } = useAuth() // JWT pour l'authentification
-
+    const { user: clerkUser } = useUser()
+    const { getToken } = useAuth()
+    const [loading, setLoading] = useState(true)
     const [isEditing, setIsEditing] = useState(false) // Mode édition
-    const [formData, setFormData] = useState({
-        iban: '',
-        bic: '',
-    })
-    const [loading, setLoading] = useState(true) // Indicateur de chargement
-    const [bankInfo, setBankInfo] = useState<{
-        iban: string
-        bic: string
-    } | null>(null) // Stocke les données actuelles
 
-    // Récupérer les données utilisateur au chargement
+    const form = useForm<BankInfoFormValues>({
+        resolver: zodResolver(bankInfoSchema),
+        defaultValues: {
+            iban: '',
+            bic: '',
+        },
+    })
+
+    // Charger les informations bancaires
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchBankInfo = async () => {
             try {
                 if (!clerkUser) return
                 const token = await getToken()
@@ -30,39 +53,26 @@ const PaymentMethods: React.FC = () => {
 
                 const fullUserData = await getUserById(clerkUser.id)
                 if (fullUserData && fullUserData.bankInfo) {
-                    // Pré-remplit les données bancaires
-                    setBankInfo({
-                        iban: fullUserData.bankInfo.iban || 'Non défini',
-                        bic: fullUserData.bankInfo.bic || 'Non défini',
-                    })
-                    setFormData({
+                    form.reset({
                         iban: fullUserData.bankInfo.iban || '',
                         bic: fullUserData.bankInfo.bic || '',
                     })
                 }
             } catch (error) {
                 console.error(
-                    'Erreur lors de la récupération des données utilisateur :',
+                    'Erreur lors de la récupération des données bancaires :',
                     error,
                 )
             } finally {
-                setLoading(false) // Arrêter l'indicateur de chargement
+                setLoading(false)
             }
         }
 
-        fetchUserData()
-    }, [clerkUser, getToken])
+        fetchBankInfo()
+    }, [clerkUser, getToken, form])
 
-    // Gère les changements dans les champs du formulaire
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setFormData((prev) => ({ ...prev, [name]: value }))
-    }
-
-    // Gère la soumission du formulaire
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
+    // Soumettre le formulaire
+    const handleSubmit = async (values: BankInfoFormValues) => {
         try {
             const token = await getToken()
             if (!token) {
@@ -83,56 +93,21 @@ const PaymentMethods: React.FC = () => {
                 return
             }
 
-            // Prépare les données à mettre à jour
             const updatedUserData = {
-                ...fullUserData, // Inclut toutes les informations actuelles
+                ...fullUserData,
                 bankInfo: {
-                    ...formData, // Écrase uniquement les informations bancaires
+                    ...values,
                 },
             }
 
-            console.log('Données envoyées :', updatedUserData)
-
-            // Validation locale avant l'envoi
-            if (
-                !updatedUserData.bankInfo.iban ||
-                !updatedUserData.bankInfo.bic
-            ) {
-                console.error(
-                    'Données bancaires incomplètes',
-                    updatedUserData.bankInfo,
-                )
-                return
-            }
-
-            // Met à jour les données utilisateur via l'API
-            const updatedUser = await updateUser(
-                clerkUser.id,
-                updatedUserData,
-                token,
-            )
-
-            console.log('Utilisateur mis à jour :', updatedUser)
-
-            // Mettre à jour les données locales avec les nouvelles données
-            setBankInfo({
-                iban: updatedUser.bankInfo?.iban || 'Non défini',
-                bic: updatedUser.bankInfo?.bic || 'Non défini',
-            })
-            setFormData({
-                iban: updatedUser.bankInfo?.iban || '',
-                bic: updatedUser.bankInfo?.bic || '',
-            })
+            await updateUser(clerkUser.id, updatedUserData, token)
             setIsEditing(false) // Quitter le mode édition
+            console.log('Informations bancaires mises à jour.')
         } catch (error) {
-            if (error.response) {
-                console.error('Erreur du serveur :', error.response.data)
-            } else {
-                console.error(
-                    'Erreur lors de la mise à jour des informations utilisateur :',
-                    error,
-                )
-            }
+            console.error(
+                'Erreur lors de la mise à jour des informations bancaires :',
+                error,
+            )
         }
     }
 
@@ -143,81 +118,79 @@ const PaymentMethods: React.FC = () => {
     return (
         <div>
             {isEditing ? (
-                // Formulaire d'édition
-                <form
-                    onSubmit={handleSubmit}
-                    className='flex flex-col gap-4'
-                >
-                    {/* IBAN */}
-                    <div>
-                        <label
-                            htmlFor='iban'
-                            className='block text-sm font-medium text-gray-700'
-                        >
-                            IBAN
-                        </label>
-                        <input
-                            type='text'
-                            id='iban'
+                // Mode édition
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(handleSubmit)}
+                        className='space-y-4'
+                    >
+                        {/* IBAN */}
+                        <FormField
                             name='iban'
-                            value={formData.iban}
-                            onChange={handleChange}
-                            required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active focus:ring-blueGreen-dark-active'
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>IBAN</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                    </div>
 
-                    {/* BIC */}
-                    <div>
-                        <label
-                            htmlFor='bic'
-                            className='block text-sm font-medium text-gray-700'
-                        >
-                            BIC
-                        </label>
-                        <input
-                            type='text'
-                            id='bic'
+                        {/* BIC */}
+                        <FormField
                             name='bic'
-                            value={formData.bic}
-                            onChange={handleChange}
-                            required
-                            className='mt-1 w-full rounded-md border-gray-300 p-2 shadow-sm focus:border-blueGreen-dark-active focus:ring-blueGreen-dark-active'
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>BIC</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                    </div>
 
-                    {/* Boutons */}
-                    <div className='flex gap-4'>
-                        <button
-                            type='submit'
-                            className='rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
-                        >
-                            Enregistrer
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() => setIsEditing(false)}
-                            className='rounded-md bg-gray-300 px-4 py-2 hover:bg-gray-400'
-                        >
-                            Annuler
-                        </button>
-                    </div>
-                </form>
+                        {/* Boutons */}
+                        <div className='flex justify-end gap-4'>
+                            <Button
+                                type='button'
+                                onClick={() => setIsEditing(false)}
+                                className='bg-gray-200 text-black hover:bg-gray-300'
+                            >
+                                Annuler
+                            </Button>
+                            <Button
+                                type='submit'
+                                className='bg-blueGreen-dark text-white'
+                            >
+                                Enregistrer
+                            </Button>
+                        </div>
+                    </form>
+                </Form>
             ) : (
-                // Affichage des informations bancaires
-                <div>
+                // Mode vue
+                <div className='space-y-4'>
                     <p>
-                        <strong>IBAN :</strong> {bankInfo?.iban || 'Non défini'}
+                        <strong>IBAN :</strong>{' '}
+                        {form.getValues('iban') || 'Non défini'}
                     </p>
                     <p>
-                        <strong>BIC :</strong> {bankInfo?.bic || 'Non défini'}
+                        <strong>BIC :</strong>{' '}
+                        {form.getValues('bic') || 'Non défini'}
                     </p>
-                    <button
+
+                    <Button
+                        type='button'
                         onClick={() => setIsEditing(true)}
-                        className='mt-4 rounded-md bg-blueGreen-dark-active px-4 py-2 text-white hover:bg-blueGreen-dark'
+                        className='mt-4 bg-blueGreen-dark text-white'
                     >
                         Modifier
-                    </button>
+                    </Button>
                 </div>
             )}
         </div>

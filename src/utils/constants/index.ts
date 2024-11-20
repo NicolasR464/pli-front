@@ -27,6 +27,8 @@ export const pagePaths = {
     MESSAGES: '/messagerie/',
     /** Path to transactions page */
     TRANSACTION: '/transaction/',
+    /** Path for profil page */
+    MYPROFILE : '/myprofile'
 }
 
 /**
