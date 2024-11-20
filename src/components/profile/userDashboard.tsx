@@ -17,7 +17,6 @@ const UserDashboard: React.FC = () => {
         user: state.user,
     }))
 
-    // Liste des sections avec icônes
     const sections = [
         { id: 'info', label: 'Mes infos', icon: <User /> },
         { id: 'transactions', label: 'Mes Transactions', icon: <List /> },
