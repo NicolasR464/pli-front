@@ -15,9 +15,9 @@ import {
 import { useUserStore } from '@/stores/user'
 import { pagePaths } from '@/utils/constants'
 
+import TogglePremiumButton from '../togglePremiumStatus'
 import UserProfileCard from '../userCard'
 import { SignOutButton } from '@clerk/nextjs'
-import TogglePremiumButton from '../togglePremiumStatus'
 
 const UserProfileMenu: React.FC = () => {
     const { user } = useUserStore((state) => ({
