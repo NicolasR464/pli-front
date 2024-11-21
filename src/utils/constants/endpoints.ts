@@ -13,11 +13,12 @@ export const apiEndpoints = {
             TRANSACTIONS: 'api/transactions/',
             INSTANT_MESSAGES: 'api/messages/',
         },
-        // Private endpoints
-        private: {
+        // Protected endpoints
+        protected: {
             USERS: 'api/protected/users/',
             ARTICLES: 'api/protected/articles/',
             TRANSACTIONS: 'api/protected/transactions/',
+            TRANSACTION_FINAL: 'api/protected/transactions/:id/complete',
             INSTANT_MESSAGES: 'api/protected/messages/',
         },
     },

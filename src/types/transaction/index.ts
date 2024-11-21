@@ -1,24 +1,34 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { z } from 'zod'
 
-import { DeliveryTypeSchema } from '../article'
+import { AddressSchema } from '@/types/address/userAddress'
+import {
+    DeliveryCompanySchema,
+    TransactionStatesSchema,
+} from '@/types/transaction/actions'
 
-const Delivery = z.object({
-    _id: z.string(),
-    type: DeliveryTypeSchema,
-    packageWeight: z.number().positive(),
-    sent: z.date(),
-    cost: z.number().positive(),
-    qrCodeUrl: z.string().url(),
+/**
+ * @description Schema defining the delivery of the transaction - only present if this is not a pick-up transaction
+ * @exports DeliverySchema
+ */
+export const DeliverySchema = z.object({
+    id: z.string().optional(),
+    company: DeliveryCompanySchema.optional(),
+    packageWeight: z.number().positive().optional(),
+    sent: z.date().optional(),
+    cost: z.number().positive().optional(),
+    qrCodeUrl: z.string().url().optional(),
+    address: AddressSchema,
 })
 
 export const TransactionSchema = z.object({
-    _id: z.string(),
-    version: z.number().int(),
-    receiver: z.string(),
-    article: z.string(),
-    sender: z.string(),
-    delivery: Delivery,
+    id: z.string(),
+    userA: z.string(),
+    userB: z.string(),
+    articleA: z.string().optional(),
+    articleB: z.string(),
+    state: TransactionStatesSchema,
+    delivery: DeliverySchema.optional(),
 })
 
 export type Transaction = z.infer<typeof TransactionSchema>

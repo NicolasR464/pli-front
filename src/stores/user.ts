@@ -13,7 +13,7 @@ type UserStore = {
 }
 
 /**
- * This store is used to manage user data, including pseudo, avatarUrl, isPremium status, and address.
+ * This store is used to manage non-sensitive user data, like pseudo, avatarUrl, isPremium status.
  * It provides a method to update the user data partially.
  */
 export const useUserStore = create<UserStore>()(

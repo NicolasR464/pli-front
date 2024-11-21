@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { RegistrationForm } from '@/components/forms/userRegistration'
+import UserRegistrationForm from '@/components/forms/UserRegistrationForm'
 
 import { trocUpLogos } from '@/utils/constants/images'
 
@@ -17,7 +17,7 @@ const Onboarding = (): React.JSX.Element => {
             <h1 className='mb-8 text-4xl font-bold'>
                 {'Bienvenue sur TrocUp !'}
             </h1>
-            <RegistrationForm />
+            <UserRegistrationForm />
         </div>
     )
 }

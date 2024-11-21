@@ -15,7 +15,7 @@ type UserMessageKeys = keyof typeof userMessages
  * @param {NotificationType} options.type - The type of the notification (success, error, etc.).
  * @returns {void}
  */
-const notify = ({
+export const notify = ({
     message,
     type = NotificationType.enum.INFO,
 }: {

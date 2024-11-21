@@ -86,3 +86,10 @@ export type State = z.infer<typeof StateSchema>
 export type Status = z.infer<typeof StatusSchema>
 export type DeliveryType = z.infer<typeof DeliveryTypeSchema>
 export type Article = z.infer<typeof ArticleSchema>
+
+export type ArticlesListProps = {
+    userBalance?: number
+    userCredit?: number
+    isPremium?: boolean
+    isConnected: boolean
+}

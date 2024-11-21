@@ -27,6 +27,12 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     const sortedCategories = Object.keys(products.categories).sort((a, b) =>
         products.categories[a].tag.localeCompare(products.categories[b].tag),
     )
+
+    // Fonction pour fermer la Sheet
+    const closeSheet = (): void => {
+        setIsOpen(false)
+    }
+
     return (
         <>
             <Button
@@ -51,7 +57,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
                         <h2 className='text-xl font-semibold'>{'TROCUP'}</h2>
                         {/* Barre de recherche */}
                         <div className='visible-below-425 relative hidden p-4'>
-                            <SearchBar />
+                            <SearchBar onSearchSubmit={closeSheet} />
                         </div>
                     </SheetHeader>
                     {/* Catégories */}
@@ -65,6 +71,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
                                     key={categoryKey}
                                     href={`/articles?category=${encodeURIComponent(categoryKey)}`}
                                     className='p-3 text-blueGreen-dark-active hover:underline'
+                                    onClick={closeSheet}
                                 >
                                     {products.categories[categoryKey].tag}
                                 </Link>

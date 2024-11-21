@@ -6,6 +6,7 @@ import { addAuthHeader } from '@/utils/functions'
 import type { User } from '@/types/user'
 
 import type { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 type CreateUserSuccess = {
     message: string
@@ -28,7 +29,7 @@ type PaginatedUsers = {
  */
 export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
     const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
-        await userInstance.get(apiEndpoints.microServices.private.USERS, {
+        await userInstance.get(apiEndpoints.microServices.protected.USERS, {
             params: {
                 skip: pageParam,
                 limit: paginationLimit,
@@ -58,7 +59,7 @@ export const createUser = async (
     addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<CreateUserResponse> = await userInstance.post(
-        apiEndpoints.microServices.private.USERS,
+        apiEndpoints.microServices.protected.USERS,
         data,
     )
 
@@ -72,22 +73,40 @@ export const createUser = async (
 
 /**
  * Get user by Id.
- * @param {string} userId the id of the user to retreive.
- * @returns {Promise<User>|undefined} A promise that resolves with user information.
+ * @param {string} userId the id of the user to retrieve.
+ * @returns {Promise<User | undefined>} A promise that resolves with user information or undefined if not found.
  */
 export const getUserById = async (
     userId: string | undefined | null,
 ): Promise<User | undefined> => {
-    if (!userId) return undefined
+    if (!userId) {
+        return undefined
+    }
 
-    const response: AxiosResponse<User> = await userInstance.get(
-        `${apiEndpoints.microServices.public.USERS}${userId}`,
-    )
+    try {
+        const response: AxiosResponse<User> = await userInstance.get(
+            `${apiEndpoints.microServices.public.USERS}${userId}`,
+        )
 
-    if (response.status !== 200)
-        throw new Error(`Failed to fetch user with id ${String(userId)}`)
+        if (response.status !== 200) {
+            throw new Error('Erreur : utilisateur introuvable.')
+        }
 
-    return response.data
+        return response.data
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+            const statusCode = error.response?.status
+            if (statusCode === 404) {
+                return undefined
+            }
+
+            throw new Error(
+                `Erreur API : ${error.message || 'Message inconnu'}`,
+            )
+        }
+
+        throw new Error('Erreur inattendue lors de l’appel API.')
+    }
 }
 
 /**
@@ -107,7 +126,7 @@ export const updateUser = async (
     addAuthHeader(userInstance, JWT)
 
     const response: AxiosResponse<User> = await userInstance.put(
-        `${apiEndpoints.microServices.private.USERS}${userId}`,
+        `${apiEndpoints.microServices.protected.USERS}${userId}`,
         data,
     )
 

@@ -122,6 +122,7 @@ export const getArticlesByUser = async (userId: string): Promise<Article[]> => {
     }
     return []
 }
+
 /**
  * Create a new article.
  * @param {Partial<Article>} article - The article to create.
@@ -138,14 +139,65 @@ export const createArticle = async (
 
     const response: AxiosResponse<Partial<Article>> =
         await articleInstance.post(
-            apiEndpoints.microServices.private.ARTICLES,
+            apiEndpoints.microServices.protected.ARTICLES,
             article,
         )
 
     if (response.status !== 201)
         throw new Error(
-            `Failed to create ${apiEndpoints.microServices.private.ARTICLES}`,
+            `Failed to create ${apiEndpoints.microServices.protected.ARTICLES}`,
         )
 
     return response.data
+}
+
+/**
+ * Update an article.
+ * @param {string} articleId - The ID of the article to update.
+ * @param {Partial<Article>} articleData - The updated article data.
+ * @param {string} JWT - The JWT token for authentication.
+ * @returns {Promise<Article>} The updated article.
+ * @throws {Error} If the update fails.
+ */
+export const updateArticle = async (
+    articleId: string,
+    articleData: Partial<Article>,
+    JWT: string,
+): Promise<Article> => {
+    if (!JWT) throw new Error('No JWT provided')
+
+    addAuthHeader(articleInstance, JWT)
+
+    const response: AxiosResponse<Article> = await articleInstance.put(
+        `${apiEndpoints.microServices.protected.ARTICLES}${articleId}`,
+        articleData,
+    )
+
+    if (response.status !== 200)
+        throw new Error(`Failed to update article with id ${String(articleId)}`)
+
+    return response.data
+}
+
+/**
+ * Delete an article.
+ * @param {string} articleId - The ID of the article to delete.
+ * @param {string} JWT - The JWT token for authentication.
+ * @returns {Promise<void>} Resolves when the article is deleted.
+ * @throws {Error} If the deletion fails.
+ */
+export const deleteArticle = async (
+    articleId: string,
+    JWT: string,
+): Promise<void> => {
+    if (!JWT) throw new Error('No JWT provided')
+
+    addAuthHeader(articleInstance, JWT)
+
+    const response: AxiosResponse<void> = await articleInstance.delete(
+        `${apiEndpoints.microServices.protected.ARTICLES}${articleId}`,
+    )
+
+    if (response.status !== 200)
+        throw new Error(`Failed to delete article with id ${String(articleId)}`)
 }

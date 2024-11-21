@@ -1,34 +1,15 @@
-import type { ProductDataParams } from './mutations'
-
 import { localInstance } from '@/utils/axiosInstances/local'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 
+import type {
+    EmailParams,
+    EmailResponse,
+    ImageAnalysisResponse,
+    ProductAnalysisResponse,
+    ProductDataParams,
+} from '@/types/mutations/local'
+
 import type { AxiosResponse } from 'axios'
-
-export type ImageAnalysis = {
-    imageUrl: string
-    brand: string
-    tags: string[]
-    objectIdentified: string
-    category: string
-    subCategory: string
-    state: string
-}
-
-export type ImageAnalysisResponse = {
-    message: string
-    content: ImageAnalysis
-}
-
-type ProductAnalysis = {
-    productName: string
-    estimatedValue: number
-}
-
-export type ProductAnalysisResponse = {
-    message: string
-    content: ProductAnalysis
-}
 
 /**
  * Store and analyze an image by sending it to the local instance.
@@ -68,6 +49,30 @@ export const analyzeProductData = async (
         throw new Error(
             `Failed to fetch ${apiEndpoints.local.PRODUCT_ANALYSIS}`,
         )
+
+    return response.data
+}
+
+/**
+ * Send an email by sending it to the local instance.
+ * @param {FormData} formData - The form data to be sent.
+ * @returns {Promise<EmailResponse>} A promise that resolves to the email response.
+ * @throws {Error} If the email sending fails.
+ */
+export const sendEmail = async ({
+    contentData,
+    emailType,
+}: EmailParams): Promise<EmailResponse> => {
+    const response: AxiosResponse<EmailResponse> = await localInstance.post(
+        apiEndpoints.local.SEND_EMAIL,
+        {
+            contentData,
+            emailType,
+        },
+    )
+
+    if (response.status !== 200)
+        throw new Error(`Failed to fetch ${apiEndpoints.local.SEND_EMAIL}`)
 
     return response.data
 }

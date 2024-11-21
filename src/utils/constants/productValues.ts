@@ -253,7 +253,7 @@ export const products: ProductCategories = {
             tag: 'Sport',
             subcategories: {
                 BALLS: 'Ballons',
-                EXERCISE_BIKES: 'Vélos d’appartement',
+                EXERCISE_BIKES: 'Vélos',
                 FITNESS_EQUIPMENT: 'Équipement de fitness',
                 FOOTBALL_GEAR: 'Articles de football',
                 OTHER: 'Autre',
