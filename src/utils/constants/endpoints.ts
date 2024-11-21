@@ -20,6 +20,9 @@ export const apiEndpoints = {
             TRANSACTIONS: 'api/protected/transactions/',
             INSTANT_MESSAGES: 'api/protected/messages/',
         },
+        admin: {
+            USERS: 'api/protected/admin/users/',
+        },
     },
 
     // Local API endpoints

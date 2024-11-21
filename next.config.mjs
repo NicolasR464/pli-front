@@ -11,6 +11,7 @@ const nextConfig = {
             'res.cloudinary.com',
             'api.multiavatar.com',
             'cdn.pixabay.com',
+            'img.clerk.com'
         ],
     },
 
