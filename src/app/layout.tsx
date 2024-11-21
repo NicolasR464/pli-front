@@ -1,35 +1,29 @@
-'use client'
+// src/app/layout.tsx
+'use client' // Composant client
 
 import { Toaster } from 'react-hot-toast'
-import {
-    Carrois_Gothic_SC,
-    Quattrocento_Sans,
-    Questrial,
-} from 'next/font/google'
 import { usePathname } from 'next/navigation'
+import { ClerkProvider } from '@clerk/nextjs'
+import { Carrois_Gothic_SC, Quattrocento_Sans, Questrial } from 'next/font/google'
 
-// Ajoute ce hook pour obtenir le pathname actuel
 import Footer from '@/components/designSystem/footer'
 import Navbar from '@/components/designSystem/navigation/navbar'
-
-import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
+import UserStoreProvider from '@/utils/providers/UserStoreProvider'
+import { pagePaths } from '@/utils/constants'
 
 import './globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
 
-// eslint-disable-next-line new-cap
 const carroisGothic = Carrois_Gothic_SC({
     weight: '400',
     subsets: ['latin'],
 })
 
-// eslint-disable-next-line new-cap
 const quattrocentoSans = Quattrocento_Sans({
     weight: ['400'],
     subsets: ['latin'],
 })
-// eslint-disable-next-line new-cap
+
 const questrial = Questrial({
     weight: '400',
     subsets: ['latin'],
@@ -40,7 +34,6 @@ const Layout = ({
 }: Readonly<{
     children: React.ReactNode
 }>): React.JSX.Element => {
-    // Récupère le chemin actuel
     const pathname = usePathname()
 
     return (
@@ -57,15 +50,19 @@ const Layout = ({
                             {/* N'affiche pas Navbar si sur '/aide' */}
                             {pathname !== '/aide' && <Navbar />}
                         </header>
-                        <main className='flex-grow'>
-                            <Toaster />
-                            {children}
-                        </main>
-                        <Footer />
+                        <div className='flex min-h-screen flex-col'>
+                            <main className='flex-grow'>
+                                <UserStoreProvider />
+                                <Toaster />
+                                {children}
+                            </main>
+                            <Footer />
+                        </div>
                     </ReactQueryProvider>
                 </body>
             </html>
         </ClerkProvider>
     )
 }
+
 export default Layout

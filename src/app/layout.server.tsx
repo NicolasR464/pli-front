@@ -1,4 +1,5 @@
-import type { Metadata } from 'next'
+// src/app/layout.server.tsx
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
     title: 'TrocUp',
@@ -9,10 +10,12 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         locale: 'fr_FR',
-        url: 'https://troc-up.vercel.app',
+        url: 'https://trocup.fr',
         siteName: 'TrocUp',
     },
     other: {
         custom: ['utf8'],
     },
 }
+
+export default metadata
