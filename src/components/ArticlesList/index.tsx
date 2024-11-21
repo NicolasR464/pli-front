@@ -7,7 +7,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { getAllArticles } from '@/utils/apiCalls/article'
 import { rqKeys } from '@/utils/constants'
 import { formatDate } from '@/utils/functions/dates'
+import { isEligible } from '@/utils/functions/isEligible'
 
+import type { ArticlesListProps } from '@/types/article'
 import { StatusSchema } from '@/types/article'
 
 import {
@@ -20,7 +22,12 @@ import {
 import SkeletonAvatarTxt from '../skeletons/SkeletonAvatarTxt'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
-export const ArticlesList = (): React.JSX.Element => {
+export const ArticlesList = ({
+    userBalance,
+    isPremium,
+    userCredit,
+    isConnected,
+}: ArticlesListProps): React.JSX.Element => {
     const searchParams = useSearchParams()
     const category = searchParams.get('category')
 
@@ -98,36 +105,55 @@ export const ArticlesList = (): React.JSX.Element => {
                 articles.pages.map(
                     (page) =>
                         Array.isArray(page.articles) &&
-                        page.articles.map((article) => (
-                            <Card
-                                key={article.id}
-                                className='hover:scale-102 m-2 flex h-full transform cursor-pointer flex-col justify-between transition duration-200 ease-in-out hover:bg-gray-50 hover:shadow-md'
-                                onClick={() => {
-                                    router.push(`/articles/${article.id}`)
-                                }}
-                            >
-                                <CardHeader>
-                                    <img
-                                        src={article.imageUrls[0]}
-                                        alt='#'
-                                        className='w-full object-cover'
-                                    />
-                                </CardHeader>
-                                <CardContent className='flex-grow'>
-                                    <CardTitle className='pb-1 text-sm font-bold sm:text-base md:text-lg'>
-                                        {article.adTitle}
-                                    </CardTitle>
-                                    <div className='flex text-sm sm:text-base md:text-lg'>
-                                        <div>{article.price}</div>
-                                        <div>{' €'}</div>
-                                    </div>
-                                </CardContent>
-                                <CardFooter className='mt-auto flex-col items-start text-xs sm:text-sm md:text-base'>
-                                    <div>{article.address?.city}</div>
-                                    <div>{formatDate(article.createdAt)}</div>
-                                </CardFooter>
-                            </Card>
-                        )),
+                        page.articles.map((article) => {
+                            const eligible =
+                                isConnected &&
+                                isEligible({
+                                    isPremium: isPremium ?? false,
+                                    userBalance: userBalance ?? 0,
+                                    userCredit: userCredit ?? 0,
+                                    articlePrice: article.price,
+                                })
+
+                            return (
+                                <Card
+                                    key={article.id}
+                                    className={`hover:scale-102 m-2 flex h-full transform cursor-pointer flex-col justify-between transition duration-200 ease-in-out hover:bg-gray-50 hover:shadow-md ${
+                                        isConnected
+                                            ? eligible
+                                                ? 'border border-green-500'
+                                                : 'border border-red-500'
+                                            : ''
+                                    }`}
+                                    onClick={() => {
+                                        router.push(`/articles/${article.id}`)
+                                    }}
+                                >
+                                    <CardHeader>
+                                        <img
+                                            src={article.imageUrls[0]}
+                                            alt='#'
+                                            className='w-full object-cover'
+                                        />
+                                    </CardHeader>
+                                    <CardContent className='flex-grow'>
+                                        <CardTitle className='pb-1 text-sm font-bold sm:text-base md:text-lg'>
+                                            {article.adTitle}
+                                        </CardTitle>
+                                        <div className='flex text-sm sm:text-base md:text-lg'>
+                                            <div>{article.price}</div>
+                                            <div>{' €'}</div>
+                                        </div>
+                                    </CardContent>
+                                    <CardFooter className='mt-auto flex-col items-start text-xs sm:text-sm md:text-base'>
+                                        <div>{article.address?.city}</div>
+                                        <div>
+                                            {formatDate(article.createdAt)}
+                                        </div>
+                                    </CardFooter>
+                                </Card>
+                            )
+                        }),
                 )}
 
             <div>{!!isFetching && <SkeletonAvatarTxt />}</div>
