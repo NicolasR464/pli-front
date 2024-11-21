@@ -39,12 +39,9 @@ import { cn } from '@/components/shadcn/utils'
 
 import { useArticleStore } from '@/stores/article'
 import { useUserStore } from '@/stores/user'
-import type {
-    ImageAnalysis,
-    ProductAnalysisResponse,
-} from '@/utils/apiCalls/local'
 import { useProductDataAnalysis } from '@/utils/apiCalls/local/mutations'
 import { getAddressSuggestions } from '@/utils/apiCalls/thirdPartyApis/addressSuggestions'
+import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths } from '@/utils/constants'
 import {
     categoriesList,
@@ -65,13 +62,19 @@ import {
     addressObjectEmpty,
     ArticleFormDataSchema,
 } from '@/types/formValidations/adCreation'
+import type {
+    ImageAnalysis,
+    ProductAnalysisResponse,
+} from '@/types/mutations/local'
 
+import { useAuth } from '@clerk/nextjs'
 import { useDebouncedCallback } from '@mantine/hooks'
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from '@radix-ui/react-popover'
+import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import {
     Calendar as CalendarIcon,
@@ -83,6 +86,14 @@ import {
 
 const ArticleForm = (): React.JSX.Element => {
     const router = useRouter()
+    const { userId } = useAuth()
+
+    // Get user address
+    const { data: userData } = useQuery({
+        queryKey: ['user', userId],
+        queryFn: () => getUserById(userId),
+        enabled: !!userId,
+    })
 
     const [newAddressOpen, setNewAddressOpen] = useState(false)
     const [isManufactureDateOpen, setIsManufactureDateOpen] = useState(false)
@@ -98,9 +109,7 @@ const ArticleForm = (): React.JSX.Element => {
     } = useProductDataAnalysis()
 
     // Data stored in Zustand stores
-    const { address: storedAddresses, isPremium } = useUserStore(
-        (state) => state.user,
-    )
+    const { isPremium } = useUserStore((state) => state.user)
     const analyzedImage = useArticleStore((state) => state.analysedImage)
 
     const setArticle = useArticleStore((state) => state.setArticle)
@@ -788,94 +797,98 @@ const ArticleForm = (): React.JSX.Element => {
                     />
 
                     {/* Saved user addresses Select */}
-                    {!!storedAddresses && storedAddresses.length > 0 && (
-                        <div className='flex justify-center'>
-                            <FormField
-                                control={control}
-                                name='savedUserAddressLabel'
-                                render={({ field }) => (
-                                    <FormItem className={addressInputClass}>
-                                        <FormLabel>
-                                            {
-                                                'Sélectionne une adresse enregistrée\u00A0: '
-                                            }
-                                        </FormLabel>
-                                        <div className='flex items-center'>
-                                            <Select
-                                                onValueChange={(value) => {
-                                                    setValue(
-                                                        'newAddressObject',
-                                                        addressObjectEmpty,
-                                                    )
-
-                                                    const parsedValue =
-                                                        JSON.parse(
-                                                            value,
-                                                        ) as Address
-
-                                                    setValue(
-                                                        'registeredAddressObject',
-                                                        parsedValue,
-                                                    )
-
-                                                    field.onChange(value)
-                                                }}
-                                                value={field.value ?? ''}
-                                            >
-                                                <FormControl>
-                                                    <SelectTrigger
-                                                        className={cn(
-                                                            addressInputClass,
-                                                            'justify-between',
-                                                        )}
-                                                    >
-                                                        <SelectValue
-                                                            placeholder={
-                                                                <House className='opacity-50' />
-                                                            }
-                                                        />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent>
-                                                    {storedAddresses.map(
-                                                        (address) => (
-                                                            <SelectItem
-                                                                key={
-                                                                    address.label
-                                                                }
-                                                                value={JSON.stringify(
-                                                                    address,
-                                                                )}
-                                                            >
-                                                                {address.label}
-                                                            </SelectItem>
-                                                        ),
-                                                    )}
-                                                </SelectContent>
-                                            </Select>
-                                            {!!savedUserAddressLabelWatch && (
-                                                <CircleX
-                                                    className='ml-2 h-6 w-6 shrink-0 cursor-pointer text-red-500'
-                                                    onClick={() => {
+                    {!!userData &&
+                        !!userData.addresses &&
+                        userData.addresses.length > 0 && (
+                            <div className='flex justify-center'>
+                                <FormField
+                                    control={control}
+                                    name='savedUserAddressLabel'
+                                    render={({ field }) => (
+                                        <FormItem className={addressInputClass}>
+                                            <FormLabel>
+                                                {
+                                                    'Sélectionne une adresse enregistrée\u00A0: '
+                                                }
+                                            </FormLabel>
+                                            <div className='flex items-center'>
+                                                <Select
+                                                    onValueChange={(value) => {
                                                         setValue(
-                                                            'savedUserAddressLabel',
-                                                            undefined,
+                                                            'newAddressObject',
+                                                            addressObjectEmpty,
                                                         )
+
+                                                        const parsedValue =
+                                                            JSON.parse(
+                                                                value,
+                                                            ) as Address
 
                                                         setValue(
                                                             'registeredAddressObject',
-                                                            addressObjectEmpty,
+                                                            parsedValue,
                                                         )
+
+                                                        field.onChange(value)
                                                     }}
-                                                />
-                                            )}
-                                        </div>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    )}
+                                                    value={field.value ?? ''}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger
+                                                            className={cn(
+                                                                addressInputClass,
+                                                                'justify-between',
+                                                            )}
+                                                        >
+                                                            <SelectValue
+                                                                placeholder={
+                                                                    <House className='opacity-50' />
+                                                                }
+                                                            />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {userData.addresses?.map(
+                                                            (address) => (
+                                                                <SelectItem
+                                                                    key={
+                                                                        address.label
+                                                                    }
+                                                                    value={JSON.stringify(
+                                                                        address,
+                                                                    )}
+                                                                >
+                                                                    {
+                                                                        address.label
+                                                                    }
+                                                                </SelectItem>
+                                                            ),
+                                                        )}
+                                                    </SelectContent>
+                                                </Select>
+                                                {!!savedUserAddressLabelWatch && (
+                                                    <CircleX
+                                                        className='ml-2 h-6 w-6 shrink-0 cursor-pointer text-red-500'
+                                                        onClick={() => {
+                                                            setValue(
+                                                                'savedUserAddressLabel',
+                                                                undefined,
+                                                            )
+
+                                                            setValue(
+                                                                'registeredAddressObject',
+                                                                addressObjectEmpty,
+                                                            )
+                                                        }}
+                                                    />
+                                                )}
+                                            </div>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
 
                     {/* Article Address Input */}
                     <div className='mt-[9px] flex justify-center'>
@@ -887,8 +900,8 @@ const ArticleForm = (): React.JSX.Element => {
                                     className={`flex flex-col ${addressInputClass} `}
                                 >
                                     <FormLabel className='w-full'>
-                                        {!!storedAddresses &&
-                                        storedAddresses.length > 0
+                                        {!!userData?.addresses &&
+                                        userData.addresses.length > 0
                                             ? 'Ou rajoute une nouvelle adresse :'
                                             : 'Rajoute une nouvelle adresse :'}
                                     </FormLabel>

@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import type { ImageAnalysis } from '@/utils/apiCalls/local'
-
 import type { Article } from '@/types/article'
+import type { ImageAnalysis } from '@/types/mutations/local'
 
 type ArticleStore = {
     analysedImage: ImageAnalysis
     article: Partial<Article>
     openConfirmDialog: boolean
+    openRequestDialog: boolean
     setAnalyzedImage: (analysedImage: ImageAnalysis) => void
     setArticle: (article: Partial<Article>) => void
     setOpenConfirmDialog: (open: boolean) => void
@@ -30,7 +30,7 @@ export const useArticleStore = create<ArticleStore>()(
         },
         article: {},
         openConfirmDialog: false,
-
+        openRequestDialog: false,
         setAnalyzedImage: (analysedImage: ImageAnalysis): void => {
             set((state) => {
                 state.analysedImage = analysedImage

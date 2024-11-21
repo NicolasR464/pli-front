@@ -3,8 +3,10 @@ export const paginationLimit = 20
 
 /** The list of React Query keys  */
 export const rqKeys = {
-    USERS: 'users',
     ARTICLES: 'allArticles',
+    ARTICLE: 'article',
+    TRANSACTION: 'transaction',
+    USERS: 'users',
     USER: 'user',
 }
 
@@ -28,7 +30,7 @@ export const pagePaths = {
     /** Path to transactions page */
     TRANSACTION: '/transaction/',
     /** Path for profil page */
-    MYPROFILE: '/myprofile',
+    MYPROFILE: '/myProfile',
     /** Path for users */
     USERS: '/users/',
 }
@@ -69,7 +71,20 @@ export const userMessages = {
     notLoggedIn: {
         label: 'not-logged-in',
         type: {
-            ERROR: 'Tu n’es pas connecté. Connecte-toi pour continuer.',
+            ERROR: 'Tu n’es pas connecté.e, connecte-toi pour continuer.',
+        },
+    },
+    requestSent: {
+        label: 'request-sent',
+        type: {
+            SUCCESS: 'Demande envoyée !',
+            ERROR: 'Une erreur est survenue lors de l’envoi de la demande.',
+        },
+    },
+    transactionDuplicate: {
+        label: 'transaction-duplicate',
+        type: {
+            ERROR: 'Cette transaction existe déjà',
         },
     },
 }

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-import ArticleCard from './articleCard'
+import ArticleCard from './ArticleCard'
 
 import type { Article } from '@/types/article'
 

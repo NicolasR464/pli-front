@@ -16,7 +16,7 @@ const getImageBlob = async (data: FileDropItem): Promise<File> => {
     return file
 }
 
-const ImageProcessing = (): React.JSX.Element => {
+const ImageDropZone = (): React.JSX.Element => {
     const [image, setImage] = useState<string>('')
     const [isDragging, setIsDragging] = useState(false)
 
@@ -124,4 +124,4 @@ const ImageProcessing = (): React.JSX.Element => {
     )
 }
 
-export default ImageProcessing
+export default ImageDropZone

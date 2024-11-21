@@ -13,10 +13,13 @@ import ProductDetails from '@/components/articleDisplay/ProductDetails'
 import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
 import Map from '@/components/Map'
+import TransactionRequest from '@/components/transactions/userActions/TransactionRequest'
 
+import { useUserStore } from '@/stores/user'
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths } from '@/utils/constants'
+import { isEligible } from '@/utils/functions/isEligible'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -24,6 +27,9 @@ const ArticlePage = (): React.JSX.Element => {
     // Get id from URL in string to avoid type errors :
     const { id } = useParams()
     const articleId = String(id)
+
+    // Get connected user info from store
+    const { user: userConnected } = useUserStore()
 
     // React query to get article data
     const {
@@ -38,7 +44,7 @@ const ArticlePage = (): React.JSX.Element => {
     // Type and store id in a variable to avoid errors
     const ownerId = article?.owner
 
-    // React query to get user data
+    // React query to get article owner data
     const { data: user } = useQuery({
         queryKey: ['user', ownerId],
         queryFn: () => getUserById(ownerId),
@@ -101,7 +107,7 @@ const ArticlePage = (): React.JSX.Element => {
                                     }
                                     pseudo={user.pseudo}
                                     name={user.name}
-                                    address={user.address}
+                                    address={user.addresses?.[0]}
                                 />
                             )}
                         </Link>
@@ -127,8 +133,18 @@ const ArticlePage = (): React.JSX.Element => {
 
                         {/* Action buttons */}
                         <ProductActions
-                            sellerId={user?.id ?? ''}
-                            articleTitle={article.adTitle}
+                            userB={{
+                                id: article.owner,
+                                email: user?.email ?? '',
+                            }}
+                            articleB={{
+                                id: article.id,
+                                adTitle: article.adTitle,
+                                imageUrl: article.imageUrls[0],
+                                address: article.address,
+                                deliveryType: article.deliveryType,
+                                price: article.price,
+                            }}
                         />
                     </div>
                 </div>
@@ -146,10 +162,31 @@ const ArticlePage = (): React.JSX.Element => {
                     </div>
                 </div>
                 {/* Action buttons */}
-                <ProductActions
-                    sellerId={user?.id ?? ''}
-                    articleTitle={article?.adTitle ?? ''}
-                />
+                {!!article &&
+                    !!user &&
+                    !!userConnected.isPremium &&
+                    !!userConnected.balance &&
+                    !!userConnected.credit &&
+                    isEligible({
+                        isPremium: userConnected.isPremium,
+                        userBalance: userConnected.balance,
+                        userCredit: userConnected.credit,
+                        articlePrice: article.price,
+                    }) && (
+                        <TransactionRequest
+                            userB={{
+                                id: article.owner,
+                                email: user.email,
+                            }}
+                            articleB={{
+                                id: article.id,
+                                adTitle: article.adTitle,
+                                imageUrl: article.imageUrls[0],
+                                address: article.address,
+                                deliveryType: article.deliveryType,
+                            }}
+                        />
+                    )}
 
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}
