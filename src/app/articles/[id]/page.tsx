@@ -14,7 +14,6 @@ import SellerInfo from '@/components/articleDisplay/SellerInfo'
 import { ConditionsTroc } from '@/components/ConditionsTroc'
 import Map from '@/components/Map'
 
-import { useUserStore } from '@/stores/user'
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths } from '@/utils/constants'
