@@ -11,7 +11,11 @@ type Suggestion = {
     type: 'category' | 'subcategory'
 }
 
-const SearchBar: React.FC = () => {
+type SearchBarProps = {
+    onSearchSubmit?: () => void
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
     const router = useRouter()
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [filteredSuggestions, setFilteredSuggestions] = useState<
@@ -69,6 +73,7 @@ const SearchBar: React.FC = () => {
         event.preventDefault()
         if (searchTerm) {
             router.push(`/articles?query=${encodeURIComponent(searchTerm)}`)
+            if (onSearchSubmit) onSearchSubmit()
         }
     }
 
@@ -93,20 +98,23 @@ const SearchBar: React.FC = () => {
                 <ul className='absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-lg'>
                     {filteredSuggestions.map((suggestion) => (
                         <li
-                            key={suggestion.name}
-                            className='cursor-pointer px-4 py-2 hover:bg-gray-100'
-                            onClick={() => {
-                                handleSuggestionClick(suggestion.name)
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    handleSuggestionClick(suggestion.name)
-                                }
-                            }}
+                            key={`${suggestion.name}-${suggestion.type}`}
+                            className='px-4 py-2 hover:bg-gray-100'
                         >
-                            {suggestion.type === 'category' && (
-                                <strong>{suggestion.name}</strong>
-                            )}
+                            <button
+                                type='button'
+                                className='w-full cursor-pointer text-left'
+                                onClick={() => {
+                                    handleSuggestionClick(suggestion.name)
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        handleSuggestionClick(suggestion.name)
+                                    }
+                                }}
+                            >
+                                {suggestion.name}
+                            </button>
                         </li>
                     ))}
                 </ul>
