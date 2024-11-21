@@ -72,8 +72,8 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
             {/* For Transaction 1-to-M request */}
             {!!articleB.price &&
                 !!userConnected.isPremium &&
-                !!userConnected.balance &&
-                !!userConnected.credit &&
+                userConnected.balance !== undefined &&
+                userConnected.credit !== undefined &&
                 isEligible({
                     isPremium: userConnected.isPremium,
                     userBalance: userConnected.balance,

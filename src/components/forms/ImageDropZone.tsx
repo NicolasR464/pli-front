@@ -48,7 +48,7 @@ const ImageDropZone = (): React.JSX.Element => {
     }
 
     return (
-        <div className='flex w-full flex-col items-center justify-center'>
+        <div className='z-10 flex w-full flex-col items-center justify-center'>
             <DropZone
                 getDropOperation={(types: DragTypes) => {
                     if (
@@ -119,7 +119,11 @@ const ImageDropZone = (): React.JSX.Element => {
                 )}
             </DropZone>
 
-            {!!isPending && <p>{'Analyse en cours…'}</p>}
+            {!!isPending && (
+                <p className='animate-colorPulse text-lg font-bold'>
+                    {'Analyse en cours…'}
+                </p>
+            )}
         </div>
     )
 }
