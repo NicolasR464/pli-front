@@ -165,8 +165,8 @@ const ArticlePage = (): React.JSX.Element => {
                 {!!article &&
                     !!user &&
                     !!userConnected.isPremium &&
-                    !!userConnected.balance &&
-                    !!userConnected.credit &&
+                    userConnected.balance !== undefined &&
+                    userConnected.credit !== undefined &&
                     isEligible({
                         isPremium: userConnected.isPremium,
                         userBalance: userConnected.balance,
