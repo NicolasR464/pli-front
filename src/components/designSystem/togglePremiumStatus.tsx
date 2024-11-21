@@ -4,6 +4,8 @@ import { useUserStore } from '@/stores/user'
 import { updateUser } from '@/utils/apiCalls/user'
 
 import { useAuth, useUser } from '@clerk/nextjs'
+import { notify } from '@/utils/functions/toasterHelper'
+import { NotificationType } from '@/types'
 
 const TogglePremiumButton: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string>('')
@@ -33,9 +35,15 @@ const TogglePremiumButton: React.FC = () => {
                 ...user,
                 isPremium: true,
             })
+
+            notify({
+                message:
+                    'Tu es désormais Premium pour une periode d‘essai de deux semaines !',
+                type: NotificationType.enum.SUCCESS,
+            })
         } catch {
             setErrorMessage(
-                `Erreur lors de la mise à jour du statut premium. Veuillez réesseyer`,
+                `Erreur lors de la mise à jour du statut premium. Essaie encore`,
             )
         }
     }
