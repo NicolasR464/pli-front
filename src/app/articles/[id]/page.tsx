@@ -102,7 +102,7 @@ const ArticlePage = (): React.JSX.Element => {
                                     }
                                     pseudo={user.pseudo}
                                     name={user.name}
-                                    address={user.address}
+                                    address={user.addresses?.[0]}
                                 />
                             )}
                         </Link>

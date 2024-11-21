@@ -10,23 +10,13 @@ import {
 import { avatarPlaceholder } from '@/utils/constants/avatarPlaceholder'
 import { formatDate } from '@/utils/functions/dates'
 
+import type { Address } from '@/types/article'
+
 type SellerInfoProps = {
     avatarUrl: string | null | undefined
     name: string
     pseudo: string
-    address:
-        | {
-              label?: string
-              housenumber?: string
-              street?: string
-              city?: string
-              postcode?: string
-              citycode?: string
-              floor?: number
-              extra?: string
-              geopoints?: { type: string; coordinates: number[] }
-          }[]
-        | undefined
+    address?: Address
     lastConnected: Date
 }
 
@@ -61,18 +51,21 @@ const SellerInfo: React.FC<SellerInfoProps> = ({
                 <strong>{'Pseudo : '}</strong>
                 {pseudo}
             </p>
-            {!!address && address.length > 0 && (
+            {!!address && (
                 <p>
-                    <strong>{'Adresse : '}</strong>
-                    {address[0].street ? `${address[0].street}, ` : ''}
-                    {address[0].city ? `${address[0].city}, ` : ''}
-                    {address[0].postcode ? String(address[0].postcode) : ''}
+                    <strong>{'Adresse principale : '}</strong>
+                    {address.street ? `${address.street}, ` : ''}
+                    {address.city ? `${address.city}, ` : ''}
+                    {address.postcode ? String(address.postcode) : ''}
                 </p>
             )}
-            <p>
-                <strong>{'Dernière connexion : '}</strong>
-                {formatDate(lastConnected)}
-            </p>
+
+            {lastConnected !== undefined && (
+                <p>
+                    <strong>{'Dernière connexion : '}</strong>
+                    {formatDate(lastConnected)}
+                </p>
+            )}
         </div>
     </div>
 )

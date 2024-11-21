@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
-/* eslint-disable no-warning-comments */
 'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 
 import { Button } from '@/components/shadcn/ui/button'
@@ -20,10 +19,12 @@ import { TransactionStatesSchema } from '@/types/transaction/actions'
 
 import { useAuth } from '@clerk/nextjs'
 import { useQuery } from '@tanstack/react-query'
+import { sendMessage } from '@/utils/apiCalls/instantMessage'
 
 const PostTransaction = (): React.JSX.Element => {
     const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false)
     const [jwtToken, setJwtToken] = useState<string>()
+    const [roomId, setRoomId] = useState<string>()
     const router = useRouter()
 
     const { mutateAsync: confirmTransaction } = useConfirmTransaction()
@@ -88,6 +89,12 @@ const PostTransaction = (): React.JSX.Element => {
         queryFn: () => getUserById(transaction!.userA),
         enabled: isTransactionFetched && !!transaction && !!transaction.userA,
     })
+
+    useEffect(() => {
+        if (!!isUserAFetched && !!userA && !!articleB) {
+            setRoomId(`${userA.id}_${articleB.owner}`)
+        }
+    }, [userA, articleB, isUserAFetched])
 
     /**
      * Handle the confirmation of the transaction by userB (the one who is asked a transaction request)
@@ -230,17 +237,6 @@ const PostTransaction = (): React.JSX.Element => {
                     </Button>
                 </div>
             )}
-
-            {/* TODO: Add a link to send a message to the userA */}
-            {/* {!!isTransactionFetched && !!isTransactionConfirmed && (
-                <div className='flex justify-center'>
-                    <Button>
-                        <Link href={`/user/${userA?.id}`}>
-                            {`Voir le profil de ${userA?.pseudo}`}
-                        </Link>
-                    </Button>
-                </div>
-            )} */}
         </div>
     )
 }

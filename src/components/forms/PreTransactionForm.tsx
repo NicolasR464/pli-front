@@ -45,7 +45,7 @@ import { notify } from '@/utils/functions/toasterHelper'
 
 import { EmailTypeSchema, NotificationType } from '@/types'
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
-import { DeliveryTypeSchema, type Address } from '@/types/article'
+import { type Address, DeliveryTypeSchema } from '@/types/article'
 import { addressObjectEmpty } from '@/types/formValidations/adCreation'
 import type { PreTransactionFormData } from '@/types/formValidations/preTransaction'
 import { preTransactionSchema } from '@/types/formValidations/preTransaction'
@@ -232,8 +232,6 @@ const PreTransactionForm: React.FC = () => {
                     }
 
                     setOpenRequestDialog(false)
-
-                    return
                 },
             },
         )

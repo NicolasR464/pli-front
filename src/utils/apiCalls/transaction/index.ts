@@ -95,7 +95,7 @@ export const getTransactionsByUser = async (
 
     const response: AxiosResponse<Transaction[]> =
         await transactionInstance.get(
-            `${apiEndpoints.microServices.private.TRANSACTIONS}users/${userId}`,
+            `${apiEndpoints.microServices.protected.TRANSACTIONS}users/${userId}`,
         )
 
     if (response.status !== 200)

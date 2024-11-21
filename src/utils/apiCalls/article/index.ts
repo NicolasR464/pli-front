@@ -169,7 +169,7 @@ export const updateArticle = async (
     addAuthHeader(articleInstance, JWT)
 
     const response: AxiosResponse<Article> = await articleInstance.put(
-        `${apiEndpoints.microServices.private.ARTICLES}/${articleId}`,
+        `${apiEndpoints.microServices.protected.ARTICLES}${articleId}`,
         articleData,
     )
 
@@ -195,7 +195,7 @@ export const deleteArticle = async (
     addAuthHeader(articleInstance, JWT)
 
     const response: AxiosResponse<void> = await articleInstance.delete(
-        `${apiEndpoints.microServices.private.ARTICLES}/${articleId}`,
+        `${apiEndpoints.microServices.protected.ARTICLES}${articleId}`,
     )
 
     if (response.status !== 200)

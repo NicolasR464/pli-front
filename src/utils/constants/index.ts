@@ -30,7 +30,7 @@ export const pagePaths = {
     /** Path to transactions page */
     TRANSACTION: '/transaction/',
     /** Path for profil page */
-    MYPROFILE: '/myprofile',
+    MYPROFILE: '/myProfile',
     /** Path for users */
     USERS: '/users/',
 }

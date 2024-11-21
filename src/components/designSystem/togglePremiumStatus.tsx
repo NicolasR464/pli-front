@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 import { useUserStore } from '@/stores/user'
 import { updateUser } from '@/utils/apiCalls/user'
+import { notify } from '@/utils/functions/toasterHelper'
+
+import { NotificationType } from '@/types'
 
 import { useAuth, useUser } from '@clerk/nextjs'
-import { notify } from '@/utils/functions/toasterHelper'
-import { NotificationType } from '@/types'
 
 const TogglePremiumButton: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState<string>('')

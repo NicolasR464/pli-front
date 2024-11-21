@@ -9,7 +9,6 @@ import { sendMessage } from '@/utils/apiCalls/instantMessage'
 
 import { useAuth, useUser } from '@clerk/nextjs'
 
-
 /**
  * This component handles the actions related to a product, including 1toM transaction requests and messaging the seller.
  * It uses the TransactionRequest and RequestDialog components to manage transaction requests.
@@ -39,7 +38,7 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
             }
             const senderId = clerkUser?.id ?? 'unknown_user'
             const roomID = `${senderId}_${userB.id}`
-            const message = `Bonjour, je suis intéressé(e) par votre article "${articleTitle}".`
+            const message = `Bonjour, je suis intéressé(e) par votre article "${articleB.adTitle}".`
             const sentAt = new Date()
 
             // Envoi du premier message
@@ -64,32 +63,31 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
     }
 
     return (
-     
-    <div className='mb-6 mt-6 flex justify-center space-x-4'>
-        {/* For Transaction 1-to-M request */}
-        <TransactionRequest
-            userB={userB}
-            articleB={articleB}
-        />
+        <div className='mb-6 mt-6 flex justify-center space-x-4'>
+            {/* For Transaction 1-to-M request */}
+            <TransactionRequest
+                userB={userB}
+                articleB={articleB}
+            />
 
-        {/* For Transaction 1-to-1 request */}
-        <Button
+            {/* For Transaction 1-to-1 request */}
+            <Button
                 onClick={() => {
                     handleSendMessage()
                 }}
                 disabled={loading}
                 className='transform rounded-lg bg-gradient-to-r from-teal-200 to-teal-300 px-6 py-2 text-teal-700 shadow-md transition duration-300 ease-in-out hover:scale-105 hover:from-teal-300 hover:to-teal-400 hover:text-white'
                 aria-label='Envoyer un message au vendeur'
-        >
-            {loading ? 'Envoi en cours…' : 'Envoyer un message 💬'}
-        </Button>
+            >
+                {loading ? 'Envoi en cours…' : 'Envoyer un message 💬'}
+            </Button>
 
-        {error.trim() && (
-            <div className='mt-4 text-red-500'>
-                <p>{error}</p>
-            </div>
-        )}
-    </div>
+            {error.trim() && (
+                <div className='mt-4 text-red-500'>
+                    <p>{error}</p>
+                </div>
+            )}
+        </div>
     )
 }
 
