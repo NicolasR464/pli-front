@@ -150,9 +150,12 @@ const PostTransaction = (): React.JSX.Element => {
                     isTransactionConfirmed && 'text-green-500'
                 }`}
             >
-                {!!isTransactionFetched &&
-                    !!isTransactionConfirmed &&
-                    'Transaction confirmée !'}
+                {!!isTransactionFetched && !!isTransactionConfirmed && (
+                    <>
+                        <i>{'trocUp'}</i>
+                        {' confirmé !'}
+                    </>
+                )}
 
                 {!!isTransactionFetched && !isTransactionConfirmed && (
                     <>

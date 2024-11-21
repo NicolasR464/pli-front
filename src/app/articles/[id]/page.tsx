@@ -161,32 +161,6 @@ const ArticlePage = (): React.JSX.Element => {
                         <ConditionsTroc />
                     </div>
                 </div>
-                {/* Action buttons */}
-                {!!article &&
-                    !!user &&
-                    !!userConnected.isPremium &&
-                    userConnected.balance !== undefined &&
-                    userConnected.credit !== undefined &&
-                    isEligible({
-                        isPremium: userConnected.isPremium,
-                        userBalance: userConnected.balance,
-                        userCredit: userConnected.credit,
-                        articlePrice: article.price,
-                    }) && (
-                        <TransactionRequest
-                            userB={{
-                                id: article.owner,
-                                email: user.email,
-                            }}
-                            articleB={{
-                                id: article.id,
-                                adTitle: article.adTitle,
-                                imageUrl: article.imageUrls[0],
-                                address: article.address,
-                                deliveryType: article.deliveryType,
-                            }}
-                        />
-                    )}
 
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}

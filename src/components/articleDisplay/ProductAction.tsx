@@ -71,9 +71,10 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
         <div className='mb-6 mt-6 flex justify-center space-x-4'>
             {/* For Transaction 1-to-M request */}
             {!!articleB.price &&
+                !!userConnected &&
                 !!userConnected.isPremium &&
-                !!userConnected.balance &&
-                !!userConnected.credit &&
+                userConnected.balance !== undefined &&
+                userConnected.credit !== undefined &&
                 isEligible({
                     isPremium: userConnected.isPremium,
                     userBalance: userConnected.balance,
