@@ -106,7 +106,6 @@ export const ArticlesList = ({
                 articles.pages.map(
                     (page) =>
                         Array.isArray(page.articles) &&
-          
                         page.articles.map((article) => {
                             const eligible =
                                 isConnected &&
@@ -156,7 +155,6 @@ export const ArticlesList = ({
                                 </Card>
                             )
                         }),
-
                 )}
 
             <div>{!!isFetching && <SkeletonAvatarTxt />}</div>

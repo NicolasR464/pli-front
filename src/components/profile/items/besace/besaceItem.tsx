@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 import { Button } from '@/components/shadcn/ui/button'
 import {
@@ -9,7 +10,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/shadcn/ui/card'
-import Image from 'next/image'
 
 import type { Article } from '@/types/article'
 

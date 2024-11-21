@@ -3,14 +3,16 @@
 
 import { Toaster } from 'react-hot-toast'
 import { usePathname } from 'next/navigation'
-import { ClerkProvider } from '@clerk/nextjs'
+
 import Footer from '@/components/designSystem/footer'
 import Navbar from '@/components/designSystem/navigation/navbar'
+
+import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 import UserStoreProvider from '@/utils/providers/UserStoreProvider'
-import { pagePaths } from '@/utils/constants'
 
 import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const Layout = ({
     children,
