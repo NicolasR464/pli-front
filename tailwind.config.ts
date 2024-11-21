@@ -103,10 +103,29 @@ const config = {
                         height: '0',
                     },
                 },
+                colorPulse: {
+                    '0%': { color: 'inherit' },
+                    '25%': { color: '#22c55e' },
+                    '50%': { color: '#eab308' },
+                    '75%': { color: '#22c55e' },
+                    '100%': { color: 'inherit' },
+                },
+                slideDown: {
+                    '0%': {
+                        transform: 'translateY(-10%)',
+                        opacity: '0',
+                    },
+                    '100%': {
+                        transform: 'translateY(0)',
+                        opacity: '1',
+                    },
+                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
+                colorPulse: 'colorPulse 2s ease-in-out infinite',
+                slideDown: 'slideDown 0.5s ease-out',
             },
             letterSpacing: {
                 tighter: '-0.05em',

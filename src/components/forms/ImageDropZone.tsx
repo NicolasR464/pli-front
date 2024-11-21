@@ -16,7 +16,7 @@ const getImageBlob = async (data: FileDropItem): Promise<File> => {
     return file
 }
 
-const ImageProcessing = (): React.JSX.Element => {
+const ImageDropZone = (): React.JSX.Element => {
     const [image, setImage] = useState<string>('')
     const [isDragging, setIsDragging] = useState(false)
 
@@ -48,7 +48,7 @@ const ImageProcessing = (): React.JSX.Element => {
     }
 
     return (
-        <div className='flex w-full flex-col items-center justify-center'>
+        <div className='z-10 flex w-full flex-col items-center justify-center'>
             <DropZone
                 getDropOperation={(types: DragTypes) => {
                     if (
@@ -119,9 +119,13 @@ const ImageProcessing = (): React.JSX.Element => {
                 )}
             </DropZone>
 
-            {!!isPending && <p>{'Analyse en cours…'}</p>}
+            {!!isPending && (
+                <p className='animate-colorPulse text-lg font-bold'>
+                    {'Analyse en cours…'}
+                </p>
+            )}
         </div>
     )
 }
 
-export default ImageProcessing
+export default ImageDropZone

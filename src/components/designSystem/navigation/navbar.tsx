@@ -22,11 +22,11 @@ const Navbar: React.FC = () => {
             <div className='flex min-w-max items-center justify-between py-0'>
                 <div className='flex items-center justify-center space-x-4'>
                     <Image
-                        src='https://res.cloudinary.com/ddtptgbnn/image/upload/v1731668976/blockmark_black_4x_vkglhp.png'
+                        src='https://res.cloudinary.com/ddtptgbnn/image/upload/v1732097833/TROCUP_yytqrj.png'
                         alt='Trocup'
-                        width={150}
-                        height={100}
-                        className='left-0'
+                        width={70}
+                        height={200}
+                        className='left-0 m-5'
                     />
 
                     {/* Bouton Ajouter */}

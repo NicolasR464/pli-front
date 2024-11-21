@@ -15,6 +15,32 @@ type CarouselImagesProps = {
 }
 
 const CarouselImages: React.FC<CarouselImagesProps> = ({ imageUrls }) => {
+    // Si une seule image, retourner une version simplifiée sans carousel
+    if (imageUrls.length === 1) {
+        const [imageUrl] = imageUrls
+        return (
+            <div className='mx-auto w-full max-w-md'>
+                <div className='p-1'>
+                    <Card>
+                        <CardContent className='flex aspect-square items-center justify-center p-6'>
+                            <Image
+                                src={imageUrl}
+                                alt='Single article image'
+                                className='h-full w-full object-cover'
+                                width={250}
+                                height={250}
+                                role='img'
+                                aria-label='Single article image'
+                                loading='lazy'
+                            />
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        )
+    }
+
+    // Sinon afficher le carousel
     return (
         <Carousel
             className='mx-auto w-full max-w-md'

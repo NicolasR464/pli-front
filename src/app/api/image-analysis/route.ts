@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import type { ImageAnalysisResponse } from '@/utils/apiCalls/local'
 import { userMessages } from '@/utils/constants'
 import { apiEndpoints } from '@/utils/constants/endpoints'
 import { mainFolder, subfolders } from '@/utils/constants/images'
@@ -11,6 +10,7 @@ import { StateSchema } from '@/types/article'
 import type { ProductCategories } from '@/types/article/categories'
 import type { CloudinaryResponse } from '@/types/article/cloudinaryApiCall'
 import { environment } from '@/types/environment'
+import type { ImageAnalysisResponse } from '@/types/mutations/local'
 
 import { AzureKeyCredential } from '@azure/core-auth'
 import type {
