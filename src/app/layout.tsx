@@ -1,18 +1,23 @@
 // src/app/layout.tsx
-'use client' // Composant client
+'use client'
 
 import { Toaster } from 'react-hot-toast'
+import {
+    Carrois_Gothic_SC,
+    Quattrocento_Sans,
+    Questrial,
+} from 'next/font/google'
 import { usePathname } from 'next/navigation'
-import { ClerkProvider } from '@clerk/nextjs'
-import { Carrois_Gothic_SC, Quattrocento_Sans, Questrial } from 'next/font/google'
 
 import Footer from '@/components/designSystem/footer'
 import Navbar from '@/components/designSystem/navigation/navbar'
+
+import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
 import UserStoreProvider from '@/utils/providers/UserStoreProvider'
-import { pagePaths } from '@/utils/constants'
 
 import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const carroisGothic = Carrois_Gothic_SC({
     weight: '400',
