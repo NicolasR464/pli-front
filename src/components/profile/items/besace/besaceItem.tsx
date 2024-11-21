@@ -9,6 +9,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/shadcn/ui/card'
+import Image from 'next/image'
 
 import type { Article } from '@/types/article'
 
@@ -21,7 +22,7 @@ const BesaceItem: React.FC<BesaceItemProps> = ({ article, onDelete }) => {
     return (
         <Card className='w-full'>
             <CardHeader>
-                <img
+                <Image
                     src={article.imageUrls[0] || '/default-image.jpg'}
                     alt={article.adTitle}
                     className='h-48 w-full rounded-md object-cover'

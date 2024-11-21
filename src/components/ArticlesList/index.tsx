@@ -132,7 +132,7 @@ export const ArticlesList = ({
                                     }}
                                 >
                                     <CardHeader>
-                                        <img
+                                        <Image
                                             src={article.imageUrls[0]}
                                             alt='#'
                                             className='w-full object-cover'
