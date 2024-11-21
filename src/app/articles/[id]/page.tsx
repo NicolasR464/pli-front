@@ -18,7 +18,6 @@ import { useUserStore } from '@/stores/user'
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths } from '@/utils/constants'
-import { isEligible } from '@/utils/functions/isEligible'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -26,9 +25,6 @@ const ArticlePage = (): React.JSX.Element => {
     // Get id from URL in string to avoid type errors :
     const { id } = useParams()
     const articleId = String(id)
-
-    // Get connected user info from store
-    const { user: userConnected } = useUserStore()
 
     // React query to get article data
     const {
