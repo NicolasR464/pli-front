@@ -60,7 +60,7 @@ const SellerInfo: React.FC<SellerInfoProps> = ({
                 </p>
             )}
 
-            {lastConnected !== undefined && (
+            {lastConnected instanceof Date && (
                 <p>
                     <strong>{'Dernière connexion : '}</strong>
                     {formatDate(lastConnected)}

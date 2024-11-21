@@ -17,7 +17,7 @@ const ProductDetails: React.FC<ProductInfoProps> = ({ article }) => {
         <div className='text-gray-700'>
             {!!article.manufactureDate && (
                 <p>
-                    <strong>{'Année: '}</strong>
+                    <strong>{'Année : '}</strong>
                     {formatDate(article.manufactureDate)}
                 </p>
             )}
@@ -33,7 +33,7 @@ const ProductDetails: React.FC<ProductInfoProps> = ({ article }) => {
             )}
             {!article.brand && <p>{'Pas de marque précisée'}</p>}
             <strong className='mt-2'>
-                {'Livraison en '}
+                {'Livraison : '}
                 {deliveryTranslation}
             </strong>
         </div>

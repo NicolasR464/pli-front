@@ -1,7 +1,7 @@
+/* eslint-disable multiline-comment-style */
 'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 
 import { Button } from '@/components/shadcn/ui/button'
@@ -9,7 +9,6 @@ import { Button } from '@/components/shadcn/ui/button'
 import { getArticleById } from '@/utils/apiCalls/article'
 import { getTransaction } from '@/utils/apiCalls/transaction'
 import { useConfirmTransaction } from '@/utils/apiCalls/transaction/mutations'
-import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths, rqKeys, userMessages } from '@/utils/constants'
 import { notify } from '@/utils/functions/toasterHelper'
 
@@ -19,12 +18,10 @@ import { TransactionStatesSchema } from '@/types/transaction/actions'
 
 import { useAuth } from '@clerk/nextjs'
 import { useQuery } from '@tanstack/react-query'
-import { sendMessage } from '@/utils/apiCalls/instantMessage'
 
 const PostTransaction = (): React.JSX.Element => {
     const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false)
     const [jwtToken, setJwtToken] = useState<string>()
-    const [roomId, setRoomId] = useState<string>()
     const router = useRouter()
 
     const { mutateAsync: confirmTransaction } = useConfirmTransaction()
@@ -84,17 +81,12 @@ const PostTransaction = (): React.JSX.Element => {
     })
 
     // Fetch the userA data (the one who requested the transaction)
-    const { data: userA, isFetched: isUserAFetched } = useQuery({
-        queryKey: [rqKeys.USER, transaction?.userA, transaction],
-        queryFn: () => getUserById(transaction!.userA),
-        enabled: isTransactionFetched && !!transaction && !!transaction.userA,
-    })
 
-    useEffect(() => {
-        if (!!isUserAFetched && !!userA && !!articleB) {
-            setRoomId(`${userA.id}_${articleB.owner}`)
-        }
-    }, [userA, articleB, isUserAFetched])
+    // const { data: userA, isFetched: isUserAFetched } = useQuery({
+    //     queryKey: [rqKeys.USER, transaction?.userA, transaction],
+    //     queryFn: () => getUserById(transaction!.userA),
+    //     enabled: isTransactionFetched && !!transaction && !!transaction.userA,
+    // })
 
     /**
      * Handle the confirmation of the transaction by userB (the one who is asked a transaction request)

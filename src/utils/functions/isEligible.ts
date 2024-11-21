@@ -5,6 +5,11 @@ type EligibilityParams = {
     articlePrice: number
 }
 
+/**
+ * Checks if a user is eligible to request an article based on their premium status, balance, and credit.
+ * @param {EligibilityParams} params - The parameters for eligibility check.
+ * @returns {boolean} - True if the user is eligible, false otherwise.
+ */
 export const isEligible = ({
     isPremium,
     userBalance,
