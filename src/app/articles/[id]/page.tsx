@@ -89,9 +89,14 @@ const ArticlePage = (): React.JSX.Element => {
                         </h2>
                         <p className='mb-4 mt-2'>{article.description}</p>
 
-                        {!!article.dimensions && (
-                            <ArticleDetails dimensions={article.dimensions} />
-                        )}
+                        {!!article.dimensions &&
+                            Object.values(article.dimensions).some(
+                                (value) => value && value > 0,
+                            ) && (
+                                <ArticleDetails
+                                    dimensions={article.dimensions}
+                                />
+                            )}
                     </div>
                     {/* Product details and seller info */}
                     <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
