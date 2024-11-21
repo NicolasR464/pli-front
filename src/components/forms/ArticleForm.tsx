@@ -318,7 +318,7 @@ const ArticleForm = (): React.JSX.Element => {
                             e.preventDefault()
                             handleSubmit(onSubmit)()
                         }}
-                        className='animate-slideDown mx-auto max-w-4xl space-y-8 rounded-lg bg-white p-6 shadow-md'
+                        className='mx-auto max-w-4xl animate-slideDown space-y-8 rounded-lg bg-white p-6 shadow-md'
                     >
                         <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
                             {/* Ad Title Input */}
