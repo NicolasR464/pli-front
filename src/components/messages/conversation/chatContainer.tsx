@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/consistent-return */
 import React, { useEffect, useRef, useState } from 'react'
 import { Repeat } from 'react-feather'
-import Link from 'next/link'
 
 import { ChatHeader } from './chatHeader'
 import { ChatInput } from './chatInput'
@@ -21,6 +20,9 @@ import { pagePaths } from '@/utils/constants'
 import { formatDate, groupMessagesByDate } from '@/utils/functions/messages'
 
 import { useAuth, useUser } from '@clerk/nextjs'
+import ProposeExchangeModal from './proposalModal'
+import { User } from '@/types/user'
+import { Button } from '@/components/shadcn/ui/button'
 
 type Message = {
     id: string
@@ -47,6 +49,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     const [contactName, setContactName] = useState<string>('Inconnu')
     const [contactAvatar, setContactAvatar] = useState<string>('')
     const [receiverId, setReceiverId] = useState<string | null>('')
+    const [otherParticipantInfo, setOtherParticipantInfo] = useState<User>()
     const [currentUserInfo, setCurrentUserInfo] = useState<{
         avatar: string
         username: string
@@ -55,7 +58,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     const { getToken } = useAuth()
     const messagesEndRef = useRef<HTMLDivElement | null>(null)
     const messageIds = useRef(new Set<string>())
-
+const [showModal, setShowModal] = useState(false)
     const scrollToBottom = (): void => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -75,10 +78,11 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
             setReceiverId(otherParticipantId ?? '')
 
             if (otherParticipantId) {
-                const otherParticipantInfo =
+                const fetchedParticipantInfo =
                     await getUserById(otherParticipantId)
-                setContactName(otherParticipantInfo?.pseudo ?? '')
-                setContactAvatar(otherParticipantInfo?.avatarUrl ?? '')
+                setOtherParticipantInfo(fetchedParticipantInfo)
+                setContactName(fetchedParticipantInfo?.pseudo ?? '')
+                setContactAvatar(fetchedParticipantInfo?.avatarUrl ?? '')
             }
 
             if (user?.id) {
@@ -185,14 +189,21 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
 
             <div className='sticky bottom-0 flex border-t border-gray-300 bg-white p-4'>
                 <ChatInput onSendMessage={handleSendMessage} />
-                <button className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'>
-                    <Link
-                        href={`${pagePaths.USERS}/${user?.id}/${pagePaths.TRANSACTION}/recap`}
+                <Button className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'>
+                    <Button
+                        onClick={() => setShowModal(true)}
+                        className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'
                     >
                         {'Proposer un échange'}
-                    </Link>
-                </button>
+                    </Button>
+                </Button>
             </div>
+            {showModal && (
+                <ProposeExchangeModal
+                    receiverInfo={otherParticipantInfo}
+                    onClose={() => setShowModal(false)}
+                />
+            )}
         </div>
     )
 }

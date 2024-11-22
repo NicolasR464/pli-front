@@ -11,6 +11,34 @@ import type { Transaction } from '@/types/transaction'
 
 import type { AxiosResponse } from 'axios'
 
+/**
+ * Function to get a transaction by its ID.
+ * @param {string} id - The ID of the transaction to fetch.
+ * @param {string} JWT - The JSON Web Token for authentication.
+ * @returns {Promise<Transaction>} The transaction.
+ */
+export const getTransaction = async (
+    id: string,
+    JWT: string,
+): Promise<Transaction> => {
+    addAuthHeader(transactionInstance, JWT)
+
+    const response: AxiosResponse<Transaction> = await transactionInstance.get(
+        apiEndpoints.microServices.protected.TRANSACTIONS + id,
+    )
+
+    if (response.status !== 200)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
+        )
+
+    return response.data
+}
+
+/**
+ * Function to get all transactions.
+ * @returns {Promise<Transaction[]>} The transactions.
+ */
 export const getTransactions = async (): Promise<Transaction[]> => {
     const response: AxiosResponse<Transaction[]> =
         await transactionInstance.get(
@@ -20,6 +48,34 @@ export const getTransactions = async (): Promise<Transaction[]> => {
     if (response.status !== 200)
         throw new Error(
             `Failed to fetch ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
+<<<<<<< HEAD
+=======
+        )
+
+    return response.data
+}
+
+/**
+ * Function to create a new transaction.
+ * @param {PreTransactionParams} data - The transaction data to create.
+ * @param {string} JWT - The JSON Web Token for authentication.
+ * @returns {Promise<TransactionResponse>} The created transaction.
+ */
+export const createPreTransaction = async (
+    data: PreTransactionParams['data'],
+    JWT: PreTransactionParams['JWT'],
+): Promise<Transaction> => {
+    addAuthHeader(transactionInstance, JWT)
+
+    const response: AxiosResponse<Transaction> = await transactionInstance.post(
+        apiEndpoints.microServices.protected.TRANSACTIONS,
+        data,
+    )
+
+    if (response.status !== 201)
+        throw new Error(
+            `Failed to fetch ${apiEndpoints.microServices.protected.TRANSACTIONS}`,
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
         )
 
     return response.data
@@ -109,13 +165,46 @@ export const getTransactionsByUser = async (
 
     const response: AxiosResponse<Transaction[]> =
         await transactionInstance.get(
-            `${apiEndpoints.microServices.private.TRANSACTIONS}users/${userId}`,
+            `${apiEndpoints.microServices.protected.TRANSACTIONS}users/${userId}`,
         )
 
     if (response.status !== 200)
         throw new Error(
             `Failed to fetch transactions for user ${String(userId)}`,
         )
+
+    return response.data
+}
+
+/**
+ * Function to confirm a transaction.
+ * @param {ConfirmTransactionParams} data - The transaction data to confirm.
+ * @param {string} JWT - The JSON Web Token for authentication.
+ * @returns {Promise<Transaction>} The confirmed transaction.
+ */
+export const confirmTransaction = async (
+    data: ConfirmTransactionParams['data'],
+    JWT: ConfirmTransactionParams['JWT'],
+): Promise<Transaction> => {
+    addAuthHeader(transactionInstance, JWT)
+
+    const response: AxiosResponse<Transaction> =
+        await transactionInstance.patch(
+            apiEndpoints.microServices.protected.TRANSACTION_FINAL.replace(
+                ':id',
+                data.id,
+            ),
+            { state: data.state },
+        )
+
+    if (response.status !== 200) {
+        throw new Error(
+            `Failed to confirm ${apiEndpoints.microServices.protected.TRANSACTION_FINAL.replace(
+                ':id',
+                data.id,
+            )}`,
+        )
+    }
 
     return response.data
 }

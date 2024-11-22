@@ -6,10 +6,10 @@
 export const trocUpLogos = {
     transparent: {
         // Fichier_34_4x_o3pmn3
-        main: 'https://res.cloudinary.com/etnaassets/image/upload/v1723194848/Fichier_34_4x_o3pmn3.png',
+        main: 'https://res.cloudinary.com/etna-assets/image/upload/v1723194848/Fichier_34_4x_o3pmn3.png',
         // TROCUP_nobk_4x_izt0q3
         secondary:
-            'https://res.cloudinary.com/etnaassets/image/upload/v1723194847/TROCUP_nobk_4x_izt0q3.png',
+            'https://res.cloudinary.com/etna-assets/image/upload/v1723194847/TROCUP_nobk_4x_izt0q3.png',
     },
 }
 

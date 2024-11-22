@@ -22,7 +22,7 @@ export const ConditionsTroc = (): React.JSX.Element => (
             <AccordionTrigger>
                 {'Pour que tout soit clair avant de commencer à échanger,'}
                 {'consultez nos conditions générales et engagez-vous dans'}
-                {'un troc transparent et équitable. Cliquez pour en savoir'}
+                {' un troc transparent et équitable. Cliquez pour en savoir'}
                 {' plus ! 🚀'}
             </AccordionTrigger>
             <AccordionContent>

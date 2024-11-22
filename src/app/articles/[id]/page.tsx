@@ -84,9 +84,14 @@ const ArticlePage = (): React.JSX.Element => {
                         </h2>
                         <p className='mb-4 mt-2'>{article.description}</p>
 
-                        {!!article.dimensions && (
-                            <ArticleDetails dimensions={article.dimensions} />
-                        )}
+                        {!!article.dimensions &&
+                            Object.values(article.dimensions).some(
+                                (value) => value && value > 0,
+                            ) && (
+                                <ArticleDetails
+                                    dimensions={article.dimensions}
+                                />
+                            )}
                     </div>
                     {/* Product details and seller info */}
                     <div className='mt-8 w-full md:mt-0 md:w-1/2 md:pl-8'>
@@ -102,7 +107,7 @@ const ArticlePage = (): React.JSX.Element => {
                                     }
                                     pseudo={user.pseudo}
                                     name={user.name}
-                                    address={user.address}
+                                    address={user.addresses?.[0]}
                                 />
                             )}
                         </Link>
@@ -138,6 +143,7 @@ const ArticlePage = (): React.JSX.Element => {
                                 imageUrl: article.imageUrls[0],
                                 address: article.address,
                                 deliveryType: article.deliveryType,
+                                price: article.price,
                             }}
                         />
                     </div>
@@ -155,26 +161,6 @@ const ArticlePage = (): React.JSX.Element => {
                         <ConditionsTroc />
                     </div>
                 </div>
-                {/* Action buttons */}
-                {!!article && !!user && (
-                    <TransactionRequest
-                        userB={{
-                            id: article.owner,
-                            email: user.email,
-                        }}
-                        articleB={{
-                            id: article.id,
-                            adTitle: article.adTitle,
-                            imageUrl: article.imageUrls[0],
-                            address: article.address,
-                            deliveryType: article.deliveryType,
-                        }}
-                    />
-                )}
-                <ProductActions
-                    sellerId={user?.id ?? ''}
-                    articleTitle={article?.adTitle ?? ''}
-                />
 
                 <Separator />
                 {/* Tab section (Besace user / Similaire) */}

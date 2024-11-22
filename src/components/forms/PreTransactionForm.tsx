@@ -45,7 +45,11 @@ import { notify } from '@/utils/functions/toasterHelper'
 
 import { EmailTypeSchema, NotificationType } from '@/types'
 import type { AddressSuggestion } from '@/types/address/gouvApiCall'
+<<<<<<< HEAD
 import { DeliveryTypeSchema, type Address } from '@/types/article'
+=======
+import { type Address, DeliveryTypeSchema } from '@/types/article'
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
 import { addressObjectEmpty } from '@/types/formValidations/adCreation'
 import type { PreTransactionFormData } from '@/types/formValidations/preTransaction'
 import { preTransactionSchema } from '@/types/formValidations/preTransaction'
@@ -188,12 +192,15 @@ const PreTransactionForm: React.FC = () => {
             return
         }
 
+<<<<<<< HEAD
         console.log('JWT:', JWT)
         console.log('userA:', userA)
         console.log('userB:', userB)
         console.log('articleB:', articleB)
         console.log('data:', data)
 
+=======
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
         const transactionData: PreTransactionParams = {
             data: {
                 userA: userA.id,
@@ -238,8 +245,11 @@ const PreTransactionForm: React.FC = () => {
                     }
 
                     setOpenRequestDialog(false)
+<<<<<<< HEAD
 
                     return
+=======
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
                 },
             },
         )

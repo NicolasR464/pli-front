@@ -354,8 +354,20 @@ const UserRegistrationForm = (): React.JSX.Element => {
                                                 {!!field.value &&
                                                     !addressObject &&
                                                     field.value}
+<<<<<<< HEAD
                                                 {addressObject?.label ??
                                                     'Rentre ton adresse'}
+=======
+
+                                                {!field.value &&
+                                                    !addressObject?.label &&
+                                                    'Rentre ton adresse'}
+
+                                                {!!addressObject &&
+                                                    !!addressObject.label &&
+                                                    addressObject.label}
+
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
                                                 <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                                             </Button>
                                         </FormControl>

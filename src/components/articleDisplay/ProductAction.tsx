@@ -4,7 +4,17 @@ import React from 'react'
 import { Button } from '@/components/shadcn/ui/button'
 import type { TransactionRequestProps } from '@/components/transactions/userActions/TransactionRequest'
 import TransactionRequest from '@/components/transactions/userActions/TransactionRequest'
+<<<<<<< HEAD
 import { useAuth, useUser } from '@clerk/nextjs'
+=======
+
+import { useUserStore } from '@/stores/user'
+import { sendMessage } from '@/utils/apiCalls/instantMessage'
+import { isEligible } from '@/utils/functions/isEligible'
+
+import { useAuth, useUser } from '@clerk/nextjs'
+
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
 /**
  * This component handles the actions related to a product, including 1toM transaction requests and messaging the seller.
  * It uses the TransactionRequest and RequestDialog components to manage transaction requests.
@@ -22,6 +32,9 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string>('')
     const clerkUser = useUser().user
+
+    const { user: userConnected } = useUserStore()
+
     const handleSendMessage = async (): Promise<void> => {
         setLoading(true)
         try {
@@ -56,7 +69,9 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
             setLoading(false)
         }
     }
+
     return (
+<<<<<<< HEAD
 
     <div className='mb-6 mt-6 flex justify-center space-x-4'>
         {/* Transaction 1-to-M request dialog */}
@@ -64,6 +79,27 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
             userB={userB}
             articleB={articleB}
         />
+=======
+        <div className='mb-6 mt-6 flex justify-center space-x-4'>
+            {/* For Transaction 1-to-M request */}
+            {!!articleB.price &&
+                !!userConnected.isPremium &&
+                userConnected.balance !== undefined &&
+                userConnected.credit !== undefined &&
+                isEligible({
+                    isPremium: userConnected.isPremium,
+                    userBalance: userConnected.balance,
+                    userCredit: userConnected.credit,
+                    articlePrice: articleB.price,
+                }) && (
+                    <TransactionRequest
+                        userB={userB}
+                        articleB={articleB}
+                    />
+                )}
+
+            {/* For Transaction 1-to-1 request */}
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
             <Button
                 onClick={() => {
                     handleSendMessage()
@@ -74,6 +110,7 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
             >
                 {loading ? 'Envoi en cours…' : 'Envoyer un message 💬'}
             </Button>
+
             {error.trim() && (
                 <div className='mt-4 text-red-500'>
                     <p>{error}</p>

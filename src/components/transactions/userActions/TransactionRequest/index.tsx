@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /* eslint-disable no-console */
+=======
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
 'use client'
 
 import { Button } from '@/components/shadcn/ui/button'
@@ -43,6 +46,7 @@ const TransactionRequest = ({
     const setUserB = useTransactionStore((state) => state.setUserB)
     const requestSent = useTransactionStore((state) => state.requestSent)
 
+<<<<<<< HEAD
     console.log('userB', userB)
     console.log('articleB', articleB)
 
@@ -51,6 +55,10 @@ const TransactionRequest = ({
 
         // eslint-disable-next-line no-console
         console.log('articleA', articleA)
+=======
+    if (articleA) {
+        // @TODO : For 1to1 transactions, do a post request to transaction service - to do a pre-transaction
+>>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
     }
 
     return (

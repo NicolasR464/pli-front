@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import type { TransactionWithArticleDataProps } from '@/components/profile/items/transaction/transactionItem'
 import TransactionItem from '@/components/profile/items/transaction/transactionItem'
 
 import { getArticleById } from '@/utils/apiCalls/article'
@@ -7,30 +8,12 @@ import { getTransactionsByUser } from '@/utils/apiCalls/transaction'
 
 import { useAuth, useUser } from '@clerk/nextjs'
 
-type Transaction = {
-    _id: string
-    version: number
-    receiver: string
-    article: string
-    sender: string
-    delivery: {
-        _id: string
-        type: string
-        packageWeight: number
-        sent: string
-        cost: number
-        qrCodeUrl: string
-    }
-    articleData: {
-        adTitle: string
-        imageUrls: string[]
-    }
-}
-
 const Transactions: React.FC = () => {
     const { user: clerkUser } = useUser()
     const { getToken } = useAuth()
-    const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [transactions, setTransactions] = useState<
+        TransactionWithArticleDataProps[]
+    >([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string>('')
 
@@ -53,15 +36,21 @@ const Transactions: React.FC = () => {
                 const transactionsWithArticles = await Promise.all(
                     userTransactions.map(async (transaction) => {
                         const article = await getArticleById(
-                            transaction.article,
+                            transaction.articleB,
                         )
                         return {
-                            ...transaction,
-                            delivery: {
-                                ...transaction.delivery,
-                                sent: new Date(
-                                    transaction.delivery.sent,
-                                ).toISOString(),
+                            transaction: {
+                                id: transaction.id,
+                                ...(transaction.delivery && {
+                                    delivery: {
+                                        id: transaction.delivery.id,
+                                        ...(transaction.delivery.sent && {
+                                            sent: new Date(
+                                                transaction.delivery.sent,
+                                            ).toISOString(),
+                                        }),
+                                    },
+                                }),
                             },
                             articleData: article,
                         }
@@ -94,10 +83,11 @@ const Transactions: React.FC = () => {
                 </div>
             )}
             <div className='mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-                {transactions.map((transaction) => (
+                {transactions.map((transactionData) => (
                     <TransactionItem
-                        key={transaction._id}
-                        transaction={transaction}
+                        key={transactionData.transaction.id}
+                        transaction={transactionData.transaction}
+                        articleData={transactionData.articleData}
                     />
                 ))}
             </div>
