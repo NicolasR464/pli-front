@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-
-import { getArticlesByUser } from '@/utils/apiCalls/article'
-
-import type { Article } from '@/types/article'
-import { User } from '@/types/user'
-
-import { useAuth, useUser } from '@clerk/nextjs'
-import { useTransactionStore } from '@/stores/transaction'
 import { useRouter } from 'next/navigation'
+
+import { useTransactionStore } from '@/stores/transaction'
+import { getArticlesByUser } from '@/utils/apiCalls/article'
+import { getUserById } from '@/utils/apiCalls/user'
 import { pagePaths } from '@/utils/constants'
 
+import type { Article } from '@/types/article'
+import type { User } from '@/types/user'
+
+import { useAuth, useUser } from '@clerk/nextjs'
+
 type ProposeExchangeModalProps = {
-    receiverInfo: User
+    receiverInfo?: User
     onClose: () => void
 }
 
@@ -25,7 +26,6 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
     const [selectedTheirArticleId, setSelectedTheirArticleId] =
         useState<string>('')
     const [error, setError] = useState<string>('')
-
     const { getToken } = useAuth()
     const { user } = useUser()
     const router = useRouter()
@@ -34,7 +34,6 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
         setArticleB: state.setArticleB,
         setUserB: state.setUserB,
     }))
-
     useEffect(() => {
         const fetchArticles = async (): Promise<void> => {
             try {
@@ -45,21 +44,22 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
                     )
                     return
                 }
+                const currentUser = await getUserById(user.id)
 
                 const [theirArticlesData, myArticlesData] = await Promise.all([
-                    getArticlesByUser(receiverInfo.id), // Articles de l'autre utilisateur
-                    getArticlesByUser(user.id), // Vos propres articles
+                    getArticlesByUser(receiverInfo?.id ?? ''),
+                    getArticlesByUser(currentUser?.id ?? ''),
                 ])
 
                 setTheirArticles(theirArticlesData)
                 setMyArticles(myArticlesData)
-            } catch (err) {
+            } catch {
                 setError('Erreur lors de la récupération des articles.')
             }
         }
 
         fetchArticles()
-    }, [getToken, user, receiverInfo.id])
+    }, [getToken, user, receiverInfo?.id])
 
     const handleProposeExchange = (): void => {
         if (!selectedMyArticleId || !selectedTheirArticleId) {
@@ -83,20 +83,24 @@ const ProposeExchangeModal: React.FC<ProposeExchangeModalProps> = ({
         setTransactionData.setArticleA({
             id: selectedMyArticle.id,
             adTitle: selectedMyArticle.adTitle,
+            address: undefined,
+            imageUrl: selectedMyArticle.imageUrls[0],
+            deliveryType: 'PICKUP',
         })
         setTransactionData.setArticleB({
             id: selectedTheirArticle.id,
             adTitle: selectedTheirArticle.adTitle,
+            address: undefined,
+            imageUrl: selectedTheirArticle.imageUrls[0],
+            deliveryType: 'PICKUP',
         })
         setTransactionData.setUserB({
-            id: receiverInfo.id,
-            email: receiverInfo.email,
+            id: receiverInfo?.id ?? '',
+            email: receiverInfo?.email ?? '',
         })
 
         // Redirection vers la page de transaction
-        router.push(
-            `${pagePaths.users}/${receiverInfo.id}/${pagePaths.Transactions}`,
-        )
+        router.push(`${pagePaths.USERS}/${pagePaths.TRANSACTION}/recap`)
     }
 
     return (

@@ -52,11 +52,7 @@ export const environment = createEnv({
         AZURE_COGNITIVE_SERVICES_KEY: z.string(),
         AZURE_COGNITIVE_SERVICES_KEY_TWO: z.string(),
         SENDGRID_API_KEY: z.string(),
-<<<<<<< HEAD
-        FROM_EMAIL: z.string().email(),
-=======
         FROM_EMAIL: z.string(),
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
     },
 
     /** Client-side env variables. Starts by 'NEXT_PUBLIC_'. */

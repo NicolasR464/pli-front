@@ -1,20 +1,17 @@
 // eslint-disable-next-line simple-import-sort/imports
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button } from '@/components/shadcn/ui/button'
 import type { TransactionRequestProps } from '@/components/transactions/userActions/TransactionRequest'
 import TransactionRequest from '@/components/transactions/userActions/TransactionRequest'
-<<<<<<< HEAD
-import { useAuth, useUser } from '@clerk/nextjs'
-=======
 
 import { useUserStore } from '@/stores/user'
 import { sendMessage } from '@/utils/apiCalls/instantMessage'
 import { isEligible } from '@/utils/functions/isEligible'
 
 import { useAuth, useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
 /**
  * This component handles the actions related to a product, including 1toM transaction requests and messaging the seller.
  * It uses the TransactionRequest and RequestDialog components to manage transaction requests.
@@ -71,15 +68,6 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
     }
 
     return (
-<<<<<<< HEAD
-
-    <div className='mb-6 mt-6 flex justify-center space-x-4'>
-        {/* Transaction 1-to-M request dialog */}
-        <TransactionRequest
-            userB={userB}
-            articleB={articleB}
-        />
-=======
         <div className='mb-6 mt-6 flex justify-center space-x-4'>
             {/* For Transaction 1-to-M request */}
             {!!articleB.price &&
@@ -99,7 +87,6 @@ const ProductActions: React.FC<TransactionRequestProps> = ({
                 )}
 
             {/* For Transaction 1-to-1 request */}
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
             <Button
                 onClick={() => {
                     handleSendMessage()

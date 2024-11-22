@@ -5,9 +5,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Repeat } from 'react-feather'
 
+import { Button } from '@/components/shadcn/ui/button'
 import { ChatHeader } from './chatHeader'
 import { ChatInput } from './chatInput'
 import { MessageBubble } from './messageBubble'
+import ProposeExchangeModal from './proposalModal'
 import UserInfoCard from './userInfoCard'
 
 import { getMessagesByRoomID } from '@/utils/apiCalls/instantMessage'
@@ -16,13 +18,11 @@ import {
     sendMessageViaWebSocket,
 } from '@/utils/apiCalls/instantMessage/connectWebSocket'
 import { getUserById } from '@/utils/apiCalls/user'
-import { pagePaths } from '@/utils/constants'
 import { formatDate, groupMessagesByDate } from '@/utils/functions/messages'
 
+import type { User } from '@/types/user'
+
 import { useAuth, useUser } from '@clerk/nextjs'
-import ProposeExchangeModal from './proposalModal'
-import { User } from '@/types/user'
-import { Button } from '@/components/shadcn/ui/button'
 
 type Message = {
     id: string
@@ -58,7 +58,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({ roomId }) => {
     const { getToken } = useAuth()
     const messagesEndRef = useRef<HTMLDivElement | null>(null)
     const messageIds = useRef(new Set<string>())
-const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(false)
     const scrollToBottom = (): void => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -191,17 +191,21 @@ const [showModal, setShowModal] = useState(false)
                 <ChatInput onSendMessage={handleSendMessage} />
                 <Button className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'>
                     <Button
-                        onClick={() => setShowModal(true)}
+                        onClick={() => {
+                            setShowModal(true)
+                        }}
                         className='ml-2 rounded bg-blueGreen-dark-active p-2 text-white'
                     >
                         {'Proposer un échange'}
                     </Button>
                 </Button>
             </div>
-            {showModal && (
+            {!!showModal && (
                 <ProposeExchangeModal
                     receiverInfo={otherParticipantInfo}
-                    onClose={() => setShowModal(false)}
+                    onClose={() => {
+                        setShowModal(false)
+                    }}
                 />
             )}
         </div>

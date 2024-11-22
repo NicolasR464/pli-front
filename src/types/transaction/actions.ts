@@ -10,11 +10,7 @@ import type { User } from '@/types/user'
 export const TransactionStatesSchema = z.enum([
     'PENDING',
     'ACCEPTED',
-<<<<<<< HEAD
-    'REJECTED',
-=======
     'REFUSED',
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
     'DELIVERED',
 ])
 

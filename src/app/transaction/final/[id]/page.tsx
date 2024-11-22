@@ -1,66 +1,23 @@
-<<<<<<< HEAD
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 
 import { useConfirmTransaction } from '@/utils/apiCalls/transaction/mutations'
+import { notify } from '@/utils/functions/toasterHelper'
 
+import { NotificationType } from '@/types'
 import { TransactionStatesSchema } from '@/types/transaction/actions'
 
 import { useAuth } from '@clerk/nextjs'
-import { NotificationType } from '@/types'
-import { notify } from '@/utils/functions/toasterHelper'
 
 const PostTransaction = (): React.JSX.Element => {
     const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false)
     const { mutateAsync: confirmTransaction } = useConfirmTransaction()
 
-=======
-/* eslint-disable multiline-comment-style */
-'use client'
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { useParams, useRouter } from 'next/navigation'
-
-import { Button } from '@/components/shadcn/ui/button'
-
-import { getArticleById } from '@/utils/apiCalls/article'
-import { getTransaction } from '@/utils/apiCalls/transaction'
-import { useConfirmTransaction } from '@/utils/apiCalls/transaction/mutations'
-import { pagePaths, rqKeys, userMessages } from '@/utils/constants'
-import { notify } from '@/utils/functions/toasterHelper'
-
-import { NotificationType } from '@/types'
-import type { TransactionStates } from '@/types/transaction/actions'
-import { TransactionStatesSchema } from '@/types/transaction/actions'
-
-import { useAuth } from '@clerk/nextjs'
-import { useQuery } from '@tanstack/react-query'
-
-const PostTransaction = (): React.JSX.Element => {
-    const [isTransactionConfirmed, setIsTransactionConfirmed] = useState(false)
-    const [jwtToken, setJwtToken] = useState<string>()
-    const router = useRouter()
-
-    const { mutateAsync: confirmTransaction } = useConfirmTransaction()
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
     const { getToken } = useAuth()
     const params = useParams()
     const transactionId = params.id as string
 
-<<<<<<< HEAD
-    const handleConfirmTransaction = async (): Promise<void> => {
-        const JWT = await getToken()
-
-        console.log('🔥 handleConfirmTransaction')
-
-        console.log(JWT, transactionId)
-
-        if (!JWT || !transactionId) return
-
-        // Create confirm transaction mutation
-
-=======
     useEffect(() => {
         const fetchJWT = async (): Promise<void> => {
             const token = await getToken()
@@ -79,7 +36,7 @@ const PostTransaction = (): React.JSX.Element => {
     // Fetch the transaction data
     const { data: transaction, isFetched: isTransactionFetched } = useQuery({
         queryKey: [rqKeys.TRANSACTION, transactionId, jwtToken],
-        queryFn: () => getTransaction(transactionId, jwtToken!),
+        queryFn: () => getTransaction(transactionId, jwtToken),
         enabled: !!transactionId && !!jwtToken,
     })
 
@@ -104,7 +61,7 @@ const PostTransaction = (): React.JSX.Element => {
     // Fetch the articleA data
     const { data: articleA, isFetched: isArticleAFetched } = useQuery({
         queryKey: [rqKeys.ARTICLE, transaction?.articleA, transaction],
-        queryFn: () => getArticleById(transaction!.articleA!),
+        queryFn: () => getArticleById(transaction!.articleA),
         enabled:
             isTransactionFetched &&
             !!transaction &&
@@ -114,11 +71,13 @@ const PostTransaction = (): React.JSX.Element => {
 
     // Fetch the userA data (the one who requested the transaction)
 
-    // const { data: userA, isFetched: isUserAFetched } = useQuery({
-    //     queryKey: [rqKeys.USER, transaction?.userA, transaction],
-    //     queryFn: () => getUserById(transaction!.userA),
-    //     enabled: isTransactionFetched && !!transaction && !!transaction.userA,
-    // })
+    /*
+     * const { data: userA, isFetched: isUserAFetched } = useQuery({
+     *     queryKey: [rqKeys.USER, transaction?.userA, transaction],
+     *     queryFn: () => getUserById(transaction!.userA),
+     *     enabled: isTransactionFetched && !!transaction && !!transaction.userA,
+     * })
+     */
 
     /**
      * Handle the confirmation of the transaction by userB (the one who is asked a transaction request)
@@ -147,28 +106,16 @@ const PostTransaction = (): React.JSX.Element => {
         }
 
         // Create confirm transaction mutation
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
         confirmTransaction(
             {
                 data: {
                     id: transactionId,
-<<<<<<< HEAD
-                    state: TransactionStatesSchema.enum.ACCEPTED,
-=======
                     state,
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
                 },
                 JWT,
             },
             {
                 onSuccess: () => {
-<<<<<<< HEAD
-                    console.log('🔥 onSuccess')
-                    setIsTransactionConfirmed(true)
-                },
-                onError: () => {
-                    console.log('🔥 onError')
-=======
                     if (state === TransactionStatesSchema.enum.REFUSED) {
                         router.push(pagePaths.HOME)
                     } else {
@@ -176,7 +123,6 @@ const PostTransaction = (): React.JSX.Element => {
                     }
                 },
                 onError: () => {
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
                     setIsTransactionConfirmed(false)
                     notify({
                         message:
@@ -190,21 +136,6 @@ const PostTransaction = (): React.JSX.Element => {
 
     return (
         <div>
-<<<<<<< HEAD
-            <h1 className='text-center text-2xl font-bold'>
-                {isTransactionConfirmed
-                    ? 'Transaction confirmée !'
-                    : 'Confirmer la transaction'}
-            </h1>
-
-            <button
-                onClick={() => {
-                    handleConfirmTransaction()
-                }}
-            >
-                {'Confirmer la transaction'}
-            </button>
-=======
             <h1
                 className={`mt-4 text-center text-2xl font-bold ${
                     isTransactionConfirmed && 'text-green-500'
@@ -292,7 +223,6 @@ const PostTransaction = (): React.JSX.Element => {
                     </Button>
                 </div>
             )}
->>>>>>> 442dbf6df05201130022e64fd9ee1d01b43fb295
         </div>
     )
 }
