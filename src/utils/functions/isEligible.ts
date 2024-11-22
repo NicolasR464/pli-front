@@ -1,4 +1,4 @@
-type EligibilityParams = {
+export type EligibilityParams = {
     isPremium: boolean
     userBalance: number
     userCredit: number
