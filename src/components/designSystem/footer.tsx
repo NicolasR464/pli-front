@@ -31,11 +31,19 @@ const Footer: React.FC = () => {
                         </li>
                         <li>
                             <Link
-                                href='/terms'
+                                href='/cgu'
                                 className='font-body text-grey-dark hover:underline'
                             >
-                                {'Conditions générales'}
+                                {'Condition Générales d’utilisation'}
                             </Link>
+                        <li>
+                            <Link
+                                href='/cgv'
+                                className='font-body text-grey-dark hover:underline'
+                            >
+                                {'Condition Générales de vente'}
+                            </Link>
+                        </li>
                         </li>
                     </ul>
                 </div>
@@ -88,22 +96,6 @@ const Footer: React.FC = () => {
                                 className='font-body text-grey-dark hover:underline'
                             >
                                 {'Retours'}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href='cgu'
-                                className='font-body text-grey-dark hover:underline'
-                            >
-                                {'Condition Générales d’utilisation'}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href='/cgv'
-                                className='font-body text-grey-dark hover:underline'
-                            >
-                                {'Condition Générales de vente'}
                             </Link>
                         </li>
                     </ul>

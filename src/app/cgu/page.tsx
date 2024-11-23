@@ -34,17 +34,17 @@ const CGU: React.FC = (): React.JSX.Element => {
                     </h2>
                     <p className='text-justify leading-relaxed text-gray-600'>
                         {
-                            'Les présentes Conditions Générales d’Utilisation (CGU)'
+                            'Les présentes Conditions Générales d’Utilisation (CGU) '
                         }
-                        {'régissent l’utilisation de la plateforme de troc'}
+                        {'régissent l’utilisation de la plateforme de troc '}
                         {
-                            '(ci-après dénommée « la Plateforme »). En accédant et en'
-                        }
-                        {
-                            'utilisant la Plateforme, l’utilisateur (ci-après dénommé'
+                            '(ci-après dénommée « la Plateforme »). En accédant et en '
                         }
                         {
-                            '« l’Utilisateur ») accepte sans réserve les présentes'
+                            'utilisant la Plateforme, l’utilisateur (ci-après dénommé '
+                        }
+                        {
+                            '« l’Utilisateur ») accepte sans réserve les présentes '
                         }
                         {'CGU.'}
                     </p>
@@ -56,19 +56,19 @@ const CGU: React.FC = (): React.JSX.Element => {
                         {'1. Objet de la Plateforme'}
                     </h2>
                     <p className='text-justify leading-relaxed text-gray-600'>
-                        {'La Plateforme est un service d’échanges entre'}
+                        {'La Plateforme est un service d’échanges entre '}
                         {
-                            'particuliers permettant aux Utilisateurs de publier des'
+                            'particuliers permettant aux Utilisateurs de publier des '
                         }
-                        {'annonces de produits disponibles pour le troc. La'}
+                        {'annonces de produits disponibles pour le troc. La '}
                         {
-                            'Plateforme met l’accent sur l’expérience utilisateur, la'
-                        }
-                        {
-                            'sécurité et la transparence des échanges. Les présentes'
+                            'Plateforme met l’accent sur l’expérience utilisateur, la '
                         }
                         {
-                            'CGU encadrent l’ensemble des services proposés, que ce'
+                            'sécurité et la transparence des échanges. Les présentes '
+                        }
+                        {
+                            'CGU encadrent l’ensemble des services proposés, que ce '
                         }
                         {'soit en mode gratuit ou en mode Premium.'}
                     </p>
@@ -84,28 +84,28 @@ const CGU: React.FC = (): React.JSX.Element => {
                         {'2.1 Compte Utilisateur'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'Pour utiliser les services de la Plateforme,'}
+                        {'Pour utiliser les services de la Plateforme, '}
                         {
-                            'l’Utilisateur doit créer un compte en fournissant des'
+                            'l’Utilisateur doit créer un compte en fournissant des '
                         }
                         {
-                            'informations exactes et à jour. La création d’un compte'
+                            'informations exactes et à jour. La création d’un compte '
                         }
-                        {'entraîne l’acceptation des présentes CGU.'}
+                        {' entraîne l’acceptation des présentes CGU.'}
                     </p>
 
-                    <h3 className='mb-2 text-xl font-semibold text-gray-600'>
+                    <h3 className='mb-2 mt-4 text-xl font-semibold text-gray-600'>
                         {'2.2 Mode Gratuit'}
                     </h3>
                     <ul className='list-inside list-disc space-y-2 text-gray-600'>
                         <li>
                             {
-                                'Affichage publicitaire : La navigation est soumise à'
+                                'Affichage publicitaire : La navigation est soumise à '
                             }
                             {'la présence de publicités.'}
                         </li>
                         <li>
-                            {'Boost d’article : L’Utilisateur peut booster un'}
+                            {'Boost d’article : L’Utilisateur peut booster un '}
                             {
                                 'article moyennant 2€ pour une meilleure visibilité.'
                             }
@@ -137,20 +137,20 @@ const CGU: React.FC = (): React.JSX.Element => {
                     <ul className='justify list-inside list-disc space-y-2 text-gray-600'>
                         <li>
                             {
-                                'Soigner les annonces : Utiliser des photos claires'
+                                'Soigner les annonces : Utiliser des photos claires '
                             }
                             {'et des descriptions précises.'}
                         </li>
                         <li>
                             {
-                                'Publier des produits de qualité : Se limiter à des'
+                                'Publier des produits de qualité : Se limiter à des '
                             }
                             {
                                 'articles en bon état et pertinents pour l’échange.'
                             }
                         </li>
                         <li>
-                            {'Favoriser l’échange collectif : Participer'}
+                            {'Favoriser l’échange collectif : Participer '}
                             {'activement et positivement aux échanges.'}
                         </li>
                     </ul>
@@ -168,29 +168,29 @@ const CGU: React.FC = (): React.JSX.Element => {
                         {'4.1 Limite de Publication'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'L’Utilisateur peut publier un maximum de cinq (5)'}
+                        {'L’Utilisateur peut publier un maximum de cinq (5) '}
                         {'articles simultanément sur la Plateforme.'}
                     </p>
 
-                    <h3 className='mb-2 text-xl font-semibold text-gray-600'>
+                    <h3 className='mb-2 mt-4 text-xl font-semibold text-gray-600'>
                         {'4.2 Valeur Maximale de la Besace'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
                         {
-                            'La valeur totale des articles proposés pour le troc par'
+                            'La valeur totale des articles proposés pour le troc par '
                         }
                         {
-                            'un Utilisateur ne doit pas excéder 200€ (150€ pour les'
+                            'un Utilisateur ne doit pas excéder 200€ (150€ pour les '
                         }
                         {'Utilisateurs non-Premium).'}
                     </p>
 
-                    <h3 className='mb-2 text-xl font-semibold text-gray-600'>
+                    <h3 className='mb-2 mt-4 text-xl font-semibold text-gray-600'>
                         {'4.3 Renouvellement des Annonces'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'Les annonces ayant plus de six (6) mois sont'}
-                        {'automatiquement marquées pour renouvellement afin de'}
+                        {'Les annonces ayant plus de six (6) mois sont '}
+                        {'automatiquement marquées pour renouvellement afin de '}
                         {'maintenir un flux de produits récents.'}
                     </p>
                 </section>
@@ -206,35 +206,35 @@ const CGU: React.FC = (): React.JSX.Element => {
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
                         {
-                            'Après chaque échange, une évaluation est demandée aux'
+                            'Après chaque échange, une évaluation est demandée aux '
                         }
                         {
-                            'Utilisateurs afin de maintenir la fiabilité des profils'
+                            'Utilisateurs afin de maintenir la fiabilité des profils '
                         }
                         {'sur la Plateforme.'}
                     </p>
 
-                    <h3 className='mb-2 text-xl font-semibold text-gray-600'>
+                    <h3 className='mb-2 mt-4 text-xl font-semibold text-gray-600'>
                         {'5.2 Contestation d’un Objet Non Conforme'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
                         {'En cas de réception d’un objet non conforme,'}
-                        {'l’Utilisateur dispose de cinq (5) jours ouvrés pour'}
+                        {'l’Utilisateur dispose de cinq (5) jours ouvrés pour '}
                         {
                             'contester l’échange. La Plateforme pourra procéder à un'
                         }
                         {'prélèvement SEPA si nécessaire.'}
                     </p>
 
-                    <h3 className='mb-2 text-xl font-semibold text-gray-600'>
+                    <h3 className='mb-2 mt-4 text-xl font-semibold text-gray-600'>
                         {'5.3 Conditions d’Utilisation du Mode "One-to-Many"'}
                     </h3>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'Le mode "one-to-many" est accessible uniquement aux'}
-                        {'Utilisateurs Premium ayant effectué trois (3)'}
-                        {'transactions réussies et ayant une note moyenne'}
-                        {'supérieure à 4/5. La prise d’objets est limitée à'}
-                        {'hauteur de 75% de la valeur de la besace de'}
+                        {'Le mode "one-to-many" est accessible uniquement aux '}
+                        {'Utilisateurs Premium ayant effectué trois (3)' }
+                        {'transactions réussies et ayant une note moyenne '}
+                        {'supérieure à 4/5. La prise d’objets est limitée à '}
+                        {'hauteur de 75% de la valeur de la besace de '}
                         {'l’Utilisateur concerné.'}
                     </p>
                 </section>
@@ -247,13 +247,13 @@ const CGU: React.FC = (): React.JSX.Element => {
                         }
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'Si un Utilisateur interrompt son abonnement Premium'}
-                        {'alors qu’il est redevable d’un montant dû à la'}
+                        {'Si un Utilisateur interrompt son abonnement Premium '}
+                        {'alors qu’il est redevable d’un montant dû à la '}
                         {
-                            'Plateforme, il s’engage à payer la somme restante. Toute'
+                            'Plateforme, il s’engage à payer la somme restante. Toute '
                         }
-                        {'violation des présentes CGU pourra entraîner la'}
-                        {'suspension temporaire ou définitive de l’abonnement'}
+                        {'violation des présentes CGU pourra entraîner la '}
+                        {'suspension temporaire ou définitive de l’abonnement '}
                         {
                             'Premium de l’Utilisateur, sans remboursement possible.'
                         }
@@ -266,15 +266,15 @@ const CGU: React.FC = (): React.JSX.Element => {
                         {'7. Modifications des CGU'}
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'La Plateforme se réserve le droit de modifier les'}
+                        {'La Plateforme se réserve le droit de modifier les '}
                         {
-                            'présentes CGU à tout moment. Les modifications seront'
+                            'présentes CGU à tout moment. Les modifications seront '
                         }
                         {
-                            'communiquées aux Utilisateurs et entreront en vigueur'
+                            'communiquées aux Utilisateurs et entreront en vigueur '
                         }
-                        {'dans un délai de sept (7) jours. En continuant à'}
-                        {'utiliser la Plateforme après ce délai, l’Utilisateur'}
+                        {'dans un délai de sept (7) jours. En continuant à '}
+                        {'utiliser la Plateforme après ce délai, l’Utilisateur '}
                         {'accepte les modifications.'}
                     </p>
                 </section>
@@ -285,14 +285,14 @@ const CGU: React.FC = (): React.JSX.Element => {
                         {'8. Responsabilité de la Plateforme'}
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'La Plateforme n’est en aucun cas responsable des'}
-                        {'dommages indirects pouvant survenir du fait de'}
+                        {'La Plateforme n’est en aucun cas responsable des '}
+                        {'dommages indirects pouvant survenir du fait de '}
                         {
-                            'l’utilisation du site ou de ses services. L’Utilisateur'
+                            'l’utilisation du site ou de ses services. L’Utilisateur '
                         }
-                        {'reconnaît que la Plateforme agit uniquement comme'}
+                        {'reconnaît que la Plateforme agit uniquement comme '}
                         {
-                            'intermédiaire dans les échanges et que toute transaction'
+                            'intermédiaire dans les échanges et que toute transaction '
                         }
                         {'s’effectue sous sa propre responsabilité.'}
                     </p>
@@ -304,15 +304,15 @@ const CGU: React.FC = (): React.JSX.Element => {
                         {'9. Données Personnelles'}
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
-                        {'Les informations personnelles recueillies lors de la'}
+                        {'Les informations personnelles recueillies lors de la '}
                         {
-                            'création d’un compte sont traitées conformément à notre'
+                            'création d’un compte sont traitées conformément à notre '
                         }
                         {
-                            'Politique de Confidentialité. L’Utilisateur dispose d’un'
+                            'Politique de Confidentialité. L’Utilisateur dispose d’un '
                         }
                         {
-                            'droit d’accès, de modification, et de suppression de ses'
+                            'droit d’accès, de modification, et de suppression de ses '
                         }
                         {'données personnelles en contactant le support.'}
                     </p>
@@ -325,14 +325,14 @@ const CGU: React.FC = (): React.JSX.Element => {
                     </h2>
                     <p className='justify leading-relaxed text-gray-600'>
                         {
-                            'Les présentes CGU sont soumises à la loi française. En'
+                            'Les présentes CGU sont soumises à la loi française. En '
                         }
                         {
-                            'cas de litige, les parties conviennent de rechercher une'
+                            'cas de litige, les parties conviennent de rechercher une '
                         }
-                        {'solution amiable avant d’entamer toute procédure'}
+                        {'solution amiable avant d’entamer toute procédure '}
                         {
-                            'judiciaire. A défaut d’accord, les tribunaux compétents'
+                            'judiciaire. A défaut d’accord, les tribunaux compétents '
                         }
                         {
                             'de [Ville] seront seuls habilités à trancher le litige.'
@@ -342,27 +342,30 @@ const CGU: React.FC = (): React.JSX.Element => {
 
                 {/* Conclusion */}
                 <section className='mb-8 border-t border-gray-300 pt-8'>
+                    <h2 className='mb-4 text-2xl font-semibold text-gray-700'>
+                        {'Acceptation'}
+                    </h2>
                     <p className='justify leading-relaxed text-gray-600'>
                         {
-                            'En accédant et en utilisant la Plateforme, vous acceptez'
+                            'En accédant et en utilisant la Plateforme, vous acceptez '
                         }
-                        {'pleinement les présentes Conditions Générales'}
+                        {'pleinement les présentes Conditions Générales '}
                         {'d’Utilisation.'}
                     </p>
                     <p className='justify mt-4 leading-relaxed text-gray-600'>
-                        {'Ces CGU couvrent les principales conditions'}
+                        {'Ces CGU couvrent les principales conditions '}
                         {
-                            'd’utilisation de la Plateforme de troc et protègent les'
+                            'd’utilisation de la Plateforme de troc et protègent les '
                         }
                         {
-                            'intérêts de l’entreprise tout en clarifiant les droits'
+                            'intérêts de l’entreprise tout en clarifiant les droits '
                         }
-                        {'et obligations des Utilisateurs. Assurez-vous de les'}
+                        {'et obligations des Utilisateurs. Assurez-vous de les '}
                         {
-                            'adapter en fonction des spécificités légales de votre'
+                            'adapter en fonction des spécificités légales de votre '
                         }
                         {
-                            'juridiction et de consulter un juriste pour validation'
+                            'juridiction et de consulter un juriste pour validation '
                         }
                         {'avant publication.'}
                     </p>
