@@ -94,8 +94,8 @@ const AccordionDemo: React.FC = (): React.JSX.Element => {
                         src='/heroAide.png'
                         alt='Illustration de la plateforme Trocup'
                         layout='responsive'
-                        width={1920}
-                        height={1000}
+                        width={1920}  // eslint-disable-line unicorn/numeric-separators-style
+                        height={1000} // eslint-disable-line unicorn/numeric-separators-style
                         className='max-h-[290px] w-full object-cover shadow-lg'
                     />
 

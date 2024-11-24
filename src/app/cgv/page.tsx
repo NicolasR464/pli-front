@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+
 /* eslint-disable new-cap */
 const CGV: React.FC = (): React.JSX.Element => {
     return (
