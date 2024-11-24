@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-
+/* eslint-disable new-cap */
 const CGV: React.FC = (): React.JSX.Element => {
     return (
         <div>
@@ -34,13 +34,13 @@ const CGV: React.FC = (): React.JSX.Element => {
                     <p className='justify text-justify leading-relaxed text-gray-600'>
                         {'Les présentes Conditions Générales de Vente (CGV)'}
                         {
-                            'régissent les transactions effectuées sur la plateforme '
+                            'régissent les transactions effectuées sur la plateforme\r'
                         }
-                        {'de troc (ci-après dénommée « la Plateforme »). En '}
+                        {'de troc (ci-après dénommée « la Plateforme »). En\r'}
                         {
-                            'accédant et en utilisant la Plateforme, l’Utilisateur '
+                            'accédant et en utilisant la Plateforme, l’Utilisateur\r'
                         }
-                        {'(ci-après dénommé « l’Utilisateur ») accepte sans '}
+                        {'(ci-après dénommé « l’Utilisateur ») accepte sans\r'}
                         {'réserve les présentes CGV.'}
                     </p>
                 </section>
@@ -52,13 +52,15 @@ const CGV: React.FC = (): React.JSX.Element => {
                     </h2>
                     <p className='justify text-justify leading-relaxed text-gray-600'>
                         {
-                            'Les CGV définissent les modalités de vente des services '
+                            'Les CGV définissent les modalités de vente des services\r'
                         }
-                        {'proposés par la Plateforme. Ces services incluent '}
+                        {'proposés par la Plateforme. Ces services incluent\r'}
                         {
-                            'l’échange d’articles entre utilisateurs sous forme de '
+                            'l’échange d’articles entre utilisateurs sous forme de\r'
                         }
-                        {'troc et des services supplémentaires disponibles en '}
+                        {
+                            'troc et des services supplémentaires disponibles en\r'
+                        }
                         {'abonnement Premium.'}
                     </p>
                 </section>
@@ -150,10 +152,10 @@ const CGV: React.FC = (): React.JSX.Element => {
                     </h3>
                     <p className='justify justify leading-relaxed text-gray-600'>
                         {
-                            'La valeur totale des articles proposés pour le troc par '
+                            'La valeur totale des articles proposés pour le troc par\r'
                         }
                         {
-                            'un Utilisateur ne doit pas excéder 200€ (150€ pour les '
+                            'un Utilisateur ne doit pas excéder 200€ (150€ pour les\r'
                         }
                         {'Utilisateurs non-Premium).'}
                     </p>
@@ -162,8 +164,10 @@ const CGV: React.FC = (): React.JSX.Element => {
                         {'4.3 Renouvellement des Annonces'}
                     </h3>
                     <p className='justify justify leading-relaxed text-gray-600'>
-                        {'Les annonces ayant plus de six (6) mois sont '}
-                        {'automatiquement marquées pour renouvellement afin de '}
+                        {'Les annonces ayant plus de six (6) mois sont\r'}
+                        {
+                            'automatiquement marquées pour renouvellement afin de\r'
+                        }
                         {'maintenir un flux de produits récents.'}
                     </p>
                 </section>
@@ -178,10 +182,10 @@ const CGV: React.FC = (): React.JSX.Element => {
                     </h3>
                     <p className='justify justify leading-relaxed text-gray-600'>
                         {
-                            'Après chaque échange, une évaluation est demandée aux '
+                            'Après chaque échange, une évaluation est demandée aux\r'
                         }
                         {
-                            'Utilisateurs afin de maintenir la fiabilité des profils '
+                            'Utilisateurs afin de maintenir la fiabilité des profils\r'
                         }
                         {'sur la Plateforme.'}
                     </p>
@@ -190,10 +194,12 @@ const CGV: React.FC = (): React.JSX.Element => {
                         {'5.2 Contestation d’un Objet Non Conforme'}
                     </h3>
                     <p className='justify justify leading-relaxed text-gray-600'>
-                        {'En cas de réception d’un objet non conforme, '}
-                        {'l’Utilisateur dispose de cinq (5) jours ouvrés pour '}
+                        {'En cas de réception d’un objet non conforme,\r'}
                         {
-                            'contester l’échange. La Plateforme pourra procéder à un '
+                            'l’Utilisateur dispose de cinq (5) jours ouvrés pour\r'
+                        }
+                        {
+                            'contester l’échange. La Plateforme pourra procéder à un\r'
                         }
                         {'prélèvement SEPA si nécessaire.'}
                     </p>
@@ -207,13 +213,17 @@ const CGV: React.FC = (): React.JSX.Element => {
                         }
                     </h2>
                     <p className='justify justify leading-relaxed text-gray-600'>
-                        {'Si un Utilisateur interrompt son abonnement Premium '}
-                        {'alors qu’il est redevable d’un montant dû à la '}
                         {
-                            'Plateforme, il s’engage à payer la somme restante. Toute '
+                            'Si un Utilisateur interrompt son abonnement Premium\r'
                         }
-                        {'violation des présentes CGV pourra entraîner la '}
-                        {'suspension temporaire ou définitive de l’abonnement '}
+                        {'alors qu’il est redevable d’un montant dû à la\r'}
+                        {
+                            'Plateforme, il s’engage à payer la somme restante. Toute\r'
+                        }
+                        {'violation des présentes CGV pourra entraîner la\r'}
+                        {
+                            'suspension temporaire ou définitive de l’abonnement\r'
+                        }
                         {
                             'Premium de l’Utilisateur, sans remboursement possible.'
                         }
@@ -226,15 +236,17 @@ const CGV: React.FC = (): React.JSX.Element => {
                         {'7. Modifications des CGV'}
                     </h2>
                     <p className='justify justify leading-relaxed text-gray-600'>
-                        {'La Plateforme se réserve le droit de modifier les '}
+                        {'La Plateforme se réserve le droit de modifier les\r'}
                         {
-                            'présentes CGV à tout moment. Les modifications seront '
+                            'présentes CGV à tout moment. Les modifications seront\r'
                         }
                         {
-                            'communiquées aux Utilisateurs et entreront en vigueur '
+                            'communiquées aux Utilisateurs et entreront en vigueur\r'
                         }
-                        {'dans un délai de sept (7) jours. En continuant à '}
-                        {'utiliser la Plateforme après ce délai, l’Utilisateur '}
+                        {'dans un délai de sept (7) jours. En continuant à\r'}
+                        {
+                            'utiliser la Plateforme après ce délai, l’Utilisateur\r'
+                        }
                         {'accepte les modifications.'}
                     </p>
                 </section>
@@ -245,14 +257,14 @@ const CGV: React.FC = (): React.JSX.Element => {
                         {'8. Responsabilité de la Plateforme'}
                     </h2>
                     <p className='justify justify leading-relaxed text-gray-600'>
-                        {'La Plateforme n’est en aucun cas responsable des '}
-                        {'dommages indirects pouvant survenir du fait de '}
+                        {'La Plateforme n’est en aucun cas responsable des\r'}
+                        {'dommages indirects pouvant survenir du fait de\r'}
                         {
-                            'l’utilisation du site ou de ses services. L’Utilisateur '
+                            'l’utilisation du site ou de ses services. L’Utilisateur\r'
                         }
-                        {'reconnaît que la Plateforme agit uniquement comme '}
+                        {'reconnaît que la Plateforme agit uniquement comme\r'}
                         {
-                            'intermédiaire dans les échanges et que toute transaction '
+                            'intermédiaire dans les échanges et que toute transaction\r'
                         }
                         {'s’effectue sous sa propre responsabilité.'}
                     </p>
@@ -264,15 +276,17 @@ const CGV: React.FC = (): React.JSX.Element => {
                         {'9. Données Personnelles'}
                     </h2>
                     <p className='justify justify leading-relaxed text-gray-600'>
-                        {'Les informations personnelles recueillies lors de la '}
                         {
-                            'création d’un compte sont traitées conformément à notre '
+                            'Les informations personnelles recueillies lors de la\r'
                         }
                         {
-                            'Politique de Confidentialité. L’Utilisateur dispose d’un '
+                            'création d’un compte sont traitées conformément à notre\r'
                         }
                         {
-                            'droit d’accès, de modification, et de suppression de ses '
+                            'Politique de Confidentialité. L’Utilisateur dispose d’un\r'
+                        }
+                        {
+                            'droit d’accès, de modification, et de suppression de ses\r'
                         }
                         {'données personnelles en contactant le support.'}
                     </p>
@@ -285,14 +299,14 @@ const CGV: React.FC = (): React.JSX.Element => {
                     </h2>
                     <p className='justify justify leading-relaxed text-gray-600'>
                         {
-                            'Les présentes CGV sont soumises à la loi française. En '
+                            'Les présentes CGV sont soumises à la loi française. En\r'
                         }
                         {
-                            'cas de litige, les parties conviennent de rechercher une '
+                            'cas de litige, les parties conviennent de rechercher une\r'
                         }
-                        {'solution amiable avant d’entamer toute procédure '}
+                        {'solution amiable avant d’entamer toute procédure\r'}
                         {
-                            'judiciaire. A défaut d’accord, les tribunaux compétents '
+                            'judiciaire. A défaut d’accord, les tribunaux compétents\r'
                         }
                         {
                             'de [Ville] seront seuls habilités à trancher le litige.'
@@ -303,7 +317,9 @@ const CGV: React.FC = (): React.JSX.Element => {
                 {/* Conclusion */}
                 <section className='mt-8 text-center'>
                     <p className='justify text-gray-600'>
-                        {'Merci de respecter les présentes conditions pour une '}
+                        {
+                            'Merci de respecter les présentes conditions pour une\r'
+                        }
                         {'expérience de troc optimale.'}
                     </p>
                 </section>
@@ -311,5 +327,5 @@ const CGV: React.FC = (): React.JSX.Element => {
         </div>
     )
 }
-
+/* eslint-disable new-cap */
 export default CGV

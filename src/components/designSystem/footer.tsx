@@ -36,6 +36,7 @@ const Footer: React.FC = () => {
                             >
                                 {'Condition Générales d’utilisation'}
                             </Link>
+                        </li>
                         <li>
                             <Link
                                 href='/cgv'
@@ -43,7 +44,6 @@ const Footer: React.FC = () => {
                             >
                                 {'Condition Générales de vente'}
                             </Link>
-                        </li>
                         </li>
                     </ul>
                 </div>

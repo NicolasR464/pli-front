@@ -1,17 +1,18 @@
-"use client";
+'use client'
 
-import { usePathname } from 'next/navigation';
-import Navbar from '@/components/designSystem/navigation/navbar';
+import { usePathname } from 'next/navigation'
+
+import Navbar from '@/components/designSystem/navigation/navbar'
 
 const NavbarWrapper = (): React.JSX.Element | null => {
-    const pathname = usePathname();
+    const pathname = usePathname()
 
     // Ne pas afficher la navbar si l'URL est "/aide"
     if (pathname === '/aide') {
-        return null;
+        return null
     }
 
-    return <Navbar />;
-};
+    return <Navbar />
+}
 
-export default NavbarWrapper;
+export default NavbarWrapper

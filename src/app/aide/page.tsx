@@ -32,77 +32,79 @@ const AccordionDemo: React.FC = (): React.JSX.Element => {
         // Afficher un "loading" ou un fallback si nécessaire
         return <div>{'Loading…'}</div>
     }
-
+    /* eslint-disable new-cap */
     return (
-        <div>**           <section className='hero-section relative flex items-center justify-center'>
-    <div className='relative w-full'>
-        {/* Conteneur du logo et du texte */}
-        <div className='absolute left-0 top-0 z-20 flex flex-col items-center gap-y-1 p-4'>
-            <Link href='/'>
-                <Image
-                    src='/logo.png'
-                    alt='Logo'
-                    width={128}
-                    height={128}
-                    className='w-32'
-                />
-            </Link>
-            <div className='text-lg font-semibold text-white'>
-                {'Centre d’aide'}
-            </div>
-        </div>
+        <div>
+            <section className='hero-section relative flex items-center justify-center'>
+                <div className='relative w-full'>
+                    {/* Conteneur du logo et du texte */}
+                    <div className='absolute left-0 top-0 z-20 flex flex-col items-center gap-y-1 p-4'>
+                        <Link href='/'>
+                            <Image
+                                src='/logo.png'
+                                alt='Logo'
+                                width={128}
+                                height={128}
+                                className='w-32'
+                            />
+                        </Link>
+                        <div className='text-lg font-semibold text-white'>
+                            {'Centre d’aide'}
+                        </div>
+                    </div>
 
-        {/* Conteneur pour "Retour sur TrocUp" et le bouton Connexion/Déconnexion */}
-        <div className='absolute right-4 top-4 z-20 flex items-center gap-4'>
-            {/* Texte "Retour sur TrocUp" à gauche */}
-            <Link
-                href={pagePaths.HOME}
-                className='text-lg font-semibold text-white'
-            >
-                {'Retour sur TrocUp'}
-            </Link>
+                    {/* Conteneur pour "Retour sur TrocUp" et le bouton Connexion/Déconnexion */}
+                    <div className='absolute right-4 top-4 z-20 flex items-center gap-4'>
+                        {/* Texte "Retour sur TrocUp" à gauche */}
+                        <Link
+                            href={pagePaths.HOME}
+                            className='text-lg font-semibold text-white'
+                        >
+                            {'Retour sur TrocUp'}
+                        </Link>
 
-            {/* Bouton Connexion/Déconnexion à droite */}
-            <div className='flex gap-2'>
-                <SignedOut>
-                    <SignInButton
-                        forceRedirectUrl={pagePaths.HOME}
-                        signUpForceRedirectUrl={pagePaths.ONBOARDING}
-                        mode='modal'
-                    >
-                        <Button className='border border-blueGreen bg-transparent text-blueGreen hover:bg-blueGreen-hover hover:text-white'>
-                            {'🚀 Connexion'}
-                        </Button>
-                    </SignInButton>
-                </SignedOut>
+                        {/* Bouton Connexion/Déconnexion à droite */}
+                        <div className='flex gap-2'>
+                            <SignedOut>
+                                <SignInButton
+                                    forceRedirectUrl={pagePaths.HOME}
+                                    signUpForceRedirectUrl={
+                                        pagePaths.ONBOARDING
+                                    }
+                                    mode='modal'
+                                >
+                                    <Button className='border border-blueGreen bg-transparent text-blueGreen hover:bg-blueGreen-hover hover:text-white'>
+                                        {'🚀 Connexion'}
+                                    </Button>
+                                </SignInButton>
+                            </SignedOut>
 
-                <SignedIn>
-                    <SignOutButton>
-                        <Button className='border border-blueGreen bg-transparent text-blueGreen hover:bg-blueGreen-hover hover:text-white'>
-                            {'🔑 Déconnexion'}
-                        </Button>
-                    </SignOutButton>
-                </SignedIn>
-            </div>
-        </div>
+                            <SignedIn>
+                                <SignOutButton>
+                                    <Button className='border border-blueGreen bg-transparent text-blueGreen hover:bg-blueGreen-hover hover:text-white'>
+                                        {'🔑 Déconnexion'}
+                                    </Button>
+                                </SignOutButton>
+                            </SignedIn>
+                        </div>
+                    </div>
 
-        {/* Image de fond */}
-        <Image
-            src='/heroAide.png'
-            alt='Illustration de la plateforme Trocup'
-            layout='responsive'
-            width={1920}
-            height={1000}
-            className='max-h-[290px] w-full object-cover shadow-lg'
-        />
+                    {/* Image de fond */}
+                    <Image
+                        src='/heroAide.png'
+                        alt='Illustration de la plateforme Trocup'
+                        layout='responsive'
+                        width={1920}
+                        height={1000}
+                        className='max-h-[290px] w-full object-cover shadow-lg'
+                    />
 
-        {/* Texte au centre de l'image */}
-        <h1 className='absolute inset-0 z-10 flex translate-y-[-12px] items-center justify-center text-5xl font-bold text-white'>
-            {'Comment pouvons-nous vous aider?'}
-        </h1>
-    </div>
-</section>
-
+                    {/* Texte au centre de l'image */}
+                    <h1 className='absolute inset-0 z-10 flex translate-y-[-12px] items-center justify-center text-5xl font-bold text-white'>
+                        {'Comment pouvons-nous vous aider?'}
+                    </h1>
+                </div>
+            </section>
             <div className='mb-12 mt-8 flex min-h-[60vh] items-center justify-center'>
                 {' '}
                 {/* Réduction de la hauteur minimum */}
@@ -712,5 +714,5 @@ const AccordionDemo: React.FC = (): React.JSX.Element => {
         </div>
     )
 }
-
+/* eslint-disable new-cap */
 export default AccordionDemo

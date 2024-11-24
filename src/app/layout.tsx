@@ -16,14 +16,21 @@ import UserStoreProvider from '@/utils/providers/UserStoreProvider'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 
+// const inter = Inter({ subsets: ['latin'] })
+
+// eslint-disable-next-line new-cap
 const carroisGothic = Carrois_Gothic_SC({
     weight: '400',
     subsets: ['latin'],
 })
+
+// eslint-disable-next-line new-cap
 const quattrocentoSans = Quattrocento_Sans({
     weight: ['400'],
     subsets: ['latin'],
 })
+
+// eslint-disable-next-line new-cap
 const questrial = Questrial({
     weight: '400',
     subsets: ['latin'],
@@ -49,13 +56,13 @@ export const metadata: Metadata = {
 const Layout = ({
     children,
 }: {
-    children: React.ReactNode
+    readonly children: React.ReactNode
 }): React.JSX.Element => (
     <ClerkProvider
         signUpFallbackRedirectUrl={pagePaths.ONBOARDING}
         afterSignOutUrl={pagePaths.HOME}
     >
-        <html lang="en">
+        <html lang='en'>
             <body
                 className={`${carroisGothic.className} ${quattrocentoSans.className} ${questrial.className}`}
             >
@@ -64,8 +71,8 @@ const Layout = ({
                         {/* Utilisation du composant Client pour la Navbar */}
                         <NavbarWrapper />
                     </header>
-                    <div className="flex min-h-screen flex-col">
-                        <main className="flex-grow">
+                    <div className='flex min-h-screen flex-col'>
+                        <main className='flex-grow'>
                             <UserStoreProvider />
                             <Toaster />
                             {children}
