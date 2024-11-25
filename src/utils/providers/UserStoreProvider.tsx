@@ -17,14 +17,14 @@ const UserStoreProvider = (): undefined => {
     const userDataStore = useUserStore((state) => state.user)
     const hasStoreHydrated = useUserStore((state) => state.hasHydrated)
 
-    const { data: userQuery } = useQuery({
+    const { data: userQuery, isSuccess: isUserQuerySuccess } = useQuery({
         queryKey: [rqKeys.USER, userId],
         queryFn: () => getUserById(userId),
-        enabled: !!userId && !userDataStore.pseudo && hasStoreHydrated,
+        enabled: isLoaded && !!userId && hasStoreHydrated,
     })
 
     useEffect(() => {
-        if (isLoaded && isSignedIn && userQuery && !userDataStore.pseudo) {
+        if (isLoaded && isSignedIn && userQuery) {
             setUserData({
                 pseudo: userQuery.pseudo,
                 avatarUrl: userQuery.avatarUrl,
@@ -42,8 +42,9 @@ const UserStoreProvider = (): undefined => {
         userId,
         setUserData,
         userQuery,
-        userDataStore,
         resetUserData,
+        isUserQuerySuccess,
+        userDataStore.pseudo,
     ])
 
     return undefined

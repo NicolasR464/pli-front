@@ -21,6 +21,7 @@ import {
 } from '../shadcn/ui/card'
 import SkeletonAvatarTxt from '../skeletons/SkeletonAvatarTxt'
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { MapPin } from 'lucide-react'
 
 export const ArticlesList = ({
     userBalance,
@@ -140,15 +141,17 @@ export const ArticlesList = ({
                                         <CardTitle className='pb-1 text-sm font-bold sm:text-base md:text-lg'>
                                             {article.adTitle}
                                         </CardTitle>
-                                        <div className='flex text-sm sm:text-base md:text-lg'>
-                                            <div>{article.price}</div>
-                                            <div>{' €'}</div>
-                                        </div>
                                     </CardContent>
                                     <CardFooter className='mt-auto flex-col items-start text-xs sm:text-sm md:text-base'>
-                                        <div>{article.address?.city}</div>
+                                        <div className='flex items-center'>
+                                            <MapPin className='mr-1' />
+                                            {article.address?.city}
+                                        </div>
+                                        <div className='h-[1px] w-full bg-gray-200' />
                                         <div>
-                                            {formatDate(article.createdAt)}
+                                            {`posté le : ${formatDate(
+                                                article.createdAt,
+                                            )}`}
                                         </div>
                                     </CardFooter>
                                 </Card>
