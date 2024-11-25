@@ -28,9 +28,9 @@ const UserStoreProvider = (): undefined => {
             setUserData({
                 pseudo: userQuery.pseudo,
                 avatarUrl: userQuery.avatarUrl,
-                credit: userQuery.credit,
-                balance: userQuery.balance,
-                isPremium: userQuery.isPremium,
+                credit: userQuery.credit || 0,
+                balance: userQuery.balance || 0,
+                isPremium: userQuery.isPremium || false,
             })
         }
 
