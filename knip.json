@@ -17,7 +17,8 @@
         "src/stores/user.ts",
         "src/utils/axiosInstances/instantMessage.tsx",
         "src/utils/axiosInstances/transaction.tsx",
-        "src/components/messages/**"
+        "src/components/messages/**",
+        "src/components/WelcomeMsg/index.tsx"
     ],
     "ignoreDependencies": [
         "postcss",
