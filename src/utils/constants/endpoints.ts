@@ -21,6 +21,9 @@ export const apiEndpoints = {
             TRANSACTION_FINAL: 'api/protected/transactions/:id/complete',
             INSTANT_MESSAGES: 'api/protected/messages/',
         },
+        admin: {
+            USERS: 'api/protected/admin/users/',
+        },
     },
 
     // Local API endpoints

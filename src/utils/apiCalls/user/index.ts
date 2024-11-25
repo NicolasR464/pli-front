@@ -25,19 +25,31 @@ type PaginatedUsers = {
 /**
  * Retrieves a paginated list of users.
  * @param {number} pageParam  The page number for pagination
+ * @param {string} JWT The JWT token for authentication.
  * @returns {Promise<PaginatedUsers>} A promise that resolves to the paginated users
  */
-export const getUsers = async (pageParam: number): Promise<PaginatedUsers> => {
-    const response: AxiosResponse<{ users: User[]; nextCursor: number }> =
-        await userInstance.get(apiEndpoints.microServices.protected.USERS, {
+
+export const getUsers = async (
+    pageParam: number,
+    JWT: string,
+): Promise<PaginatedUsers> => {
+    if (!JWT) {
+        throw new Error('No JWT token provided')
+    }
+    // Add the authorization header
+    addAuthHeader(userInstance, JWT)
+    // API call to get users with pagination
+    const response: AxiosResponse<{ users: User[]; nextCursor?: number }> =
+        await userInstance.get(apiEndpoints.microServices.admin.USERS, {
             params: {
                 skip: pageParam,
                 limit: paginationLimit,
             },
         })
-
-    if (response.status !== 200) throw new Error('No users found')
-
+    if (response.status !== 200) {
+        throw new Error('Failed to fetch users')
+    }
+    // Return users with optional nextCursor
     return {
         users: response.data.users,
         nextCursor: response.data.nextCursor,
