@@ -88,6 +88,7 @@ module.exports = {
         'unicorn/string-content': 'off',
         'unicorn/prevent-abbreviations': 'off',
         'unicorn/prefer-set-has': 'off',
+        'unicorn/no-null': 'off',
         'jsdoc/check-tag-names': 'off',
         'react/jsx-max-depth': 'off',
         'no-underscore-dangle': 'off',

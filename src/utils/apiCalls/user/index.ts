@@ -6,7 +6,7 @@ import { addAuthHeader } from '@/utils/functions'
 import type { User } from '@/types/user'
 
 import type { AxiosResponse } from 'axios'
-import axios from 'axios'
+import { isAxiosError } from 'axios'
 
 type CreateUserSuccess = {
     message: string
@@ -106,7 +106,7 @@ export const getUserById = async (
 
         return response.data
     } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
+        if (isAxiosError(error)) {
             const statusCode = error.response?.status
             if (statusCode === 404) {
                 return undefined

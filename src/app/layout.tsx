@@ -7,7 +7,7 @@ import {
 } from 'next/font/google'
 
 import Footer from '@/components/designSystem/footer'
-import Navbar from '@/components/designSystem/navigation/navbar'
+import NavbarWrapper from '@/components/designSystem/NavbarWrapper'
 
 import { pagePaths } from '@/utils/constants'
 import ReactQueryProvider from '@/utils/providers/ReactQuery'
@@ -29,6 +29,7 @@ const quattrocentoSans = Quattrocento_Sans({
     weight: ['400'],
     subsets: ['latin'],
 })
+
 // eslint-disable-next-line new-cap
 const questrial = Questrial({
     weight: '400',
@@ -54,9 +55,9 @@ export const metadata: Metadata = {
 
 const Layout = ({
     children,
-}: Readonly<{
-    children: React.ReactNode
-}>): React.JSX.Element => (
+}: {
+    readonly children: React.ReactNode
+}): React.JSX.Element => (
     <ClerkProvider
         signUpFallbackRedirectUrl={pagePaths.ONBOARDING}
         afterSignOutUrl={pagePaths.HOME}
@@ -67,7 +68,8 @@ const Layout = ({
             >
                 <ReactQueryProvider>
                     <header>
-                        <Navbar />
+                        {/* Utilisation du composant Client pour la Navbar */}
+                        <NavbarWrapper />
                     </header>
                     <div className='flex min-h-screen flex-col'>
                         <main className='flex-grow'>
@@ -82,4 +84,5 @@ const Layout = ({
         </html>
     </ClerkProvider>
 )
+
 export default Layout

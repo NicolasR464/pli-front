@@ -2,6 +2,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import { getAllArticles } from '@/utils/apiCalls/article'
@@ -131,7 +132,7 @@ export const ArticlesList = ({
                                     }}
                                 >
                                     <CardHeader>
-                                        <img
+                                        <Image
                                             src={article.imageUrls[0]}
                                             alt='#'
                                             className='w-full object-cover'
